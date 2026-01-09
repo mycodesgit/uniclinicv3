@@ -25,6 +25,8 @@ Route::get('/', function () {
     
     Route::prefix('/patient')->group(function () {
         Route::get('/students',[PatientsController::class,'index'])->name('patients.students');
+        Route::get('/students/search',[PatientsController::class,'studentsShow'])->name('patients.show');
+        Route::get('/students/{id}',[PatientsController::class,'show'])->name('patients.details');
     });
 
     Route::prefix('/appointment')->group(function () {

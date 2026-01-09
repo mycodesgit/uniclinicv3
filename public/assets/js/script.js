@@ -448,32 +448,32 @@ Template Name: Preclinic - Bootstrap Admin Template
 	}
 
 		// Datatable
-	if($('.datatable').length > 0) {
-		$('.datatable').DataTable({
-			"bFilter": true,
-			"sDom": 'fBtlpi',  
-			"ordering": true,
-			"language": {
-				search: ' ',
-				sLengthMenu: '_MENU_',
-				searchPlaceholder: "Search",
-				sLengthMenu: 'Row Per Page _MENU_ Entries',
-				info: "_START_ - _END_ of _TOTAL_ items",
-				paginate: {
-					next: '<i class="ti ti-arrow-right"></i>',
-					previous: '<i class="ti ti-arrow-left text-body"></i> '
-				},
-			},
-			// "scrollX": true,         // Enable horizontal scrolling
-			// "scrollCollapse": true,  // Adjust table size when the scroll is used
-			"responsive": true,
-			"autoWidth": false,
-			initComplete: (settings, json)=>{
-				$('.dataTables_filter').appendTo('#tableSearch');
-				$('.dataTables_filter').appendTo('.search-input');
-			},	
-		});
-	}	
+	// if($('.datatable').length > 0) {
+	// 	$('.datatable').DataTable({
+	// 		"bFilter": true,
+	// 		"sDom": 'fBtlpi',  
+	// 		"ordering": true,
+	// 		"language": {
+	// 			search: ' ',
+	// 			sLengthMenu: '_MENU_',
+	// 			searchPlaceholder: "Search",
+	// 			sLengthMenu: 'Row Per Page _MENU_ Entries',
+	// 			info: "_START_ - _END_ of _TOTAL_ items",
+	// 			paginate: {
+	// 				next: '<i class="ti ti-arrow-right"></i>',
+	// 				previous: '<i class="ti ti-arrow-left text-body"></i> '
+	// 			},
+	// 		},
+	// 		"scrollX": true,         // Enable horizontal scrolling
+	// 		"scrollCollapse": true,  // Adjust table size when the scroll is used
+	// 		"responsive": true,
+	// 		"autoWidth": false,
+	// 		initComplete: (settings, json)=>{
+	// 			$('.dataTables_filter').appendTo('#tableSearch');
+	// 			$('.dataTables_filter').appendTo('.search-input');
+	// 		},	
+	// 	});
+	// }	
 
 	// Datetimepicker
 	if($('.datetimepicker').length > 0 ){

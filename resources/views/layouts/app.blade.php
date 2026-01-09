@@ -639,6 +639,10 @@
     <!-- Main JS -->
     <script src="{{ asset('assets/js/script.js') }}" type="text/javascript"></script>
 
+    @if (request()->routeIs('patients.students'))
+        @include('script.patient.studentscript')
+    @endif
+
 </body>
 
 
