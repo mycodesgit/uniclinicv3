@@ -48,6 +48,7 @@ class Student extends Model
         'stud_mother',
         'stud_guardian',
         'guardian_contact',
+        'guardian_address',
         'lst_sch_attended_year',
         'date_admission',
         'graduation_date',

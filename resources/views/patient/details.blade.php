@@ -17,16 +17,16 @@
             <div class="row align-items-end">
                 <div class="col-xl-9 col-lg-8">
                     <div class="d-sm-flex align-items-center position-relative z-0 overflow-hidden p-3">
-                        <img src="{{ asset('assets/img/icons/shape-01.svg') }}" alt="img" class="z-n1 position-absolute end-0 top-0 d-none d-lg-flex">
+                        {{-- <img src="{{ asset('assets/img/icons/shape-01.svg') }}" alt="img" class="z-n1 position-absolute end-0 top-0 d-none d-lg-flex"> --}}
                         <a href="javascript:void(0);" class="avatar avatar-xxxl patient-avatar me-2 flex-shrink-0">
-                            <img src="{{ asset('assets/img/users/user-08.jpg') }}" alt="product" class="rounded">
+                            <img src="{{ asset('assets/img/user.png') }}" alt="product" class="rounded">
                         </a>
                         <div>
-                            <p class="text-primary mb-1">#PT0025</p>
+                            <p class="text-primary mb-1" style="font-weight: bold"><i class="ti ti-id me-1 text-dark"></i>Student ID No. : {{ $patients->stud_id }}</p>
                             <h5 class="mb-1"><a href="javascript:void(0);" class="fw-bold">{{ $patients->fname }} {{ $patients->lname }}</a></h5>
                             <p class="mb-3">{{ $patients->address }}</p>
                             <div class="d-flex align-items-center flex-wrap">
-                                <p class="mb-0 d-inline-flex align-items-center"><i class="ti ti-phone me-1 text-dark"></i>Phone : <span class="text-dark ms-1">+1 54546 45648</span></p>
+                                <p class="mb-0 d-inline-flex align-items-center"><i class="ti ti-phone me-1 text-dark"></i>Phone No. : <span class="text-dark ms-1">0{{ $patients->contact }}</span></p>
                                 <span class="mx-2 text-light">|</span>
                                 <p class="mb-0 d-inline-flex align-items-center"><i class="ti ti-calendar-time me-1 text-dark"></i>Last Visited : <span class="text-dark ms-1">30 Apr 2025</span></p>
                             </div>
@@ -72,21 +72,21 @@
                     <div class="col-md-12">
                         <div class="card shadow-sm flex-fill w-100">
                             <div class="card-header">
-                                <h5 class="fw-bold mb-0"><i class="ti ti-user-star me-1"></i>Personal Information</h5>
+                                <h5 class="fw-bold mb-0" style="color: teal"><i class="ti ti-user-star me-1"></i>Personal Information</h5>
                             </div>
                             <div class="card-body pb-0">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Last Name<span class="text-danger ms-1">*</span></label>
-                                            <input type="text" class="form-control form-control-sm update-field" value="{{ ucfirst(strtolower($patients->lname)) }}" data-column-id="{{ $patients->id }}" data-column-name="lname" placeholder="Enter Last Name">
+                                            <input type="text" class="form-control form-control-sm update-field" value="{{ strtoupper($patients->lname) }}" data-column-id="{{ $patients->id }}" data-column-name="lname" placeholder="Enter Last Name">
                                         </div>
                                     </div>
 
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">First Name<span class="text-danger ms-1">*</span></label>
-                                            <input type="text" class="form-control form-control-sm update-field" value="{{ ucfirst(strtolower($patients->fname)) }}">
+                                            <input type="text" class="form-control form-control-sm update-field" value="{{ strtoupper($patients->fname) }}">
                                         </div>
                                     </div>
 
@@ -94,7 +94,7 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Middle Name<span class="text-danger ms-1">*</span></label>
-                                            <input type="text" class="form-control form-control-sm update-field" value="{{ ucfirst(strtolower($patients->mname)) }}">
+                                            <input type="text" class="form-control form-control-sm update-field" value="{{ strtoupper($patients->mname) }}">
                                         </div>
                                     </div>
 
@@ -127,12 +127,82 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Height (cm)</label>
+                                            <input type="text" name="height_cm" id="height_cm" value="{{ $patients->height_cm }}" data-column-id="{{ $patients->id }}" data-column-name="height_cm" class="form-control form-control-sm update-field" placeholder="N/A">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Height (ft)</label><br>
+                                            <input type="text" name="height_ft" id="height_ft" value="{{ $patients->height_ft }}" data-column-id="{{ $patients->id }}" data-column-name="height_ft" class="form-control form-control-sm update-field" placeholder="N/A">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Weight (kg)</label><br>
+                                            <input type="text" name="weight_kg" id="weight_kg" value="{{ $patients->weight_kg }}" data-column-id="{{ $patients->id }}" data-column-name="weight_kg" class="form-control form-control-sm update-field" placeholder="N/A">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Weight (lb)</label><br>
+                                            <input type="text" name="weight_lb" id="weight_lb" value="{{ $patients->weight_lb }}" data-column-id="{{ $patients->id }}" data-column-name="weight_lb" class="form-control form-control-sm update-field" placeholder="N/A">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">BMI:</label>
+                                            <input type="text" name="bmi" id="bmi" value="{{ $patients->bmi }}" data-column-id="{{ $patients->id }}" data-column-name="bmi" class="form-control form-control-sm" placeholder="N/A" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">BMI Category:</label>
+                                            <input type="text" name="bami_cat" id="bmi_cat" class="form-control form-control-sm" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Temp:</label>
+                                            <input type="text" name="temp" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="temp" value="{{ $patients->temp }}" placeholder="Enter Tmp.">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">PR:</label>
+                                            <input type="text" name="pr" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="pr" value="{{ $patients->pr }}" placeholder="Enter PR">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">BP:</label>
+                                            <input type="text" name="bp" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="bp" value="{{ $patients->bp }}" placeholder="Enter BP">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">RR:</label>
+                                            <input type="text" name="rr" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="rr" value="{{ $patients->rr }}" placeholder="Enter RR">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="d-flex align-items-sm-center justify-content-between flex-wrap gap-2 pb-3 mb-3 border-1 border-bottom mt-4">
                                         <div>
-                                            <h6 class="fw-bold mb-0 d-flex align-items-center"><i class="ti ti-home me-1"></i> Home Address</h6>
+                                            <h6 class="fw-bold mb-0 d-flex align-items-center" style="color: teal"><i class="ti ti-home me-1"></i> Home Address</h6>
                                         </div>
                                     </div>
 
@@ -204,29 +274,109 @@
                                 <div class="row">
                                     <div class="d-flex align-items-sm-center justify-content-between flex-wrap gap-2 pb-3 mb-3 border-1 border-bottom mt-4">
                                         <div>
-                                            <h6 class="fw-bold mb-0 d-flex align-items-center"><i class="ti ti-user me-1"></i> Guardian Details</h6>
+                                            <h6 class="fw-bold mb-0 d-flex align-items-center" style="color: teal"><i class="ti ti-user me-1"></i> Guardian Details</h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Select Father & Mother / Guardian<span class="text-danger ms-1">*</span></label>
+                                            <select class="form-control form-control-sm" id="parentType">
+                                                <option value=""> --Select-- </option>
+                                                <option value="father&mother">Father & Mother</option>
+                                                <option value="guardian">Guardian</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 parent-fields">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Father<span class="text-danger ms-1">*</span></label>
+                                            <input type="text" class="form-control form-control-sm update-field"
+                                                value="{{ $patients->stud_father }}"
+                                                placeholder="Enter Father's Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 parent-fields">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Mother<span class="text-danger ms-1">*</span></label>
+                                            <input type="text" class="form-control form-control-sm update-field"
+                                                value="{{ $patients->stud_mother }}"
+                                                placeholder="Enter Mother's Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 guardian-field">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Guardian<span class="text-danger ms-1">*</span></label>
+                                            <input type="text" class="form-control form-control-sm update-field"
+                                                value="{{ $patients->stud_guardian }}"
+                                                placeholder="Enter Guardian's Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Region<span class="text-danger ms-1">*</span></label>
+                                            <select id="gregion" class="form-control form-control-sm select2bs4">
+                                                <option value="">Select Region</option>
+                                                @foreach($regions as $region)
+                                                    <option value="{{ $region->region_id }}" data-name="{{ $region->name }}">{{ $region->name }}</option>
+                                                @endforeach
+                                                <input type="hidden" id="gregion_name" name="gregion">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Province<span class="text-danger ms-1">*</span></label>
+                                            <select id="gprovince" class="form-control form-control-sm select2bs4">
+                                                <option value="">Select Province</option>
+                                            </select>
+                                            <input type="hidden" id="gprovince_name" name="gprovince">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">City/Municipality<span class="text-danger ms-1">*</span></label>
+                                            <select id="gcity" class="form-control form-control-sm select2bs4">
+                                                <option value="">Select City</option>
+                                            </select>
+                                            <input type="hidden" id="gcity_name" name="gcity">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-meduim">Barangay<span class="text-danger ms-1">*</span></label>
+                                            <select id="gbarangay" class="form-control form-control-sm select2bs4">
+                                                <option value="">Select Barangay</option>
+                                            </select>
+                                            <input type="hidden" id="gbrgy_name" name="gbrgy_name">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-meduim">House No. / Block / Purok<span class="text-danger ms-1">*</span></label>
+                                            <input type="text" name="ghnum" id="gviewdatastudHnum" class="form-control form-control-sm" placeholder="House No. / Block / Purok" style="text-transform: uppercase;">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-meduim">Zipcode<span class="text-danger ms-1">*</span></label>
+                                            <input type="text" name="gzcode" id="gzipcode" class="form-control form-control-sm" readonly placeholder="Zip Code" readonly style="background-color: #ddd !important; border: 1px solid #aaa;">
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <label class="form-label mb-1 fw-medium">Address (<span class="text-danger ms-1">Readonly</span>)</label>
-                                            <input type="text" name="address" class="form-control form-control-sm update-field" id="viewdatastudAddress" value="{{ $patients->address }}" readonly style="background-color: #ddd !important; border: 1px solid #aaa;">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="d-flex align-items-sm-center justify-content-between flex-wrap gap-2 pb-3 mb-3 border-1 border-bottom mt-4">
-                                        <div>
-                                            <h6 class="fw-bold mb-0 d-flex align-items-center"><i class="ti ti-user me-1"></i> Guardian Details</h6>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="mb-3">
-                                            <label class="form-label mb-1 fw-medium">Address (<span class="text-danger ms-1">Readonly</span>)</label>
-                                            <input type="text" name="address" class="form-control form-control-sm update-field" id="viewdatastudAddress" value="{{ $patients->address }}" readonly style="background-color: #ddd !important; border: 1px solid #aaa;">
+                                            <label class="form-label mb-1 fw-medium">Guardian Address (<span class="text-danger ms-1">Readonly</span>)</label>
+                                            <input type="text" name="guardian_address" class="form-control form-control-sm update-field" id="gviewdatastudAddress" value="{{ $patients->guardian_address }}" readonly style="background-color: #ddd !important; border: 1px solid #aaa;">
                                         </div>
                                     </div>
                                 </div>
@@ -236,7 +386,15 @@
                 </div>
 
                 <div class="tab-pane" id="medhistory">
-                    Med
+                    <div class="col-md-12">
+                        <div class="card shadow-sm flex-fill w-100">
+                            <div class="card-header">
+                                <h5 class="fw-bold mb-0"><i class="ti ti-prescription me-1"></i>Medical History</h5>
+                            </div>
+                            <div class="card-body pb-0">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="tab-pane" id="physexam">
@@ -249,6 +407,25 @@
     </div>
     <!-- End Content -->
 
+    <script>
+        document.getElementById('parentType').addEventListener('change', function () {
+            const parentFields = document.querySelectorAll('.parent-fields');
+            const guardianField = document.querySelector('.guardian-field');
+
+            if (this.value === 'father&mother') {
+                parentFields.forEach(el => el.style.display = 'block');
+                guardianField.style.display = 'none';
+            } 
+            else if (this.value === 'guardian') {
+                parentFields.forEach(el => el.style.display = 'none');
+                guardianField.style.display = 'block';
+            } 
+            else {
+                parentFields.forEach(el => el.style.display = 'none');
+                guardianField.style.display = 'none';
+            }
+        });
+    </script>
 
 @endsection
 

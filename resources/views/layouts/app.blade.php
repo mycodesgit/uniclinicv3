@@ -333,8 +333,8 @@
             <div class="sidebar-logo">
                 <div>
                     <!-- Logo Normal -->
-                    <a href="index.html" class="logo logo-normal">
-                        <img src="{{ asset('assets/img/logo.svg') }}" alt="Logo">
+                    <a href="./" class="logo logo-normal" style="margin-top: -5px">
+                        <img src="{{ asset('assets/img/MDHULogoblack.png') }}" alt="Logo">
                     </a>
 
                     <!-- Logo Small -->
