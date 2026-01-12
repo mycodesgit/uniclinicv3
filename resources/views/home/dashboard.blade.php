@@ -19,13 +19,12 @@
         <!-- row start -->
         <div class="row">
 
-            <!-- col start -->
-            <div class="col-xl-4 d-flex">
+            <div class="col-xl-3 d-flex">
                 <div class="card shadow-sm flex-fill w-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <div>
-                                <p class="mb-1">Total Appointments</p>
+                                <p class="mb-1">Patient Today</p>
                                 <div class="d-flex align-items-center gap-1">
                                     <h3 class="fw-bold mb-0">658</h3>
                                     <span class="badge fw-medium bg-success flex-shrink-0">+95%</span>
@@ -41,55 +40,73 @@
                     </div>
                 </div>
             </div>
-            <!-- col end -->
 
-            <!-- col start -->
-            <div class="col-xl-4 d-flex">
+            <div class="col-xl-3 d-flex">
                 <div class="card shadow-sm flex-fill w-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <div>
-                                <p class="mb-1">Online Consultations</p>
+                                <p class="mb-1">Patient this Month</p>
                                 <div class="d-flex align-items-center gap-1">
-                                    <h3 class="fw-bold mb-0">125</h3>
-                                    <span class="badge fw-medium bg-danger flex-shrink-0">-15%</span>
+                                    <h3 class="fw-bold mb-0">658</h3>
+                                    <span class="badge fw-medium bg-success flex-shrink-0">+95%</span>
                                 </div>
                             </div>
-                            <span class="avatar border border-danger text-danger rounded-2 flex-shrink-0"><i class="ti ti-users fs-20"></i></span>
+                            <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-calendar-heart fs-20"></i></span>
                         </div>
                         <div class="d-flex align-items-end">
-                            <div id="s-col-6" class="chart-set"></div>
-                            <span class="badge fw-medium badge-soft-danger flex-shrink-0 ms-2">+21% <i class="ti ti-arrow-down ms-1"></i></span>
+                            <div id="s-col-5" class="chart-set"></div>
+                            <span class="badge fw-medium badge-soft-success flex-shrink-0 ms-2">+21% <i class="ti ti-arrow-up ms-1"></i></span>
                             <p class="ms-1 fs-13 text-truncate">in last 7 Days </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- col end -->
 
-            <!-- col start -->
-            <div class="col-xl-4 d-flex">
+            <div class="col-xl-3 d-flex">
                 <div class="card shadow-sm flex-fill w-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <div>
-                                <p class="mb-1">Cancelled Appointments</p>
+                                <p class="mb-1">Walk-In Appointments</p>
                                 <div class="d-flex align-items-center gap-1">
-                                    <h3 class="fw-bold mb-0">35</h3>
-                                    <span class="badge fw-medium bg-success flex-shrink-0">+45%</span>
+                                    <h3 class="fw-bold mb-0">658</h3>
+                                    <span class="badge fw-medium bg-success flex-shrink-0">+95%</span>
                                 </div>
                             </div>
-                            <span class="avatar border border-success text-success rounded-2 flex-shrink-0"><i class="ti ti-versions fs-20"></i></span>
+                            <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-calendar-heart fs-20"></i></span>
                         </div>
                         <div class="d-flex align-items-end">
-                            <div id="s-col-7" class="chart-set"></div>
-                            <span class="badge fw-medium badge-soft-success flex-shrink-0 ms-2">+31% <i class="ti ti-arrow-up ms-1"></i></span>
+                            <div id="s-col-5" class="chart-set"></div>
+                            <span class="badge fw-medium badge-soft-success flex-shrink-0 ms-2">+21% <i class="ti ti-arrow-up ms-1"></i></span>
                             <p class="ms-1 fs-13 text-truncate">in last 7 Days </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- col end -->
+
+            <div class="col-xl-3 d-flex">
+                <div class="card shadow-sm flex-fill w-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div>
+                                <p class="mb-1">Online Appointments</p>
+                                <div class="d-flex align-items-center gap-1">
+                                    <h3 class="fw-bold mb-0">658</h3>
+                                    <span class="badge fw-medium bg-success flex-shrink-0">+95%</span>
+                                </div>
+                            </div>
+                            <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-calendar-heart fs-20"></i></span>
+                        </div>
+                        <div class="d-flex align-items-end">
+                            <div id="s-col-5" class="chart-set"></div>
+                            <span class="badge fw-medium badge-soft-success flex-shrink-0 ms-2">+21% <i class="ti ti-arrow-up ms-1"></i></span>
+                            <p class="ms-1 fs-13 text-truncate">in last 7 Days </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
 
         </div>
         <!-- row end -->

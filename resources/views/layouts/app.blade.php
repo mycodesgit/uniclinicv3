@@ -264,7 +264,7 @@
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-md p-2">
                         
                             <div class="d-flex align-items-center bg-light rounded-3 p-2 mb-2">
-                                <img src="assets/img/doctors/doctor-01.jpg" class="rounded-circle" width="42" height="42" alt="">
+                                <img src="{{ asset('assets/img/doctors/doctor-01.jpg') }}" class="rounded-circle" width="42" height="42" alt="">
                                 <div class="ms-2">
                                     <p class="fw-medium text-dark mb-0">Dr.Michael Smith</p>
                                     <span class="d-block fs-13">Cardiologist</span>
@@ -363,7 +363,7 @@
                 <div id="sidebar-menu" class="sidebar-menu">
                     @include('includes.sidebar')                   
                 </div>
-                <div class="sidebar-footer mt-5">
+                {{-- <div class="sidebar-footer mt-5">
                     <div class="trial-item mt-0 p-3 text-center">
                         <div class="trial-item-icon rounded-4 mb-3 p-2 text-center shadow-sm d-inline-flex">
                             <img src="{{ asset('assets/img/icons/sidebar-icon.svg') }}" alt="img">
@@ -374,7 +374,7 @@
                         </div>
                         <a href="javascript:void(0);" class="close-icon shadow-sm"><i class="ti ti-x"></i></a>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
         </div>
@@ -390,7 +390,7 @@
 
             <!-- Footer Start -->
             <div class="footer text-center bg-white p-2 border-top">
-                <p class="text-dark mb-0">2025 &copy; <a href="javascript:void(0);" class="link-primary">Preclinic</a>, All Rights Reserved</p>
+                <p class="text-dark mb-0">2025 &copy; <a href="javascript:void(0);" class="link-primary">MDHU</a>, All Rights Reserved</p>
             </div>
             <!-- Footer End -->
 
@@ -641,6 +641,9 @@
 
     @if (request()->routeIs('patients.students'))
         @include('script.patient.studentscript')
+    @endif
+    @if (request()->routeIs('patients.details'))
+        @include('script.patient.patientaddressscript')
     @endif
 
 </body>

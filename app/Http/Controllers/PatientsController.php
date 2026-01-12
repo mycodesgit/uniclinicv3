@@ -46,9 +46,27 @@ class PatientsController extends Controller
         return response()->json($students);
     }
 
-    public function show($id)
+    public function showmoredetails($id)
     {
-        $student = Student::findOrFail($id);
-        return view('patient.details', compact('student'));
+        $patients = Student::findOrFail($id);
+
+        $regions = Region::all();
+
+        return view('patient.details', compact('patients', 'regions'));
+    }
+
+    public function getPortalProvinces($region_id) 
+    {
+        return response()->json(Province::where('region_id', $region_id)->get());
+    }
+    
+    public function getPortalCities($province_id) 
+    {
+        return response()->json(City::where('province_id', $province_id)->get());
+    }
+    
+    public function getPortalBarangays($city_id) 
+    {
+        return response()->json(Barangay::where('city_id', $city_id)->get());
     }
 }

@@ -26,7 +26,11 @@ Route::get('/', function () {
     Route::prefix('/patient')->group(function () {
         Route::get('/students',[PatientsController::class,'index'])->name('patients.students');
         Route::get('/students/search',[PatientsController::class,'studentsShow'])->name('patients.show');
-        Route::get('/students/{id}',[PatientsController::class,'show'])->name('patients.details');
+        Route::get('/students/{id}',[PatientsController::class,'showmoredetails'])->name('patients.details');
+
+        Route::get('/portal/provinces/{region_id}', [PatientsController::class, 'getPortalProvinces'])->name('getPortalProvinces');
+        Route::get('/portal/cities/{province_id}', [PatientsController::class, 'getPortalCities'])->name('getPortalCities');
+        Route::get('/portal/barangays/{city_id}', [PatientsController::class, 'getPortalBarangays'])->name('getPortalBarangays');
     });
 
     Route::prefix('/appointment')->group(function () {

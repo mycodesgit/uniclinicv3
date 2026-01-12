@@ -33,7 +33,7 @@
             </li>
             <li>
                 <a href="doctors-schedules.html">
-                    <i class="ti ti-clock-check"></i><span>My Schedule</span>
+                    <i class="ti ti-file"></i><span>Reports</span>
                 </a>
             </li>
             <li class="submenu">

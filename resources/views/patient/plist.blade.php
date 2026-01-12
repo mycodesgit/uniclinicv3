@@ -11,7 +11,7 @@
             </div>
             <div class="d-flex align-items-center flex-wrap gap-2">
                 <a href="javascript:void(0);" class="btn btn-teal d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_patient_outsider">
-                    <i class="ti ti-plus me-1"></i>New Outsider Patient
+                    <i class="ti ti-plus me-1"></i>New Guest Patient
                 </a>
             </div>
         </div>
@@ -31,7 +31,7 @@
             </li>
             <li class="nav-item">
                 <a href="#outsiders" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
-                    <span>Outsiders</span>
+                    <span>Guest</span>
                 </a>
             </li>
         </ul>
@@ -56,7 +56,7 @@
                         <table class="table datatable table-nowrap" id="">
                             <thead class="">
                                 <tr>
-                                    <th>Patient</th>
+                                    <th>Name</th>
                                     <th>StudID</th>
                                     <th>Gender</th>
                                     <th>Civil Status</th>
@@ -130,8 +130,8 @@
                             <td>${student.civil_status}</td>
                             <td>
                                 <div class="d-flex align-items-center gap-1">
-                                    <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1">
-                                        <i class="ti ti-calendar-cog"></i>
+                                    <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal" title="View Details">
+                                        <i class="ti ti-eye" style="color: #fff"></i>
                                     </a>
                                     <a href="javascript:void(0);" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1" data-bs-toggle="dropdown">
                                         <i class="ti ti-dots-vertical"></i>
@@ -187,7 +187,7 @@
 <div class="offcanvas offcanvas-offset offcanvas-end" tabindex="-1" id="new_patient_outsider">
     <div class="offcanvas-header d-block pb-0 px-0">
         <div class="border-bottom d-flex align-items-center justify-content-between pb-3 px-3">
-            <h5 class="offcanvas-title fs-18 fw-bold">New Outsider Patient</h5>
+            <h5 class="offcanvas-title fs-18 fw-bold">New Guest Patient</h5>
             <button type="button" class="btn-close custom-btn-close opacity-100" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
     </div>
@@ -353,7 +353,7 @@
     <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
         <div class=" d-flex justify-content-end gap-2">
             <a href="javascript:void(0);" class="btn btn-light btm-md">Cancel</a>
-            <button data-bs-dismiss="offcanvas" class="btn btn-primary btm-md" id="filter-submit">Create Create Appointment</button>
+            <button data-bs-dismiss="offcanvas" class="btn btn-primary btm-md" id="filter-submit">Save Data</button>
         </div>
     </div>
 </div>
