@@ -14,15 +14,20 @@
         // Filter out undefined or empty values, then join with comma
         let fullAddress = [hnum, barangay, city, province, region, zipcode].filter(Boolean).join(', ');
 
-        $('#viewdatastudAddress').val(fullAddress);
+        $('#viewdatastudAddress').val(fullAddress).trigger('change');
         $('#viewdatastudHnum').on('input', updateAddress);
     }
+
+    
+    $(document).ready(function () {
+        $('#viewdatastudHnum').on('input', updateAddress);
+    });
 
     $(document).ready(function () {
         $('#region').on('change', function () {
             var regionId = $(this).val();
             var regionName = $(this).find(':selected').data('name');
-            $('#region_name').val(regionName);
+            $('#region_name').val(regionName).trigger('change');
             updateAddress(); // Update address
 
             $('#province').empty().append('<option disabled selected>Loading...</option>');
@@ -35,7 +40,7 @@
         $('#province').on('change', function () {
             var provinceId = $(this).val();
             var provinceName = $(this).find(':selected').data('name');
-            $('#province_name').val(provinceName);
+            $('#province_name').val(provinceName).trigger('change');
             updateAddress(); // Update address
 
             $('#city').empty().append('<option disabled selected>Loading...</option>');
@@ -47,10 +52,10 @@
 
         $('#city').on('change', function () {
             var cityName = $(this).find(':selected').data('name');
-            var zip = $(this).find(':selected').data('zip');
+            var zip = $(this).find(':selected').data('zip') || '';
 
-            $('#city_name').val(cityName);
-            $('#zipcode').val(zip || '');
+            $('#city_name').val(cityName).trigger('change');
+            $('#zipcode').val(zip).trigger('change');
             updateAddress(); // Update address
 
             var cityId = $(this).val();
@@ -63,7 +68,7 @@
 
         $('#barangay').on('change', function () {
             var brgyName = $(this).find(':selected').data('name');
-            $('#brgy_name').val(brgyName);
+            $('#brgy_name').val(brgyName).trigger('change');
             updateAddress(); // Update address
         });
     });
@@ -86,7 +91,7 @@
         // Filter out undefined or empty values, then join with comma
         let fullAddress1 = [ghnum, gbarangay, gcity, gprovince, gregion, gzipcode].filter(Boolean).join(', ');
 
-        $('#gviewdatastudAddress').val(fullAddress1);
+        $('#gviewdatastudAddress').val(fullAddress1).trigger('change');
         $('#gviewdatastudHnum').on('input', updategAddress);
     }
 
@@ -94,7 +99,7 @@
         $('#gregion').on('change', function () {
             var regionId = $(this).val();
             var regionName = $(this).find(':selected').data('name');
-            $('#gregion_name').val(regionName);
+            $('#gregion_name').val(regionName).trigger('change');
             updategAddress(); // Update address
 
             $('#gprovince').empty().append('<option disabled selected>Loading...</option>');
@@ -107,7 +112,7 @@
         $('#gprovince').on('change', function () {
             var provinceId = $(this).val();
             var provinceName = $(this).find(':selected').data('name');
-            $('#gprovince_name').val(provinceName);
+            $('#gprovince_name').val(provinceName).trigger('change');
             updategAddress(); // Update address
 
             $('#gcity').empty().append('<option disabled selected>Loading...</option>');
@@ -118,11 +123,11 @@
         });
 
         $('#gcity').on('change', function () {
-            var cityName = $(this).find(':selected').data('name');
-            var zip = $(this).find(':selected').data('zip');
+            var cityName = $(this).find(':selected').data('name') ;
+            var zip = $(this).find(':selected').data('zip') || '';
 
-            $('#gcity_name').val(cityName);
-            $('#gzipcode').val(zip || '');
+            $('#gcity_name').val(cityName).trigger('change');
+            $('#gzipcode').val(zip).trigger('change');
             updategAddress(); // Update address
 
             var cityId = $(this).val();
@@ -135,7 +140,7 @@
 
         $('#gbarangay').on('change', function () {
             var brgyName = $(this).find(':selected').data('name');
-            $('#gbrgy_name').val(brgyName);
+            $('#gbrgy_name').val(brgyName).trigger('change');
             updategAddress(); // Update address
         });
     });

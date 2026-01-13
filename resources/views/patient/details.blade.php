@@ -252,7 +252,7 @@
                                             <select id="barangay" class="form-control form-control-sm select2bs4">
                                                 <option value="">Select Barangay</option>
                                             </select>
-                                            <input type="hidden" id="brgy_name" name="brgy">
+                                            <input type="hidden" id="brgy_name" class="update-field" name="brgy" data-column-id="{{ $patients->id }}" data-column-name="brgy">
                                         </div>
                                     </div>
 
@@ -266,7 +266,7 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-meduim">Zipcode<span class="text-danger ms-1">*</span></label>
-                                            <input type="text" name="zcode" id="zipcode" class="form-control form-control-sm readonlytext" readonly placeholder="Zip Code" readonly>
+                                            <input type="text" name="zcode" id="zipcode" class="form-control form-control-sm readonlytext update-field" data-column-id="{{ $patients->id }}" data-column-name="zcode" readonly >
                                         </div>
                                     </div>
                                 </div>
@@ -304,6 +304,7 @@
                                             <label class="form-label mb-1 fw-medium">Mother<span class="text-danger ms-1">*</span></label>
                                             <input type="text" class="form-control form-control-sm update-field"
                                                 value="{{ $patients->stud_mother }}"
+                                                name="stud_mother" data-column-id="{{ $patients->id }}" data-column-name="stud_mother"
                                                 placeholder="Enter Mother's Name">
                                         </div>
                                     </div>
@@ -313,6 +314,7 @@
                                             <label class="form-label mb-1 fw-medium">Guardian<span class="text-danger ms-1">*</span></label>
                                             <input type="text" class="form-control form-control-sm update-field"
                                                 value="{{ $patients->stud_guardian }}"
+                                                name="stud_guardian" data-column-id="{{ $patients->id }}" data-column-name="stud_guardian"
                                                 placeholder="Enter Guardian's Name">
                                         </div>
                                     </div>
@@ -370,14 +372,14 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-meduim">Zipcode<span class="text-danger ms-1">*</span></label>
-                                            <input type="text" name="gzcode" id="gzipcode" class="form-control form-control-sm readonlytext" readonly placeholder="Zip Code" readonly>
+                                            <input type="text" name="gzcode" id="gzipcode" class="form-control form-control-sm readonlytext" readonly>
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Guardian Address (<span class="text-danger ms-1">Readonly</span>)</label>
-                                            <input type="text" name="guardian_address" class="form-control form-control-sm readonlytext update-field" id="gviewdatastudAddress" value="{{ $patients->guardian_address }}" readonly>
+                                            <input type="text" name="guardian_address" class="form-control form-control-sm readonlytext update-field" id="gviewdatastudAddress" data-column-id="{{ $patients->id }}" data-column-name="guardian_address" readonly>
                                         </div>
                                     </div>
                                 </div>

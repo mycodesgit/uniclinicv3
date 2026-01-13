@@ -58,5 +58,15 @@ class Student extends Model
         'graduation_semester',
         'graduation_course',
         'lst_sch_type',
+        'height_cm',
+        'height_ft',
+        'weight_kg',
+        'weight_lb',
+        'bmi',
+        'bami_cat',
+        'temp',
+        'pr',
+        'bp',
+        'rr',
     ];
 }
