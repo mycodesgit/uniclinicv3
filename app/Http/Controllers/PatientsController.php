@@ -28,7 +28,7 @@ class PatientsController extends Controller
         return view('patient.plist');
     }
 
-    public function studentsShow(Request $request)
+    public function show(Request $request)
     {
         $campus = 'MC';
         $search = $request->query('search');
@@ -46,7 +46,7 @@ class PatientsController extends Controller
         return response()->json($students);
     }
 
-    public function showmoredetails($id)
+    public function showdetails($id)
     {
         $patients = Student::findOrFail($id);
 
@@ -68,5 +68,25 @@ class PatientsController extends Controller
     public function getPortalBarangays($city_id) 
     {
         return response()->json(Barangay::where('city_id', $city_id)->get());
+    }
+
+    public function update(Request $request)
+    {
+        $patient = Student::findOrFail($request->id);
+        $column = $request->column;
+        if ($column == 'birthdate') {
+            $birthdate = Carbon::parse($request->value);
+            $age = $birthdate->age;
+            $patient->update([
+                $column => $request->value,
+                'age' => $age
+            ]);
+        } else {
+            $patient->update([
+                $column => $request->value
+            ]);
+        }
+
+        return response()->json(['success' => true]);
     }
 }

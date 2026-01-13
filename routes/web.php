@@ -25,8 +25,9 @@ Route::get('/', function () {
     
     Route::prefix('/patient')->group(function () {
         Route::get('/students',[PatientsController::class,'index'])->name('patients.students');
-        Route::get('/students/search',[PatientsController::class,'studentsShow'])->name('patients.show');
-        Route::get('/students/{id}',[PatientsController::class,'showmoredetails'])->name('patients.details');
+        Route::get('/students/search',[PatientsController::class,'show'])->name('patients.show');
+        Route::get('/students/{id}',[PatientsController::class,'showdetails'])->name('patients.details');
+        Route::post('/student/show/moreinfo/update', [PatientsController::class, 'update'])->name('patients.update');
 
         Route::get('/portal/provinces/{region_id}', [PatientsController::class, 'getPortalProvinces'])->name('getPortalProvinces');
         Route::get('/portal/cities/{province_id}', [PatientsController::class, 'getPortalCities'])->name('getPortalCities');

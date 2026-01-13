@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Doctor Dashboard - Medical & Hospital - Bootstrap 5 Admin Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="author" content="Dreams Technologies">
 	
     <!-- Favicon -->
@@ -43,6 +44,12 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" id="app-style">
+
+    <style>
+        .readonlytext {
+            background-color: #e9e9e9 !important; border: 1px solid #aaa;"
+        }
+    </style>
 
 </head>
 
@@ -347,9 +354,9 @@
                         <img src="{{ asset('assets/img/logo-white.svg') }}" alt="Logo">
                     </a>
                 </div>
-                <button class="sidenav-toggle-btn btn border-0 p-0 active" id="toggle_btn"> 
+                {{-- <button class="sidenav-toggle-btn btn border-0 p-0 active" id="toggle_btn"> 
                     <i class="ti ti-arrow-left text-body"></i>
-                </button>
+                </button> --}}
 
                 <!-- Sidebar Menu Close -->
                 <button class="sidebar-close">
@@ -444,37 +451,37 @@
                                         <li>
                                             <label class="dropdown-item px-2 d-flex align-items-center text-dark">
                                                 <input class="form-check-input m-0 me-2" type="checkbox">
-                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="assets/img/users/user-02.jpg" class="flex-shrink-0 rounded-circle" alt="img"></span>Emily Clark
+                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/users/user-02.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>Emily Clark
                                             </label>
                                         </li>
                                         <li>
                                             <label class="dropdown-item px-2 d-flex align-items-center text-dark">
                                                 <input class="form-check-input m-0 me-2" type="checkbox">
-                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="assets/img/profiles/avatar-01.jpg" class="flex-shrink-0 rounded-circle" alt="img"></span>John Carter
+                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/profiles/avatar-01.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>John Carter
                                             </label>
                                         </li>
                                         <li>
                                             <label class="dropdown-item px-2 d-flex align-items-center text-dark">
                                                 <input class="form-check-input m-0 me-2" type="checkbox">
-                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="assets/img/profiles/avatar-16.jpg" class="flex-shrink-0 rounded-circle" alt="img"></span>Sophia White
+                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/profiles/avatar-16.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>Sophia White
                                             </label>
                                         </li>
                                         <li>
                                             <label class="dropdown-item px-2 d-flex align-items-center text-dark">
                                                 <input class="form-check-input m-0 me-2" type="checkbox">
-                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="assets/img/profiles/avatar-15.jpg" class="flex-shrink-0 rounded-circle" alt="img"></span>Michael Johnson
+                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/profiles/avatar-15.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>Michael Johnson
                                             </label>
                                         </li>
                                         <li>
                                             <label class="dropdown-item px-2 d-flex align-items-center text-dark">
                                                 <input class="form-check-input m-0 me-2" type="checkbox">
-                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="assets/img/profiles/avatar-14.jpg" class="flex-shrink-0 rounded-circle" alt="img"></span>Olivia Harris
+                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/profiles/avatar-14.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>Olivia Harris
                                             </label>
                                         </li>
                                         <li>
                                             <label class="dropdown-item px-2 d-flex align-items-center text-dark">
                                                 <input class="form-check-input m-0 me-2" type="checkbox">
-                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="assets/img/profiles/avatar-01.jpg" class="flex-shrink-0 rounded-circle" alt="img"></span>David Anderson
+                                                <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/profiles/avatar-01.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>David Anderson
                                             </label>
                                         </li>
                                     </ul>
@@ -640,9 +647,9 @@
     <script src="{{ asset('assets/js/script.js') }}" type="text/javascript"></script>
 
     @if (request()->routeIs('patients.students'))
-        @include('script.patient.studentscript')
     @endif
     @if (request()->routeIs('patients.details'))
+        @include('script.patient.studentscript')
         @include('script.patient.patientaddressscript')
     @endif
 

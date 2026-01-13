@@ -79,14 +79,14 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Last Name<span class="text-danger ms-1">*</span></label>
-                                            <input type="text" class="form-control form-control-sm update-field" value="{{ strtoupper($patients->lname) }}" data-column-id="{{ $patients->id }}" data-column-name="lname" placeholder="Enter Last Name">
+                                            <input type="text" class="form-control form-control-sm readonlytext update-field" value="{{ strtoupper($patients->lname) }}" data-column-id="{{ $patients->id }}" data-column-name="lname" placeholder="Enter Last Name" readonly>
                                         </div>
                                     </div>
 
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">First Name<span class="text-danger ms-1">*</span></label>
-                                            <input type="text" class="form-control form-control-sm update-field" value="{{ strtoupper($patients->fname) }}">
+                                            <input type="text" class="form-control form-control-sm readonlytext update-field" value="{{ strtoupper($patients->fname) }}" data-column-id="{{ $patients->id }}" data-column-name="fname" placeholder="Enter First Name" readonly>
                                         </div>
                                     </div>
 
@@ -94,19 +94,19 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Middle Name<span class="text-danger ms-1">*</span></label>
-                                            <input type="text" class="form-control form-control-sm update-field" value="{{ strtoupper($patients->mname) }}">
+                                            <input type="text" class="form-control form-control-sm readonlytext update-field" value="{{ strtoupper($patients->mname) }}" data-column-id="{{ $patients->id }}" data-column-name="mname" placeholder="Enter Middle  Name" readonly>
                                         </div>
                                     </div>
 
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Ext. Name<span class="text-danger ms-1">*</span></label>
-                                            <select name="ext_name" class="form-control form-control-sm update-field">
+                                            <select name="ext" class="form-control form-control-sm update-field">
                                                 <option value=""> --Select-- </option>
-                                                <option value="Jr." data-column-id="{{ $patients->id }}" data-column-name="ext_name" @if($patients->ext_name == "Jr.") selected @endif>Jr.</option>
-                                                <option value="Sr." data-column-id="{{ $patients->id }}" data-column-name="ext_name" @if($patients->ext_name == "Sr.") selected @endif>Sr.</option>
-                                                <option value="III" data-column-id="{{ $patients->id }}" data-column-name="ext_name" @if($patients->ext_name == "III") selected @endif>III</option>
-                                                <option value="IV"  data-column-id="{{ $patients->id }}" data-column-name="ext_name" @if($patients->ext_name == "IV") selected @endif>IV</option>
+                                                <option value="Jr." data-column-id="{{ $patients->id }}" data-column-name="ext" @if($patients->ext == "Jr.") selected @endif>Jr.</option>
+                                                <option value="Sr." data-column-id="{{ $patients->id }}" data-column-name="ext" @if($patients->ext == "Sr.") selected @endif>Sr.</option>
+                                                <option value="III" data-column-id="{{ $patients->id }}" data-column-name="ext" @if($patients->ext == "III") selected @endif>III</option>
+                                                <option value="IV"  data-column-id="{{ $patients->id }}" data-column-name="ext" @if($patients->ext_name == "IV") selected @endif>IV</option>
                                             </select>
                                         </div>
                                     </div>
@@ -209,7 +209,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Address (<span class="text-danger ms-1">Readonly</span>)</label>
-                                            <input type="text" name="address" class="form-control form-control-sm update-field" id="viewdatastudAddress" value="{{ $patients->address }}" readonly style="background-color: #ddd !important; border: 1px solid #aaa;">
+                                            <input type="text" name="address" class="form-control form-control-sm readonlytext update-field" id="viewdatastudAddress" data-column-id="{{ $patients->id }}" data-column-name="address" value="{{ $patients->address }}" readonly>
                                         </div>
                                     </div>
 
@@ -221,8 +221,8 @@
                                                 @foreach($regions as $region)
                                                     <option value="{{ $region->region_id }}" data-name="{{ $region->name }}">{{ $region->name }}</option>
                                                 @endforeach
-                                                <input type="hidden" id="region_name" name="region">
                                             </select>
+                                            <input type="hidden" id="region_name" class="update-field" name="region" data-column-id="{{ $patients->id }}" data-column-name="region" value="{{ $patients->region }}">
                                         </div>
                                     </div>
 
@@ -232,7 +232,7 @@
                                             <select id="province" class="form-control form-control-sm select2bs4">
                                                 <option value="">Select Province</option>
                                             </select>
-                                            <input type="hidden" id="province_name" name="province">
+                                            <input type="hidden" id="province_name" class="update-field" name="province" data-column-id="{{ $patients->id }}" data-column-name="province" value="{{ $patients->province }}">
                                         </div>
                                     </div>
 
@@ -242,7 +242,7 @@
                                             <select id="city" class="form-control form-control-sm select2bs4">
                                                 <option value="">Select City</option>
                                             </select>
-                                            <input type="hidden" id="city_name" name="city">
+                                            <input type="hidden" id="city_name" class="update-field" name="city" data-column-id="{{ $patients->id }}" data-column-name="city" value="{{ $patients->city }}">
                                         </div>
                                     </div>
 
@@ -259,14 +259,14 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-meduim">House No. / Block / Purok<span class="text-danger ms-1">*</span></label>
-                                            <input type="text" name="hnum" id="viewdatastudHnum" class="form-control form-control-sm" placeholder="House No. / Block / Purok" style="text-transform: uppercase;">
+                                            <input type="text" name="hnum" id="viewdatastudHnum" class="form-control form-control-sm update-field" placeholder="House No. / Block / Purok" style="text-transform: uppercase;" data-column-id="{{ $patients->id }}" data-column-name="hnum" value="{{ $patients->hnum }}">
                                         </div>
                                     </div>
 
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-meduim">Zipcode<span class="text-danger ms-1">*</span></label>
-                                            <input type="text" name="zcode" id="zipcode" class="form-control form-control-sm" readonly placeholder="Zip Code" readonly style="background-color: #ddd !important; border: 1px solid #aaa;">
+                                            <input type="text" name="zcode" id="zipcode" class="form-control form-control-sm readonlytext" readonly placeholder="Zip Code" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -294,7 +294,8 @@
                                             <label class="form-label mb-1 fw-medium">Father<span class="text-danger ms-1">*</span></label>
                                             <input type="text" class="form-control form-control-sm update-field"
                                                 value="{{ $patients->stud_father }}"
-                                                placeholder="Enter Father's Name">
+                                                name="stud_father"
+                                                placeholder="Enter Father's Name" id="parentType" data-column-id="{{ $patients->id }}" data-column-name="stud_father">
                                         </div>
                                     </div>
 
@@ -324,8 +325,8 @@
                                                 @foreach($regions as $region)
                                                     <option value="{{ $region->region_id }}" data-name="{{ $region->name }}">{{ $region->name }}</option>
                                                 @endforeach
-                                                <input type="hidden" id="gregion_name" name="gregion">
                                             </select>
+                                            <input type="hidden" id="gregion_name" name="gregion">
                                         </div>
                                     </div>
 
@@ -369,14 +370,14 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-meduim">Zipcode<span class="text-danger ms-1">*</span></label>
-                                            <input type="text" name="gzcode" id="gzipcode" class="form-control form-control-sm" readonly placeholder="Zip Code" readonly style="background-color: #ddd !important; border: 1px solid #aaa;">
+                                            <input type="text" name="gzcode" id="gzipcode" class="form-control form-control-sm readonlytext" readonly placeholder="Zip Code" readonly>
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Guardian Address (<span class="text-danger ms-1">Readonly</span>)</label>
-                                            <input type="text" name="guardian_address" class="form-control form-control-sm update-field" id="gviewdatastudAddress" value="{{ $patients->guardian_address }}" readonly style="background-color: #ddd !important; border: 1px solid #aaa;">
+                                            <input type="text" name="guardian_address" class="form-control form-control-sm readonlytext update-field" id="gviewdatastudAddress" value="{{ $patients->guardian_address }}" readonly>
                                         </div>
                                     </div>
                                 </div>
