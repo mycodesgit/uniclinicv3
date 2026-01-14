@@ -379,7 +379,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Guardian Address (<span class="text-danger ms-1">Readonly</span>)</label>
-                                            <input type="text" name="guardian_address" class="form-control form-control-sm readonlytext update-field" id="gviewdatastudAddress" data-column-id="{{ $patients->id }}" data-column-name="guardian_address" readonly>
+                                            <input type="text" name="guardian_address" class="form-control form-control-sm readonlytext update-field" id="gviewdatastudAddress" data-column-id="{{ $patients->id }}" data-column-name="guardian_address" value="{{ $patients->guardian_address }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -395,6 +395,271 @@
                                 <h5 class="fw-bold mb-0"><i class="ti ti-prescription me-1"></i>Medical History</h5>
                             </div>
                             <div class="card-body pb-0">
+                                <div class="row">
+                                    <div class="col-md-3 text-center bg-primary text-white">
+                                        <strong>Disease</strong>
+                                    </div>
+                                    <div class="col-md-3 text-center bg-primary text-white">
+                                        <strong>Specific Disease Remarks</strong>
+                                    </div>
+                                    <div class="col-md-2 text-center bg-primary text-white">
+                                        <strong>Hospital Confinement</strong>
+                                    </div>
+                                    <div class="col-md-4 text-center bg-primary text-white">
+                                        <strong>Date, if confined</strong>
+                                    </div>
+                                </div>
+                                @php
+                                    $labels = [
+                                        "Allergy (Food, Medicine.)",
+                                        "COVID-19 Infection",
+                                        "Nosebleed",
+                                        "Dengue Fever",
+                                        "Rheumatic Fever",
+                                        "Typhoid Fever",
+                                        "Arthritis",
+                                        "Urinary Tract Infect, STD",
+                                        "Amoebiasis",
+                                        "Hyperacidity",
+                                        "Asthma",
+                                        "Hepatitis A/B",
+                                        "Heart Disease",
+                                        "Mumps",
+                                        "Tuberculosis, Pneumonia",
+                                        "Chicken Pox",
+                                        "Measles",
+                                        "Fainting Spells. Seizure",
+                                        "Hernia",
+                                        "Thyroid Disease, Cancer",
+                                    ];
+                                @endphp
+                                
+                                <br>
+
+                                <div class="row">
+                                    @for ($i = 0; $i < 20; $i++)
+                                        <div class="col-md-3">
+                                            <div class="form-check">
+                                                <input type="checkbox" name="disease_{{ $i }}" class="form-check-input update-field1" data-column-id="{{ $patients->id }}" data-column-name="disease" data-array="{{ $i }}" value="1" @if(isset($patients->disease[$i]) && $patients->disease[$i] == 1) checked @endif>
+                                                <label class="form-check-label">{{ $labels[$i % count($labels)] }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-check">
+                                                <input type="text" name="disease_rem_{{ $i }}" class="form-control form-control-sm w-100 custom-input update-field1" data-column-id="{{ $patients->id }}" data-column-name="disease_rem" data-array="{{ $i }}" placeholder="Enter remarks here">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 text-center">
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input update-field1" name="hospital_confine_{{ $i }}" id="hospital_confine_{{ $i }}" data-column-id="{{ $patients->id }}" data-column-name="hospital_confine" data-array="{{ $i }}">
+                                                <label class="form-check-label mr-3">Yes</label>&emsp;
+                                                <input type="radio" class="form-check-input update-field1" name="hospital_confine_{{ $i }}" id="hospital_confine_{{ $i }}" data-column-id="{{ $patients->id }}" data-column-name="hospital_confine" data-array="{{ $i }}">
+                                                <label class="form-check-label">No</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="date" name="date_hospitaliz_{{ $i }}" class="form-control form-control-sm w-100 custom-input update-field1" data-column-id="{{ $patients->id }}" data-column-name="date_hospitaliz" data-array="{{ $i }}">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="date" name="date_hospitaliz1_{{ $i }}" class="form-control form-control-sm w-100 custom-input update-field1" data-column-id="{{ $patients->id }}" data-column-name="date_hospitaliz1" data-array="{{ $i }}">
+                                        </div>
+                                    @endfor
+                                </div>
+
+                                <hr>
+
+                                <h5 class="fw-bold mb-0" style="color: teal"><i class="ti ti-first-aid-kit me-1"></i>IMMUNIZATIONS</h5><br>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="0" value="1">
+                                            <label class="form-check-label">Chicken Pox</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="1" value="1">
+                                            <label class="form-check-label">Hepatitis A</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="2" value="1">
+                                            <label class="form-check-label">Influenza</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="3" value="1">
+                                            <label class="form-check-label">Tetanus Toxoid</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="4" value="1">
+                                            <label class="form-check-label">HPV Vaccine</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="5" value="1">
+                                            <label class="form-check-label">Hepatitis B</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="6" value="1">
+                                            <label class="form-check-label">Pneumonia</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="7" value="1">
+                                            <label class="form-check-label">Rabies</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Covid Vaccine</label>
+                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}"  data-array="0" data-column-name="immunization2">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">1st Dose</label>
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}"  data-array="1" data-column-name="immunization2">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Covid Vaccine</label>
+                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="2" data-column-name="immunization2">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">2nd Dose</label>
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="3" data-column-name="immunization2">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Booster Dose</label>
+                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="4" data-column-name="immunization2">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">1st Dose</label>
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="5" data-column-name="immunization2">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Booster Dose</label>
+                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="6" data-column-name="immunization2">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">2nd Dose</label>
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="7" data-column-name="immunization2">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Smoking</label>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-column-name="smoking" data-array="0" placeholder="Sticks" value="{{ isset(explode(',', $patients->smoking)[0]) ? explode(',', $patients->smoking)[0] : '' }}">
+                                                </div>
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-column-name="smoking" data-array="1" placeholder="Years" value="{{ isset(explode(',', $patients->smoking)[1]) ? explode(',', $patients->smoking)[1] : '' }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Drinking</label>
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-column-name="drinking" data-array="0" value="{{ isset(explode(',', $patients->drinking)[0]) ? explode(',', $patients->drinking)[0] : '' }}">
+                                                </div>
+                                                <div class="col-2 text-center">
+                                                    Beer per
+                                                </div>
+                                                <div class="col-2">
+                                                    <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-column-name="drinking" data-array="1" value="{{ isset(explode(',', $patients->drinking)[1]) ? explode(',', $patients->drinking)[1] : '' }}">
+                                                </div>
+                                                <div class="col-2">
+                                                    <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-column-name="drinking" data-array="2" value="{{ isset(explode(',', $patients->drinking)[2]) ? explode(',', $patients->drinking)[2] : '' }}">
+                                                </div>
+                                                <div class="col-2 text-center">
+                                                    Shots per
+                                                </div>
+                                                <div class="col-2">
+                                                    <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-column-name="drinking" data-array="3" value="{{ isset(explode(',', $patients->drinking)[3]) ? explode(',', $patients->drinking)[3] : '' }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Menarche</label>
+                                            <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="Menarche" value="{{ ucfirst(strtolower($patients->Menarche)) }}" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Duration</label>
+                                            <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="Duration" value="{{ ucfirst(strtolower($patients->Duration)) }}" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Interval</label>
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input update-field" name="Interval" data-column-id="{{ $patients->id }}" data-column-name="Interval" value="1" @if(isset($patients->Interval) && $patients->Interval == 0) checked @endif>
+                                                <label class="form-check-label mr-3">Regular</label>&emsp;
+                                                <input type="radio" class="form-check-input update-field" name="Interval" data-column-id="{{ $patients->id }}" data-column-name="Interval" value="0" @if(isset($patients->Interval) && $patients->Interval == 1) checked @endif>
+                                                <label class="form-check-label">Irregular</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Pads Used per Day</label>
+                                            <input type="number" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="pads_use" value="{{ $patients->pads_use }}" placeholder="">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-9">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">Menstrual Symtoms</label>
+                                            <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="mens_symp" value="{{ ucfirst(strtolower($patients->mens_symp)) }}" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label mb-1 fw-medium">LMP</label>
+                                            <input type="date" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="lmp" value="{{ $patients->lmp }}" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
