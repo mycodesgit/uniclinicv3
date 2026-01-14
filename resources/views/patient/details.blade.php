@@ -35,12 +35,7 @@
                 </div>
                 <div class="col-xl-3 col-lg-4">
                     <div class="p-3 text-lg-end">
-                        <div class="mb-4">
-                            <a href="javascript:void(0);" class="btn btn-outline-white shadow-sm rounded-circle d-inline-flex align-items-center p-2 fs-14 me-2"><i class="ti ti-phone"></i></a>
-                            <a href="javascript:void(0);" class="btn btn-outline-white shadow-sm rounded-circle d-inline-flex align-items-center p-2 fs-14 me-2"><i class="ti ti-message-circle"></i></a>
-                            <a href="javascript:void(0);" class="btn btn-outline-white shadow-sm rounded-circle d-inline-flex align-items-center p-2 fs-14"><i class="ti ti-video"></i></a>
-                        </div>
-                        <a href="new-appointment.html" class="btn btn-primary"><i class="ti ti-calendar-event me-1"></i>Book Apppointment</a>
+                        <a href="#" class="btn btn-primary"><i class="ti ti-calendar-event me-1"></i>Pre-entrance Health Examination</a>
                     </div>
                 </div>
             </div>
