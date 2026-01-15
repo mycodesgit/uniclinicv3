@@ -445,11 +445,11 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2 text-center">
-                                            <div class="form-check">
-                                                <input type="radio" class="form-check-input update-field1" name="hospital_confine_{{ $i }}" id="hospital_confine_{{ $i }}" data-column-id="{{ $patients->id }}" data-column-name="hospital_confine" data-array="{{ $i }}">
-                                                <label class="form-check-label mr-3">Yes</label>&emsp;
-                                                <input type="radio" class="form-check-input update-field1" name="hospital_confine_{{ $i }}" id="hospital_confine_{{ $i }}" data-column-id="{{ $patients->id }}" data-column-name="hospital_confine" data-array="{{ $i }}">
-                                                <label class="form-check-label">No</label>
+                                            <div>
+                                                <input type="radio" class="form-check-input update-field1" id="hpcyes" name="hospital_confine_{{ $i }}" id="hospital_confine_{{ $i }}" data-column-id="{{ $patients->id }}" data-column-name="hospital_confine" data-array="{{ $i }}">
+                                                <label class="form-check-label mr-3" for="hpcyes">Yes</label>&emsp;
+                                                <input type="radio" class="form-check-input update-field1" id="hpcno" name="hospital_confine_{{ $i }}" id="hospital_confine_{{ $i }}" data-column-id="{{ $patients->id }}" data-column-name="hospital_confine" data-array="{{ $i }}">
+                                                <label class="form-check-label" for="hpcno">No</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -623,15 +623,14 @@
                                             <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="Duration" value="{{ ucfirst(strtolower($patients->Duration)) }}" placeholder="">
                                         </div>
                                     </div>
-                                    <div class="col-md-3 text-center">
+                                    <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Interval</label>
-                                            <div class="form-check">
-                                                <input type="radio" class="form-check-input update-field" name="Interval" data-column-id="{{ $patients->id }}" data-column-name="Interval" value="1" @if(isset($patients->Interval) && $patients->Interval == 0) checked @endif>
-                                                <label class="form-check-label mr-3">Regular</label>&emsp;
-                                                <input type="radio" class="form-check-input update-field" name="Interval" data-column-id="{{ $patients->id }}" data-column-name="Interval" value="0" @if(isset($patients->Interval) && $patients->Interval == 1) checked @endif>
-                                                <label class="form-check-label">Irregular</label>
-                                            </div>
+                                            <select name="Interval" id="Interval" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="Interval">
+                                                <option value="">--Select--</option>
+                                                <option value="0" @if(isset($patients->Interval) && $patients->Interval == 0) checked @endif>Regular</option>
+                                                <option value="1" @if(isset($patients->Interval) && $patients->Interval == 1) selected @endif>Irregular</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -690,11 +689,11 @@
                                             <label class="form-check-label"><b>SKIN</b></label>
                                     </div>
                                     <div class="col-md-2 text-center">
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input update-field1" name="en_pexam" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="0" value="1">
-                                            <label class="form-check-label mr-3">Yes</label>&emsp;
-                                            <input type="radio" class="form-check-input update-field1" name="en_pexam" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="0" value="0">
-                                            <label class="form-check-label">No</label>
+                                        <div class="">
+                                            <input type="radio" class="form-check-input update-field1" id="enskinyes" name="en_pexam" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="0" value="1">
+                                            <label class="form-check-label mr-3" for="enskinyes">Yes</label>&emsp;
+                                            <input type="radio" class="form-check-input update-field1" id="enskinno" name="en_pexam" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="0" value="0">
+                                            <label class="form-check-label" for="enskinno">No</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 text-left">
@@ -719,11 +718,11 @@
                                             <label class="form-check-label"><b>HEAD</b></label>
                                     </div>
                                     <div class="col-md-2 text-center">
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input update-field1" name="en_pexam1" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="1" value="1">
-                                            <label class="form-check-label mr-3">Yes</label>&emsp;
-                                            <input type="radio" class="form-check-input update-field1" name="en_pexam1" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="1" value="">
-                                            <label class="form-check-label">No</label>
+                                        <div class="">
+                                            <input type="radio" class="form-check-input update-field1" id="enheadyes" name="en_pexam1" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="1" value="1">
+                                            <label class="form-check-label mr-3" for="enheadyes">Yes</label>&emsp;
+                                            <input type="radio" class="form-check-input update-field1" id="enheadno" name="en_pexam1" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="1" value="">
+                                            <label class="form-check-label" for="enheadno">No</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 text-left">
