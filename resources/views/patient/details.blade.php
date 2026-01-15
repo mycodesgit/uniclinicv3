@@ -712,6 +712,7 @@
                                         <input type="text" class="form-control form-control-sm custom-input w-100 update-field1" data-column-id="{{ $patients->id }}"  data-array="0" data-column-name="other_pexam" placeholder="Enter findings here">
                                     </div>
                                 </div>
+
                                 {{-- row2 --}}
                                 <div class="row">
                                     <div class="col-md-2">
@@ -735,6 +736,36 @@
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control form-control-sm custom-input w-100 update-field1" data-column-id="{{ $patients->id }}"  data-array="1" data-column-name="other_pexam" placeholder="Enter findings here">
+                                    </div>
+                                </div>
+
+                                {{-- row3 --}}
+                                <div class="row">
+                                    <div class="col-md-2">
+                                            <label class="form-check-label"><b>EYES</b></label>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <div>
+                                            <input type="radio" class="form-check-input update-field1" id="eneyesyes" name="en_pexam2" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="2" value="1">
+                                            <label class="form-check-label mr-3" for="eneyesyes">Yes</label>&emsp;
+                                            <input type="radio" class="form-check-input update-field1" id="eneyesno" name="en_pexam2" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="2" value="">
+                                            <label class="form-check-label" for="eneyesno">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 text-left">
+                                        <div>
+                                            <input type="checkbox" class="form-check-input update-field1" name="findings_pexam2" data-column-id="{{ $patients->id }}" data-column-name="findings_pexam" data-array="6" value="1">
+                                            <label class="form-check-label mr-3">Deformity</label>&emsp;
+                                            <input type="checkbox" class="form-check-input update-field1" name="findings_pexam2" data-column-id="{{ $patients->id }}" data-column-name="findings_pexam" data-array="7" value="1">
+                                            <label class="form-check-label mr-3">Discharge</label>&emsp;
+                                            <input type="checkbox" class="form-check-input update-field1" name="findings_pexam2" data-column-id="{{ $patients->id }}" data-column-name="findings_pexam" data-array="8" value="1">
+                                            <label class="form-check-label mr-3">Swelling</label>&emsp;
+                                            <input type="checkbox" class="form-check-input update-field1" name="findings_pexam2" data-column-id="{{ $patients->id }}" data-column-name="findings_pexam" data-array="9" value="1">
+                                            <label class="form-check-label">Pale/Red Conjectiva</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="custom-input w-100 update-field1" data-column-id="{{ $patients->id }}"  data-array="2" data-column-name="other_pexam">
                                     </div>
                                 </div>
 
