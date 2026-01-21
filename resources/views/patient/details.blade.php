@@ -636,20 +636,20 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Pads Used per Day</label>
-                                            <input type="number" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="pads_use" value="{{ $patients->pads_use }}" placeholder="">
+                                            <input type="number" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="pads_use" value="{{ $patients->pads_use }}">
                                         </div>
                                     </div>
 
                                     <div class="col-md-9">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Menstrual Symtoms</label>
-                                            <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="mens_symp" value="{{ ucfirst(strtolower($patients->mens_symp)) }}" placeholder="">
+                                            <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="mens_symp" value="{{ ucfirst(strtolower($patients->mens_symp)) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">LMP</label>
-                                            <input type="date" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="lmp" value="{{ $patients->lmp }}" placeholder="">
+                                            <input type="date" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="lmp" value="{{ $patients->lmp }}">
                                         </div>
                                     </div>
                                 </div>
