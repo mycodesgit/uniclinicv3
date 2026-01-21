@@ -1003,7 +1003,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control form-control-smcustom-input w-100 update-field1" data-column-id="{{ $patients->id }}"  data-array="10" data-column-name="other_pexam" value="" placeholder="Enter findings here">
+                                        <input type="text" class="form-control form-control-sm custom-input w-100 update-field1" data-column-id="{{ $patients->id }}"  data-array="10" data-column-name="other_pexam" value="" placeholder="Enter findings here">
                                     </div>
                                 </div>
 
