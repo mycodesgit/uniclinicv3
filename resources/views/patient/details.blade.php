@@ -1126,7 +1126,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <label class="form-check-label"><b>PENDING REASONS</b></label>
-                                        <textarea type="text" class="form-control w-100 update-field" data-column-id="{{ $patients->id }}"  data-array="13" data-column-name="pend_reason">{{ $patients->pend_reason }}</textarea>
+                                        <textarea type="text" class="form-control w-100 update-field" name="pend_reason" data-column-id="{{ $patients->id }}"  data-array="13" data-column-name="pend_reason">{{ $patients->pend_reason }}</textarea>
                                     </div>
                                 </div>
 
