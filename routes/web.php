@@ -28,6 +28,7 @@ Route::get('/', function () {
         Route::get('/students/search',[PatientsController::class,'show'])->name('patients.show');
         Route::get('/students/{id}',[PatientsController::class,'showdetails'])->name('patients.details');
         Route::post('/student/show/moreinfo/update', [PatientsController::class, 'update'])->name('patients.update');
+        Route::post('/student/show/moreinfo/historyupdate', [PatientsController::class, 'studentsHistory'])->name('patients.studentsHistory');
 
         Route::get('/portal/provinces/{region_id}', [PatientsController::class, 'getPortalProvinces'])->name('getPortalProvinces');
         Route::get('/portal/cities/{province_id}', [PatientsController::class, 'getPortalCities'])->name('getPortalCities');

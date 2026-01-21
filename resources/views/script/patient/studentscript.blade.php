@@ -35,6 +35,30 @@
             });
         });
     });
+
+    $(document).ready(function() {
+        $('.update-field1').on('change', function() {
+            var columnId = $(this).data('column-id');
+            var columnName = $(this).data('column-name');
+            var value = $(this).val();
+            var dataArray = $(this).data('array'); // Add this line
+
+            $.ajax({
+                url: "{{ route('patients.studentsHistory') }}",
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: columnId,
+                    column: columnName,
+                    value: value,
+                    data_array: dataArray // Add this line
+                },
+                success: function(response) {
+                    
+                }
+            });
+        });
+    });
 </script>
 
 <script>

@@ -89,4 +89,24 @@ class PatientsController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function studentsHistory(Request $request)
+    {
+        $patient = Student::find($request->id);
+        $column = $request->column;
+        $value = $request->value;
+        $array = $request->data_array; 
+
+        $arrayVal = $patient->$column;
+        $arrayVal = explode(",", $arrayVal);
+        $currentValue = isset($arrayVal[$array]) ? $arrayVal[$array] : null;
+        $newvalue = $currentValue === $value ? '' : $value;
+        $arrayVal[$array] = $newvalue;
+        $newarrayVal = implode(",", $arrayVal);
+        $patient->$column = $newarrayVal;
+        $patient->save();
+        
+    
+        return response()->json(['success' => true]);
+    }
 }

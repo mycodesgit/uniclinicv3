@@ -441,22 +441,22 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-check">
-                                                <input type="text" name="disease_rem_{{ $i }}" class="form-control form-control-sm w-100 custom-input update-field1" data-column-id="{{ $patients->id }}" data-column-name="disease_rem" data-array="{{ $i }}" placeholder="Enter remarks here">
+                                                <input type="text" name="disease_rem_{{ $i }}" class="form-control form-control-sm w-100 custom-input update-field1" data-column-id="{{ $patients->id }}" data-column-name="disease_rem" data-array="{{ $i }}" value="{{ isset(explode(',', $patients->disease_rem)[$i]) ? explode(',', $patients->disease_rem)[$i] : '' }}" placeholder="Enter remarks here">
                                             </div>
                                         </div>
                                         <div class="col-md-2 text-center">
                                             <div>
-                                                <input type="radio" class="form-check-input update-field1" id="hpcyes" name="hospital_confine_{{ $i }}" id="hospital_confine_{{ $i }}" data-column-id="{{ $patients->id }}" data-column-name="hospital_confine" data-array="{{ $i }}">
+                                                <input type="radio" class="form-check-input update-field1" id="hpcyes" name="hospital_confine_{{ $i }}" id="hospital_confine_{{ $i }}" data-column-id="{{ $patients->id }}" data-column-name="hospital_confine" data-array="{{ $i }}" value="1" {{ explode(',', $patients->hospital_confine)[$i] == 1 ? 'checked' : '' }}>
                                                 <label class="form-check-label mr-3" for="hpcyes">Yes</label>&emsp;
-                                                <input type="radio" class="form-check-input update-field1" id="hpcno" name="hospital_confine_{{ $i }}" id="hospital_confine_{{ $i }}" data-column-id="{{ $patients->id }}" data-column-name="hospital_confine" data-array="{{ $i }}">
+                                                <input type="radio" class="form-check-input update-field1" id="hpcno" name="hospital_confine_{{ $i }}" id="hospital_confine_{{ $i }}" data-column-id="{{ $patients->id }}" data-column-name="hospital_confine" data-array="{{ $i }}" value="0" {{ explode(',', $patients->hospital_confine)[$i] == 0 ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="hpcno">No</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <input type="date" name="date_hospitaliz_{{ $i }}" class="form-control form-control-sm w-100 custom-input update-field1" data-column-id="{{ $patients->id }}" data-column-name="date_hospitaliz" data-array="{{ $i }}">
+                                            <input type="date" name="date_hospitaliz_{{ $i }}" class="form-control form-control-sm w-100 custom-input update-field1" data-column-id="{{ $patients->id }}" data-column-name="date_hospitaliz" data-array="{{ $i }}" value="{{ isset(explode(',', $patients->date_hospitaliz)[$i]) ? explode(',', $patients->date_hospitaliz)[$i] : '' }}">
                                         </div>
                                         <div class="col-md-2">
-                                            <input type="date" name="date_hospitaliz1_{{ $i }}" class="form-control form-control-sm w-100 custom-input update-field1" data-column-id="{{ $patients->id }}" data-column-name="date_hospitaliz1" data-array="{{ $i }}">
+                                            <input type="date" name="date_hospitaliz1_{{ $i }}" class="form-control form-control-sm w-100 custom-input update-field1" data-column-id="{{ $patients->id }}" data-column-name="date_hospitaliz1" data-array="{{ $i }}" value="{{ isset(explode(',', $patients->date_hospitaliz1)[$i]) ? explode(',', $patients->date_hospitaliz1)[$i] : '' }}">
                                         </div>
                                     @endfor
                                 </div>
@@ -468,25 +468,25 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="0" value="1">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="0" value="1" @if(explode(',', $patients->immunization1)[0]  == "1") checked @endif>
                                             <label class="form-check-label">Chicken Pox</label>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="1" value="1">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="1" value="1" @if(explode(',', $patients->immunization1)[1]  == "1") checked @endif>
                                             <label class="form-check-label">Hepatitis A</label>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="2" value="1">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="2" value="1" @if(explode(',', $patients->immunization1)[2]  == "1") checked @endif>
                                             <label class="form-check-label">Influenza</label>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="3" value="1">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="3" value="1" @if(explode(',', $patients->immunization1)[3]  == "1") checked @endif>
                                             <label class="form-check-label">Tetanus Toxoid</label>
                                         </div>
                                     </div>
@@ -495,25 +495,25 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="4" value="1">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="4" value="1" @if(explode(',', $patients->immunization1)[4]  == "1") checked @endif>
                                             <label class="form-check-label">HPV Vaccine</label>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="5" value="1">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="5" value="1" @if(explode(',', $patients->immunization1)[5]  == "1") checked @endif>
                                             <label class="form-check-label">Hepatitis B</label>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="6" value="1">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="6" value="1" @if(explode(',', $patients->immunization1)[6]  == "1") checked @endif>
                                             <label class="form-check-label">Pneumonia</label>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="7" value="1">
+                                            <input type="checkbox" class="form-check-input update-field1" name="immunization1" data-column-id="{{ $patients->id }}" data-column-name="immunization1" data-array="7" value="1" @if(explode(',', $patients->immunization1)[7]  == "1") checked @endif>
                                             <label class="form-check-label">Rabies</label>
                                         </div>
                                     </div>
@@ -525,49 +525,49 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Covid Vaccine</label>
-                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}"  data-array="0" data-column-name="immunization2">
+                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}"  data-array="0" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[0]) ? explode(',', $patients->immunization2)[0] : '' }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">1st Dose</label>
-                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}"  data-array="1" data-column-name="immunization2">
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}"  data-array="1" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[1]) ? explode(',', $patients->immunization2)[1] : '' }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Covid Vaccine</label>
-                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="2" data-column-name="immunization2">
+                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="2" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[2]) ? explode(',', $patients->immunization2)[2] : '' }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">2nd Dose</label>
-                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="3" data-column-name="immunization2">
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="3" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[3]) ? explode(',', $patients->immunization2)[3] : '' }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Booster Dose</label>
-                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="4" data-column-name="immunization2">
+                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="4" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[4]) ? explode(',', $patients->immunization2)[4] : '' }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">1st Dose</label>
-                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="5" data-column-name="immunization2">
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="5" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[5]) ? explode(',', $patients->immunization2)[5] : '' }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Booster Dose</label>
-                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="6" data-column-name="immunization2">
+                                            <input type="text" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="6" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[6]) ? explode(',', $patients->immunization2)[6] : '' }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">2nd Dose</label>
-                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="7" data-column-name="immunization2">
+                                            <input type="date" class="form-control form-control-sm update-field1" data-column-id="{{ $patients->id }}" data-array="7" data-column-name="immunization2" value="{{ isset(explode(',', $patients->immunization2)[7]) ? explode(',', $patients->immunization2)[7] : '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -614,23 +614,24 @@
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Menarche</label>
-                                            <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="Menarche" value="{{ ucfirst(strtolower($patients->Menarche)) }}" placeholder="">
+                                            <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="nenarche" value="{{ ucfirst(strtolower($patients->menarche)) }}" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label mb-1 fw-medium">Duration</label>
-                                            <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="Duration" value="{{ ucfirst(strtolower($patients->Duration)) }}" placeholder="">
+                                            <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="Duration" value="{{ ucfirst(strtolower($patients->studuration)) }}" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
-                                            <label class="form-label mb-1 fw-medium">Interval</label>
-                                            <select name="Interval" id="Interval" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="Interval">
-                                                <option value="">--Select--</option>
-                                                <option value="0" @if(isset($patients->Interval) && $patients->Interval == 0) checked @endif>Regular</option>
-                                                <option value="1" @if(isset($patients->Interval) && $patients->Interval == 1) selected @endif>Irregular</option>
-                                            </select>
+                                            <label class="form-label mb-1 fw-medium text-center">Interval</label>
+                                            <div>
+                                                <input type="radio" class="form-check-input update-field" name="studinterval" data-column-id="{{ $patients->id }}" data-column-name="studinterval" value="1" @if(isset($patients->studinterval) && $patients->studinterval == 1) checked @endif>
+                                                <label class="form-check-label mr-3">Regular</label>&emsp;
+                                                <input type="radio" class="form-check-input update-field" name="studinterval" data-column-id="{{ $patients->id }}" data-column-name="studinterval" value="0" @if(isset($patients->studinterval) && $patients->studinterval == 0) checked @endif>
+                                                <label class="form-check-label">Irregular</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
