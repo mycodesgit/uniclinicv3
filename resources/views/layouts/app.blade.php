@@ -652,6 +652,9 @@
         @include('script.patient.studentscript')
         @include('script.patient.patientaddressscript')
     @endif
+    @if (request()->routeIs('appointment.walkin'))
+        @include('script.walkin.consultScript')
+    @endif
 
 </body>
 

@@ -10,7 +10,7 @@
                 <h4 class="fw-bold mb-0">Walk-In Consultation</h4>
             </div>
             <div class="d-flex align-items-center flex-wrap gap-2">
-                <a href="javascript:void(0);" class="btn btn-primary d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_appointment"><i class="ti ti-plus me-1"></i>New Appointment</a>
+                <a href="javascript:void(0);" class="btn btn-outline-primary d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_consult_appointment"><i class="ti ti-plus me-1"></i>New Appointment</a>
                 <a href="javascript:void(0);" class="btn btn-outline-white bg-white d-inline-flex align-items-center"><i class="ti ti-calendar-time me-1"></i>Schedule Availability</a>
             </div>
         </div>
@@ -41,24 +41,23 @@
             <div class="tab-content">
                 <div class="tab-pane show active" id="consult">
                     <div class="table-responsive">
-                        <table class="table datatable table-nowrap">
+                        <table id="consultationTable" class="table datatable table-nowrap">
                             <thead class="">
                                 <tr>
                                     <th>Patient</th>
-                                    <th>Phone</th>
-                                    <th>Doctor</th>
-                                    <th>Address</th>
-                                    <th>Last Visit</th>
-                                    <th>Status</th>
-                                    <th></th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Chief Complaint</th>
+                                    <th>Treatment</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
+                            <tbody style="font-size: 10pt;">
+                                {{-- <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <a href="patient-details.html" class="avatar avatar-md me-2">
-                                                <img src="{{ asset('assets/img/users/user-08.jpg') }}" alt="product" class="rounded-circle">
+                                                <img src="{{ asset('assets/img/user.png') }}" alt="product" class="rounded-circle">
                                             </a>
                                             <a href="patient-details.html" class="text-dark fw-semibold">Alberto Ripley <span class="text-body fs-13 fw-normal d-block"> 26, Male </span>  </a>
                                         </div>
@@ -99,7 +98,7 @@
                                             </ul>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                     </div>
@@ -111,3 +110,209 @@
     </div>
     <!-- End Content -->
 @endsection
+
+<div class="offcanvas offcanvas-offset offcanvas-end" tabindex="-1" id="new_consult_appointment">
+    <div class="offcanvas-header d-block pb-0 px-0">
+        <div class="border-bottom d-flex align-items-center justify-content-between pb-3 px-3">
+            <h5 class="offcanvas-title fs-18 fw-bold">New Appointment</h5>
+            <button type="button" class="btn-close custom-btn-close opacity-100" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="offcanvas-body pt-3">
+        <form action="#">
+            <!-- start row-->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Appointment ID <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control rounded bg-light" value="AP234354">
+                        </div>
+                    </div>
+                </div> <!-- end col-->
+
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Search Patients<span class="text-danger">*</span></label>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle form-control rounded d-flex align-items-center justify-content-between border" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
+                                Select
+                            </a>
+                            <div class="dropdown-menu shadow-lg w-100 dropdown-info">
+                                <div class="mb-3">
+                                    <div class="input-icon-start position-relative">
+                                        <span class="input-icon-addon fs-12">
+                                            <i class="ti ti-search"></i>
+                                        </span>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Search">
+                                    </div>
+                                </div>
+                                <ul class="mb-3 list-style-none">
+                                    <li>
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox">
+                                            <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/users/user-02.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>Emily Clark
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox">
+                                            <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/profiles/avatar-01.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>John Carter
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox">
+                                            <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/profiles/avatar-16.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>Sophia White
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox">
+                                            <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/profiles/avatar-15.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>Michael Johnson
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox">
+                                            <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/profiles/avatar-14.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>Olivia Harris
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox">
+                                            <span class="avatar avatar-sm rounded-circle me-2"><img src="{{ asset('assets/img/profiles/avatar-01.jpg') }}" class="flex-shrink-0 rounded-circle" alt="img"></span>David Anderson
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end col-->
+
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Appointment Type <span class="text-danger">*</span></label>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle form-control rounded d-flex align-items-center justify-content-between border" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
+                                Select
+                            </a>
+                            <div class="dropdown-menu shadow-lg w-100 dropdown-info">
+                                <div class="mb-3">
+                                    <div class="input-icon-start position-relative">
+                                        <span class="input-icon-addon fs-12">
+                                            <i class="ti ti-search"></i>
+                                        </span>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Select">
+                                    </div>
+                                </div>
+                                <ul class="mb-3 list-style-none">
+                                    <li>
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox">
+                                            In Person
+                                        </label>
+                                    </li>
+                                    <li class="list-none">
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox">
+                                            Online
+                                        </label>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end col-->
+
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        <label class="form-label mb-1 text-dark fs-14 fw-medium"> Date of Appointment <span class="text-danger">*</span></label>
+                        <div class="input-icon-end position-relative">  
+                            <input type="text" class="form-control datetimepicker" placeholder="dd/mm/yyyy">
+                            <span class="input-icon-addon">
+                                <i class="ti ti-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div> <!-- end col-->
+
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        <label class="form-label mb-1 text-dark fs-14 fw-medium"> Time <span class="text-danger">*</span></label>
+                        <div class="input-icon-end position-relative">  
+                            <input type="text" class="form-control timepicker" placeholder="-- : --">
+                            <span class="input-icon-addon">
+                                <i class="ti ti-clock"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div> <!-- end col-->
+
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <div>
+                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Appointment Reason</label>
+                            <textarea rows="4" class="form-control rounded"> </textarea>
+                        </div>
+                    </div>
+                </div> <!-- end col-->
+
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Status<span class="text-danger">*</span></label>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle form-control rounded d-flex align-items-center justify-content-between border" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
+                                Select
+                            </a>
+                            <div class="dropdown-menu shadow-lg w-100 dropdown-info">
+                                <div class="mb-3">
+                                    <div class="input-icon-start position-relative">
+                                        <span class="input-icon-addon fs-12">
+                                            <i class="ti ti-search"></i>
+                                        </span>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Select">
+                                    </div>
+                                </div>
+                                <ul class="mb-3 list-style-none">
+                                    <li>
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox">
+                                            Checked Out
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox" checked>
+                                            Checked In
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox">
+                                            Cancelled
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
+                                            <input class="form-check-input m-0 me-2" type="checkbox">
+                                            Scheduled
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end col-->
+            </div>
+            <!-- end row-->
+        </form>
+    </div>
+    <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
+        <div class=" d-flex justify-content-end gap-2">
+            <a href="javascript:void(0);" class="btn btn-light btm-md">Cancel</a>
+            <button data-bs-dismiss="offcanvas" class="btn btn-primary btm-md" id="filter-submit">Create Create Appointment</button>
+        </div>
+    </div>
+</div>

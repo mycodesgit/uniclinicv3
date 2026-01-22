@@ -40,5 +40,6 @@ Route::get('/', function () {
 
     Route::prefix('/appointment')->group(function () {
         Route::get('/walkins',[AppointmentsController::class,'index'])->name('appointment.walkin');
+        Route::get('/walkins/fetch',[AppointmentsController::class,'getwalkinconsult'])->name('getwalkinconsult.walkin');
         Route::get('/online',[AppointmentsController::class,'onlineappoint'])->name('appointment.online');
     });
