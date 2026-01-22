@@ -23,14 +23,19 @@ class AppointmentsController extends Controller
         return view('appointment.walkin');
     }
 
-    public function onlineappoint()
+    public function walkinconsultdetails($id)
     {
-        return view('appointment.online');
+        $patients = Student::findOrFail($id);
+        $complaints =  Complaint::all();
+
+        return view('appointment.walkin-details', compact('patients', 'complaints', 'id'));
     }
 
-    public function getwalkinconsult()
+    public function getwalkinconsult($id)
     {
-        $data = Patientvisit::leftJoin('coasv2_db_enrollment.students', 'patientvisits.stid', '=', 'coasv2_db_enrollment.students.stud_id')
+        $patients = Student::findOrFail($id);
+
+        $data = Patientvisit::leftJoin('coasv2_db_enrollment.students', 'patientvisits.stid', '=', 'coasv2_db_enrollment.students.id')
             ->leftJoin('complaint', 'patientvisits.chief_complaint', '=', 'complaint.id')
             ->select(
                     'patientvisits.*', 
@@ -40,6 +45,7 @@ class AppointmentsController extends Controller
                     'coasv2_db_enrollment.students.ext', 
                     'complaint.complaint as complaintname')
             ->orderBy('patientvisits.date', 'desc')
+            ->where('patientvisits.stid', $id)
             ->get()
             ->map(function ($item) {
                 $item->complaintname = collect(explode(',', $item->chief_complaint))
@@ -50,5 +56,10 @@ class AppointmentsController extends Controller
             });
 
         return response()->json(['data' => $data]);
+    }
+
+    public function onlineappoint()
+    {
+        return view('appointment.online');
     }
 }

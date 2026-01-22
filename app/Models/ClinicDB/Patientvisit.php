@@ -13,6 +13,7 @@ class Patientvisit extends Model
 
     protected $fillable=[
         'stid',
+        'stdntID',
         'date',
         'time',
         'chief_complaint',

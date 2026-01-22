@@ -83,103 +83,103 @@
     </div>
     <!-- End Content -->
 
-<script>
-    var studentsReadRoute = "{{ route('patients.show') }}";
-</script>
+    <script>
+        var studentsReadRoute = "{{ route('patients.show') }}";
+    </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-        const patientDetailsRoute = "{{ route('patients.details', ['id' => ':id']) }}";
-        const form = document.getElementById('searchForm');
-        const input = document.getElementById('searchInput');
-        const tableBody = document.getElementById('studentsTable');
-        const pagination = document.getElementById('paginationLinks');
+            const patientDetailsRoute = "{{ route('patients.details', ['id' => ':id']) }}";
+            const form = document.getElementById('searchForm');
+            const input = document.getElementById('searchInput');
+            const tableBody = document.getElementById('studentsTable');
+            const pagination = document.getElementById('paginationLinks');
 
-        const searchRoute = "{{ route('patients.show') }}";
+            const searchRoute = "{{ route('patients.show') }}";
 
-        function loadStudents(page = 1) {
-            const search = input.value.trim();
+            function loadStudents(page = 1) {
+                const search = input.value.trim();
 
-            fetch(`${searchRoute}?search=${encodeURIComponent(search)}&page=${page}`, {
-                headers: { 'Accept': 'application/json' }
-            })
-            .then(res => res.json())
-            .then(res => {
+                fetch(`${searchRoute}?search=${encodeURIComponent(search)}&page=${page}`, {
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(res => res.json())
+                .then(res => {
 
-                tableBody.innerHTML = '';
-                pagination.innerHTML = '';
+                    tableBody.innerHTML = '';
+                    pagination.innerHTML = '';
 
-                if (res.data.length === 0) {
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="5" class="text-center">No records found</td>
-                        </tr>
-                    `;
-                    return;
-                }
+                    if (res.data.length === 0) {
+                        tableBody.innerHTML = `
+                            <tr>
+                                <td colspan="5" class="text-center">No records found</td>
+                            </tr>
+                        `;
+                        return;
+                    }
 
-                // Populate table
-                res.data.forEach(student => {
-                    const detailsUrl = patientDetailsRoute.replace(':id', student.id);
-                    tableBody.innerHTML += `
-                        <tr>
-                            <td>${student.lname}, ${student.fname}</td>
-                            <td>${student.stud_id}</td>
-                            <td>${student.gender}</td>
-                            <td>${student.civil_status}</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-1">
-                                    <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal" title="View Details">
-                                        <i class="ti ti-eye" style="color: #fff"></i>
-                                    </a>
-                                    <a href="javascript:void(0);" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1" data-bs-toggle="dropdown">
-                                        <i class="ti ti-dots-vertical"></i>
-                                    </a>
-                                    <ul class="dropdown-menu p-2">
-                                        <li>
-                                            <a href="edit-patient.html" class="dropdown-item d-flex align-items-center">Edit</a>
-                                        </li>
-                                        <li>
-                                            <a href="patient-details.html" class="dropdown-item d-flex align-items-center">View</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#delete_modal">Delete</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                });
+                    // Populate table
+                    res.data.forEach(student => {
+                        const detailsUrl = patientDetailsRoute.replace(':id', student.id);
+                        tableBody.innerHTML += `
+                            <tr>
+                                <td>${student.lname}, ${student.fname}</td>
+                                <td>${student.stud_id}</td>
+                                <td>${student.gender}</td>
+                                <td>${student.civil_status}</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal" title="View Details">
+                                            <i class="ti ti-eye" style="color: #fff"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1" data-bs-toggle="dropdown">
+                                            <i class="ti ti-dots-vertical"></i>
+                                        </a>
+                                        <ul class="dropdown-menu p-2">
+                                            <li>
+                                                <a href="edit-patient.html" class="dropdown-item d-flex align-items-center">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a href="patient-details.html" class="dropdown-item d-flex align-items-center">View</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#delete_modal">Delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    });
 
-                // Pagination links
-                for (let i = 1; i <= res.last_page; i++) {
-                    pagination.innerHTML += `
-                        <li class="page-item ${i === res.current_page ? 'active' : ''}">
-                            <a class="page-link" href="#" data-page="${i}">${i}</a>
-                        </li>
-                    `;
-                }
+                    // Pagination links
+                    for (let i = 1; i <= res.last_page; i++) {
+                        pagination.innerHTML += `
+                            <li class="page-item ${i === res.current_page ? 'active' : ''}">
+                                <a class="page-link" href="#" data-page="${i}">${i}</a>
+                            </li>
+                        `;
+                    }
 
-                // Pagination click events
-                document.querySelectorAll('.page-link').forEach(link => {
-                    link.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        loadStudents(this.dataset.page);
+                    // Pagination click events
+                    document.querySelectorAll('.page-link').forEach(link => {
+                        link.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            loadStudents(this.dataset.page);
+                        });
                     });
                 });
+            }
+
+            // Button search
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                loadStudents(1);
             });
-        }
 
-        // Button search
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            loadStudents(1);
         });
-
-    });
-</script>
+    </script>
 
 
 @endsection

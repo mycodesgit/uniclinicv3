@@ -977,6 +977,7 @@ Author URL: https://themeforest.net/user/dreamstechnologies
     color: var(--menu-item-hover-color);
     border-color: var(--menu-item-border);
     box-shadow: var(--box-shadow-sm);
+    background-color: var(--menu-item-border);
 }
 .sidebar .sidebar-menu > ul > li ul > li.active a span {
     color: var(--teal);
@@ -1057,13 +1058,14 @@ Author URL: https://themeforest.net/user/dreamstechnologies
     height: 100%;
     left: 20px;
     top: 0;
+    color: var(--teal) !important;
 }
 .sidebar .sidebar-menu > ul li .submenu > ul li a::after {
     position: absolute;
     content: "\f671";
     font-family: "tabler-icons";
     font-size: 8px;
-    color: var(--menu-item-border);
+    color: var(--teal);
     left: 16px;
     background-color: var(--menu-item-border);
     border-radius: 50rem;

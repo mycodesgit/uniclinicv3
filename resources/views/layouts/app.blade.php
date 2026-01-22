@@ -33,6 +33,12 @@
     <!-- Tabler Icon CSS -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/tabler-icons/tabler-icons.min.css') }}">
 
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+
+    <!-- Choices CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/choices.js/public/assets/styles/choices.min.css') }}">
+
     <!-- Daterangepikcer CSS -->
 	<link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
 
@@ -630,14 +636,18 @@
     <!-- Chart JS -->
     <script src="{{ asset('assets/plugins/apexchart/apexcharts.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/apexchart/chart-data.js') }}" type="text/javascript"></script>
-
+    
     <!-- Daterangepikcer JS -->
 	<script src="{{ asset('assets/js/moment.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
+    
+    <!-- Select2 JS -->
+    <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
 
     <!-- Datetimepicker JS -->
     <script src="{{ asset('assets/js/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script> 
+    <script src="{{ asset('assets/plugins/choices.js/public/assets/scripts/choices.min.js') }}" type="text/javascript"></script>
 
     <!-- Datatable JS -->
     <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
@@ -652,10 +662,12 @@
         @include('script.patient.studentscript')
         @include('script.patient.patientaddressscript')
     @endif
-    @if (request()->routeIs('appointment.walkin'))
+    @if (request()->routeIs('appointment.walkin.details'))
         @include('script.walkin.consultScript')
     @endif
-
+    <script>
+        
+    </script>
 </body>
 
 

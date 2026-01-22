@@ -5,9 +5,10 @@
     //     "positionClass": "toast-top-right"
     // };
     $(document).ready(function() {
+        const walkinId = {{ $id }};
         var dataTable = $('#consultationTable').DataTable({
             "ajax": {
-                "url": "{{ route('getwalkinconsult.walkin') }}",
+                "url": "{{ route('getwalkinconsult.walkin', ['id' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
             "bFilter": true,
