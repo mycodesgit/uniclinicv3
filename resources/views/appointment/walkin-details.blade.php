@@ -114,19 +114,24 @@
 <div class="offcanvas offcanvas-offset offcanvas-end" tabindex="-1" id="new_consult_appointment">
     <div class="offcanvas-header d-block pb-0 px-0">
         <div class="border-bottom d-flex align-items-center justify-content-between pb-3 px-3">
-            <h5 class="offcanvas-title fs-18 fw-bold">New Appointment</h5>
+            <h5 class="offcanvas-title fs-18 fw-bold">New Consultation</h5>
             <button type="button" class="btn-close custom-btn-close opacity-100" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
     </div>
     <div class="offcanvas-body pt-3">
-        <form action="#">
-            <input type="hidden" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
-            <input type="hidden" class="form-control rounded bg-light" value="{{ $patients->stud_id }}" readonly>
+        <form id="adPVisit" method="POST">
+            @csrf
+
+            <input type="hidden" name="stid" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
+            <input type="hidden" name="stdntID" class="form-control rounded bg-light" value="{{ $patients->stud_id }}" readonly>
+            <input type="hidden" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly>
+            <input type="hidden" name="time" class="form-control form-control-sm" value="{{ date('h:i A') }}"  readonly>
+
             <!-- start row-->
             <div class="row">
                 <div class="col-lg-12">
                     <div class="mb-3">
-                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Appointment ID <span class="text-danger">*</span></label>
+                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation ID <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <input type="text" class="form-control rounded bg-light" value="AP234354">
                         </div>
@@ -155,35 +160,11 @@
                     </div>
                 </div> <!-- end col-->
 
-                <div class="col-lg-6">
-                    <div class="mb-3">
-                        <label class="form-label mb-1 text-dark fs-14 fw-medium"> Date of Appointment <span class="text-danger">*</span></label>
-                        <div class="input-icon-end position-relative">  
-                            <input type="text" class="form-control datetimepicker" placeholder="dd/mm/yyyy">
-                            <span class="input-icon-addon">
-                                <i class="ti ti-calendar"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div> <!-- end col-->
-
-                <div class="col-lg-6">
-                    <div class="mb-3">
-                        <label class="form-label mb-1 text-dark fs-14 fw-medium"> Time <span class="text-danger">*</span></label>
-                        <div class="input-icon-end position-relative">  
-                            <input type="text" class="form-control timepicker" placeholder="-- : --">
-                            <span class="input-icon-addon">
-                                <i class="ti ti-clock"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div> <!-- end col-->
-
                 <div class="col-lg-12">
                     <div class="mb-3">
                         <div>
-                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Appointment Reason</label>
-                            <textarea rows="4" class="form-control rounded"> </textarea>
+                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation Treatment</label>
+                            <textarea rows="4" name="treatment" class="form-control rounded"> </textarea>
                         </div>
                     </div>
                 </div> <!-- end col-->
@@ -236,12 +217,12 @@
                 </div> <!-- end col-->
             </div>
             <!-- end row-->
+            <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
+                <div class=" d-flex justify-content-end gap-2">
+                    <a href="javascript:void(0);" class="btn btn-light btm-md">Cancel</a>
+                    <button data-bs-dismiss="offcanvas" type="submit" class="btn btn-primary btm-md">Create Create Appointment</button>
+                </div>
+            </div>
         </form>
-    </div>
-    <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
-        <div class=" d-flex justify-content-end gap-2">
-            <a href="javascript:void(0);" class="btn btn-light btm-md">Cancel</a>
-            <button data-bs-dismiss="offcanvas" class="btn btn-primary btm-md" id="filter-submit">Create Create Appointment</button>
-        </div>
     </div>
 </div>

@@ -58,6 +58,84 @@ class AppointmentsController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    public function createWalkinConsultation(Request $request)
+    {
+        $patient = new Patientvisit();
+        $patient->stid = $request->input('stid');
+        $patient->stdntID = $request->input('stdntID');
+        $patient->date = $request->input('date');
+        $patient->time = $request->input('time');
+
+        $patient->chief_complaint = $request->input('chief_complaint');
+        $patient->treatment = $request->input('treatment');
+        $patient->certificate = $request->input('certificate');
+
+        $input1 = $request->input('qty', []);  
+        $input2 = $request->input('medicine', []);
+        $input3 = $request->input('chief_complaint', []);
+
+        $maxCount = max(count($input1), count($input2), count($input3));
+        
+        $input1 = array_pad($input1, $maxCount, '');  
+        $input2 = array_pad($input2, $maxCount, '');
+        $input3 = array_pad($input3, $maxCount, '');
+        
+        $input1 = array_map(function($value) {
+            return $value === null ? '' : $value;
+        }, $input1);
+        
+        $input2 = array_map(function($value) {
+            return $value === null ? '' : $value;
+        }, $input2);
+        
+        $input3 = array_map(function($value) {
+            return $value === null ? '' : $value;
+        }, $input3);
+        
+        $complaint = implode(',', $input3);
+        
+        if (substr($complaint, -1) === ',') {
+            $complaint = rtrim($complaint, ',');
+        }
+        $quantity = implode(',', $input1);
+        $medicine = implode(',', $input2);
+        
+        $patient->medicine = $medicine;
+        
+        $medicinesDetails = [];
+        $medicines = explode(',', $medicine);
+        $quantities = explode(',', $quantity);
+        
+        $quantityvisit = explode(',', $patient->qty);
+        
+        foreach ($medicines as $index => $med) {
+            $medicine2 = Medicine::select('qty', 'id', 'medicine')->where('id', $med)->first();
+            
+            if ($medicine2) {
+                $visitQuantity = isset($quantityvisit[$index]) ? $quantityvisit[$index] : 0;
+                $newQuantity = ((int)$medicine2->qty + (int)$visitQuantity) - (int)$quantities[$index];
+        
+                if ($newQuantity >= 0) {
+                    $medicine2->update(['qty' => $newQuantity]);
+        
+                    $medicinesDetails[] = [
+                        'id' => $medicine2->id,
+                        'medicine' => $medicine2->medicine,
+                        'quantity' => $newQuantity
+                    ];
+                }
+            }
+        }
+        
+        $patient->chief_complaint = $complaint;
+        
+        $patient->qty = $quantity;
+        
+        $patient->save();
+
+        return response()->json(['success' => true, 'message' => 'Added Successfully']);
+    }
+
     public function onlineappoint()
     {
         return view('appointment.online');

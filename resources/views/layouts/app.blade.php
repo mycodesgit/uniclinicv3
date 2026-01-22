@@ -48,12 +48,18 @@
     <!-- Simplebar CSS -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/simplebar/simplebar.min.css') }}">
 
+    <!-- Toatr CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
+
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" id="app-style">
 
     <style>
         .readonlytext {
             background-color: #e9e9e9 !important; border: 1px solid #aaa;"
+        }
+        .toast-top-right {
+            margin-top: 45px;
         }
     </style>
 
@@ -652,6 +658,9 @@
     <!-- Datatable JS -->
     <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/dataTables.bootstrap5.min.js') }}" type="text/javascript"></script>
+
+    <!-- Toastr JS -->
+    <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}" type="text/javascript"></script>
 
     <!-- Main JS -->
     <script src="{{ asset('assets/js/script.js') }}" type="text/javascript"></script>

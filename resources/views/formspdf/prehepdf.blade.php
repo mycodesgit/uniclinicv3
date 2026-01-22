@@ -121,7 +121,7 @@
         <table class="table">
             <tr>
                 <td width="53">Date of Birth:</td>
-                <td><div class="tr-b w-100 text-center"><b>{{ \Carbon\Carbon::parse($patients->birthdate)->format('F d, Y') }}</b><span class="period">.</span></div></td>
+                <td><div class="tr-b w-100 text-center"><b>{{ \Carbon\Carbon::parse($patients->bday)->format('F d, Y') }}</b><span class="period">.</span></div></td>
                 <td width="18">Age:</td>
                 <td><div class="tr-b w-100 text-center"><b>{{ $patients->age }}</b> <span class="period">.</span></div></td>
                 <td width="18">Sex:</td>
