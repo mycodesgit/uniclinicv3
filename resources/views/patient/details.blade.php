@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-xl-3 col-lg-4">
                     <div class="p-3 text-lg-end">
-                        <a href="#" class="btn btn-primary"><i class="ti ti-calendar-event me-1"></i>Pre-entrance Health Examination</a>
+                        <a href="{{ route('showprehepdf', $patients->id) }}" target="_blank" class="btn btn-outline-primary"><i class="ti ti-calendar-event me-1"></i>Pre-entrance Health Examination</a>
                     </div>
                 </div>
             </div>
