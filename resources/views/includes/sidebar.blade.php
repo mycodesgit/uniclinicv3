@@ -26,8 +26,8 @@
                     <li class="{{ request()->is('appointment/online/*') ? 'active' : '' }}"><a href="{{ route('appointment.online') }}">Online Consultations</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="doctors-prescriptions.html">
+            <li class="{{ request()->is('all/*') ? 'active' : '' }}">
+                <a href="{{ route('medicine.list') }}">
                     <i class="ti ti-prescription"></i><span>Medicines</span>
                 </a>
             </li>

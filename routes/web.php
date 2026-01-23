@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\PDFreportController;
+use App\Http\Controllers\MedicineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,4 +49,12 @@ Route::get('/', function () {
         Route::post('/walkins/referral/add',[AppointmentsController::class,'createWalkinReferral'])->name('appointment.walkinreferral.store');
 
         Route::get('/online',[AppointmentsController::class,'onlineappoint'])->name('appointment.online');
+    });
+
+    Route::prefix('/all')->group(function () {
+        Route::get('/medicine',[MedicineController::class,'index'])->name('medicine.list');
+        Route::get('/medicine/list/ajax', [MedicineController::class, 'getmedicineRead'])->name('getmedicineRead');
+        Route::post('/medicine/add', [MedicineController::class, 'medicineCreate'])->name('medicineCreate');
+        Route::post('/medicineUpdate', [MedicineController::class, 'medicineUpdate'])->name('medicineUpdate');
+        Route::post('/medicineDelete/{id}', [MedicineController::class, 'medicineDelete'])->name('medicineDelete');
     });

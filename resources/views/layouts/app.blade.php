@@ -674,9 +674,10 @@
     @if (request()->routeIs('appointment.walkin.details'))
         @include('script.walkin.consultScript')
     @endif
-    <script>
-        
-    </script>
+    @if (request()->routeIs('medicine.list'))
+        @include('script.med.medScript')
+    @endif
+
 </body>
 
 

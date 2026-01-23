@@ -307,7 +307,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="adPVisit" method="POST">
+                    <form id="adPReferral" method="POST">
                         @csrf
 
                         <input type="hidden" name="stid" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
@@ -405,7 +405,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="adPVisit" method="POST">
+                    <form id="adPToothextract" method="POST">
                         @csrf
 
                         <input type="hidden" name="stid" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
