@@ -10,8 +10,11 @@
                 <h4 class="fw-bold mb-0">Walk-In Consultation</h4>
             </div>
             <div class="d-flex align-items-center flex-wrap gap-2">
-                <a href="javascript:void(0);" class="btn btn-outline-primary d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_consult_appointment"><i class="ti ti-plus me-1"></i>New Appointment</a>
-                <a href="javascript:void(0);" class="btn btn-outline-white bg-white d-inline-flex align-items-center"><i class="ti ti-calendar-time me-1"></i>Schedule Availability</a>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodalwalkinconsult">
+                    <i class="ti ti-plus me-1"></i> Add New Consultation
+                </button>
+                {{-- <a href="javascript:void(0);" class="btn btn-outline-primary d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_consult_appointment"><i class="ti ti-plus me-1"></i>New Appointment</a> --}}
+                {{-- <a href="javascript:void(0);" class="btn btn-outline-white bg-white d-inline-flex align-items-center"><i class="ti ti-calendar-time me-1"></i>Schedule Availability</a> --}}
             </div>
         </div>
         <!-- End Page Header -->
@@ -49,7 +52,8 @@
                                     <th>Time</th>
                                     <th>Chief Complaint</th>
                                     <th>Treatment</th>
-                                    <th>Actions</th>
+                                    <th>Medicine</th>
+                                    <th>Quantity</th>
                                 </tr>
                             </thead>
                             <tbody style="font-size: 10pt;">
@@ -109,120 +113,151 @@
                         
     </div>
     <!-- End Content -->
-@endsection
 
-<div class="offcanvas offcanvas-offset offcanvas-end" tabindex="-1" id="new_consult_appointment">
-    <div class="offcanvas-header d-block pb-0 px-0">
-        <div class="border-bottom d-flex align-items-center justify-content-between pb-3 px-3">
-            <h5 class="offcanvas-title fs-18 fw-bold">New Consultation</h5>
-            <button type="button" class="btn-close custom-btn-close opacity-100" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-    </div>
-    <div class="offcanvas-body pt-3">
-        <form id="adPVisit" method="POST">
-            @csrf
+    <!-- Center modal content -->
+    <div class="modal fade" id="centermodalwalkinconsult" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myCenterModalLabel">Add New Consultation</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="adPVisit" method="POST">
+                        @csrf
 
-            <input type="hidden" name="stid" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
-            <input type="hidden" name="stdntID" class="form-control rounded bg-light" value="{{ $patients->stud_id }}" readonly>
-            <input type="hidden" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly>
-            <input type="hidden" name="time" class="form-control form-control-sm" value="{{ date('h:i A') }}"  readonly>
+                        <input type="hidden" name="stid" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
+                        <input type="hidden" name="stdntID" class="form-control rounded bg-light" value="{{ $patients->stud_id }}" readonly>
+                        <input type="hidden" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly>
+                        <input type="hidden" name="time" class="form-control form-control-sm" value="{{ date('h:i A') }}"  readonly>
 
-            <!-- start row-->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="mb-3">
-                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation ID <span class="text-danger">*</span></label>
-                        <div class="input-group">
-                            <input type="text" class="form-control rounded bg-light" value="AP234354">
-                        </div>
-                    </div>
-                </div> <!-- end col-->
-
-                <div class="col-lg-12">
-                    <div class="mb-3">
-                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient<span class="text-danger">*</span></label>
-                        <div class="input-group">
-                            <input type="text" class="form-control rounded bg-light" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}">
-                        </div>
-                    </div>
-                </div> <!-- end col-->
-
-                <div class="col-lg-12">
-                    <div class="mb-3">
-                        <label for="choices-multiple-remove-button" class="form-label mb-1 text-dark fs-14 fw-medium">Chief Complaint <span class="text-danger">*</span></label>
-                        <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="chief_complaint[]" multiple>
-                            @foreach ($complaints as $complaint)
-                                <option style="color:black" value="{{ $complaint->id }}">
-                                    {{ $complaint->complaint }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div> <!-- end col-->
-
-                <div class="col-lg-12">
-                    <div class="mb-3">
-                        <div>
-                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation Treatment</label>
-                            <textarea rows="4" name="treatment" class="form-control rounded"> </textarea>
-                        </div>
-                    </div>
-                </div> <!-- end col-->
-
-                <div class="col-lg-12">
-                    <div class="mb-3">
-                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Status<span class="text-danger">*</span></label>
-                        <div class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle form-control rounded d-flex align-items-center justify-content-between border" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
-                                Select
-                            </a>
-                            <div class="dropdown-menu shadow-lg w-100 dropdown-info">
+                        <!-- start row-->
+                        <div class="row">
+                            <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <div class="input-icon-start position-relative">
-                                        <span class="input-icon-addon fs-12">
-                                            <i class="ti ti-search"></i>
-                                        </span>
-                                        <input type="text" class="form-control form-control-sm" placeholder="Select">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation ID <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded bg-light" value="AP234354">
                                     </div>
                                 </div>
-                                <ul class="mb-3 list-style-none">
-                                    <li>
-                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
-                                            <input class="form-check-input m-0 me-2" type="checkbox">
-                                            Checked Out
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
-                                            <input class="form-check-input m-0 me-2" type="checkbox" checked>
-                                            Checked In
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
-                                            <input class="form-check-input m-0 me-2" type="checkbox">
-                                            Cancelled
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="dropdown-item px-2 d-flex align-items-center text-dark">
-                                            <input class="form-check-input m-0 me-2" type="checkbox">
-                                            Scheduled
-                                        </label>
-                                    </li>
-                                </ul>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded bg-light" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label for="choices-multiple-remove-button" class="form-label mb-1 text-dark fs-14 fw-medium">Chief Complaint <span class="text-danger">*</span></label>
+                                    <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="chief_complaint[]" multiple>
+                                        @foreach ($complaints as $complaint)
+                                            <option style="color:black" value="{{ $complaint->id }}">
+                                                {{ $complaint->complaint }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <div>
+                                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation Treatment</label>
+                                        <textarea rows="4" name="treatment" class="form-control rounded"> </textarea>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 fw-medium text-center">Certificate</label>
+                                    <div>
+                                        <input type="radio" class="form-check-input" name="certificate" id="certificate" value="1">
+                                        <label class="form-check-label mr-3" for="certificate">Yes</label>&emsp;
+                                        <input type="radio" class="form-check-input" name="certificate" id="noCertificate" value="0">
+                                        <label class="form-check-label" for="noCertificate">No</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity</label>
+                                        </div>
+                                    </div>
+
+                                    <div id="dynamic-fields" class="mb-3">
+                                        <div class="row mb-3 align-items-end">
+                                            <div class="col-md-7">
+                                                <select name="medicine[]" class="form-select form-control-sm">
+                                                    <option value="">Select Medicine</option>
+                                                    @foreach ($medicines as $medicine)
+                                                        <option value="{{ $medicine->id }}" >
+                                                            {{ $medicine->medicine }} - ({{ $medicine->qty }} left )
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="number" placeholder="Quantity" name="qty[]" class="form-control form-control-sm" min="1">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <button type="button" class="btn btn-outline-success btn-sm add-button">
+                                            <i class="fas fa-plus"></i> Add
+                                        </button>
+                                        <button type="button" id="myremove" class="btn btn-danger btn-sm remove-button">
+                                            <i class="fas fa-minus"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div> <!-- end col-->
-            </div>
-            <!-- end row-->
-            <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
-                <div class=" d-flex justify-content-end gap-2">
-                    <a href="javascript:void(0);" class="btn btn-light btm-md">Cancel</a>
-                    <button data-bs-dismiss="offcanvas" type="submit" class="btn btn-primary btm-md">Create Create Appointment</button>
+                        <!-- end row-->
+                        <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
+                            <div class=" d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-outline-danger btn-md" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-outline-primary btn-md">
+                                    <i class="fas fa-save"></i> Save Data
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <template id="medicine-row-template">
+                        <div class="row mb-3 align-items-end">
+                            <div class="col-md-7">
+                                <select name="medicine[]" class="form-select form-control form-control-sm">
+                                    <option value="">Select Medicine</option>
+                                    @foreach ($medicines as $medicine)
+                                        <option value="{{ $medicine->id }}">
+                                            {{ $medicine->medicine }} - ({{ $medicine->qty }} left )
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" placeholder="Quantity" name="qty[]" class="form-control form-control-sm" min="1">
+                            </div>
+                        </div>
+                    </template>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
+@endsection
+
+
+

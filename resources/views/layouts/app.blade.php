@@ -58,7 +58,7 @@
         .readonlytext {
             background-color: #e9e9e9 !important; border: 1px solid #aaa;"
         }
-        .toast-top-right {
+        .toast-top-center {
             margin-top: 45px;
         }
     </style>
@@ -633,11 +633,11 @@
     <!-- jQuery -->
     <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}" type="text/javascript"></script>
 
-    <!-- Bootstrap Core JS -->
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>    
-
 	<!-- Simplebar JS -->
 	<script src="{{ asset('assets/plugins/simplebar/simplebar.min.js') }}" type="text/javascript"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>    
 
     <!-- Chart JS -->
     <script src="{{ asset('assets/plugins/apexchart/apexcharts.min.js') }}" type="text/javascript"></script>

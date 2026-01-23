@@ -27,8 +27,10 @@ class AppointmentsController extends Controller
     {
         $patients = Student::findOrFail($id);
         $complaints =  Complaint::all();
+        $medicines = Medicine::all();
+        $patientVisit = Patientvisit::where('stid', $id)->get();
 
-        return view('appointment.walkin-details', compact('patients', 'complaints', 'id'));
+        return view('appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'patientVisit', 'id'));
     }
 
     public function getwalkinconsult($id)
@@ -37,13 +39,15 @@ class AppointmentsController extends Controller
 
         $data = Patientvisit::leftJoin('coasv2_db_enrollment.students', 'patientvisits.stid', '=', 'coasv2_db_enrollment.students.id')
             ->leftJoin('complaint', 'patientvisits.chief_complaint', '=', 'complaint.id')
+            ->leftJoin('medicines', 'patientvisits.medicine', '=', 'medicines.id')
             ->select(
                     'patientvisits.*', 
                     'coasv2_db_enrollment.students.lname', 
                     'coasv2_db_enrollment.students.fname', 
                     'coasv2_db_enrollment.students.mname', 
                     'coasv2_db_enrollment.students.ext', 
-                    'complaint.complaint as complaintname')
+                    'complaint.complaint as complaintname',
+                    'medicines.medicine as medicinename')
             ->orderBy('patientvisits.date', 'desc')
             ->where('patientvisits.stid', $id)
             ->get()
@@ -52,6 +56,12 @@ class AppointmentsController extends Controller
                     ->map(fn($id) => Complaint::find($id)?->complaint)
                     ->filter()
                     ->values();
+                
+                $item->medicinename = collect(explode(',', $item->medicine))
+                    ->map(fn($id) => Medicine::find($id)?->medicine)
+                    ->filter()
+                    ->values();
+                
                 return $item;
             });
 

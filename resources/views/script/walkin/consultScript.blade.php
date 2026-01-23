@@ -2,7 +2,7 @@
     toastr.options = {
         "closeButton": true,
         "progressBar": true,
-        "positionClass": "toast-top-right"
+        "positionClass": "toast-top-center"
     };
     $(document).ready(function() {
         $('#adPVisit').submit(function(event) {
@@ -18,6 +18,8 @@
                         toastr.success(response.message);
                         //console.log(response);
                         $(document).trigger('pvisitAdded');
+                        $('#centermodalwalkinconsult').modal('hide');
+                        $('#adPVisit')[0].reset();
                     } else {
                         toastr.error(response.message);
                         console.log(response);
@@ -80,19 +82,21 @@
                 { data: 'time' },
                 { data: 'complaintname' },
                 { data: 'treatment' },
-                { 
-                    data: 'id',
-                    render: function(data, type, row) {
-                        if (type === 'display') {
-                            var editLink = '<a href="#" class="btn btn-outline-primary btn-sm btn-studdataview"  data-id="' + row.id + '" data-studid="' + row.stud_id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-gender="' + row.gender + '" data-bday="' + row.bday + '" data-pbirth="' + row.pbirth + '" data-contact="' + row.contact + '" data-email="' + row.email + '" data-religion="' + row.religion + '" data-address="' + row.address + '" data-civil="' + row.civil_status + '" data-hnum="' + row.hnum + '" data-brgy="' + row.brgy + '" data-city="' + row.city + '" data-province="' + row.province + '" data-region="' + row.region + '" data-zcode="' + row.zcode + '" data-father="' + row.stud_father + '" data-mother="' + row.stud_mother + '" data-guardian="' + row.stud_guardian + '" data-income="' + row.monthly_income + '" data-pcontact="' + row.guardian_contact + '" data-lstschattended="' + row.lstsch_attended + '" data-lstschattendedyear="' + row.lst_sch_attended_year + '" data-suclstattended="' + row.suc_lst_attended + '" data-dateadmission="' + row.date_admission + '">' +
-                                '<i class="ti ti-eye"></i>' +
-                                '</a>';
-                            return editLink;
-                        } else {
-                            return data;
-                        }
-                    },
-                 },
+                { data: 'medicinename' },
+                { data: 'qty' },
+                // { 
+                //     data: 'id',
+                //     render: function(data, type, row) {
+                //         if (type === 'display') {
+                //             var editLink = '<a href="#" class="btn btn-outline-primary btn-sm btn-studdataview"  data-id="' + row.id + '" data-studid="' + row.stud_id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-gender="' + row.gender + '" data-bday="' + row.bday + '" data-pbirth="' + row.pbirth + '" data-contact="' + row.contact + '" data-email="' + row.email + '" data-religion="' + row.religion + '" data-address="' + row.address + '" data-civil="' + row.civil_status + '" data-hnum="' + row.hnum + '" data-brgy="' + row.brgy + '" data-city="' + row.city + '" data-province="' + row.province + '" data-region="' + row.region + '" data-zcode="' + row.zcode + '" data-father="' + row.stud_father + '" data-mother="' + row.stud_mother + '" data-guardian="' + row.stud_guardian + '" data-income="' + row.monthly_income + '" data-pcontact="' + row.guardian_contact + '" data-lstschattended="' + row.lstsch_attended + '" data-lstschattendedyear="' + row.lst_sch_attended_year + '" data-suclstattended="' + row.suc_lst_attended + '" data-dateadmission="' + row.date_admission + '">' +
+                //                 '<i class="ti ti-eye"></i>' +
+                //                 '</a>';
+                //             return editLink;
+                //         } else {
+                //             return data;
+                //         }
+                //     },
+                // },
             ],
             "createdRow": function (row, data, index) {
                 $(row).attr('id', 'tr-' + data.id); 
@@ -101,5 +105,40 @@
         $(document).on('pvisitAdded', function() {
             dataTable.ajax.reload();
         });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const dynamicFieldsContainer = document.getElementById('dynamic-fields');
+        const template = document.getElementById('medicine-row-template');
+        const removeBtn = document.getElementById('myremove');
+
+        function toggleRemoveButton() {
+            const rows = dynamicFieldsContainer.querySelectorAll('.row');
+            removeBtn.style.display = rows.length > 1 ? 'inline-block' : 'none';
+        }
+
+        // ADD button
+        document.querySelector('.add-button').addEventListener('click', () => {
+            const fragment = template.content.cloneNode(true);
+            dynamicFieldsContainer.appendChild(fragment);
+
+            // Initialize select2 ONLY for the newly added select
+            const selects = dynamicFieldsContainer.querySelectorAll('select.select2');
+            $(selects[selects.length - 1]).select2({ width: '100%' });
+
+            toggleRemoveButton();
+        });
+
+        // REMOVE button
+        removeBtn.addEventListener('click', () => {
+            const rows = dynamicFieldsContainer.querySelectorAll('.row');
+            if (rows.length > 1) {
+                rows[rows.length - 1].remove();
+            }
+            toggleRemoveButton();
+        });
+
+        // Hide remove button initially
+        toggleRemoveButton();
     });
 </script>
