@@ -181,7 +181,7 @@
             var formData = $(this).serialize();
 
             $.ajax({
-                //
+                url: "{{route('appointment.walkinreferral.store') }}",
                 type: "POST",
                 data: formData,
                 success: function(response) {

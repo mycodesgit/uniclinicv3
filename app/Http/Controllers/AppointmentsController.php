@@ -164,6 +164,37 @@ class AppointmentsController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    public function createWalkinReferral(Request $request) 
+    {
+        if ($request->isMethod('post')) {
+            $request->validate([
+                'preferfrom' => 'required',
+                'preferto' => 'required',
+                'reasonrefer' => 'required',
+                'tentdiagnose' => 'required',
+                'treatmentmedgiven' => 'required',
+            ]);
+
+            try {
+                PatientReferral::create([
+                    'stid' => $request->input('stid'),
+                    'stdntID' => $request->input('stdntID'),
+                    'date' => $request->input('date'),
+                    'time' => $request->input('time'),
+                    'preferfrom' => $request->input('preferfrom'),
+                    'preferto' => $request->input('preferto'),
+                    'reasonrefer' => $request->input('reasonrefer'),
+                    'tentdiagnose' => $request->input('tentdiagnose'),
+                    'treatmentmedgiven' => $request->input('treatmentmedgiven'),
+                ]);
+
+                return response()->json(['success' => true, 'message' => 'Referral stored successfully'], 200);
+            } catch (\Exception $e) {
+                return response()->json(['error' => true, 'message' => 'Failed to store Referral'], 404);
+            }
+        }
+    }
+
     public function onlineappoint()
     {
         return view('appointment.online');
