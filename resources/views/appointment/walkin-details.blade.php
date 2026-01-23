@@ -10,8 +10,14 @@
                 <h4 class="fw-bold mb-0">Walk-In Consultation</h4>
             </div>
             <div class="d-flex align-items-center flex-wrap gap-2">
-                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodalwalkinconsult">
+                <button id="btn-consult" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodalwalkinconsult">
                     <i class="ti ti-plus me-1"></i> Add New Consultation
+                </button>
+                <button id="btn-referral" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodalwalkinreferral">
+                    <i class="ti ti-plus me-1"></i> Add New Referral
+                </button>
+                <button id="btn-extraction" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodalwalkintoothextraction">
+                    <i class="ti ti-plus me-1"></i> Add New Tooth Extraction
                 </button>
                 {{-- <a href="javascript:void(0);" class="btn btn-outline-primary d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_consult_appointment"><i class="ti ti-plus me-1"></i>New Appointment</a> --}}
                 {{-- <a href="javascript:void(0);" class="btn btn-outline-white bg-white d-inline-flex align-items-center"><i class="ti ti-calendar-time me-1"></i>Schedule Availability</a> --}}
@@ -44,7 +50,7 @@
             <div class="tab-content">
                 <div class="tab-pane show active" id="consult">
                     <div class="table-responsive">
-                        <table id="consultationTable" class="table datatable table-nowrap">
+                        <table id="consultationTable" class="table table-hover" style="width: 100%">
                             <thead class="">
                                 <tr>
                                     <th>Patient</th>
@@ -106,6 +112,26 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="tab-pane" id="referral">
+                    <div class="table-responsive">
+                        <table id="referlisttab" class="table table-striped" style="width: 100%">
+                            <thead class="">
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Referred from</th>
+                                    <th>Referred to</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 10pt;">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane" id="toothextraction">
                 </div>
             </div> 
         </div>

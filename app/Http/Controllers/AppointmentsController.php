@@ -13,6 +13,7 @@ use App\Models\EnrollmentDB\StudEnrolmentHistory;
 use App\Models\EnrollmentDB\Student;
 
 use App\Models\ClinicDB\Patientvisit;
+use App\Models\ClinicDB\PatientReferral;
 use App\Models\ClinicDB\Medicine;
 use App\Models\ClinicDB\Complaint;
 
@@ -144,6 +145,23 @@ class AppointmentsController extends Controller
         $patient->save();
 
         return response()->json(['success' => true, 'message' => 'Added Successfully']);
+    }
+
+
+    public function getwalkinreferral($id) 
+    {
+        $data = PatientReferral::leftJoin('coasv2_db_enrollment.students', 'patientreferral.stid', '=', 'coasv2_db_enrollment.students.id')
+            ->select(
+                    'patientreferral.*', 
+                    'coasv2_db_enrollment.students.lname', 
+                    'coasv2_db_enrollment.students.fname', 
+                    'coasv2_db_enrollment.students.mname', 
+                    'coasv2_db_enrollment.students.ext', )
+            ->orderBy('patientreferral.date', 'desc')
+            ->where('patientreferral.stid', $id)
+            ->get();
+
+        return response()->json(['data' => $data]);
     }
 
     public function onlineappoint()

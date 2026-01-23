@@ -44,5 +44,7 @@ Route::get('/', function () {
         Route::get('/walkins/fetch/{id}',[AppointmentsController::class,'getwalkinconsult'])->name('getwalkinconsult.walkin');
         Route::post('/walkins/add',[AppointmentsController::class,'createWalkinConsultation'])->name('appointment.walkinconsult.store');
 
+        Route::get('/walkins/referralfetch/{id}',[AppointmentsController::class,'getwalkinreferral'])->name('getwalkinreferral.walkin');
+
         Route::get('/online',[AppointmentsController::class,'onlineappoint'])->name('appointment.online');
     });
