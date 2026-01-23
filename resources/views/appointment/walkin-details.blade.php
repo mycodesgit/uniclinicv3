@@ -283,6 +283,95 @@
             </div>
         </div>
     </div>
+
+    <!-- Center modal content -->
+    <div class="modal fade" id="centermodalwalkinreferral" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myCenterModalLabel">Add New Referral</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="adPVisit" method="POST">
+                        @csrf
+
+                        <input type="hidden" name="stid" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
+                        <input type="hidden" name="stdntID" class="form-control rounded bg-light" value="{{ $patients->stud_id }}" readonly>
+                        <input type="hidden" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly>
+                        <input type="hidden" name="time" class="form-control form-control-sm" value="{{ date('h:i A') }}"  readonly>
+
+                        <!-- start row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation ID <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded bg-light" value="AP234354">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Reffered From</label><br>
+                                    <select name="preferfrom" id="" class="form-control">
+                                        <option disabled selected> --Select-- </option>
+                                        <option value="Medical Doctor">Medical Doctor</option>
+                                        <option value="School Nurse">School Nurse</option>
+                                        <option value="Dentist">Dentist</option>
+                                    </select>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Reffered To</label><br>
+                                    <select name="preferto" id="" class="form-control">
+                                        <option disabled selected> --Select-- </option>
+                                        <option value="Medical Doctor">Medical Doctor</option>
+                                        <option value="CHO">CHO</option>
+                                        <option value="Dentist">Dentist</option>
+                                        <option value="Radiologist">Radiologist</option>
+                                    </select>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Reason for Referral</label><br>
+                                    <textarea name="reasonrefer" id="" cols="30" rows="3" class="form-control"></textarea>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Tentative Diagnosis</label><br>
+                                    <textarea name="tentdiagnose" id="" cols="30" rows="3" class="form-control form-control-sm"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Treatment/Medication Given</label><br>
+                                    <textarea name="treatmentmedgiven" id="" cols="30" rows="3" class="form-control form-control-sm"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row-->
+                        <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
+                            <div class=" d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-outline-danger btn-md" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-outline-primary btn-md">
+                                    <i class="fas fa-save"></i> Save Data
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
