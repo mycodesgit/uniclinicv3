@@ -231,18 +231,18 @@ class AppointmentsController extends Controller
 
     public function getwalkinreferral($id) 
     {
-        $data = PatientReferral::leftJoin('coasv2_db_enrollment.students', 'patientreferral.stid', '=', 'coasv2_db_enrollment.students.id')
-            ->select(
-                    'patientreferral.*', 
-                    'coasv2_db_enrollment.students.lname', 
-                    'coasv2_db_enrollment.students.fname', 
-                    'coasv2_db_enrollment.students.mname', 
-                    'coasv2_db_enrollment.students.ext', )
-            ->orderBy('patientreferral.date', 'desc')
-            ->where('patientreferral.stid', $id)
-            ->get();
+        // $data = PatientReferral::leftJoin('coasv2_db_enrollment.students', 'patientreferral.stid', '=', 'coasv2_db_enrollment.students.id')
+        //     ->select(
+        //             'patientreferral.*', 
+        //             'coasv2_db_enrollment.students.lname', 
+        //             'coasv2_db_enrollment.students.fname', 
+        //             'coasv2_db_enrollment.students.mname', 
+        //             'coasv2_db_enrollment.students.ext', )
+        //     ->orderBy('patientreferral.date', 'desc')
+        //     ->where('patientreferral.stid', $id)
+        //     ->get();
 
-        return response()->json(['data' => $data]);
+        // return response()->json(['data' => $data]);
     }
 
     public function createWalkinReferral(Request $request) 
