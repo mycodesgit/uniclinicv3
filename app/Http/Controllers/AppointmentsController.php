@@ -95,49 +95,55 @@ class AppointmentsController extends Controller
         $visits = Patientvisit::where('stid', $student->id)
             ->orderBy('date', 'desc')
             ->get();
+        
+        if ($visits->isEmpty()) {
+            return response()->json(['data' => []]);
+        }
 
-        // Collect all complaint & medicine IDs
         $complaintIds = $visits->pluck('chief_complaint')
+            ->filter() // remove null
             ->flatMap(fn ($v) => explode(',', $v))
-            ->unique()
-            ->filter();
+            ->filter()
+            ->unique();
 
         $medicineIds = $visits->pluck('medicine')
+            ->filter()
             ->flatMap(fn ($v) => explode(',', $v))
-            ->unique()
-            ->filter();
+            ->filter()
+            ->unique();
 
-        // Fetch once
-        $complaints = Complaint::whereIn('id', $complaintIds)
-            ->pluck('complaint', 'id');
+        $complaints = $complaintIds->isNotEmpty()
+            ? Complaint::whereIn('id', $complaintIds)->pluck('complaint', 'id')
+            : collect();
 
-        $medicines = Medicine::whereIn('id', $medicineIds)
-            ->pluck('medicine', 'id');
+        $medicines = $medicineIds->isNotEmpty()
+            ? Medicine::whereIn('id', $medicineIds)->pluck('medicine', 'id')
+            : collect();
 
-        // Map final response
         $data = $visits->map(function ($visit) use ($student, $complaints, $medicines) {
 
             return [
-                'id'         => $visit->id,
-                'date'       => $visit->date,
-                'time'       => $visit->time,
-                'treatment'  => $visit->treatment,
-                'qty'        => $visit->qty,
+                'id'        => $visit->id,
+                'date'      => $visit->date,
+                'time'      => $visit->time,
+                'treatment' => $visit->treatment,
+                'qty'       => $visit->qty,
 
-                'lname'      => $student->lname,
-                'fname'      => $student->fname,
-                'mname'      => $student->mname,
-                'ext'        => $student->ext,
+                'lname' => $student->lname,
+                'fname' => $student->fname,
+                'mname' => $student->mname,
+                'ext'   => $student->ext,
 
-                'complaintname' => collect(explode(',', $visit->chief_complaint))
+                // SAFE string output
+                'complaintname' => collect(explode(',', (string) $visit->chief_complaint))
                     ->map(fn ($id) => $complaints[$id] ?? null)
                     ->filter()
-                    ->values(),
+                    ->implode(', '),
 
-                'medicinename'  => collect(explode(',', $visit->medicine))
+                'medicinename' => collect(explode(',', (string) $visit->medicine))
                     ->map(fn ($id) => $medicines[$id] ?? null)
                     ->filter()
-                    ->values(),
+                    ->implode(', '),
             ];
         });
 
