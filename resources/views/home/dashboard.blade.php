@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <div>
-                                <p class="mb-1">Patient Today</p>
+                                <p class="mb-1">Patient Consultation Today</p>
                                 <div class="d-flex align-items-center gap-1">
                                     <h1 class="fw-bold mb-0">{{ $ptodayvisits }}</h1>
                                 </div>
@@ -32,7 +32,9 @@
                             <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-calendar-heart fs-20"></i></span>
                         </div>
                         <div class="d-flex align-items-end">
-                            <div id="s-col-5" class="chart-set"></div>
+                            <div>
+                                <img src="{{ asset('assets/img/icons/icon-4.svg') }}" width="70px" class="img-fluid">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,16 +47,15 @@
                             <div>
                                 <p class="mb-1">Patient this Month</p>
                                 <div class="d-flex align-items-center gap-1">
-                                    <h3 class="fw-bold mb-0">658</h3>
-                                    <span class="badge fw-medium bg-success flex-shrink-0">+95%</span>
+                                    <h1 class="fw-bold mb-0">{{ $pthismonthvisits }}</h1>
                                 </div>
                             </div>
                             <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-calendar-heart fs-20"></i></span>
                         </div>
                         <div class="d-flex align-items-end">
-                            <div id="s-col-5" class="chart-set"></div>
-                            <span class="badge fw-medium badge-soft-success flex-shrink-0 ms-2">+21% <i class="ti ti-arrow-up ms-1"></i></span>
-                            <p class="ms-1 fs-13 text-truncate">in last 7 Days </p>
+                            <div>
+                                <img src="{{ asset('assets/img/icons/icon-3.png') }}" width="70px" class="img-fluid">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -74,9 +75,7 @@
                             <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-calendar-heart fs-20"></i></span>
                         </div>
                         <div class="d-flex align-items-end">
-                            <div id="s-col-5" class="chart-set"></div>
-                            <span class="badge fw-medium badge-soft-success flex-shrink-0 ms-2">+21% <i class="ti ti-arrow-up ms-1"></i></span>
-                            <p class="ms-1 fs-13 text-truncate">in last 7 Days </p>
+                            <div class="chart-set"></div>
                         </div>
                     </div>
                 </div>
@@ -96,10 +95,19 @@
                             <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-calendar-heart fs-20"></i></span>
                         </div>
                         <div class="d-flex align-items-end">
-                            <div id="s-col-5" class="chart-set"></div>
-                            <span class="badge fw-medium badge-soft-success flex-shrink-0 ms-2">+21% <i class="ti ti-arrow-up ms-1"></i></span>
-                            <p class="ms-1 fs-13 text-truncate">in last 7 Days </p>
+                            <div class="chart-set"></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header" >
+                        <h3 class="card-title">Patient Visit This Month - {{ \Carbon\Carbon::now()->format('F Y') }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="currcollegevisitBarChartMonthh" style="height:250px; min-height:250px"></canvas>
                     </div>
                 </div>
             </div>

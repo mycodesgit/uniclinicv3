@@ -459,8 +459,19 @@
     <!-- Sweet Alerts js -->
     <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}" type="text/javascript"></script>
 
+    <!-- Chart JS -->
+    <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}" type="text/javascript"></script>
+
     <!-- Main JS -->
     <script src="{{ asset('assets/js/script.js') }}" type="text/javascript"></script>
+
+    @if (request()->routeIs('dashboard'))
+        @include('script.dash.dashScript')
+        <script>
+            var collegeCountsmonth = {!! json_encode($collegeCountsmonth) !!};
+            var collegeAcronymsmonth = {!! json_encode($collegeAcronymsmonth) !!};
+        </script>
+    @endif
 
     @if (request()->routeIs('patients.students'))
     @endif
