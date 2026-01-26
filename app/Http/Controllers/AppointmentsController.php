@@ -29,7 +29,13 @@ class AppointmentsController extends Controller
         $patients = Student::findOrFail($id);
         $complaints =  Complaint::all();
         $medicines = Medicine::all();
-        $patientVisit = Patientvisit::where('stid', $id)->get();
+
+        $student = DB::connection('enrollment')
+            ->table('students')
+            ->where('id', $id)
+            ->first();
+
+        $patientVisit = Patientvisit::where('stid', $student->id)->get();
 
         return view('appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'patientVisit', 'id'));
     }
