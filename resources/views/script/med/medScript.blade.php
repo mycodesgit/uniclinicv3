@@ -55,7 +55,7 @@
 			},
 			"scrollX": false,         // Enable horizontal scrolling
 			"scrollCollapse": true,  // Adjust table size when the scroll is used
-			"responsive": true,
+			"responsive": false,
 			"autoWidth": false,
             "info": true,
             "columns": [
