@@ -7,6 +7,7 @@ use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\PDFreportController;
 use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\ReportsController;
 
 /*
 |--------------------------------------------------------------------------
