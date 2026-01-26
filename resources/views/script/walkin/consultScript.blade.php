@@ -80,23 +80,9 @@
                     }
                 },
                 { data: 'time' },
-                {
-  data: 'complaintname',
-  render: function (data) {
-    if (!data) return '';
-    if (Array.isArray(data)) return data.join(', ');
-    return data; // already string
-  }
-},
+                { data: 'complaintname' },
                 { data: 'treatment' },
-                {
-  data: 'medicinename',
-  render: function (data) {
-    if (!data) return '';
-    if (Array.isArray(data)) return data.join(', ');
-    return data;
-  }
-},
+                { data: 'medicinename' },
                 { data: 'qty' },
                 // { 
                 //     data: 'id',
