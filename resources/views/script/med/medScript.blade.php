@@ -78,16 +78,16 @@
                     data: 'id',
                     render: function(data, type, row) {
                         if (type === 'display') {
-                            var dropdown = '<div class="d-inline-block">' +
-                                '<a class="btn btn-primary btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown"></a>' +
-                                '<div class="dropdown-menu">' +
-                                '<a href="#" class="dropdown-item btn-mededit" data-id="' + row.id + '" data-medicine="' + row.medicine + '" data-qty="' + row.qty + '" data-expirydate="' + row.expirydate + '">' +
+                            var dropdown = '<div class="btn-group" role="group">' +
+                                '<button type="button" class="btn btn-teal btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>' +
+                                '<ul class="dropdown-menu">' +
+                                '<a href="#" class="dropdown-item btn-mededit" data-id="' + row.id + '" data-category="' + row.category + '" data-medicine="' + row.medicine + '" data-qty="' + row.qty + '" data-measure="' + row.measure + '" data-lotno="' + row.lotno + '" data-expirydate="' + row.expirydate + '" data-refnoid="' + row.refnoid + '">' +
                                 '<i class="fas fa-pen"></i> Edit' +
                                 '</a>' +
                                 '<button type="button" value="' + data + '" class="dropdown-item med-delete">' +
                                 '<i class="fas fa-trash"></i> Delete' +
                                 '</button>' +
-                                '</div>' +
+                                '</ul>' +
                                 '</div>';
                             return dropdown;
                         } else {
@@ -107,14 +107,22 @@
 
     $(document).on('click', '.btn-mededit', function() {
         var id = $(this).data('id');
+        var medCat = $(this).data('category');
         var medName = $(this).data('medicine');
         var qtyCount = $(this).data('qty');
+        var medUnit = $(this).data('measure');
+        var medLot = $(this).data('lotno');
         var expiryDate = $(this).data('expirydate');
+        var referenceNo = $(this).data('refnoid');
 
         $('#editMedicineId').val(id);
+        $('#editMedicineCategory').val(medName);
         $('#editMedicineName').val(medName);
         $('#editMedicineQty').val(qtyCount);
+        $('#editMedicineUnit').val(medUnit);
+        $('#editMedicineLotNo').val(medLot);
         $('#editMedicineExpiry').val(expiryDate);
+        $('#editMedicineReference').val(referenceNo);
         $('#editMedicineModal').modal('show');
     });
 
