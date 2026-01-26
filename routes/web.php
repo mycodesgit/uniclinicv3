@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\LoginController;
+
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\AppointmentsController;
@@ -20,11 +22,18 @@ use App\Http\Controllers\ReportsController;
 |
 */
 
-Route::get('/', function () {
-    return view('home.dashboard');
+Route::group(['middleware'=>['guest']],function(){
+    Route::get('/', function () {
+        return view('login');
+    });
+
+    Route::get('/login',[LoginController::class,'loginView'])->name('getLogin');
+    Route::post('/login/auth',[LoginController::class,'loginAuthenticate'])->name('postLogin');
 });
 
+Route::group(['middleware'=>['login_auth']],function(){
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('/logout',[DashboardController::class,'logout'])->name('logout');
     
     Route::prefix('/patient')->group(function () {
         Route::get('/students',[PatientsController::class,'index'])->name('patients.students');
@@ -59,3 +68,4 @@ Route::get('/', function () {
         Route::post('/medicineUpdate', [MedicineController::class, 'medicineUpdate'])->name('medicineUpdate');
         Route::post('/medicineDelete/{id}', [MedicineController::class, 'medicineDelete'])->name('medicineDelete');
     });
+});

@@ -68,4 +68,10 @@ class DashboardController extends Controller
 
         return view('home.dashboard', compact('ptodayvisits', 'pthismonthvisits', 'collegeAcronymsmonth', 'collegeCountsmonth'));
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('getLogin')->with('success','You have been Successfully Logged Out');
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\ClinicDB;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,9 +18,17 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'campus',
+        'lname',
+        'fname',
+        'mname',
+        'ext',
         'email',
         'password',
+        'role',
+        'gender',
+        'status',
+        'remember_token',
     ];
 
     /**
@@ -41,4 +49,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
 }

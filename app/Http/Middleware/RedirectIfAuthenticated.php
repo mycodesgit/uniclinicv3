@@ -23,10 +23,16 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                //return redirect(RouteServiceProvider::HOME);
+                return redirect()->route('dashboard');
             }
         }
+        $response = $next($request);
+        $response->headers->set('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate');
+        $response->headers->set('Pragma', 'no-cache');
 
-        return $next($request);
+        return $response;
+
+        //return $next($request);
     }
 }
