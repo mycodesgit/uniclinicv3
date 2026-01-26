@@ -132,12 +132,12 @@ class AppointmentsController extends Controller
                 'complaintname' => collect(explode(',', $visit->chief_complaint))
                     ->map(fn ($id) => $complaints[$id] ?? null)
                     ->filter()
-                    ->values(),
+                    ->implode(', '),
 
                 'medicinename'  => collect(explode(',', $visit->medicine))
                     ->map(fn ($id) => $medicines[$id] ?? null)
                     ->filter()
-                    ->values(),
+                    ->implode(', '),
             ];
         });
 
