@@ -82,9 +82,9 @@ class AppointmentsController extends Controller
 
     public function getwalkinconsult($id)
     {
-        // Get student from enrollment DB
         $student = DB::connection('enrollment')
             ->table('students')
+            ->select('id', 'lname', 'fname', 'mname', 'ext')
             ->where('id', $id)
             ->first();
 
@@ -92,31 +92,54 @@ class AppointmentsController extends Controller
             return response()->json(['message' => 'Student not found'], 404);
         }
 
-        $data = Patientvisit::where('stid', $student->id)
+        $visits = Patientvisit::where('stid', $student->id)
             ->orderBy('date', 'desc')
-            ->get()
-            ->map(function ($item) use ($student) {
+            ->get();
 
-                // Attach student info manually
-                $item->lname = $student->lname;
-                $item->fname = $student->fname;
-                $item->mname = $student->mname;
-                $item->ext   = $student->ext;
+        // Collect all complaint & medicine IDs
+        $complaintIds = $visits->pluck('chief_complaint')
+            ->flatMap(fn ($v) => explode(',', $v))
+            ->unique()
+            ->filter();
 
-                // Complaints
-                $item->complaintname = collect(explode(',', $item->chief_complaint))
-                    ->map(fn ($id) => Complaint::find($id)?->complaint)
+        $medicineIds = $visits->pluck('medicine')
+            ->flatMap(fn ($v) => explode(',', $v))
+            ->unique()
+            ->filter();
+
+        // Fetch once
+        $complaints = Complaint::whereIn('id', $complaintIds)
+            ->pluck('complaint', 'id');
+
+        $medicines = Medicine::whereIn('id', $medicineIds)
+            ->pluck('medicine', 'id');
+
+        // Map final response
+        $data = $visits->map(function ($visit) use ($student, $complaints, $medicines) {
+
+            return [
+                'id'         => $visit->id,
+                'date'       => $visit->date,
+                'time'       => $visit->time,
+                'treatment'  => $visit->treatment,
+                'qty'        => $visit->qty,
+
+                'lname'      => $student->lname,
+                'fname'      => $student->fname,
+                'mname'      => $student->mname,
+                'ext'        => $student->ext,
+
+                'complaintname' => collect(explode(',', $visit->chief_complaint))
+                    ->map(fn ($id) => $complaints[$id] ?? null)
                     ->filter()
-                    ->values();
+                    ->values(),
 
-                // Medicines
-                $item->medicinename = collect(explode(',', $item->medicine))
-                    ->map(fn ($id) => Medicine::find($id)?->medicine)
+                'medicinename'  => collect(explode(',', $visit->medicine))
+                    ->map(fn ($id) => $medicines[$id] ?? null)
                     ->filter()
-                    ->values();
-
-                return $item;
-            });
+                    ->values(),
+            ];
+        });
 
         return response()->json(['data' => $data]);
     }
