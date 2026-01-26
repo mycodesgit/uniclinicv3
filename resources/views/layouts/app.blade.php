@@ -474,6 +474,7 @@
     @endif
     @if (request()->routeIs('appointment.walkin.details'))
         @include('script.walkin.consultScript')
+        @include('script.walkin.referralScript')
     @endif
     @if (request()->routeIs('medicine.list'))
         @include('script.med.medScript')

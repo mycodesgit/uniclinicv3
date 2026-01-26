@@ -231,18 +231,44 @@ class AppointmentsController extends Controller
 
     public function getwalkinreferral($id) 
     {
-        // $data = PatientReferral::leftJoin('coasv2_db_enrollment.students', 'patientreferral.stid', '=', 'coasv2_db_enrollment.students.id')
-        //     ->select(
-        //             'patientreferral.*', 
-        //             'coasv2_db_enrollment.students.lname', 
-        //             'coasv2_db_enrollment.students.fname', 
-        //             'coasv2_db_enrollment.students.mname', 
-        //             'coasv2_db_enrollment.students.ext', )
-        //     ->orderBy('patientreferral.date', 'desc')
-        //     ->where('patientreferral.stid', $id)
-        //     ->get();
+        $student = DB::connection('enrollment')
+            ->table('students')
+            ->select('id', 'lname', 'fname', 'mname', 'ext')
+            ->where('id', $id)
+            ->first();
 
-        // return response()->json(['data' => $data]);
+        if (!$student) {
+            return response()->json(['message' => 'Student not found'], 404);
+        }
+
+        $refer = PatientReferral::where('stid', $student->id)
+            ->orderBy('date', 'desc')
+            ->get();
+        
+        if ($refer->isEmpty()) {
+            return response()->json(['data' => []]);
+        }
+
+        $data = $refer->map(function ($visit) use ($student) {
+
+            return [
+                'id'                    => $visit->id,
+                'date'                  => $visit->date,
+                'time'                  => $visit->time,
+                'preferfrom'            => $visit->preferfrom,
+                'preferto'              => $visit->preferto,
+                'reasonrefer'           => $visit->reasonrefer,
+                'tentdiagnose'          => $visit->tentdiagnose,
+                'treatmentmedgiven'     => $visit->treatmentmedgiven,
+
+                'lname' => $student->lname,
+                'fname' => $student->fname,
+                'mname' => $student->mname,
+                'ext'   => $student->ext,
+
+                
+            ];
+        });
     }
 
     public function createWalkinReferral(Request $request) 
