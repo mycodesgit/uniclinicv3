@@ -115,7 +115,7 @@
                 </div>
                 <div class="tab-pane" id="referral">
                     <div class="table-responsive">
-                        <table id="referlisttab" class="table table-striped" style="width: 100%">
+                        <table class="table table-striped" style="width: 100%">
                             <thead class="">
                                 <tr>
                                     <th>Patient</th>
