@@ -44,6 +44,11 @@ class AppointmentsController extends Controller
     {
         $patients = Student::findOrFail($id);
 
+        $student = DB::connection('enrollment')
+            ->table('students')
+            ->where('id', $id)
+            ->first();
+
         $data = Patientvisit::leftJoin('coasv2_db_enrollment.students', 'patientvisits.stid', '=', 'coasv2_db_enrollment.students.id')
             ->leftJoin('complaint', 'patientvisits.chief_complaint', '=', 'complaint.id')
             ->leftJoin('medicines', 'patientvisits.medicine', '=', 'medicines.id')
@@ -56,7 +61,7 @@ class AppointmentsController extends Controller
                     'complaint.complaint as complaintname',
                     'medicines.medicine as medicinename')
             ->orderBy('patientvisits.date', 'desc')
-            ->where('patientvisits.stid', $id)
+            ->where('patientvisits.stid', $student->id)
             ->get()
             ->map(function ($item) {
                 $item->complaintname = collect(explode(',', $item->chief_complaint))
