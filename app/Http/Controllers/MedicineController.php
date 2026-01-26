@@ -93,9 +93,13 @@ class MedicineController extends Controller
 
             $medcne = Medicine::findOrFail($request->input('id'));
             $medcne->update([
+                'category' => $request->input('category'),
                 'medicine' => $request->input('medicine'),
                 'qty'=> $request->input('qty'),
-                'expirydate'=> $request->input('expirydate')
+                'measure' => $request->input('measure'),
+                'lotno' => $request->input('lotno'),
+                'expirydate'=> $request->input('expirydate'),
+                'refnoid'=> $request->input('refnoid'),
         ]);
             return response()->json(['success' => true, 'message' => 'Medicine update successfully'], 200);
         } catch (\Exception $e) {
