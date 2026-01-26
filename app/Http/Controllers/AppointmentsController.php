@@ -40,46 +40,6 @@ class AppointmentsController extends Controller
         return view('appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'patientVisit', 'id'));
     }
 
-    // public function getwalkinconsult($id)
-    // {
-    //     $patients = Student::findOrFail($id);
-
-    //     $student = DB::connection('enrollment')
-    //         ->table('students')
-    //         ->where('id', $id)
-    //         ->first();
-
-    //     $data = Patientvisit::leftJoin('coasv2_db_enrollment.students', 'patientvisits.stid', '=', 'coasv2_db_enrollment.students.id')
-    //         ->leftJoin('complaint', 'patientvisits.chief_complaint', '=', 'complaint.id')
-    //         ->leftJoin('medicines', 'patientvisits.medicine', '=', 'medicines.id')
-    //         ->select(
-    //                 'patientvisits.*', 
-    //                 'coasv2_db_enrollment.students.lname', 
-    //                 'coasv2_db_enrollment.students.fname', 
-    //                 'coasv2_db_enrollment.students.mname', 
-    //                 'coasv2_db_enrollment.students.ext', 
-    //                 'complaint.complaint as complaintname',
-    //                 'medicines.medicine as medicinename')
-    //         ->orderBy('patientvisits.date', 'desc')
-    //         ->where('patientvisits.stid', $student->id)
-    //         ->get()
-    //         ->map(function ($item) {
-    //             $item->complaintname = collect(explode(',', $item->chief_complaint))
-    //                 ->map(fn($id) => Complaint::find($id)?->complaint)
-    //                 ->filter()
-    //                 ->values();
-                
-    //             $item->medicinename = collect(explode(',', $item->medicine))
-    //                 ->map(fn($id) => Medicine::find($id)?->medicine)
-    //                 ->filter()
-    //                 ->values();
-                
-    //             return $item;
-    //         });
-
-    //     return response()->json(['data' => $data]);
-    // }
-
     public function getwalkinconsult($id)
     {
         $student = DB::connection('enrollment')

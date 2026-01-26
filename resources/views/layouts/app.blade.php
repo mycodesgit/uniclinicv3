@@ -2,23 +2,16 @@
 <!DOCTYPE html>
 <html lang="en" data-color="teal">
 
-
-<!-- Mirrored from preclinic.dreamstechnologies.com/html/template/doctor-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Jan 2026 06:38:08 GMT -->
 <head>
 
 	<!-- Meta Tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Doctor Dashboard - Medical & Hospital - Bootstrap 5 Admin Template</title>
+    <title>MDHU - Medical Dental & Health Unit</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="author" content="Dreams Technologies">
-	
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
-
-    <!-- Apple Icon -->
-    <link rel="apple-touch-icon" href="{{ asset('assets/img/apple-icon.png') }}">
+    <meta name="description" content="Preclinic - Medical & Hospital - Bootstrap 5 Admin Template">
 
     <!-- Theme Config Js -->
     <script src="{{ asset('assets/js/theme-script.js') }}" type="c69ced46290eea12272fe16a-text/javascript"></script>
@@ -56,6 +49,9 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" id="app-style">
+
+    <!-- Logo  -->
+    <link rel="shortcut icon" type="" href="{{ asset('assets/img/CPSU_L.png') }}">
 
     <style>
         .readonlytext {
@@ -481,6 +477,4 @@
 
 </body>
 
-
-<!-- Mirrored from preclinic.dreamstechnologies.com/html/template/doctor-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Jan 2026 06:38:13 GMT -->
 </html>

@@ -26,16 +26,13 @@
                             <div>
                                 <p class="mb-1">Patient Today</p>
                                 <div class="d-flex align-items-center gap-1">
-                                    <h3 class="fw-bold mb-0">658</h3>
-                                    <span class="badge fw-medium bg-success flex-shrink-0">+95%</span>
+                                    <h1 class="fw-bold mb-0">{{ $ptodayvisits }}</h1>
                                 </div>
                             </div>
                             <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-calendar-heart fs-20"></i></span>
                         </div>
                         <div class="d-flex align-items-end">
                             <div id="s-col-5" class="chart-set"></div>
-                            <span class="badge fw-medium badge-soft-success flex-shrink-0 ms-2">+21% <i class="ti ti-arrow-up ms-1"></i></span>
-                            <p class="ms-1 fs-13 text-truncate">in last 7 Days </p>
                         </div>
                     </div>
                 </div>
