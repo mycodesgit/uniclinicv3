@@ -15,6 +15,11 @@ use App\Models\EnrollmentDB\Student;
 use App\Models\ScheduleDB\College;
 use App\Models\ScheduleDB\EnPrograms;
 
+use App\Models\ClinicDB\Patientvisit;
+use App\Models\ClinicDB\PatientReferral;
+use App\Models\ClinicDB\Medicine;
+use App\Models\ClinicDB\Complaint;
+
 use App\Models\SettingDB\ConfigureCurrent;
 use App\Models\SettingDB\Region;
 use App\Models\SettingDB\Province;
@@ -52,7 +57,14 @@ class PatientsController extends Controller
 
         $regions = Region::all();
 
-        return view('patient.details', compact('patients', 'regions'));
+        $student = DB::connection('enrollment')
+            ->table('students')
+            ->where('id', $id)
+            ->first();
+
+        $patientVisit = Patientvisit::where('stid', $student->id)->get();
+
+        return view('patient.details', compact('patients', 'regions', 'patientVisit'));
     }
 
     public function getPortalProvinces($region_id) 

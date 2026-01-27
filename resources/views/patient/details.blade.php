@@ -1148,6 +1148,23 @@
                             </div>
                             <div class="card-body pb-0">
                                 <div class="row">
+                                    <ul class="nav nav-tabs nav-bordered mb-3">
+                                        <li class="nav-item">
+                                            <a href="#consult" data-bs-toggle="tab" aria-expanded="false" class="nav-link active bg-transparent">
+                                                <span>Consultation</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#referral" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
+                                                <span>Referral</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#toothextraction" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
+                                                <span>Tooth Extraction</span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane show active" id="consult">
                                             <div class="table-responsive">
@@ -1164,6 +1181,40 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody style="font-size: 10pt;">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="referral">
+                                            <div class="table-responsive">
+                                                <table id="referlisttab" class="table table-striped" style="width: 100%">
+                                                    <thead class="">
+                                                        <tr>
+                                                            <th>Patient</th>
+                                                            <th>Date</th>
+                                                            <th>Time</th>
+                                                            <th>Referred from</th>
+                                                            <th>Referred to</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody style="font-size: 10pt;">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="toothextraction">
+                                            <div class="table-responsive">
+                                                <table id="toothextractlisttab" class="table table-striped" style="width: 100%">
+                                                    <thead class="">
+                                                        <tr>
+                                                            <th>Patient</th>
+                                                            <th>Date</th>
+                                                            <th>Time</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody style="font-size: 10pt;">
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1200,6 +1251,7 @@
             }
         });
     </script>
+
 
 @endsection
 
