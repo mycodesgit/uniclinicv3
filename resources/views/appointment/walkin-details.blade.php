@@ -204,6 +204,60 @@
                                 </div>
                             </div> <!-- end col-->
 
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">BP<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="bp" placeholder="e.g. 120/80 mmHg">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">PR<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="pr" placeholder="e.g. 72 bpm">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">RR<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="rr" placeholder="e.g. 16 bpm">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">SPO2<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="spo" placeholder="e.g. 98%">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">T<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="btemp" placeholder="e.g. 37°C">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">LMP<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="lmp" placeholder="e.g. 120/80 mmHg">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <div>

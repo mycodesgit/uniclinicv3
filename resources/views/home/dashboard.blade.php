@@ -110,6 +110,36 @@
                         <canvas id="currcollegevisitBarChartMonthh" style="height:250px; min-height:250px"></canvas>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header" >
+                        <h3 class="card-title">Patient Visit Today - {{ \Carbon\Carbon::now()->format('F d, Y') }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="currcollegevisitBarChart" style="height:250px; min-height:250px"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header" >
+                        <h3 class="card-title">Patient Visit This Month - {{ \Carbon\Carbon::now()->format('F Y') }}</h3>
+                    </div>
+                    <div class="card-body">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="fw-bold mb-0 text-truncate">Calendar</h5> 
+                    </div>
+                    <div class="card-body">
+                        <div class="datepic mb-1"></div>
+                    </div>
+                </div>
             </div>
             
 

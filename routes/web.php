@@ -68,4 +68,9 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::post('/medicineUpdate', [MedicineController::class, 'medicineUpdate'])->name('medicineUpdate');
         Route::post('/medicineDelete/{id}', [MedicineController::class, 'medicineDelete'])->name('medicineDelete');
     });
+
+    Route::prefix('/generate')->group(function () {
+        Route::get('/reports/patientdata',[ReportsController::class,'patientdatarep'])->name('reports.patientdatarep');
+        Route::get('/reports/patientdata/details/{id}',[ReportsController::class,'walkinconsultdetails'])->name('reports.patientdatarep.details');
+    });
 });

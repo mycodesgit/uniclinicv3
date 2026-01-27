@@ -31,8 +31,8 @@
                     <i class="ti ti-prescription"></i><span>Medicines</span>
                 </a>
             </li>
-            <li>
-                <a href="doctors-schedules.html">
+            <li class="{{ request()->is('generate/*') ? 'active' : '' }}">
+                <a href="{{ route('reports.patientdatarep') }}">
                     <i class="ti ti-file"></i><span>Reports</span>
                 </a>
             </li>

@@ -468,6 +468,9 @@
     @if (request()->routeIs('dashboard'))
         @include('script.dash.dashScript')
         <script>
+            var collegeCountsdaily = {!! json_encode($collegeCountsdaily) !!};
+            var collegeAcronymsdaily = {!! json_encode($collegeAcronymsdaily) !!};
+            
             var collegeCountsmonth = {!! json_encode($collegeCountsmonth) !!};
             var collegeAcronymsmonth = {!! json_encode($collegeAcronymsmonth) !!};
         </script>

@@ -38,6 +38,7 @@ class DashboardController extends Controller
                 DB::raw('LEFT(program_en_history.progCod, 3) as college_abbr')
             )
             ->whereIn(DB::raw('LEFT(program_en_history.progCod, 3)'), $colleges)
+            ->distinct() 
             ->get()
             ->groupBy('college_abbr');
 
@@ -45,6 +46,15 @@ class DashboardController extends Controller
             ->select('stid', DB::raw('COUNT(*) as total'))
             ->whereMonth('created_at', $currentMonth)
             ->whereYear('created_at', $currentYear)
+            //->distinct() // 🔑 only once per student
+            ->groupBy('stid')
+            ->get()
+            ->keyBy('stid');
+
+        $visitDailyCounts = DB::table('patientvisits')
+            ->select('stid', DB::raw('COUNT(*) as total'))
+            ->whereDate('created_at', Carbon::today())
+            ->distinct() // 🔑 only once per student
             ->groupBy('stid')
             ->get()
             ->keyBy('stid');
@@ -53,7 +63,6 @@ class DashboardController extends Controller
         $collegeAcronymsmonth = [];
 
         foreach ($colleges as $college) {
-
             $count = 0;
 
             if (isset($studentsByCollege[$college])) {
@@ -66,7 +75,26 @@ class DashboardController extends Controller
             $collegeCountsmonth[]  = $count;
         }
 
-        return view('home.dashboard', compact('ptodayvisits', 'pthismonthvisits', 'collegeAcronymsmonth', 'collegeCountsmonth'));
+
+        $collegeCountsdaily = [];
+        $collegeAcronymsdaily = [];
+
+        foreach ($colleges as $college) {
+            $count = 0;
+
+            if (isset($studentsByCollege[$college])) {
+                foreach ($studentsByCollege[$college] as $student) {
+                    if (isset($visitDailyCounts[$student->student_id])) {
+                        $count++;
+                    }
+                }
+            }
+
+            $collegeAcronymsdaily[] = $college;
+            $collegeCountsdaily[]  = $count;
+        }
+
+        return view('home.dashboard', compact('ptodayvisits', 'pthismonthvisits', 'collegeAcronymsmonth', 'collegeCountsmonth', 'collegeAcronymsdaily', 'collegeCountsdaily'));
     }
 
     public function logout()
