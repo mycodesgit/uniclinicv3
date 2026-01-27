@@ -58,6 +58,11 @@
                     <span>Physical Examination</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="#datarecords" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
+                    <span>Patient Data Records</span>
+                </a>
+            </li>
         </ul>
         <!-- tab end -->
 
@@ -1130,6 +1135,41 @@
                                     </div>
                                 </div>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="datarecords">
+                    <div class="col-md-12">
+                        <div class="card shadow-sm flex-fill w-100">
+                            <div class="card-header">
+                                <h5 class="fw-bold mb-0" style="color: teal"><i class="ti ti-file me-1"></i>Patient Data Records</h5>
+                            </div>
+                            <div class="card-body pb-0">
+                                <div class="row">
+                                    <div class="tab-content">
+                                        <div class="tab-pane show active" id="consult">
+                                            <div class="table-responsive">
+                                                <table id="" class="table table-hover" style="width: 100%">
+                                                    <thead class="">
+                                                        <tr>
+                                                            <th>Patient</th>
+                                                            <th>Date</th>
+                                                            <th>Time</th>
+                                                            <th>Chief Complaint</th>
+                                                            <th>Treatment</th>
+                                                            <th>Medicine</th>
+                                                            <th>Quantity</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody style="font-size: 10pt;">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
