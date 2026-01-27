@@ -121,6 +121,14 @@ class AppointmentsController extends Controller
         $patient->chief_complaint = $request->input('chief_complaint');
         $patient->treatment = $request->input('treatment');
         $patient->certificate = $request->input('certificate');
+        $patient->bp = $request->input('bp');
+        $patient->pr = $request->input('pr');
+        $patient->rr = $request->input('rr');
+        $patient->spo = $request->input('spo');
+        $patient->btemp = $request->input('btemp');
+        $patient->lmp = $request->input('lmp');
+        $patient->pheight = $request->input('pheight');
+        $patient->pweight = $request->input('pweight');
 
         $input1 = $request->input('qty', []);  
         $input2 = $request->input('medicine', []);
@@ -250,6 +258,14 @@ class AppointmentsController extends Controller
                     'stdntID' => $request->input('stdntID'),
                     'date' => $request->input('date'),
                     'time' => $request->input('time'),
+                    'bp' => $request->input('bp'),
+                    'pr' => $request->input('pr'),
+                    'rr' => $request->input('rr'),
+                    'spo' => $request->input('spo'),
+                    'btemp' => $request->input('btemp'),
+                    'lmp' => $request->input('lmp'),
+                    'pheight' => $request->input('pheight'),
+                    'pweight' => $request->input('pweight'),
                     'preferfrom' => $request->input('preferfrom'),
                     'preferto' => $request->input('preferto'),
                     'reasonrefer' => $request->input('reasonrefer'),

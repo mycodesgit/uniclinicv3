@@ -23,6 +23,8 @@ class Patientvisit extends Model
         'spo',
         'btemp',
         'lmp',
+        'pheight',
+        'pweight',
         'treatment',
         'medicine',
         'qty',

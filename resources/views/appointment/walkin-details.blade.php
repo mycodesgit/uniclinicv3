@@ -258,6 +258,24 @@
                                 </div>
                             </div> <!-- end col-->
 
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Height<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="pheight" placeholder="e.g. 170 cm">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Weight<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="pweight" placeholder="e.g. 70 kg">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <div>
@@ -385,6 +403,78 @@
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded bg-light" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">BP<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="bp" placeholder="e.g. 120/80 mmHg">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">PR<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="pr" placeholder="e.g. 72 bpm">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">RR<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="rr" placeholder="e.g. 16 bpm">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">SPO2<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="spo" placeholder="e.g. 98%">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">T<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="btemp" placeholder="e.g. 37°C">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">LMP<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="lmp" placeholder="e.g. 120/80 mmHg">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Height<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="pheight" placeholder="e.g. 170 cm">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Weight<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="pweight" placeholder="e.g. 70 kg">
                                     </div>
                                 </div>
                             </div> <!-- end col-->
