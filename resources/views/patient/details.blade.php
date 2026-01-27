@@ -1151,7 +1151,7 @@
                                     <div class="tab-content">
                                         <div class="tab-pane show active" id="consult">
                                             <div class="table-responsive">
-                                                <table id="" class="table table-hover" style="width: 100%">
+                                                <table id="consultationTable" class="table table-hover" style="width: 100%">
                                                     <thead class="">
                                                         <tr>
                                                             <th>Patient</th>
