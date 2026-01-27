@@ -36,7 +36,7 @@
 
             <div class="tab-content">
                 <div class="tab-pane show active" id="consult">
-                    <div class="table-responsive">
+                    {{-- <div class="table-responsive">
                         <table class="table datatable table-nowrap">
                             <thead class="">
                                 <tr>
@@ -98,7 +98,25 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div> 
+                    </div> --}}
+                    <div class="w-100 overflow-hidden position-relative flex-wrap d-block vh-100 coming-soon-cover">
+                        <img src="{{ asset('assets/img/bg/coming-soon-bg.png') }}" alt="" class="img-fluid position-absolute bottom-0">
+
+                        <!-- start row -->
+                        <div class="row justify-content-center align-items-center vh-100 overflow-auto flex-wrap">
+                            <div class="col-lg-6 mx-auto">
+                                <div class="card bg-transparent border-0">
+                                    <div class="comming-soon-pg d-flex flex-column align-items-center justify-content-center">
+                                        <div style="margin-top: -190px;">
+                                            <img src="{{ asset('assets/img/bg/coming-soon.svg') }}" alt="logo" class="img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                    </div>
                 </div>
             </div>
         </div>

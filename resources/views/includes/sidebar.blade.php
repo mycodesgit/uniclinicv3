@@ -23,7 +23,7 @@
                 </a>
                 <ul>
                     <li class="{{ request()->is('appointment/walkins/*') ? 'active' : '' }}"><a href="{{ route('appointment.walkin') }}">Walkin Consultation</a></li>
-                    <li class="{{ request()->is('appointment/online/*') ? 'active' : '' }}"><a href="#">Online Consultations</a></li>
+                    <li class="{{ request()->is('appointment/online/*') ? 'active' : '' }}"><a href="{{ route('appointment.online') }}">Online Consultations</a></li>
                 </ul>
             </li>
             <li class="{{ request()->is('all/*') ? 'active' : '' }}">
