@@ -36,17 +36,6 @@
                     <i class="ti ti-file"></i><span>Reports</span>
                 </a>
             </li>
-            <li class="submenu">
-                <a href="javascript:void(0);">
-                    <i class="ti ti-settings"></i><span>Settings</span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul>
-                    <li><a href="doctors-profile-settings.html">Profile Settings</a></li>
-                    <li><a href="doctors-password-settings.html">Change Password</a></li>
-                    <li><a href="doctors-notification-settings.html">Notifications</a></li>
-                </ul>
-            </li>
         </ul>
     </li>
                     

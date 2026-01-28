@@ -59,6 +59,7 @@
                                     <th>Name</th>
                                     <th>StudID</th>
                                     <th>Gender</th>
+                                    <th>Campus</th>
                                     <th>Civil Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -127,26 +128,27 @@
                                 <td>${student.lname}, ${student.fname}</td>
                                 <td>${student.stud_id}</td>
                                 <td>${student.gender}</td>
+                                <td>
+                                    ${
+                                        student.campus === 'MC'   ? 'Main' :
+                                        student.campus === 'VC'   ? 'Victorias' :
+                                        student.campus === 'SCC'  ? 'San Carlos' :
+                                        student.campus === 'HC'   ? 'Hinigaran' :
+                                        student.campus === 'MP'   ? 'Moises Padilla' :
+                                        student.campus === 'IC'   ? 'Ilog' :
+                                        student.campus === 'CA'   ? 'Candoni' :
+                                        student.campus === 'CC'   ? 'Cauayan' :
+                                        student.campus === 'SC'   ? 'Sipalay' :
+                                        student.campus === 'HinC' ? 'Hinobaan' :
+                                        student.campus
+                                    }
+                                </td>
                                 <td>${student.civil_status}</td>
                                 <td>
                                     <div class="d-flex align-items-center gap-1">
                                         <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal" title="View Details">
                                             <i class="ti ti-eye" style="color: #fff"></i>
                                         </a>
-                                        <a href="javascript:void(0);" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1" data-bs-toggle="dropdown">
-                                            <i class="ti ti-dots-vertical"></i>
-                                        </a>
-                                        <ul class="dropdown-menu p-2">
-                                            <li>
-                                                <a href="edit-patient.html" class="dropdown-item d-flex align-items-center">Edit</a>
-                                            </li>
-                                            <li>
-                                                <a href="patient-details.html" class="dropdown-item d-flex align-items-center">View</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#delete_modal">Delete</a>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </td>
                             </tr>
