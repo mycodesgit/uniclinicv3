@@ -22,11 +22,11 @@
                             <img src="{{ asset('assets/img/user.png') }}" alt="product" class="rounded">
                         </a>
                         <div>
-                            <p class="mb-0 d-inline-flex align-items-center mb-1"><i class="ti ti-id me-1 text-dark"></i>Student ID No. : <span class="text-primary ms-1" style="font-weight: bold">{{ $patients->stud_id }}</span></p>
+                            <p class="mb-0 d-inline-flex align-items-center mb-1"><i class="ti ti-id me-1 text-dark"></i>EMPLOYEE ID No. : <span class="text-primary ms-1" style="font-weight: bold">{{ $patients->emp_ID }}</span></p>
                             <h5 class="mb-1"><span style="color: teal; font-weight: bold">{{ $patients->fname }} {{ $patients->lname }}</span></h5>
                             <p class="mb-3">{{ $patients->address }}</p>
                             <div class="d-flex align-items-center flex-wrap">
-                                <p class="mb-0 d-inline-flex align-items-center"><i class="ti ti-phone me-1 text-dark"></i>Phone No. : <span class="text-dark ms-1">0{{ $patients->contact }}</span></p>
+                                <p class="mb-0 d-inline-flex align-items-center"><i class="ti ti-phone me-1 text-dark"></i>Phone No. : <span class="text-dark ms-1">0{{ $patients->mobile }}</span></p>
                                 <span class="mx-2 text-light">|</span>
                                 <p class="mb-0 d-inline-flex align-items-center"><i class="ti ti-calendar-time me-1 text-dark"></i>Last Visited : <span class="text-dark ms-1">30 Apr 2025</span></p>
                             </div>
@@ -46,16 +46,6 @@
             <li class="nav-item">
                 <a href="#personalinfo" data-bs-toggle="tab" aria-expanded="false" class="nav-link active bg-transparent">
                     <span>Personal Information</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#medhistory" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
-                    <span>Medical History</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#physexam" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
-                    <span>Physical Examination</span>
                 </a>
             </li>
             <li class="nav-item">

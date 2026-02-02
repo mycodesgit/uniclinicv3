@@ -112,6 +112,26 @@
                         </nav>
                     </div>
                 </div>
+
+                <div class="tab-pane" id="outsiders">
+                    <div class="table-responsive">
+                        <table id="guesttabletab" class="table datatable table-nowrap" style="width: 100%">
+                            <thead class="">
+                                <tr>
+                                    <th>Patient ID</th>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Civil Status</th>
+                                    <th>Date Added</th>
+                                    <th class="text-center" width="7%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 10pt;">
+                                
+                            </tbody>
+                        </table>
+                    </div> 
+                </div>
             </div>  
 
         </div>
