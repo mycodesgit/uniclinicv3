@@ -13,6 +13,10 @@ use App\Models\EnrollmentDB\StudEnrolmentHistory;
 use App\Models\EnrollmentDB\Student;
 
 use App\Models\HrisDB\Employees;
+use App\Models\HrisDB\Region;
+use App\Models\HrisDB\Province;
+use App\Models\HrisDB\City;
+use App\Models\HrisDB\Barangay;
 
 use App\Models\ScheduleDB\College;
 use App\Models\ScheduleDB\EnPrograms;
@@ -23,10 +27,6 @@ use App\Models\ClinicDB\Medicine;
 use App\Models\ClinicDB\Complaint;
 
 use App\Models\SettingDB\ConfigureCurrent;
-use App\Models\SettingDB\Region;
-use App\Models\SettingDB\Province;
-use App\Models\SettingDB\City;
-use App\Models\SettingDB\Barangay;
 
 class PatientEmpController extends Controller
 {
@@ -54,5 +54,29 @@ class PatientEmpController extends Controller
             ->paginate(10);
 
         return response()->json($emps);
+    }
+
+    public function showempdetails($id)
+    {
+        $patients = Employees::findOrFail($id);
+
+        $patientinfo = Employees::leftJoin('cities', 'employees.add_city', '=', 'cities.city_id')
+            ->leftJoin('barangays', 'employees.add_brgy', '=', 'barangays.id')
+            ->leftJoin('provinces', 'employees.add_prov', '=', 'provinces.province_id')
+            ->leftJoin('regions', 'employees.add_region', '=', 'regions.region_id')
+            ->select('employees.*', 'barangays.name as brgy_name', 'cities.name as city_name', 'provinces.name as province_name', 'regions.name as region_name')
+            ->where('employees.id', $id)
+            ->firstOrFail();
+
+        $regions = Region::all();
+
+        $emps = DB::connection('hremp')
+            ->table('employees')
+            ->where('employees.id', $id)
+            ->first();
+
+        $patientVisit = Patientvisit::where('stid', $emps->id)->get();
+
+        return view('patient.empdetails', compact('patients', 'regions', 'patientinfo', 'patientVisit'));
     }
 }

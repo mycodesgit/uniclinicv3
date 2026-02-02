@@ -222,7 +222,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
-            const patientDetailsRoute = "{{ route('patients.details', ['id' => ':id']) }}";
+            const patientDetailsRoute = "{{ route('patients.employee.empdetails', ['id' => ':id']) }}";
             const form = document.getElementById('searchEmpForm');
             const input = document.getElementById('searchEmpInput');
             const tableBody = document.getElementById('employeesTable');
@@ -253,29 +253,29 @@
 
 
                     // Populate table
-                    res.data.forEach(student => {
-                        const detailsUrl = patientDetailsRoute.replace(':id', student.id);
+                    res.data.forEach(emps => {
+                        const detailsUrl = patientDetailsRoute.replace(':id', emps.id);
                         tableBody.innerHTML += `
                             <tr>
-                                <td>${student.lname}, ${student.fname}</td>
-                                <td>${student.emp_ID}</td>
-                                <td>${student.sex}</td>
+                                <td>${emps.lname}, ${emps.fname}</td>
+                                <td>${emps.emp_ID}</td>
+                                <td>${emps.sex}</td>
                                 <td>
                                     ${
-                                        student.camp_id === 1   ? 'Main' :
-                                        student.camp_id === 9   ? 'Victorias' :
-                                        student.camp_id === 7  ? 'San Carlos' :
-                                        student.camp_id === 4   ? 'Hinigaran' :
-                                        student.camp_id === 12   ? 'Moises Padilla' :
-                                        student.camp_id === 6   ? 'Ilog' :
-                                        student.camp_id === 2   ? 'Candoni' :
-                                        student.camp_id === 3   ? 'Cauayan' :
-                                        student.camp_id === 8   ? 'Sipalay' :
-                                        student.camp_id === 5 ? 'Hinobaan' :
-                                        student.camp_id
+                                        emps.camp_id === 1   ? 'Main' :
+                                        emps.camp_id === 9   ? 'Victorias' :
+                                        emps.camp_id === 7  ? 'San Carlos' :
+                                        emps.camp_id === 4   ? 'Hinigaran' :
+                                        emps.camp_id === 12   ? 'Moises Padilla' :
+                                        emps.camp_id === 6   ? 'Ilog' :
+                                        emps.camp_id === 2   ? 'Candoni' :
+                                        emps.camp_id === 3   ? 'Cauayan' :
+                                        emps.camp_id === 8   ? 'Sipalay' :
+                                        emps.camp_id === 5 ? 'Hinobaan' :
+                                        emps.camp_id
                                     }
                                 </td>
-                                <td>${student.civil_status}</td>
+                                <td>${emps.civil_status}</td>
                                 <td>
                                     <div class="d-flex align-items-center gap-1">
                                         <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal" title="View Details">

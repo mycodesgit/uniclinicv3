@@ -44,6 +44,7 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::post('/student/show/moreinfo/historyupdate', [PatientsController::class, 'studentsHistory'])->name('patients.studentsHistory');
 
         Route::get('/employee/search', [PatientEmpController::class, 'search'])->name('patients.employee.search');
+        Route::get('/employee/details/{id}',[PatientEmpController::class,'showempdetails'])->name('patients.employee.empdetails');
 
         Route::get('/portal/provinces/{region_id}', [PatientsController::class, 'getPortalProvinces'])->name('getPortalProvinces');
         Route::get('/portal/cities/{province_id}', [PatientsController::class, 'getPortalCities'])->name('getPortalCities');
