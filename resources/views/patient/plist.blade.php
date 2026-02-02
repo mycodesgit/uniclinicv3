@@ -263,15 +263,15 @@
                                 <td>
                                     ${
                                         student.camp_id === 1   ? 'Main' :
-                                        student.camp_id === 'VC'   ? 'Victorias' :
-                                        student.camp_id === 'SCC'  ? 'San Carlos' :
-                                        student.camp_id === 'HC'   ? 'Hinigaran' :
-                                        student.camp_id === 'MP'   ? 'Moises Padilla' :
-                                        student.camp_id === 'IC'   ? 'Ilog' :
-                                        student.camp_id === 'CA'   ? 'Candoni' :
-                                        student.camp_id === 'CC'   ? 'Cauayan' :
-                                        student.camp_id === 'SC'   ? 'Sipalay' :
-                                        student.camp_id === 'HinC' ? 'Hinobaan' :
+                                        student.camp_id === 9   ? 'Victorias' :
+                                        student.camp_id === 7  ? 'San Carlos' :
+                                        student.camp_id === 4   ? 'Hinigaran' :
+                                        student.camp_id === 12   ? 'Moises Padilla' :
+                                        student.camp_id === 6   ? 'Ilog' :
+                                        student.camp_id === 2   ? 'Candoni' :
+                                        student.camp_id === 3   ? 'Cauayan' :
+                                        student.camp_id === 8   ? 'Sipalay' :
+                                        student.camp_id === 5 ? 'Hinobaan' :
                                         student.camp_id
                                     }
                                 </td>
