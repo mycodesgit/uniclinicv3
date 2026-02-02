@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientsController;
+use App\Http\Controllers\PatientEmpController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\PDFreportController;
 use App\Http\Controllers\MedicineController;
@@ -41,6 +42,8 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/students/{id}',[PatientsController::class,'showdetails'])->name('patients.details');
         Route::post('/student/show/moreinfo/update', [PatientsController::class, 'update'])->name('patients.update');
         Route::post('/student/show/moreinfo/historyupdate', [PatientsController::class, 'studentsHistory'])->name('patients.studentsHistory');
+
+        Route::get('/employee/search', [PatientEmpController::class, 'search'])->name('patients.employee.search');
 
         Route::get('/portal/provinces/{region_id}', [PatientsController::class, 'getPortalProvinces'])->name('getPortalProvinces');
         Route::get('/portal/cities/{province_id}', [PatientsController::class, 'getPortalCities'])->name('getPortalCities');

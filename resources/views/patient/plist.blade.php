@@ -46,7 +46,7 @@
                         <div class="card-body">
                             <form id="searchForm">
                                 <div class="d-flex align-items-center gap-4">
-                                    <input type="text" id="searchInput" class="form-control" placeholder="Search Patient Last Name or ID">
+                                    <input type="text" id="searchInput" class="form-control" placeholder="Search Patient Last Name or Student ID">
                                     <button type="submit" class="btn btn-primary">Search</button>
                                 </div>
                             </form>
@@ -73,6 +73,42 @@
                         <br>
                         <nav>
                             <ul class="pagination justify-content-center" id="paginationLinks"></ul>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="employees">
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="searchEmpForm">
+                                <div class="d-flex align-items-center gap-4">
+                                    <input type="text" id="searchEmpInput" class="form-control" placeholder="Search Patient Last Name or Employee ID">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                        </div><!-- end card body -->
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table datatable table-nowrap" id="">
+                            <thead class="">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>EmpID</th>
+                                    <th>Gender</th>
+                                    <th>Campus</th>
+                                    <th>Civil Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeesTable">
+                                <tr>
+                                    <td colspan="6" class="text-center">Search to load data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <nav>
+                            <ul class="pagination justify-content-center" id="paginationEmpLinks"></ul>
                         </nav>
                     </div>
                 </div>
@@ -141,6 +177,102 @@
                                         student.campus === 'SC'   ? 'Sipalay' :
                                         student.campus === 'HinC' ? 'Hinobaan' :
                                         student.campus
+                                    }
+                                </td>
+                                <td>${student.civil_status}</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal" title="View Details">
+                                            <i class="ti ti-eye" style="color: #fff"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    // Pagination links
+                    for (let i = 1; i <= res.last_page; i++) {
+                        pagination.innerHTML += `
+                            <li class="page-item ${i === res.current_page ? 'active' : ''}">
+                                <a class="page-link" href="#" data-page="${i}">${i}</a>
+                            </li>
+                        `;
+                    }
+
+                    // Pagination click events
+                    document.querySelectorAll('.page-link').forEach(link => {
+                        link.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            loadStudents(this.dataset.page);
+                        });
+                    });
+                });
+            }
+
+            // Button search
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                loadStudents(1);
+            });
+
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const patientDetailsRoute = "{{ route('patients.details', ['id' => ':id']) }}";
+            const form = document.getElementById('searchEmpForm');
+            const input = document.getElementById('searchEmpInput');
+            const tableBody = document.getElementById('employeesTable');
+            const pagination = document.getElementById('paginationLinks');
+
+            const searchRoute = "{{ route('patients.employee.search') }}";
+
+            function loadStudents(page = 1) {
+                const search = input.value.trim();
+
+                fetch(`${searchRoute}?search=${encodeURIComponent(search)}&page=${page}`, {
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(res => res.json())
+                .then(res => {
+
+                    tableBody.innerHTML = '';
+                    pagination.innerHTML = '';
+
+                    if (res.data.length === 0) {
+                        tableBody.innerHTML = `
+                            <tr>
+                                <td colspan="6" class="text-center">No records found</td>
+                            </tr>
+                        `;
+                        return;
+                    }
+
+
+                    // Populate table
+                    res.data.forEach(student => {
+                        const detailsUrl = patientDetailsRoute.replace(':id', student.id);
+                        tableBody.innerHTML += `
+                            <tr>
+                                <td>${student.lname}, ${student.fname}</td>
+                                <td>${student.emp_ID}</td>
+                                <td>${student.sex}</td>
+                                <td>
+                                    ${
+                                        student.camp_id === '1'   ? 'Main' :
+                                        student.camp_id === 'VC'   ? 'Victorias' :
+                                        student.camp_id === 'SCC'  ? 'San Carlos' :
+                                        student.camp_id === 'HC'   ? 'Hinigaran' :
+                                        student.camp_id === 'MP'   ? 'Moises Padilla' :
+                                        student.camp_id === 'IC'   ? 'Ilog' :
+                                        student.camp_id === 'CA'   ? 'Candoni' :
+                                        student.camp_id === 'CC'   ? 'Cauayan' :
+                                        student.camp_id === 'SC'   ? 'Sipalay' :
+                                        student.camp_id === 'HinC' ? 'Hinobaan' :
+                                        student.camp_id
                                     }
                                 </td>
                                 <td>${student.civil_status}</td>
