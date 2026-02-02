@@ -262,7 +262,7 @@
                                 <td>${student.sex}</td>
                                 <td>
                                     ${
-                                        student.camp_id === '1'   ? 'Main' :
+                                        student.camp_id === 1   ? 'Main' :
                                         student.camp_id === 'VC'   ? 'Victorias' :
                                         student.camp_id === 'SCC'  ? 'San Carlos' :
                                         student.camp_id === 'HC'   ? 'Hinigaran' :
