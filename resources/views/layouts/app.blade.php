@@ -266,7 +266,7 @@
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-md p-2">
                         
                             <div class="d-flex align-items-center bg-light rounded-3 p-2 mb-2">
-                                <img src="{{ asset('assets/img/doctors/doctor-01.jpg') }}" class="rounded-circle" width="42" height="42" alt="">
+                                <img src="{{ asset('assets/img/user.png') }}" class="rounded-circle" width="42" height="42" alt="">
                                 <div class="ms-2">
                                     <p class="fw-medium text-dark mb-0">Dr.Michael Smith</p>
                                     <span class="d-block fs-13">Cardiologist</span>
@@ -274,7 +274,7 @@
                             </div>
 
                             <!-- Item-->
-                            <a href="doctors-profile-settings.html" class="dropdown-item">
+                            <a href="#" class="dropdown-item">
                                 <i class="ti ti-user-circle me-1 align-middle"></i>
                                 <span class="align-middle">Profile Settings</span>
                             </a>
@@ -286,13 +286,13 @@
                             </div>
 
                             <!-- Item-->
-                            <a href="javascript:void(0);" class="dropdown-item">
+                            <a href="#" class="dropdown-item">
                                 <i class="ti ti-receipt me-1 align-middle"></i>
                                 <span class="align-middle">Activity Logs</span>
                             </a>
 
                              <!-- Item-->
-                             <a href="javascript:void(0);" class="dropdown-item">
+                             <a href="#" class="dropdown-item">
                                 <i class="ti ti-help me-1 align-middle"></i>
                                 <span class="align-middle">Help & Support</span>
                             </a>
