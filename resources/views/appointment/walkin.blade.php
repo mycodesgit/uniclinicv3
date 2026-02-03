@@ -16,6 +16,26 @@
         </div>
         <!-- End Page Header -->
 
+        <!-- tab start -->
+        <ul class="nav nav-tabs nav-bordered mb-3">
+            <li class="nav-item">
+                <a href="#students" data-bs-toggle="tab" aria-expanded="false" class="nav-link active bg-transparent">
+                    <span>Students</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#employees" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
+                    <span>Employees</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#outsiders" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
+                    <span>Guest</span>
+                </a>
+            </li>
+        </ul>
+        <!-- tab end -->
+
         <!-- row start -->
         <div class="row">
             <div class="tab-content">
@@ -37,6 +57,7 @@
                                     <th>Name</th>
                                     <th>StudID</th>
                                     <th>Gender</th>
+                                    <th>Campus</th>
                                     <th>Civil Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -52,6 +73,62 @@
                             <ul class="pagination justify-content-center" id="paginationLinks"></ul>
                         </nav>
                     </div>
+                </div>
+
+                <div class="tab-pane" id="employees">
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="searchEmpForm">
+                                <div class="d-flex align-items-center gap-4">
+                                    <input type="text" id="searchEmpInput" class="form-control" placeholder="Search Patient Last Name or Employee ID">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                        </div><!-- end card body -->
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table datatable table-nowrap" id="">
+                            <thead class="">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>EmpID</th>
+                                    <th>Gender</th>
+                                    <th>Campus</th>
+                                    <th>Civil Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeesTable">
+                                <tr>
+                                    <td colspan="6" class="text-center">Search to load data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <nav>
+                            <ul class="pagination justify-content-center" id="paginationEmpLinks"></ul>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="outsiders">
+                    <div class="table-responsive">
+                        <table id="guesttabletab" class="table datatable table-nowrap" style="width: 100%">
+                            <thead class="">
+                                <tr>
+                                    <th>Patient ID</th>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Civil Status</th>
+                                    <th>Date Added</th>
+                                    <th class="text-center" width="7%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 10pt;">
+                                
+                            </tbody>
+                        </table>
+                    </div> 
                 </div>
             </div>  
         </div>
@@ -100,6 +177,21 @@
                                 <td>${student.lname}, ${student.fname}</td>
                                 <td>${student.stud_id}</td>
                                 <td>${student.gender}</td>
+                                <td>
+                                    ${
+                                        student.campus === 'MC'   ? 'Main' :
+                                        student.campus === 'VC'   ? 'Victorias' :
+                                        student.campus === 'SCC'  ? 'San Carlos' :
+                                        student.campus === 'HC'   ? 'Hinigaran' :
+                                        student.campus === 'MP'   ? 'Moises Padilla' :
+                                        student.campus === 'IC'   ? 'Ilog' :
+                                        student.campus === 'CA'   ? 'Candoni' :
+                                        student.campus === 'CC'   ? 'Cauayan' :
+                                        student.campus === 'SC'   ? 'Sipalay' :
+                                        student.campus === 'HinC' ? 'Hinobaan' :
+                                        student.campus
+                                    }
+                                </td>
                                 <td>${student.civil_status}</td>
                                 <td>
                                     <div class="d-flex align-items-center gap-1">
