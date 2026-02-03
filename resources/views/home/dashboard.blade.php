@@ -68,8 +68,7 @@
                             <div>
                                 <p class="mb-1">Walk-In Appointments</p>
                                 <div class="d-flex align-items-center gap-1">
-                                    <h3 class="fw-bold mb-0">658</h3>
-                                    <span class="badge fw-medium bg-success flex-shrink-0">+95%</span>
+                                    <h3 class="fw-bold mb-0">0</h3>
                                 </div>
                             </div>
                             <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-calendar-heart fs-20"></i></span>
@@ -88,8 +87,7 @@
                             <div>
                                 <p class="mb-1">Online Appointments</p>
                                 <div class="d-flex align-items-center gap-1">
-                                    <h3 class="fw-bold mb-0">658</h3>
-                                    <span class="badge fw-medium bg-success flex-shrink-0">+95%</span>
+                                    <h3 class="fw-bold mb-0">0</h3>
                                 </div>
                             </div>
                             <span class="avatar border border-primary text-primary rounded-2 flex-shrink-0"><i class="ti ti-calendar-heart fs-20"></i></span>
