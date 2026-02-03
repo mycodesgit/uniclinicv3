@@ -168,8 +168,6 @@
 
                         <input type="hidden" name="stid" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
                         <input type="hidden" name="stdntID" class="form-control rounded bg-light" value="{{ $patients->stud_id }}" readonly>
-                        <input type="hidden" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly>
-                        <input type="hidden" name="time" class="form-control form-control-sm" value="{{ date('h:i A') }}"  readonly>
 
                         <!-- start row-->
                         <div class="row">
@@ -187,6 +185,24 @@
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded bg-light" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}" readonly>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Date<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="date" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Time<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="time" name="time" class="form-control form-control-sm" value="{{ date('h:i A') }}">
                                     </div>
                                 </div>
                             </div> <!-- end col-->
@@ -384,8 +400,6 @@
 
                         <input type="hidden" name="stid" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
                         <input type="hidden" name="stdntID" class="form-control rounded bg-light" value="{{ $patients->stud_id }}" readonly>
-                        <input type="hidden" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly>
-                        <input type="hidden" name="time" class="form-control form-control-sm" value="{{ date('h:i A') }}"  readonly>
 
                         <!-- start row-->
                         <div class="row">
@@ -403,6 +417,24 @@
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded bg-light" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Date<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="date" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Time<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="time" name="time" class="form-control form-control-sm" value="{{ date('h:i A') }}">
                                     </div>
                                 </div>
                             </div> <!-- end col-->
