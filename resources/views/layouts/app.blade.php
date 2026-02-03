@@ -98,9 +98,7 @@
                         <i class="ti ti-arrow-right"></i>
                     </button>  
 					
-                    <!-- Search -->
-                    <div class="me-auto d-flex align-items-center header-search d-lg-flex d-none">
-                        <!-- Search -->
+                    {{-- <div class="me-auto d-flex align-items-center header-search d-lg-flex d-none">
                         <div class="input-icon-start position-relative me-2">
                             <span class="input-icon-addon">
                                 <i class="ti ti-search"></i>
@@ -108,8 +106,7 @@
                            <input type="text" class="form-control shadow-sm" placeholder="Search">
                            <span class="input-icon-addon text-dark shadow fs-18 d-inline-flex p-0 header-search-icon"><i class="ti ti-command"></i></span>
                         </div>
-                        <!-- /Search -->
-                    </div>
+                    </div> --}}
 					
                 </div>
 
