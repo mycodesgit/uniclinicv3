@@ -352,7 +352,7 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Lastname<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control form-control-sm rounded" name="lname" required>
+                                <input type="text" class="form-control form-control-sm rounded" oninput="this.value = this.value.toUpperCase()" name="lname" required>
                             </div>
                         </div>
                     </div> <!-- end col-->
@@ -361,7 +361,7 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Firstname<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control form-control-sm rounded" name="fname" required>
+                                <input type="text" class="form-control form-control-sm rounded" oninput="this.value = this.value.toUpperCase()" name="fname" required>
                             </div>
                         </div>
                     </div> <!-- end col-->
@@ -370,7 +370,7 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Middlename<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control form-control-sm rounded" name="mname">
+                                <input type="text" class="form-control form-control-sm rounded" oninput="this.value = this.value.toUpperCase()" name="mname">
                             </div>
                         </div>
                     </div> <!-- end col-->
