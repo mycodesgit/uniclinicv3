@@ -116,12 +116,12 @@
                 <div class="d-flex align-items-center">
 				
                     <!-- Search for Mobile -->
-                    {{-- <div class="header-item d-flex d-lg-none me-2">
+                    <div class="header-item d-flex d-lg-none me-2">
                         <button class="topbar-link btn btn-icon" data-bs-toggle="modal" data-bs-target="#searchModal" type="button">
                             <i class="ti ti-search fs-16"></i>
                         </button>
                     </div>
-
+                    {{-- 
                     <div class="header-item">
                         <div class="dropdown me-2">
                             <a href="doctors-appointments.html" class="btn topbar-link"><i class="ti ti-calendar-due"></i></a>
