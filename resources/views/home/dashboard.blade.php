@@ -9,10 +9,10 @@
             <div>
                 <h4 class="fw-bold mb-0">Dashboard</h4>
             </div>
-            <div class="d-flex align-items-center flex-wrap gap-2">
+            {{-- <div class="d-flex align-items-center flex-wrap gap-2">
                 <a href="javascript:void(0);" class="btn btn-primary d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_appointment"><i class="ti ti-plus me-1"></i>New Appointment</a>
                 <a href="javascript:void(0);" class="btn btn-outline-white bg-white d-inline-flex align-items-center"><i class="ti ti-calendar-time me-1"></i>Schedule Availability</a>
-            </div>
+            </div> --}}
         </div>
         <!-- End Page Header -->
 
