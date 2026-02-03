@@ -116,7 +116,7 @@
                 <div class="d-flex align-items-center">
 				
                     <!-- Search for Mobile -->
-                    <div class="header-item d-flex d-lg-none me-2">
+                    {{-- <div class="header-item d-flex d-lg-none me-2">
                         <button class="topbar-link btn btn-icon" data-bs-toggle="modal" data-bs-target="#searchModal" type="button">
                             <i class="ti ti-search fs-16"></i>
                         </button>
@@ -132,27 +132,24 @@
                         <div class="dropdown me-2">
                             <a href="doctors-profile-settings.html" class="btn topbar-link"><i class="ti ti-settings-2"></i></a>
                         </div> 
-                    </div>                    
+                    </div> --}}
 
                     <!-- Light/Dark Mode Button -->
-                    <div class="header-item d-none d-sm-flex me-2">
+                    {{-- <div class="header-item d-none d-sm-flex me-2">
                         <button class="topbar-link btn btn-icon topbar-link" id="light-dark-mode" type="button">
                             <i class="ti ti-moon fs-16"></i>
                         </button>
-                    </div>
+                    </div> --}}
                     
 					
 					<!-- Notification Dropdown -->
-                    <div class="header-item">
+                    {{-- <div class="header-item">
 						<div class="dropdown me-3">
-						
 							<button class="topbar-link btn btn-icon topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown" data-bs-offset="0,24" type="button" aria-haspopup="false" aria-expanded="false">
 								<i class="ti ti-bell-check fs-16 animate-ring"></i>
 								<span class="notification-badge"></span>
 							</button>
-							
 							<div class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-lg" style="min-height: 300px;">
-							
 								<div class="p-2 border-bottom">
 									<div class="row align-items-center">
 										<div class="col">
@@ -160,11 +157,7 @@
 										</div>
 									</div>
 								</div>
-								
-								<!-- Notification Body -->
 								<div class="notification-body position-relative z-2 rounded-0" data-simplebar>
-								 
-									<!-- Item-->
 									<div class="dropdown-item notification-item py-3 text-wrap border-bottom" id="notification-1">
 										<div class="d-flex">
 											<div class="me-2 position-relative flex-shrink-0">
@@ -188,7 +181,6 @@
 										</div>
 									</div>
 							
-									<!-- Item-->
 									<div class="dropdown-item notification-item py-3 text-wrap border-bottom" id="notification-2">
 										<div class="d-flex">
 											<div class="me-2 position-relative flex-shrink-0">
@@ -212,7 +204,6 @@
 										</div>
 									</div>
 									
-									<!-- Item-->
 									<div class="dropdown-item notification-item py-3 text-wrap border-bottom" id="notification-3">
 										<div class="d-flex">
 											<div class="me-2 position-relative flex-shrink-0">
@@ -236,7 +227,6 @@
 										</div>
 									</div>
 									
-									<!-- Item-->
 									<div class="dropdown-item notification-item py-3 text-wrap" id="notification-4">
 										<div class="d-flex">
 											<div class="me-2 position-relative flex-shrink-0">
@@ -259,19 +249,16 @@
 											</div>
 										</div>
 									</div>
-									 
 								</div>
 								
-								<!-- View All-->
 								<div class="p-2 rounded-bottom border-top text-center">
 									<a href="doctors-notifications.html" class="text-center text-decoration-underline fs-14 mb-0">
 										View All Notifications
 									</a>
 								</div> 
-								
 							</div>
 						</div>
-					</div>
+					</div> --}}
 					
 					<!-- User Dropdown -->
 					<div class="dropdown profile-dropdown d-flex align-items-center justify-content-center">
