@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('guestpatient', function (Blueprint $table) {
             $table->id();
+            $table->string('patientID')->unique();
             $table->string('lname');
             $table->string('fname');
             $table->string('mname');

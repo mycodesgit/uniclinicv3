@@ -474,6 +474,7 @@
     @endif
 
     @if (request()->routeIs('patients.students'))
+        @include('script.patient.guestscript')
     @endif
     @if (request()->routeIs('patients.details'))
         @include('script.patient.studentscript')

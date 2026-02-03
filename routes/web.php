@@ -43,6 +43,9 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::post('/student/show/moreinfo/update', [PatientsController::class, 'update'])->name('patients.update');
         Route::post('/student/show/moreinfo/historyupdate', [PatientsController::class, 'studentsHistory'])->name('patients.studentsHistory');
 
+        Route::get('/guest',[PatientsController::class,'showguest'])->name('patients.showguest');
+        Route::post('/guest/add',[PatientsController::class,'create'])->name('patients.create');
+
         Route::get('/employee/search', [PatientEmpController::class, 'search'])->name('patients.employee.search');
         Route::get('/employee/details/{id}',[PatientEmpController::class,'showempdetails'])->name('patients.employee.empdetails');
 

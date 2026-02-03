@@ -177,7 +177,7 @@
                                 <div class="mb-3">
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation ID <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" name="consultID" class="form-control rounded bg-light" value="STUD-CWI-{{ \Carbon\Carbon::now()->format('Ymd') }}-{{ strtoupper(Str::random(10)) }}" readonly>
+                                        <input type="text" name="consultID" class="form-control rounded bg-light" value="STUD-CWI-{{ \Carbon\Carbon::now()->format('Ymd') }}-{{ substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 10) }}" readonly>
                                     </div>
                                 </div>
                             </div> <!-- end col-->

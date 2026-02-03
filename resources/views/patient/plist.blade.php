@@ -10,9 +10,9 @@
                 <h4 class="fw-bold mb-0">Patients</h4>
             </div>
             <div class="d-flex align-items-center flex-wrap gap-2">
-                <a href="javascript:void(0);" class="btn btn-teal d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_patient_outsider">
+                <button id="btn-guestpatient" type="button" class="btn btn-teal d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_patient_outsider">
                     <i class="ti ti-plus me-1"></i>New Guest Patient
-                </a>
+                </button>
             </div>
         </div>
         <!-- End Page Header -->
@@ -343,23 +343,16 @@
             </div>
         </div>
         <div class="offcanvas-body pt-3">
-            <form action="#">
+            <form id="guestpatientform" method="POST">
+                @csrf
+
                 <!-- start row-->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="mb-3">
-                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient ID <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <input type="text" class="form-control rounded bg-light" value="AP234354">
-                            </div>
-                        </div>
-                    </div> <!-- end col-->
-
-                    <div class="col-lg-12">
-                        <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Lastname<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control rounded">
+                                <input type="text" class="form-control rounded" name="lname">
                             </div>
                         </div>
                     </div> <!-- end col-->
@@ -368,7 +361,7 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Firstname<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control rounded">
+                                <input type="text" class="form-control rounded" name="fname">
                             </div>
                         </div>
                     </div> <!-- end col-->
@@ -377,135 +370,128 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Middlename<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control rounded">
+                                <input type="text" class="form-control rounded" name="mname">
                             </div>
                         </div>
                     </div> <!-- end col-->
 
                     <div class="col-lg-12">
                         <div class="mb-3">
-                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Appointment Type <span class="text-danger">*</span></label>
-                            <div class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle form-control rounded d-flex align-items-center justify-content-between border" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
-                                    Select
-                                </a>
-                                <div class="dropdown-menu shadow-lg w-100 dropdown-info">
-                                    <div class="mb-3">
-                                        <div class="input-icon-start position-relative">
-                                            <span class="input-icon-addon fs-12">
-                                                <i class="ti ti-search"></i>
-                                            </span>
-                                            <input type="text" class="form-control form-control-sm" placeholder="Select">
-                                        </div>
-                                    </div>
-                                    <ul class="mb-3 list-style-none">
-                                        <li>
-                                            <label class="dropdown-item px-2 d-flex align-items-center text-dark">
-                                                <input class="form-check-input m-0 me-2" type="checkbox">
-                                                In Person
-                                            </label>
-                                        </li>
-                                        <li class="list-none">
-                                            <label class="dropdown-item px-2 d-flex align-items-center text-dark">
-                                                <input class="form-check-input m-0 me-2" type="checkbox">
-                                                Online
-                                            </label>
-                                        </li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- end col-->
-
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                            <label class="form-label mb-1 text-dark fs-14 fw-medium"> Date of Appointment <span class="text-danger">*</span></label>
-                            <div class="input-icon-end position-relative">  
-                                <input type="text" class="form-control datetimepicker" placeholder="dd/mm/yyyy">
-                                <span class="input-icon-addon">
-                                    <i class="ti ti-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div> <!-- end col-->
-
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                            <label class="form-label mb-1 text-dark fs-14 fw-medium"> Time <span class="text-danger">*</span></label>
-                            <div class="input-icon-end position-relative">  
-                                <input type="text" class="form-control timepicker" placeholder="-- : --">
-                                <span class="input-icon-addon">
-                                    <i class="ti ti-clock"></i>
-                                </span>
+                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Extension Name<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <select name="ext" id="extension_name" class="form-control rounded">
+                                    <option value="">Select Extension Name</option>
+                                    <option value="Jr.">Jr.</option>
+                                    <option value="Sr.">Sr.</option>
+                                    <option value="III">III</option>
+                                </select>
                             </div>
                         </div>
                     </div> <!-- end col-->
 
                     <div class="col-lg-12">
                         <div class="mb-3">
-                            <div>
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Appointment Reason</label>
-                                <textarea rows="4" class="form-control rounded"> </textarea>
+                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Gender<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <select name="gender" id="gender" class="form-control rounded">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
                             </div>
                         </div>
                     </div> <!-- end col-->
 
                     <div class="col-lg-12">
                         <div class="mb-3">
-                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Status<span class="text-danger">*</span></label>
-                            <div class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle form-control rounded d-flex align-items-center justify-content-between border" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
-                                    Select
-                                </a>
-                                <div class="dropdown-menu shadow-lg w-100 dropdown-info">
-                                    <div class="mb-3">
-                                        <div class="input-icon-start position-relative">
-                                            <span class="input-icon-addon fs-12">
-                                                <i class="ti ti-search"></i>
-                                            </span>
-                                            <input type="text" class="form-control form-control-sm" placeholder="Select">
-                                        </div>
-                                    </div>
-                                    <ul class="mb-3 list-style-none">
-                                        <li>
-                                            <label class="dropdown-item px-2 d-flex align-items-center text-dark">
-                                                <input class="form-check-input m-0 me-2" type="checkbox">
-                                                Checked Out
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="dropdown-item px-2 d-flex align-items-center text-dark">
-                                                <input class="form-check-input m-0 me-2" type="checkbox" checked>
-                                                Checked In
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="dropdown-item px-2 d-flex align-items-center text-dark">
-                                                <input class="form-check-input m-0 me-2" type="checkbox">
-                                                Cancelled
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="dropdown-item px-2 d-flex align-items-center text-dark">
-                                                <input class="form-check-input m-0 me-2" type="checkbox">
-                                                Scheduled
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Civil Status<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <select name="civil_status" id="civil_status" class="form-control rounded">
+                                    <option value="">Select Civil Status</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Widowed">Widowed</option>
+                                    <option value="Separated">Separated</option>
+                                </select>
                             </div>
                         </div>
                     </div> <!-- end col-->
+
+                    <div class="col-lg-12">
+                        <div class="mb-3">
+                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Address<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input type="text" name="address" class="form-control readonlytext" id="viewdatastudAddress" readonly>
+                            </div>
+                        </div>
+                    </div> <!-- end col-->
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label mb-1 fw-medium">Region<span class="text-danger ms-1">*</span></label>
+                            <select id="region" class="form-control form-control-sm select2bs4">
+                                <option value="">Select Region</option>
+                                @foreach($regions as $region)
+                                    <option value="{{ $region->region_id }}" data-name="{{ $region->name }}">{{ $region->name }}</option>
+                                @endforeach
+                            </select>
+                            <input type="hidden" id="region_name" name="region">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label mb-1 fw-medium">Province<span class="text-danger ms-1">*</span></label>
+                            <select id="province" class="form-control form-control-sm select2bs4">
+                                <option value="">Select Province</option>
+                            </select>
+                            <input type="hidden" id="province_name" class="update-field" name="province">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label mb-1 fw-medium">City/Municipality<span class="text-danger ms-1">*</span></label>
+                            <select id="city" class="form-control form-control-sm select2bs4">
+                                <option value="">Select City</option>
+                            </select>
+                            <input type="hidden" id="city_name" class="update-field" name="city">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label mb-1 fw-meduim">Barangay<span class="text-danger ms-1">*</span></label>
+                            <select id="barangay" class="form-control form-control-sm select2bs4">
+                                <option value="">Select Barangay</option>
+                            </select>
+                            <input type="hidden" id="brgy_name" class="update-field" name="brgy">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label mb-1 fw-meduim">House No. / Block / Purok<span class="text-danger ms-1">*</span></label>
+                            <input type="text" name="hnum" id="viewdatastudHnum" class="form-control form-control-sm update-field" placeholder="House No. / Block / Purok" style="text-transform: uppercase;">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label mb-1 fw-meduim">Zipcode<span class="text-danger ms-1">*</span></label>
+                            <input type="text" name="zcode" id="zipcode" class="form-control form-control-sm readonlytext update-field" readonly >
+                        </div>
+                    </div>
+
                 </div>
                 <!-- end row-->
+                <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
+                    <div class=" d-flex justify-content-end gap-2">
+                        <a href="javascript:void(0);" class="btn btn-light btm-md">Cancel</a>
+                        <button type="submit" class="btn btn-primary btm-md">Save Data</button>
+                    </div>
+                </div>
             </form>
-        </div>
-        <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
-            <div class=" d-flex justify-content-end gap-2">
-                <a href="javascript:void(0);" class="btn btn-light btm-md">Cancel</a>
-                <button data-bs-dismiss="offcanvas" class="btn btn-primary btm-md" id="filter-submit">Save Data</button>
-            </div>
         </div>
     </div>
 @endsection

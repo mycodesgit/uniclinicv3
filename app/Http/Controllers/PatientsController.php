@@ -15,6 +15,7 @@ use App\Models\EnrollmentDB\Student;
 use App\Models\ScheduleDB\College;
 use App\Models\ScheduleDB\EnPrograms;
 
+use App\Models\ClinicDB\GuestPatient;
 use App\Models\ClinicDB\Patientvisit;
 use App\Models\ClinicDB\PatientReferral;
 use App\Models\ClinicDB\Medicine;
@@ -30,7 +31,9 @@ class PatientsController extends Controller
 {
     public function index()
     {
-        return view('patient.plist');
+        $regions = Region::all();
+
+        return view('patient.plist', compact('regions'));
     }
 
     public function show(Request $request)
@@ -51,6 +54,13 @@ class PatientsController extends Controller
         return response()->json($students);
     }
 
+    public function showguest()
+    {
+        $data = GuestPatient::all();
+
+        return response()->json(['data' => $data]);
+    }
+
     public function showdetails($id)
     {
         $patients = Student::findOrFail($id);
@@ -66,6 +76,64 @@ class PatientsController extends Controller
 
         return view('patient.details', compact('patients', 'regions', 'patientVisit'));
     }
+
+    public function create(Request $request)
+{
+    if ($request->isMethod('post')) {
+
+        $request->validate([
+            'lname' => 'required',
+            'fname' => 'required',
+            'mname' => 'required',
+        ]);
+
+        $lname = $request->input('lname');
+        $fname = $request->input('fname');
+        $mname = $request->input('mname');
+
+        // ✅ KEEP THIS (unchanged)
+        $existingGuestPatient = GuestPatient::where('lname', $lname)
+            ->where('fname', $fname)
+            ->where('mname', $mname)
+            ->first();
+
+        if ($existingGuestPatient) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Guest Patient already exists'
+            ], 404);
+        }
+
+        try {
+            // ✅ SAFE auto-increment
+            $lastPatient = GuestPatient::orderBy('id', 'desc')->first();
+            $nextNumber = $lastPatient ? $lastPatient->id + 1 : 1;
+
+            GuestPatient::create([
+                'patientID' => 'GSTP-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT),
+                'lname' => $lname,
+                'fname' => $fname,
+                'mname' => $mname,
+                'ext' => $request->input('ext'),
+                'gender' => $request->input('gender'),
+                'civil_status' => $request->input('civil_status'),
+                'address' => $request->input('address'),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Guest Patient created successfully'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Failed to create Guest Patient'
+            ], 500);
+        }
+    }
+}
+
 
     public function getPortalProvinces($region_id) 
     {
