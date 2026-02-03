@@ -352,7 +352,7 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Lastname<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control rounded" name="lname">
+                                <input type="text" class="form-control form-control-sm rounded" name="lname" required>
                             </div>
                         </div>
                     </div> <!-- end col-->
@@ -361,7 +361,7 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Firstname<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control rounded" name="fname">
+                                <input type="text" class="form-control form-control-sm rounded" name="fname" required>
                             </div>
                         </div>
                     </div> <!-- end col-->
@@ -370,7 +370,7 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Middlename<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control rounded" name="mname">
+                                <input type="text" class="form-control form-control-sm rounded" name="mname">
                             </div>
                         </div>
                     </div> <!-- end col-->
@@ -379,7 +379,7 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Extension Name<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <select name="ext" id="extension_name" class="form-control rounded">
+                                <select name="ext" id="extension_name" class="form-control form-control-sm rounded">
                                     <option value="">Select Extension Name</option>
                                     <option value="Jr.">Jr.</option>
                                     <option value="Sr.">Sr.</option>
@@ -393,7 +393,7 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Gender<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <select name="gender" id="gender" class="form-control rounded">
+                                <select name="gender" id="gender" class="form-control form-control-sm rounded" required>
                                     <option value="">Select Gender</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -406,7 +406,7 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Civil Status<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <select name="civil_status" id="civil_status" class="form-control rounded">
+                                <select name="civil_status" id="civil_status" class="form-control form-control-sm rounded" required>
                                     <option value="">Select Civil Status</option>
                                     <option value="Single">Single</option>
                                     <option value="Married">Married</option>
@@ -421,7 +421,7 @@
                         <div class="mb-3">
                             <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Address<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" name="address" class="form-control readonlytext" id="viewdatastudAddress" readonly>
+                                <input type="text" name="address" class="form-control form-control-sm readonlytext" id="viewdatastudAddress" readonly>
                             </div>
                         </div>
                     </div> <!-- end col-->
