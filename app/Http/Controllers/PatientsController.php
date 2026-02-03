@@ -85,6 +85,8 @@ class PatientsController extends Controller
             'lname' => 'required',
             'fname' => 'required',
             'mname' => 'required',
+            'gender' => 'required',
+            'civil_status' => 'required',
         ]);
 
         $lname = $request->input('lname');
