@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('patientvisits', function (Blueprint $table) {
             $table->id();
-            $table->string('stid')->nullable();
+            $table->string('stid')->nullable()->index();
             $table->string('stdntID')->nullable();
+            $table->string('consultID')->nullable();
             $table->date('date')->nullable();
             $table->time('time')->nullable();
             $table->text('chief_complaint')->nullable();

@@ -73,7 +73,7 @@ class AppointmentsController extends Controller
             ->unique();
 
         $complaints = $complaintIds->isNotEmpty()
-            ? Complaint::whereIn('id', $complaintIds)->pluck('complaint', 'id')
+            ? Complaint::whereIn('id', $complaintIds)->pluck('complaintname', 'id')
             : collect();
 
         $medicines = $medicineIds->isNotEmpty()
@@ -88,6 +88,7 @@ class AppointmentsController extends Controller
                 'time'      => $visit->time,
                 'treatment' => $visit->treatment,
                 'qty'       => $visit->qty,
+                'consultID' => $visit->consultID,
 
                 'lname' => $student->lname,
                 'fname' => $student->fname,
@@ -115,6 +116,7 @@ class AppointmentsController extends Controller
         $patient = new Patientvisit();
         $patient->stid = $request->input('stid');
         $patient->stdntID = $request->input('stdntID');
+        $patient->consultID = $request->input('consultID');
         $patient->date = $request->input('date');
         $patient->time = $request->input('time');
 

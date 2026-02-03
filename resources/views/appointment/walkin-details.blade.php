@@ -177,7 +177,7 @@
                                 <div class="mb-3">
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation ID <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control rounded bg-light" value="AP234354">
+                                        <input type="text" name="consultID" class="form-control rounded bg-light" value="STUD-CWI-{{ \Carbon\Carbon::now()->format('Ymd') }}-{{ strtoupper(Str::random(10)) }}" readonly>
                                     </div>
                                 </div>
                             </div> <!-- end col-->
@@ -186,7 +186,7 @@
                                 <div class="mb-3">
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient<span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control rounded bg-light" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}">
+                                        <input type="text" class="form-control rounded bg-light" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}" readonly>
                                     </div>
                                 </div>
                             </div> <!-- end col-->
@@ -197,7 +197,7 @@
                                     <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="chief_complaint[]" multiple>
                                         @foreach ($complaints as $complaint)
                                             <option style="color:black" value="{{ $complaint->id }}">
-                                                {{ $complaint->complaint }}
+                                                {{ $complaint->complaintname }}
                                             </option>
                                         @endforeach
                                     </select>
