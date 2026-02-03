@@ -121,7 +121,7 @@
                             <i class="ti ti-search fs-16"></i>
                         </button>
                     </div>
-                    {{-- 
+                    
                     <div class="header-item">
                         <div class="dropdown me-2">
                             <a href="doctors-appointments.html" class="btn topbar-link"><i class="ti ti-calendar-due"></i></a>
@@ -132,7 +132,7 @@
                         <div class="dropdown me-2">
                             <a href="doctors-profile-settings.html" class="btn topbar-link"><i class="ti ti-settings-2"></i></a>
                         </div> 
-                    </div> --}}
+                    </div>
 
                     <!-- Light/Dark Mode Button -->
                     {{-- <div class="header-item d-none d-sm-flex me-2">
