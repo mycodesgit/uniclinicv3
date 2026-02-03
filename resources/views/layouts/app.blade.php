@@ -263,17 +263,13 @@
                             <img src="{{ asset('assets/img/user.png') }}" width="32" class="rounded-circle d-flex" alt="user-image">
                             <span class="online text-success"><i class="ti ti-circle-filled d-flex bg-white rounded-circle border border-1 border-white"></i></span>
                         </a>
-                        <div class="ms-2">
-                            <p class="fw-medium text-dark mb-0">Dr.Michael Smith</p>
-                            <span class="d-block fs-13">Cardiologist</span>
-                        </div>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-md p-2">
                         
                             <div class="d-flex align-items-center bg-light rounded-3 p-2 mb-2">
                                 <img src="{{ asset('assets/img/user.png') }}" class="rounded-circle" width="42" height="42" alt="">
                                 <div class="ms-2">
-                                    <p class="fw-medium text-dark mb-0">Dr.Michael Smith</p>
-                                    <span class="d-block fs-13">Cardiologist</span>
+                                    <p class="fw-medium text-dark mb-0">{{ Auth::guard('web')->user()->fname }} {{ Auth::guard('web')->user()->lname }}</p>
+                                    <span class="d-block fs-13">{{ Auth::guard('web')->user()->role }}</span>
                                 </div>
                             </div>
 
