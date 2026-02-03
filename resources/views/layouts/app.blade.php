@@ -116,12 +116,12 @@
                 <div class="d-flex align-items-center">
 				
                     <!-- Search for Mobile -->
-                    <div class="header-item d-flex d-lg-none me-2">
+                    {{-- <div class="header-item d-flex d-lg-none me-2">
                         <button class="topbar-link btn btn-icon" data-bs-toggle="modal" data-bs-target="#searchModal" type="button">
                             <i class="ti ti-search fs-16"></i>
                         </button>
                     </div>
-                    
+
                     <div class="header-item">
                         <div class="dropdown me-2">
                             <a href="doctors-appointments.html" class="btn topbar-link"><i class="ti ti-calendar-due"></i></a>
@@ -132,14 +132,14 @@
                         <div class="dropdown me-2">
                             <a href="doctors-profile-settings.html" class="btn topbar-link"><i class="ti ti-settings-2"></i></a>
                         </div> 
-                    </div>
+                    </div> --}}
 
                     <!-- Light/Dark Mode Button -->
-                    {{-- <div class="header-item d-none d-sm-flex me-2">
+                    <div class="header-item d-none d-sm-flex me-2">
                         <button class="topbar-link btn btn-icon topbar-link" id="light-dark-mode" type="button">
                             <i class="ti ti-moon fs-16"></i>
                         </button>
-                    </div> --}}
+                    </div>
                     
 					
 					<!-- Notification Dropdown -->
