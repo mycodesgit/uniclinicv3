@@ -11,6 +11,7 @@ use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\PDFreportController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,5 +80,9 @@ Route::group(['middleware'=>['login_auth']],function(){
     Route::prefix('/generate')->group(function () {
         Route::get('/reports/patientdata',[ReportsController::class,'patientdatarep'])->name('reports.patientdatarep');
         Route::get('/reports/patientdata/details/{id}',[ReportsController::class,'walkinconsultdetails'])->name('reports.patientdatarep.details');
+    });
+
+    Route::prefix('/users')->group(function () {
+        Route::get('/list',[UserController::class,'index'])->name('users.list');
     });
 });

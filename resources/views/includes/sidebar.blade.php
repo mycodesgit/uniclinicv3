@@ -36,6 +36,14 @@
                     <i class="ti ti-file"></i><span>Reports</span>
                 </a>
             </li>
+            
+            @if(Auth::guard('web')->user()->role == 'Administrator')
+                <li class="{{ request()->is('users/*') ? 'active' : '' }}">
+                    <a href="{{ route('users.list') }}">
+                        <i class="ti ti-users"></i><span>Users</span>
+                    </a>
+                </li>
+            @endif
         </ul>
     </li>
                     
