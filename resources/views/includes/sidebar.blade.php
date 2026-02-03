@@ -32,7 +32,7 @@
                 </a>
             </li>
             <li class="{{ request()->is('generate/*') ? 'active' : '' }}">
-                <a href="{{ route('reports.patientdatarep') }}">
+                <a href="#">
                     <i class="ti ti-file"></i><span>Reports</span>
                 </a>
             </li>
