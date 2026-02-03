@@ -60,6 +60,19 @@
         .toast-top-center {
             margin-top: 45px;
         }
+        ::-webkit-scrollbar {
+            width: 5px !important;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1 !important;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888 !important;
+            border-radius: 5px !important;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555 !important;
+        }
     </style>
 
 </head>
