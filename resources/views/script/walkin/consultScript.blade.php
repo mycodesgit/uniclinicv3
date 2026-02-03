@@ -176,7 +176,7 @@
 
 
     $(document).ready(function() {
-        $('#referralForm').submit(function(event) {
+        $('#adPReferral').submit(function(event) {
             event.preventDefault();
             var formData = $(this).serialize();
 
@@ -189,7 +189,7 @@
                         toastr.success(response.message);
                         console.log(response);
                         $(document).trigger('referralAdded');
-                        $('#addPatientReferralModal').modal('hide');
+                        $('#centermodalwalkinreferral').modal('hide');
                         $('textarea[name="reasonrefer"]').val('');
                         $('textarea[name="tentdiagnose"]').val('');
                         $('textarea[name="treatmentmedgiven"]').val('');

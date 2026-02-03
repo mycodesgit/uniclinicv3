@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('stid')->nullable();
             $table->string('stdntID')->nullable();
+            $table->string('referralID')->nullable();
             $table->date('date')->nullable();
             $table->string('time')->nullable();
             $table->string('bp')->nullable();

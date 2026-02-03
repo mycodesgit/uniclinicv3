@@ -258,6 +258,7 @@ class AppointmentsController extends Controller
                 PatientReferral::create([
                     'stid' => $request->input('stid'),
                     'stdntID' => $request->input('stdntID'),
+                    'referralID' => $request->input('referralID'),
                     'date' => $request->input('date'),
                     'time' => $request->input('time'),
                     'bp' => $request->input('bp'),

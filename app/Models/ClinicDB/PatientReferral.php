@@ -14,6 +14,7 @@ class PatientReferral extends Model
     protected $fillable=[
         'stid',
         'stdntID',
+        'referralID',
         'date',
         'time',
         'bp',
