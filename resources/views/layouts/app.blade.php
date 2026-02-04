@@ -489,6 +489,9 @@
     @if (request()->routeIs('medicine.list'))
         @include('script.med.medScript')
     @endif
+    @if (request()->routeIs('users.list'))
+        @include('script.userl.usersscript')
+    @endif
 
 </body>
 

@@ -159,7 +159,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myCenterModalLabel">Add New Consultation</h4>
+                    <h6 class="modal-title" id="myCenterModalLabel">Add New Consultation</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -391,7 +391,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myCenterModalLabel">Add New Referral</h4>
+                    <h6 class="modal-title" id="myCenterModalLabel">Add New Referral</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -577,7 +577,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myCenterModalLabel">Add New Tooth Extraction</h4>
+                    <h6 class="modal-title" id="myCenterModalLabel">Add New Tooth Extraction</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

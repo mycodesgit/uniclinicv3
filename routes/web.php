@@ -87,5 +87,11 @@ Route::group(['middleware'=>['login_auth']],function(){
 
     Route::prefix('/users')->group(function () {
         Route::get('/list',[UserController::class,'index'])->name('users.list');
+        Route::post('/list/add', [UserController::class, 'create'])->name('user.create');
+        Route::get('/list/add', [UserController::class, 'create'])->name('user.create');
+        Route::get('/list/ajax', [UserController::class, 'show'])->name('user.show');
+        Route::post('/list/update', [UserController::class, 'update'])->name('user.update');
+        Route::post('/list/update/pass', [UserController::class, 'userPassUpdate'])->name('userPassUpdate');
+        Route::post('/list/update/status', [UserController::class, 'userStatusUpdate'])->name('userStatusUpdate');
     });
 });

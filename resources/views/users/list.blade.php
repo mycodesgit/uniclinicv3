@@ -10,7 +10,7 @@
                 <h4 class="fw-bold mb-0">Users</h4>
             </div>
             <div class="d-flex align-items-center flex-wrap gap-2">
-                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodalmedadd">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodaluseradd">
                     <i class="ti ti-plus me-1"></i> Add New User
                 </button>
             </div>
@@ -41,68 +41,112 @@
     </div>
     <!-- End Content -->
 
-    <!-- Center modal content -->
-    <div class="modal fade" id="centermodalmedadd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- Center add modal content -->
+    <div class="modal fade" id="centermodaluseradd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myCenterModalLabel">Add New Medicine</h4>
+                    <h6 class="modal-title" id="myCenterModalLabel">Add New User</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="medicineForm" method="POST">
+                    <form id="userForm" method="POST">
                         @csrf
 
                         <!-- start row-->
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Category<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Last Name<span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" name="category" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Category">
+                                        <input type="text" name="lname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" placeholder="Enter Last Name" class="form-control form-control-sm">
                                     </div>
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name</label><br>
-                                    <input type="text" name="medicine" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Medicine">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">First Name<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" name="fname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" placeholder="Enter First Name" class="form-control form-control-sm">
+                                    </div>
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity</label><br>
-                                    <input type="number" name="qty"  class="form-control form-control-sm" autocomplete="off" placeholder="Enter Quantity">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Middle Name</label><br>
+                                    <input type="text" name="mname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Middle Name">
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure</label><br>
-                                    <input type="text" name="measure" class="form-control form-control-sm" autocomplete="off" placeholder="Unit Measure">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Ext</label><br>
+                                    <select class="form-control form-control-sm" name="ext">
+                                        <option disabled selected> --- Select Here --- </option>
+                                        <option value="">None</option>
+                                        <option value="Jr.">Jr.</option>
+                                        <option value="Sr.">Sr.</option>
+                                        <option value="III">III</option>
+                                        <option value="IV">IV</option>
+                                    </select>
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No.</label><br>
-                                    <input type="text" name="lotno" class="form-control form-control-sm" autocomplete="off" placeholder="Lot No.">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Gender</label><br>
+                                    <select class="form-control form-control-sm" name="gender">
+                                        <option value=""> --- Select Here --- </option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Role</label><br>
+                                    <select class="form-control select_camp form-control-sm" name="role">
+                                        <option value=""> --- Select Role --- </option>
+                                        <option value="Administrator">Administrator</option>
+                                        <option value="Nurse">Nurse</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Email</label><br>
+                                    <input type="email" name="email" placeholder="Enter Email" class="form-control form-control-sm">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Password</label><br>
+                                    <input type="password" name="password" placeholder="Enter Password" class="form-control form-control-sm">
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date</label><br>
-                                    <input type="date" name="expirydate" class="form-control form-control-sm" autocomplete="off" placeholder="Expiry Date">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID</label><br>
-                                    <input type="text" name="refnoid" class= "form-control form-control-sm" autocomplete="off" placeholder="Reference ID">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Campus<span class="text-danger">*</span></label><br>
+                                    <select class="form-control form-control-sm" name="campus" required>
+                                        <option disabled selected>Select</option>
+                                        <option value="MC" @if (old('campus') == 'MC') {{ 'selected' }} @endif>Main</option>
+                                        <option value="VC" @if (old('campus') == 'VC') {{ 'selected' }} @endif>Victorias</option>
+                                        <option value="SCC" @if (old('campus') == 'SCC') {{ 'selected' }} @endif>San Carlos</option>
+                                        <option value="HC" @if (old('campus') == 'HC') {{ 'selected' }} @endif>Hinigaran</option>
+                                        <option value="MP" @if (old('campus') == 'MP') {{ 'selected' }} @endif>Moises Padilla</option>
+                                        <option value="IC" @if (old('campus') == 'IC') {{ 'selected' }} @endif>Ilog</option>
+                                        <option value="CA" @if (old('campus') == 'CA') {{ 'selected' }} @endif>Candoni</option>
+                                        <option value="CC" @if (old('campus') == 'CC') {{ 'selected' }} @endif>Cauayan</option>
+                                        <option value="SC" @if (old('campus') == 'SC') {{ 'selected' }} @endif>Sipalay</option>
+                                        <option value="HinC" @if (old('campus') == 'HinC') {{ 'selected' }} @endif>Hinobaan</option>
+                                        <option value="VE" @if (old('campus') == 'VE') {{ 'selected' }} @endif>Valladolid</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -121,69 +165,180 @@
         </div>
     </div>
 
-    <!-- Center modal content -->
-    <div class="modal fade" id="editMedicineModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- Center edit info modal content -->
+    <div class="modal fade" id="edituserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myCenterModalLabel">Edit Medicine</h4>
+                    <h6 class="modal-title" id="myCenterModalLabel">Edit User</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editMedicineForm" method="POST">
-                        <input type="hidden" name="id" id="editMedicineId">
+                    <form id="editUserForm" method="POST">
+                        <input type="hidden" name="id" id="edituserId">
                         <!-- start row-->
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Category<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">First Name<span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" name="category" id="editMedicineCategory" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Category">
+                                        <input type="text" name="fname" id="edituserfname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" placeholder="Enter First Name" class="form-control form-control-sm">
                                     </div>
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name</label><br>
-                                    <input type="text" name="medicine" id="editMedicineName" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Medicine">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Middle Name</label><br>
+                                    <input type="text" name="mname" id="editusermname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Middle Name">
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity</label><br>
-                                    <input type="number" name="qty" id="editMedicineQty" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Quantity">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Last Name<span class="text-danger">*</span></label><br>
+                                    <input type="text" name="lname" id="edituserlname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Last Name">
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure</label><br>
-                                    <input type="text" name="measure" id="editMedicineUnit" class="form-control form-control-sm" autocomplete="off" placeholder="Unit Measure">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Ext.</label><br>
+                                    <select class="form-control form-control-sm" name="ext" id="edituserext">
+                                        <option value="">None</option>
+                                        <option value="Jr.">Jr.</option>
+                                        <option value="Sr.">Sr.</option>
+                                        <option value="III">III</option>
+                                        <option value="IV">IV</option>
+                                    </select>
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No.</label><br>
-                                    <input type="text" name="lotno" id="editMedicineLotNo" class="form-control form-control-sm" autocomplete="off" placeholder="Lot No.">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Email<span class="text-danger">*</span></label><br>
+                                    <input type="email" name="email" id="edituseremail" placeholder="Enter Email" class="form-control form-control-sm">
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Campus<span class="text-danger">*</span></label><br>
+                                    <select class="form-control form-control-sm" name="campus" id="editusercampus">
+                                        <option disabled selected>Select</option>
+                                        <option value="MC">Main</option>
+                                        <option value="VC">Victorias</option>
+                                        <option value="SCC">San Carlos</option>
+                                        <option value="HC">Hinigaran</option>
+                                        <option value="MP">Moises Padilla</option>
+                                        <option value="IC">Ilog</option>
+                                        <option value="CA">Candoni</option>
+                                        <option value="CC">Cauayan</option>
+                                        <option value="SC">Sipalay</option>
+                                        <option value="HinC">Hinobaan</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date</label><br>
-                                    <input type="date" name="expirydate" id="editMedicineExpiry" class="form-control form-control-sm" autocomplete="off" placeholder="Expiry Date">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Gender<span class="text-danger">*</span></label><br>
+                                    <select class="form-control form-control-sm" name="gender" id="editusergender">
+                                        <option value=""> --- Select Here --- </option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID</label><br>
-                                    <input type="text" name="refnoid" id="editMedicineReference" class= "form-control form-control-sm" autocomplete="off" placeholder="Reference ID">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Role<span class="text-danger">*</span></label><br>
+                                    <select class="form-control form-control-sm" name="role" id="edituserrole">
+                                        <option disabled selected> --Select-- </option>
+                                        <option value="Administrator">Administrator</option>
+                                        <option value="Nurse">Nurse</option>
+                                    </select>
                                 </div>
                             </div>
+                        </div>
+                        <!-- end row-->
+                        <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
+                            <div class=" d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-outline-danger btn-md" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-outline-primary btn-md">
+                                    <i class="fas fa-save"></i> Save Data
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Center edit password modal content -->
+    <div class="modal fade" id="edituserPassModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="myCenterModalLabel">Edit User Password</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edituserPassForm" method="POST">
+                        <input type="hidden" name="id" id="edituserPassId">
+                        <!-- start row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">New Password<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" name="password" id="edituserpass" placeholder="Enter New Password" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row-->
+                        <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
+                            <div class=" d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-outline-danger btn-md" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-outline-primary btn-md">
+                                    <i class="fas fa-save"></i> Save Data
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Center edit user status modal content -->
+    <div class="modal fade" id="edituserDeactModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="myCenterModalLabel">Edit User Status</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edituserDeactForm" method="POST">
+                        <input type="hidden" name="id" id="edituserDeactId">
+                        <!-- start row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">User Status<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <select name="status" class="form-control form-control-sm" id="edituserDeactStat">
+                                            <option disabled selected> --Select-- </option>
+                                            <option value="1">Enable</option>
+                                            <option value="2">Disabled</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
                         </div>
                         <!-- end row-->
                         <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
