@@ -7,7 +7,7 @@
         <!-- Page Header -->
         <div class="d-flex align-items-sm-center justify-content-between flex-wrap gap-2 pb-3 mb-3 border-1 border-bottom">
             <div>
-                <h4 class="fw-bold mb-0">Walk-In Consultation</h4>
+                <h4 class="fw-bold mb-0 d-flex align-items-center"> <a href="{{ route('appointment.walkin') }}" class="text-dark"> <i class="ti ti-chevron-left me-1"></i>Walk-In Consultation</a></h4>
             </div>
             <div class="d-flex align-items-center flex-wrap gap-2">
                 <button id="btn-consult" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodalwalkinconsult">

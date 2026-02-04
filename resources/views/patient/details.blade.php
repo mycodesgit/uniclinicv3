@@ -7,7 +7,7 @@
         <!-- Page Header -->
         <div class="d-flex align-items-sm-center justify-content-between flex-wrap gap-2 pb-3 mb-3 border-1 border-bottom">
             <div>
-                <h4 class="fw-bold mb-0 d-flex align-items-center"> <a href="#" class="text-dark"> <i class="ti ti-chevron-left me-1"></i>Patients Details</a></h4>
+                <h4 class="fw-bold mb-0 d-flex align-items-center"> <a href="{{ route('patients.students') }}" class="text-dark"> <i class="ti ti-chevron-left me-1"></i>Patients Details</a></h4>
             </div>
         </div>
         <!-- End Page Header -->
