@@ -5,6 +5,32 @@
         "positionClass": "toast-top-center"
     };
     $(document).ready(function() {
+        $('#adPVisit').submit(function(event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: "{{ route('appointment.walkinconsult.store') }}",
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    if(response.success) {
+                        toastr.success(response.message);
+                        //console.log(response);
+                        $(document).trigger('pvisitAdded');
+                        $('#centermodalwalkinconsult').modal('hide');
+                        $('#adPVisit')[0].reset();
+                    } else {
+                        toastr.error(response.message);
+                        console.log(response);
+                    }
+                },
+                error: function(xhr, status, error, message) {
+                    var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                    toastr.error(errorMessage);
+                }
+            });
+        });
 
         const walkinId = @json($emp_ID);
 
@@ -153,6 +179,106 @@
             } else if (target === '#toothextraction') {
                 document.getElementById('btn-extraction').classList.remove('d-none');
             }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#adPReferral').submit(function(event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: "{{route('appointment.walkinreferral.store') }}",
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    if(response.success) {
+                        toastr.success(response.message);
+                        console.log(response);
+                        $(document).trigger('referralAdded');
+                        $('#centermodalwalkinreferral').modal('hide');
+                        $('textarea[name="reasonrefer"]').val('');
+                        $('textarea[name="tentdiagnose"]').val('');
+                        $('textarea[name="treatmentmedgiven"]').val('');
+                    } else {
+                        toastr.error(response.message);
+                        console.log(response);
+                    }
+                },
+                error: function(xhr, status, error, message) {
+                    var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                    toastr.error(errorMessage);
+                }
+            });
+        });
+
+        const walkinId = @json($emp_ID);
+        
+        var dataTable = $('#referlisttab').DataTable({
+            "ajax": {
+                "url": "{{ route('getwalkinempreferral.walkin', ['emp_ID' => '__ID__']) }}".replace('__ID__', walkinId),
+                "type": "GET",
+            },
+            "bFilter": true,
+			"sDom": 'fBtlpi',  
+			"ordering": true,
+			"language": {
+				search: ' ',
+				sLengthMenu: '_MENU_',
+				searchPlaceholder: "Search",
+				sLengthMenu: 'Row Per Page _MENU_ Entries',
+				info: "_START_ - _END_ of _TOTAL_ items",
+				paginate: {
+					next: '<i class="ti ti-arrow-right"></i>',
+					previous: '<i class="ti ti-arrow-left text-body"></i> '
+				},
+			},
+			"scrollX": false,         // Enable horizontal scrolling
+			"scrollCollapse": true,  // Adjust table size when the scroll is used
+			"responsive": true,
+			"autoWidth": false,
+            "info": true,
+            "columns": [
+                { 
+                    data: null,
+                    render: function(data, type, row) {
+                        var firstname = data.fname;
+                        var middleInitial = data.mname ? data.mname.substr(0, 1) + '.' : '';
+                        // Only display ext if it's not null, not 'N/A', and not empty
+                        var ext = (data.ext && data.ext !== 'N/A') ? ' ' + data.ext : '';
+                        var lastNameWithExt = data.lname + ext;
+                        return firstname + ' ' + middleInitial + ' ' + lastNameWithExt;
+                    }
+                },
+                {
+                    data: 'date',
+                    render: function(data, type, row) {
+                        if (type === 'display' && data) {
+                            var dateObj = new Date(data);
+                            var options = { year: 'numeric', month: 'long', day: '2-digit' };
+                            return dateObj.toLocaleDateString('en-US', options);
+                        }
+                        return data;
+                    }
+                },
+                {
+                    data: 'time',
+                    render: function(data, type, row) {
+                        if (type === 'display' && data) {
+                            return moment(data, 'HH:mm').format('hh:mm A');
+                        }
+                        return data;
+                    }
+                },
+                {data: 'preferfrom'},
+                {data: 'preferto'},
+            ],
+            "createdRow": function (row, data, index) {
+                $(row).attr('id', 'tr-' + data.id); 
+            }
+        });
+        $(document).on('referralAdded', function() {
+            dataTable.ajax.reload();
         });
     });
 

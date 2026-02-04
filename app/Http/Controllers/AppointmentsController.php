@@ -335,6 +335,51 @@ class AppointmentsController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    public function getwalkinempreferral($emp_ID) 
+    {
+        $emps = DB::connection('hremp')
+            ->table('employees')
+            ->select('emp_ID', 'lname', 'fname', 'mname', 'suffix')
+            ->where('emp_ID', $emp_ID)
+            ->first();
+
+        // Always return a valid DataTables response
+        if (!$emps) {
+            return response()->json(['data' => []]);
+        }
+
+        $refer = PatientReferral::where('stdntID', $emps->emp_ID)
+            ->orderBy('date', 'desc')
+            ->get();
+        
+        if ($refer->isEmpty()) {
+            return response()->json(['data' => []]);
+        }
+
+        $data = $refer->map(function ($visit) use ($emps) {
+
+            return [
+                'id'                    => $visit->id,
+                'date'                  => $visit->date,
+                'time'                  => $visit->time,
+                'preferfrom'            => $visit->preferfrom,
+                'preferto'              => $visit->preferto,
+                'reasonrefer'           => $visit->reasonrefer,
+                'tentdiagnose'          => $visit->tentdiagnose,
+                'treatmentmedgiven'     => $visit->treatmentmedgiven,
+
+                'lname' => $student->lname,
+                'fname' => $student->fname,
+                'mname' => $student->mname,
+                'suffix'   => $student->suffix,
+
+                
+            ];
+        });
+
+        return response()->json(['data' => $data]);
+    }
+
     public function createWalkinReferral(Request $request) 
     {
         if ($request->isMethod('post')) {

@@ -405,7 +405,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation ID <span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Referral ID <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" name="referralID" class="form-control rounded bg-light" value="STUD-RWI-{{ \Carbon\Carbon::now()->format('Ymd') }}-{{ substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 10) }}" readonly>
                                     </div>
