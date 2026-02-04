@@ -31,10 +31,15 @@
                     <i class="ti ti-prescription"></i><span>Medicines</span>
                 </a>
             </li>
-            <li class="{{ request()->is('generate/*') ? 'active' : '' }}">
-                <a href="#">
-                    <i class="ti ti-file"></i><span>Reports</span>
+
+            <li class="submenu">
+                <a href="javascript:void(0);" class="{{ request()->is('generate/*') ? 'active subdrop' : '' }}">
+                    <i class="ti ti-calendar-check"></i><span>Reports</span>
+                    <span class="menu-arrow"></span>
                 </a>
+                <ul>
+                    <li class="{{ request()->is('generate/reports/consultation/*') ? 'active' : '' }}"><a href="{{ route('reports.walkinsearch') }}">Walkin Consultation</a>
+                </ul>
             </li>
             
             @if(Auth::guard('web')->user()->role == 'Administrator')

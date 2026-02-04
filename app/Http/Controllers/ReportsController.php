@@ -23,9 +23,9 @@ use App\Models\SettingDB\Barangay;
 
 class ReportsController extends Controller
 {
-    public function patientdatarep()
+    public function walkinsearch()
     {
-        return view('reports.patientdatarep');
+        return view('reports.walkinconsultrep');
     }
 
     public function walkinconsultdetails($id)

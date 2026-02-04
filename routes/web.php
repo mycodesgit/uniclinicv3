@@ -81,7 +81,7 @@ Route::group(['middleware'=>['login_auth']],function(){
     });
 
     Route::prefix('/generate')->group(function () {
-        Route::get('/reports/patientdata',[ReportsController::class,'patientdatarep'])->name('reports.patientdatarep');
+        Route::get('/reports/consultation',[ReportsController::class,'walkinsearch'])->name('reports.walkinsearch');
         Route::get('/reports/patientdata/details/{id}',[ReportsController::class,'walkinconsultdetails'])->name('reports.patientdatarep.details');
     });
 
