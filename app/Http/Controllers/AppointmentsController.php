@@ -12,6 +12,12 @@ use Carbon\Carbon;
 use App\Models\EnrollmentDB\StudEnrolmentHistory;
 use App\Models\EnrollmentDB\Student;
 
+use App\Models\HrisDB\Employees;
+use App\Models\HrisDB\Region;
+use App\Models\HrisDB\Province;
+use App\Models\HrisDB\City;
+use App\Models\HrisDB\Barangay;
+
 use App\Models\ClinicDB\Patientvisit;
 use App\Models\ClinicDB\PatientReferral;
 use App\Models\ClinicDB\Medicine;
@@ -38,6 +44,22 @@ class AppointmentsController extends Controller
         $patientVisit = Patientvisit::where('stid', $student->id)->get();
 
         return view('appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'patientVisit', 'id'));
+    }
+
+    public function walkinconsultempdetails($emp_ID)
+    {
+        $patients = Employees::where('emp_ID', $emp_ID)->firstOrFail();
+        $complaints =  Complaint::all();
+        $medicines = Medicine::all();
+
+        $emps = DB::connection('hremp')
+            ->table('employees')
+            ->where('emp_ID', $emp_ID)
+            ->first();
+
+        $patientVisit = Patientvisit::where('stdntID', $emps->emp_ID)->get();
+
+        return view('appointment.walkin-empdetails', compact('patients', 'complaints', 'medicines', 'patientVisit', 'emp_ID'));
     }
 
     public function getwalkinconsult($id)
@@ -96,6 +118,76 @@ class AppointmentsController extends Controller
                 'ext'   => $student->ext,
 
                 // SAFE string output
+                'complaintname' => collect(explode(',', (string) $visit->chief_complaint))
+                    ->map(fn ($id) => $complaints[$id] ?? null)
+                    ->filter()
+                    ->implode(', '),
+
+                'medicinename' => collect(explode(',', (string) $visit->medicine))
+                    ->map(fn ($id) => $medicines[$id] ?? null)
+                    ->filter()
+                    ->implode(', '),
+            ];
+        });
+
+        return response()->json(['data' => $data]);
+    }
+    
+    public function getwalkinempconsult($emp_ID)
+    {
+        $emps = DB::connection('hremp')
+            ->table('employees')
+            ->select('emp_ID', 'lname', 'fname', 'mname', 'suffix')
+            ->where('emp_ID', $emp_ID)
+            ->first();
+
+        // Always return a valid DataTables response
+        if (!$emps) {
+            return response()->json(['data' => []]);
+        }
+
+        $visits = Patientvisit::where('stdntID', $emps->emp_ID)
+            ->orderBy('date', 'desc')
+            ->get();
+
+        if ($visits->isEmpty()) {
+            return response()->json(['data' => []]);
+        }
+
+        $complaintIds = $visits->pluck('chief_complaint')
+            ->filter()
+            ->flatMap(fn ($v) => explode(',', $v))
+            ->filter()
+            ->unique();
+
+        $medicineIds = $visits->pluck('medicine')
+            ->filter()
+            ->flatMap(fn ($v) => explode(',', $v))
+            ->filter()
+            ->unique();
+
+        $complaints = $complaintIds->isNotEmpty()
+            ? Complaint::whereIn('id', $complaintIds)->pluck('complaintname', 'id')
+            : collect();
+
+        $medicines = $medicineIds->isNotEmpty()
+            ? Medicine::whereIn('id', $medicineIds)->pluck('medicine', 'id')
+            : collect();
+
+        $data = $visits->map(function ($visit) use ($emps, $complaints, $medicines) {
+            return [
+                'id'        => $visit->id,
+                'date'      => $visit->date,
+                'time'      => $visit->time,
+                'treatment' => $visit->treatment,
+                'qty'       => $visit->qty,
+                'consultID' => $visit->consultID,
+
+                'lname'  => $emps->lname,
+                'fname'  => $emps->fname,
+                'mname'  => $emps->mname,
+                'suffix' => $emps->suffix,
+
                 'complaintname' => collect(explode(',', (string) $visit->chief_complaint))
                     ->map(fn ($id) => $complaints[$id] ?? null)
                     ->filter()

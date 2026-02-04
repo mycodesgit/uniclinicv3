@@ -245,4 +245,100 @@
 
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const patientDetailsRoute = "{{ route('appointment.walkin.empdetails', ['emp_ID' => ':emp_ID']) }}";
+            const form = document.getElementById('searchEmpForm');
+            const input = document.getElementById('searchEmpInput');
+            const tableBody = document.getElementById('employeesTable');
+            const pagination = document.getElementById('paginationLinks');
+
+            const searchRoute = "{{ route('patients.employee.search') }}";
+
+            function loadStudents(page = 1) {
+                const search = input.value.trim();
+
+                fetch(`${searchRoute}?search=${encodeURIComponent(search)}&page=${page}`, {
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(res => res.json())
+                .then(res => {
+
+                    tableBody.innerHTML = '';
+                    pagination.innerHTML = '';
+
+                    if (res.data.length === 0) {
+                        tableBody.innerHTML = `
+                            <tr>
+                                <td colspan="6" class="text-center">No records found</td>
+                            </tr>
+                        `;
+                        return;
+                    }
+
+
+                    // Populate table
+                    res.data.forEach(emps => {
+                        const detailsUrl = patientDetailsRoute.replace(':emp_ID', emps.emp_ID);
+                        tableBody.innerHTML += `
+                            <tr>
+                                <td>${emps.lname}, ${emps.fname}</td>
+                                <td>${emps.emp_ID}</td>
+                                <td>${emps.sex}</td>
+                                <td>
+                                    ${
+                                        emps.camp_id === 1   ? 'Main' :
+                                        emps.camp_id === 9   ? 'Victorias' :
+                                        emps.camp_id === 7  ? 'San Carlos' :
+                                        emps.camp_id === 4   ? 'Hinigaran' :
+                                        emps.camp_id === 12   ? 'Moises Padilla' :
+                                        emps.camp_id === 6   ? 'Ilog' :
+                                        emps.camp_id === 2   ? 'Candoni' :
+                                        emps.camp_id === 3   ? 'Cauayan' :
+                                        emps.camp_id === 8   ? 'Sipalay' :
+                                        emps.camp_id === 5 ? 'Hinobaan' :
+                                        emps.camp_id
+                                    }
+                                </td>
+                                <td>${emps.civil_status}</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal" title="View Details">
+                                            <i class="ti ti-eye" style="color: #fff"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    // Pagination links
+                    for (let i = 1; i <= res.last_page; i++) {
+                        pagination.innerHTML += `
+                            <li class="page-item ${i === res.current_page ? 'active' : ''}">
+                                <a class="page-link" href="#" data-page="${i}">${i}</a>
+                            </li>
+                        `;
+                    }
+
+                    // Pagination click events
+                    document.querySelectorAll('.page-link').forEach(link => {
+                        link.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            loadStudents(this.dataset.page);
+                        });
+                    });
+                });
+            }
+
+            // Button search
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                loadStudents(1);
+            });
+
+        });
+    </script>
 @endsection

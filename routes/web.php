@@ -60,7 +60,9 @@ Route::group(['middleware'=>['login_auth']],function(){
     Route::prefix('/appointment')->group(function () {
         Route::get('/walkins',[AppointmentsController::class,'index'])->name('appointment.walkin');
         Route::get('/walkins/details/{id}',[AppointmentsController::class,'walkinconsultdetails'])->name('appointment.walkin.details');
+        Route::get('/walkins/empdetails/{emp_ID}',[AppointmentsController::class,'walkinconsultempdetails'])->name('appointment.walkin.empdetails');
         Route::get('/walkins/fetch/{id}',[AppointmentsController::class,'getwalkinconsult'])->name('getwalkinconsult.walkin');
+        Route::get('/walkins/fetchemp/{emp_ID}',[AppointmentsController::class,'getwalkinempconsult'])->name('getwalkinempconsult.walkin');
         Route::post('/walkins/add',[AppointmentsController::class,'createWalkinConsultation'])->name('appointment.walkinconsult.store');
 
         Route::get('/walkins/referralfetch/{id}',[AppointmentsController::class,'getwalkinreferral'])->name('getwalkinreferral.walkin');

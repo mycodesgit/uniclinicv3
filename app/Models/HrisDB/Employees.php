@@ -93,4 +93,9 @@ class Employees extends Model
         'f3'
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'emp_ID';
+    }
+
 }
