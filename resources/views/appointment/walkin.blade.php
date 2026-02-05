@@ -43,9 +43,13 @@
                     <div class="card">
                         <div class="card-body">
                             <form id="searchForm">
-                                <div class="d-flex align-items-center gap-4">
-                                    <input type="text" id="searchInput" class="form-control" placeholder="Search Patient Last Name or ID">
-                                    <button type="submit" class="btn btn-primary">Search</button>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" id="searchInput" name="searchStud" class="form-control" placeholder="Search Patient Last Name or ID">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-outline-primary mt-1">Search</button>
+                                    </div>
                                 </div>
                             </form>
                         </div><!-- end card body -->
@@ -79,9 +83,13 @@
                     <div class="card">
                         <div class="card-body">
                             <form id="searchEmpForm">
-                                <div class="d-flex align-items-center gap-4">
-                                    <input type="text" id="searchEmpInput" class="form-control" placeholder="Search Patient Last Name or Employee ID">
-                                    <button type="submit" class="btn btn-primary">Search</button>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" id="searchEmpInput" name="searchemp" class="form-control" placeholder="Search Patient Last Name or Employee ID">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-outline-primary mt-1">Search</button>
+                                    </div>
                                 </div>
                             </form>
                         </div><!-- end card body -->
@@ -137,208 +145,4 @@
     </div>
     <!-- End Content -->
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            const patientDetailsRoute = "{{ route('appointment.walkin.details', ['id' => ':id']) }}";
-            const form = document.getElementById('searchForm');
-            const input = document.getElementById('searchInput');
-            const tableBody = document.getElementById('studentsTable');
-            const pagination = document.getElementById('paginationLinks');
-
-            const searchRoute = "{{ route('patients.show') }}";
-
-            function loadStudents(page = 1) {
-                const search = input.value.trim();
-
-                fetch(`${searchRoute}?search=${encodeURIComponent(search)}&page=${page}`, {
-                    headers: { 'Accept': 'application/json' }
-                })
-                .then(res => res.json())
-                .then(res => {
-
-                    tableBody.innerHTML = '';
-                    pagination.innerHTML = '';
-
-                    if (res.data.length === 0) {
-                        tableBody.innerHTML = `
-                            <tr>
-                                <td colspan="5" class="text-center">No records found</td>
-                            </tr>
-                        `;
-                        return;
-                    }
-
-                    // Populate table
-                    res.data.forEach(student => {
-                        const detailsUrl = patientDetailsRoute.replace(':id', student.id);
-                        tableBody.innerHTML += `
-                            <tr>
-                                <td>${student.lname}, ${student.fname}</td>
-                                <td>${student.stud_id}</td>
-                                <td>${student.gender}</td>
-                                <td>
-                                    ${
-                                        student.campus === 'MC'   ? 'Main' :
-                                        student.campus === 'VC'   ? 'Victorias' :
-                                        student.campus === 'SCC'  ? 'San Carlos' :
-                                        student.campus === 'HC'   ? 'Hinigaran' :
-                                        student.campus === 'MP'   ? 'Moises Padilla' :
-                                        student.campus === 'IC'   ? 'Ilog' :
-                                        student.campus === 'CA'   ? 'Candoni' :
-                                        student.campus === 'CC'   ? 'Cauayan' :
-                                        student.campus === 'SC'   ? 'Sipalay' :
-                                        student.campus === 'HinC' ? 'Hinobaan' :
-                                        student.campus
-                                    }
-                                </td>
-                                <td>${student.civil_status}</td>
-                                <td>
-                                    <div class="d-flex align-items-center gap-1">
-                                        <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal" title="View Details">
-                                            <i class="ti ti-eye" style="color: #fff"></i>
-                                        </a>
-                                        <a href="javascript:void(0);" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1" data-bs-toggle="dropdown">
-                                            <i class="ti ti-dots-vertical"></i>
-                                        </a>
-                                        <ul class="dropdown-menu p-2">
-                                            <li>
-                                                <a href="edit-patient.html" class="dropdown-item d-flex align-items-center">Edit</a>
-                                            </li>
-                                            <li>
-                                                <a href="patient-details.html" class="dropdown-item d-flex align-items-center">View</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#delete_modal">Delete</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    });
-
-                    // Pagination links
-                    for (let i = 1; i <= res.last_page; i++) {
-                        pagination.innerHTML += `
-                            <li class="page-item ${i === res.current_page ? 'active' : ''}">
-                                <a class="page-link" href="#" data-page="${i}">${i}</a>
-                            </li>
-                        `;
-                    }
-
-                    // Pagination click events
-                    document.querySelectorAll('.page-link').forEach(link => {
-                        link.addEventListener('click', function (e) {
-                            e.preventDefault();
-                            loadStudents(this.dataset.page);
-                        });
-                    });
-                });
-            }
-
-            // Button search
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                loadStudents(1);
-            });
-
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            const patientDetailsRoute = "{{ route('appointment.walkin.empdetails', ['emp_ID' => ':emp_ID']) }}";
-            const form = document.getElementById('searchEmpForm');
-            const input = document.getElementById('searchEmpInput');
-            const tableBody = document.getElementById('employeesTable');
-            const pagination = document.getElementById('paginationLinks');
-
-            const searchRoute = "{{ route('patients.employee.search') }}";
-
-            function loadStudents(page = 1) {
-                const search = input.value.trim();
-
-                fetch(`${searchRoute}?search=${encodeURIComponent(search)}&page=${page}`, {
-                    headers: { 'Accept': 'application/json' }
-                })
-                .then(res => res.json())
-                .then(res => {
-
-                    tableBody.innerHTML = '';
-                    pagination.innerHTML = '';
-
-                    if (res.data.length === 0) {
-                        tableBody.innerHTML = `
-                            <tr>
-                                <td colspan="6" class="text-center">No records found</td>
-                            </tr>
-                        `;
-                        return;
-                    }
-
-
-                    // Populate table
-                    res.data.forEach(emps => {
-                        const detailsUrl = patientDetailsRoute.replace(':emp_ID', emps.emp_ID);
-                        tableBody.innerHTML += `
-                            <tr>
-                                <td>${emps.lname}, ${emps.fname}</td>
-                                <td>${emps.emp_ID}</td>
-                                <td>${emps.sex}</td>
-                                <td>
-                                    ${
-                                        emps.camp_id === 1   ? 'Main' :
-                                        emps.camp_id === 9   ? 'Victorias' :
-                                        emps.camp_id === 7  ? 'San Carlos' :
-                                        emps.camp_id === 4   ? 'Hinigaran' :
-                                        emps.camp_id === 12   ? 'Moises Padilla' :
-                                        emps.camp_id === 6   ? 'Ilog' :
-                                        emps.camp_id === 2   ? 'Candoni' :
-                                        emps.camp_id === 3   ? 'Cauayan' :
-                                        emps.camp_id === 8   ? 'Sipalay' :
-                                        emps.camp_id === 5 ? 'Hinobaan' :
-                                        emps.camp_id
-                                    }
-                                </td>
-                                <td>${emps.civil_status}</td>
-                                <td>
-                                    <div class="d-flex align-items-center gap-1">
-                                        <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal" title="View Details">
-                                            <i class="ti ti-eye" style="color: #fff"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    });
-
-                    // Pagination links
-                    for (let i = 1; i <= res.last_page; i++) {
-                        pagination.innerHTML += `
-                            <li class="page-item ${i === res.current_page ? 'active' : ''}">
-                                <a class="page-link" href="#" data-page="${i}">${i}</a>
-                            </li>
-                        `;
-                    }
-
-                    // Pagination click events
-                    document.querySelectorAll('.page-link').forEach(link => {
-                        link.addEventListener('click', function (e) {
-                            e.preventDefault();
-                            loadStudents(this.dataset.page);
-                        });
-                    });
-                });
-            }
-
-            // Button search
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                loadStudents(1);
-            });
-
-        });
-    </script>
 @endsection

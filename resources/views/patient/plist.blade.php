@@ -50,7 +50,7 @@
                                         <input type="text" id="searchInput" name="searchstud" class="form-control" placeholder="Search Patient Last Name or Student ID">
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary mt-1">Search</button>
+                                        <button type="submit" class="btn btn-outline-primary mt-1">Search</button>
                                     </div>
                                 </div>
                             </form>
@@ -90,7 +90,7 @@
                                         <input type="text" id="searchEmpInput" name="searchemp" class="form-control" placeholder="Search Patient Last Name or Employee ID">
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary mt-1">Search</button>
+                                        <button type="submit" class="btn btn-outline-primary mt-1">Search</button>
                                     </div>
                                 </div>
                             </form>
