@@ -459,6 +459,10 @@
     <!-- Chart JS -->
     <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}" type="text/javascript"></script>
 
+    <!-- Validation JS -->
+    <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+
     <!-- Main JS -->
     <script src="{{ asset('assets/js/script.js') }}" type="text/javascript"></script>
 
@@ -489,8 +493,12 @@
     @if (request()->routeIs('medicine.list'))
         @include('script.med.medScript')
     @endif
+    @if (request()->routeIs('reports.walkinsearch'))
+        @include('script.validations.reportsvalidation')
+    @endif
     @if (request()->routeIs('walkin.search.result'))
         @include('script.reprts.studappointreps')
+        @include('script.validations.reportsvalidation')
     @endif
     @if (request()->routeIs('users.list'))
         @include('script.userl.usersscript')

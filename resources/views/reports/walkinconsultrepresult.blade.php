@@ -20,70 +20,60 @@
                 <div class="tab-pane show active" id="students">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('walkin.search.result') }}" method="GET">
+                            <form action="{{ route('walkin.search.result') }}" method="GET" id="walkinreps">
                                 @csrf
 
                                 <!-- start row-->
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <div class="mb-3">
-                                            <label class="form-label mb-1 text-dark fs-14 fw-medium">
-                                                Select Category<span class="text-danger">*</span>
-                                            </label>
-                                            <div class="input-group">
-                                                <select class="form-control form-control-sm" name="category" id="selectcategory">
-                                                    <option disabled selected>Select</option>
-                                                    <option value="Month">Monthly</option>
-                                                    <option value="Daily">Daily</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <div class="mb-3">
-                                            <label class="form-label mb-1 text-dark fs-14 fw-medium">
-                                                Select Patient Category<span class="text-danger">*</span>
-                                            </label>
-                                            <div class="input-group">
-                                                <select class="form-control form-control-sm" name="pcat" id="selectpcat">
-                                                    <option disabled selected>Select</option>
-                                                    <option value="1">Student</option>
-                                                    <option value="2">Faculty</option>
-                                                    <option value="3">Guest</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Monthly dropdown -->
-                                    <div class="col-md-2 d-none" id="monthlyInput">
-                                        <div class="mb-3">
-                                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Select Month<span class="text-danger">*</span></label>
-                                            <select class="form-control form-control-sm" name="monthly">
-                                                <option disabled selected>Select Month</option>
-                                                <option value="01">January</option>
-                                                <option value="02">February</option>
-                                                <option value="03">March</option>
-                                                <option value="04">April</option>
-                                                <option value="05">May</option>
-                                                <option value="06">June</option>
-                                                <option value="07">July</option>
-                                                <option value="08">August</option>
-                                                <option value="09">September</option>
-                                                <option value="10">October</option>
-                                                <option value="11">November</option>
-                                                <option value="12">December</option>
+                                        <label class="form-label mb-1 text-dark fs-14 fw-medium">
+                                            Select Category<span class="text-danger">*</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <select class="form-control form-control-sm" name="category" id="selectcategory" required>
+                                                <option disabled selected>Select</option>
+                                                <option value="Month">Monthly</option>
+                                                <option value="Daily">Daily</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <!-- Daily date picker -->
-                                    <div class="col-md-2 d-none" id="dailyInput">
-                                        <div class="mb-3">
-                                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Select Date<span class="text-danger">*</span></label>
-                                            <input type="date" class="form-control form-control-sm" name="date">
+                                    <div class="col-md-2">
+                                        <label class="form-label mb-1 text-dark fs-14 fw-medium">
+                                            Select Patient Category<span class="text-danger">*</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <select class="form-control form-control-sm" name="pcat" id="selectpcat">
+                                                <option disabled selected>Select</option>
+                                                <option value="1">Student</option>
+                                                <option value="2">Faculty</option>
+                                                <option value="3">Guest</option>
+                                            </select>
                                         </div>
+                                    </div>
+
+                                    <div class="col-md-2 d-none" id="monthlyInput">
+                                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Select Month<span class="text-danger">*</span></label>
+                                        <select class="form-control form-control-sm" name="monthly">
+                                            <option disabled selected>Select Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-2 d-none" id="dailyInput">
+                                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Select Date<span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control form-control-sm" name="date">
                                     </div>
 
                                     <div class="col-md-2">
