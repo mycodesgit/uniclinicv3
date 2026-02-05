@@ -15,6 +15,7 @@ class Patientvisit extends Model
         'stid',
         'stdntID',
         'consultID',
+        'pcat',
         'date',
         'time',
         'chief_complaint',

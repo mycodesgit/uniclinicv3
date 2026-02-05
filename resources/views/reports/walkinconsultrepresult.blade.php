@@ -98,6 +98,28 @@
                             </form>
                         </div>
                     </div>
+                    <div class="table-responsive">
+                        <table id="consultationstudrepTable" class="table table-hover" style="width: 100%">
+                            <thead class="">
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Chief Complaint</th>
+                                    <th>Treatment</th>
+                                    <th>Medicine</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        <br>
+                        <nav>
+                            <ul class="pagination justify-content-center" id="paginationLinks"></ul>
+                        </nav>
+                    </div>
                 </div>
             </div>  
         </div>

@@ -15,6 +15,7 @@ class PatientReferral extends Model
         'stid',
         'stdntID',
         'referralID',
+        'pcat',
         'date',
         'time',
         'bp',

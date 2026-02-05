@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('stid')->nullable();
             $table->string('stdntID')->nullable();
             $table->string('referralID')->nullable();
+            $table->enum('pcat', [1, 2, 3])->nullable();
             $table->date('date')->nullable();
             $table->string('time')->nullable();
             $table->string('bp')->nullable();
