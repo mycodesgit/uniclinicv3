@@ -59,54 +59,40 @@
                         <!-- start row-->
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Category<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" name="category" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Category">
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Category<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" name="category" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Category">
                                 </div>
-                            </div> <!-- end col-->
+                            </div> 
 
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name</label><br>
-                                    <input type="text" name="medicine" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Medicine">
-                                </div>
-                            </div> <!-- end col-->
+                            <div class="col-md-12 mt-2">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name</label><br>
+                                <input type="text" name="medicine" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Medicine">
+                            </div> 
 
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity</label><br>
-                                    <input type="number" name="qty"  class="form-control form-control-sm" autocomplete="off" placeholder="Enter Quantity">
-                                </div>
-                            </div> <!-- end col-->
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure</label><br>
-                                    <input type="text" name="measure" class="form-control form-control-sm" autocomplete="off" placeholder="Unit Measure">
-                                </div>
-                            </div> <!-- end col-->
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No.</label><br>
-                                    <input type="text" name="lotno" class="form-control form-control-sm" autocomplete="off" placeholder="Lot No.">
-                                </div>
+                            <div class="col-md-12 mt-2">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity</label><br>
+                                <input type="number" name="qty"  class="form-control form-control-sm" autocomplete="off" placeholder="Enter Quantity">
                             </div>
 
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date</label><br>
-                                    <input type="date" name="expirydate" class="form-control form-control-sm" autocomplete="off" placeholder="Expiry Date">
-                                </div>
+                            <div class="col-md-12 mt-2">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure</label><br>
+                                <input type="text" name="measure" class="form-control form-control-sm" autocomplete="off" placeholder="Unit Measure">
                             </div>
 
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID</label><br>
-                                    <input type="text" name="refnoid" class= "form-control form-control-sm" autocomplete="off" placeholder="Reference ID">
-                                </div>
+                            <div class="col-md-12 mt-2">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No.</label><br>
+                                <input type="text" name="lotno" class="form-control form-control-sm" autocomplete="off" placeholder="Lot No.">
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date</label><br>
+                                <input type="date" name="expirydate" class="form-control form-control-sm" autocomplete="off" placeholder="Expiry Date">
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID</label><br>
+                                <input type="text" name="refnoid" class= "form-control form-control-sm" autocomplete="off" placeholder="Reference ID">
                             </div>
                         </div>
                         <!-- end row-->
@@ -135,57 +121,43 @@
                 <div class="modal-body">
                     <form id="editMedicineForm" method="POST">
                         <input type="hidden" name="id" id="editMedicineId">
-                        <!-- start row-->
+                        
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Category<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" name="category" id="editMedicineCategory" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Category">
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Category<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" name="category" id="editMedicineCategory" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Category">
                                 </div>
-                            </div> <!-- end col-->
+                            </div> 
 
                             <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name</label><br>
-                                    <input type="text" name="medicine" id="editMedicineName" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Medicine">
-                                </div>
-                            </div> <!-- end col-->
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity</label><br>
-                                    <input type="number" name="qty" id="editMedicineQty" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Quantity">
-                                </div>
-                            </div> <!-- end col-->
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure</label><br>
-                                    <input type="text" name="measure" id="editMedicineUnit" class="form-control form-control-sm" autocomplete="off" placeholder="Unit Measure">
-                                </div>
-                            </div> <!-- end col-->
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No.</label><br>
-                                    <input type="text" name="lotno" id="editMedicineLotNo" class="form-control form-control-sm" autocomplete="off" placeholder="Lot No.">
-                                </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name</label><br>
+                                <input type="text" name="medicine" id="editMedicineName" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Medicine">
                             </div>
 
                             <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date</label><br>
-                                    <input type="date" name="expirydate" id="editMedicineExpiry" class="form-control form-control-sm" autocomplete="off" placeholder="Expiry Date">
-                                </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity</label><br>
+                                <input type="number" name="qty" id="editMedicineQty" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Quantity">
+                            </div> 
+
+                            <div class="col-md-12">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure</label><br>
+                                <input type="text" name="measure" id="editMedicineUnit" class="form-control form-control-sm" autocomplete="off" placeholder="Unit Measure"></div>
                             </div>
 
                             <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID</label><br>
-                                    <input type="text" name="refnoid" id="editMedicineReference" class= "form-control form-control-sm" autocomplete="off" placeholder="Reference ID">
-                                </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No.</label><br>
+                                <input type="text" name="lotno" id="editMedicineLotNo" class="form-control form-control-sm" autocomplete="off" placeholder="Lot No.">
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date</label><br>
+                                <input type="date" name="expirydate" id="editMedicineExpiry" class="form-control form-control-sm" autocomplete="off" placeholder="Expiry Date">
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID</label><br>
+                                <input type="text" name="refnoid" id="editMedicineReference" class= "form-control form-control-sm" autocomplete="off" placeholder="Reference ID">
                             </div>
                         </div>
                         <!-- end row-->

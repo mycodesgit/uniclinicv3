@@ -496,6 +496,7 @@
     @endif
     @if (request()->routeIs('medicine.list'))
         @include('script.med.medScript')
+        @include('script.validations.medicinevalidation')
     @endif
     @if (request()->routeIs('reports.walkinsearch'))
         @include('script.validations.reportsvalidation')
