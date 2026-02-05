@@ -7,7 +7,7 @@
         <!-- Page Header -->
         <div class="d-flex align-items-sm-center justify-content-between flex-wrap gap-2 pb-3 mb-3 border-1 border-bottom">
             <div>
-                <h4 class="fw-bold mb-0">Walkin Consultation Report</h4>
+                <h4 class="fw-bold mb-0 d-flex align-items-center"> <a href="{{ route('reports.walkinsearch') }}" class="text-dark"> <i class="ti ti-chevron-left me-1"></i>Walkin Consultation Report</a></h4>
             </div>
             <div class="d-flex align-items-center flex-wrap gap-2">
             </div>

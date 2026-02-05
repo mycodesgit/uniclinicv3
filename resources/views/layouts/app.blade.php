@@ -479,6 +479,7 @@
 
     @if (request()->routeIs('patients.students'))
         @include('script.patient.guestscript')
+        @include('script.validations.patientsvalidation')
     @endif
     @if (request()->routeIs('patients.details'))
         @include('script.patient.studentscript')
