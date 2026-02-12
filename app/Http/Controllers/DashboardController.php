@@ -15,10 +15,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $ptodayvisits = Patientvisit::whereDate('created_at', Carbon::today())->count();
+        $ptodayvisits = Patientvisit::whereDate('date', Carbon::today())->count();
 
-        $pthismonthvisits = Patientvisit::whereMonth('created_at', Carbon::now()->month)
-            ->whereYear('created_at', Carbon::now()->year)
+        $pthismonthvisits = Patientvisit::whereMonth('date', Carbon::now()->month)
+            ->whereYear('date', Carbon::now()->year)
             ->count();
 
         $currentMonth = Carbon::now()->month;

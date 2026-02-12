@@ -45,6 +45,7 @@ class PatientsController extends Controller
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('lname', 'LIKE', "%{$search}%")
+                      ->orWhere('fname', 'LIKE', "%{$search}%")
                       ->orWhere('stud_id', 'LIKE', "%{$search}%");
                 });
             })

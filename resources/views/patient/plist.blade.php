@@ -47,7 +47,7 @@
                             <form id="searchForm">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="text" id="searchInput" name="searchstud" class="form-control" placeholder="Search Patient Last Name or Student ID">
+                                        <input type="text" id="searchInput" name="searchstud" class="form-control" placeholder="Search Patient Last Name or First Name or Student ID">
                                     </div>
                                     <div class="col-md-4">
                                         <button type="submit" class="btn btn-outline-primary mt-1">Search</button>
