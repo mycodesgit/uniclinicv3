@@ -87,7 +87,7 @@
                             <form id="searchEmpForm">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="text" id="searchEmpInput" name="searchemp" class="form-control" placeholder="Search Patient Last Name or Employee ID">
+                                        <input type="text" id="searchEmpInput" name="searchemp" class="form-control" placeholder="Search Patient Last Name or First Name or Employee ID">
                                     </div>
                                     <div class="col-md-4">
                                         <button type="submit" class="btn btn-outline-primary mt-1">Search</button>

@@ -47,7 +47,8 @@ class PatientEmpController extends Controller
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('lname', 'LIKE', "%{$search}%")
-                      ->orWhere('emp_ID', 'LIKE', "%{$search}%");
+                        ->orWhere('fname', 'LIKE', "%{$search}%")
+                        ->orWhere('emp_ID', 'LIKE', "%{$search}%");
                 });
             })
             ->orderBy('lname')
