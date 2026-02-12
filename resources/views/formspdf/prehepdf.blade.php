@@ -105,8 +105,8 @@
         <table class="table">
             <tr class="tr-b">
                 <td class="text-left">Name:</td>
-                <td class="text-center"><b>{{ strtoupper($patients->fname) }}</b></td>
                 <td class="text-center"><b>{{ strtoupper($patients->lname) }} {{ strtoupper($patients->ext_name) }}</b></td>
+                <td class="text-center"><b>{{ strtoupper($patients->fname) }}</b></td>
                 <td class="text-center"><b>{{ strtoupper($patients->mname) }}</b></td>
                 <td></td>
             </tr>
@@ -123,7 +123,7 @@
                 <td width="53">Date of Birth:</td>
                 <td><div class="tr-b w-100 text-center"><b>{{ \Carbon\Carbon::parse($patients->bday)->format('F d, Y') }}</b><span class="period">.</span></div></td>
                 <td width="18">Age:</td>
-                <td><div class="tr-b w-100 text-center"><b>{{ $patients->age }}</b> <span class="period">.</span></div></td>
+                <td><div class="tr-b w-100 text-center"><b>{{ \Carbon\Carbon::parse($patients->bday)->age }}</b> <span class="period">.</span></div></td>
                 <td width="18">Sex:</td>
                 <td><div class="tr-b w-100 text-center"><b>{{ $patients->gender }}</b> <span class="period">.</span></div></td>
                 <td width="48">Civil Status:</td>
