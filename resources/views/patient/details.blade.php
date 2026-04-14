@@ -22,7 +22,10 @@
                             <img src="{{ asset('assets/img/user.png') }}" alt="product" class="rounded">
                         </a>
                         <div>
-                            <p class="mb-0 d-inline-flex align-items-center mb-1"><i class="ti ti-id me-1 text-dark"></i>Student ID No. : <span class="text-primary ms-1" style="font-weight: bold">{{ $patients->stud_id }}</span></p>
+                            <p class="mb-0 d-inline-flex align-items-center mb-1">
+                                <i class="ti ti-id me-1 text-dark"></i>Student ID No. : <span class="text-primary ms-1" style="font-weight: bold">{{ $patients->stud_id }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="ti ti-school me-1 text-dark"></i>Course : <span class="text-primary ms-1" style="font-weight: bold">{{ $patients->course }}</span>
+                            </p>
                             <h5 class="mb-1"><span style="color: teal; font-weight: bold">{{ $patients->fname }} {{ $patients->lname }}</span></h5>
                             <p class="mb-3">{{ $patients->address }}</p>
                             <div class="d-flex align-items-center flex-wrap">
