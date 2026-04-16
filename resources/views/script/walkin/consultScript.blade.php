@@ -2,7 +2,7 @@
     toastr.options = {
         "closeButton": true,
         "progressBar": true,
-        "positionClass": "toast-top-center"
+        "positionClass": "toast-top-right"
     };
     $(document).ready(function() {
         $('#adPVisit').submit(function(event) {
@@ -39,25 +39,31 @@
                 "url": "{{ route('getwalkinconsult.walkin', ['id' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
-            "bFilter": true,
-			"sDom": 'fBtlpi',  
-			"ordering": true,
-			"language": {
-				search: ' ',
-				sLengthMenu: '_MENU_',
-				searchPlaceholder: "Search",
-				sLengthMenu: 'Row Per Page _MENU_ Entries',
-				info: "_START_ - _END_ of _TOTAL_ items",
-				paginate: {
-					next: '<i class="ti ti-arrow-right"></i>',
-					previous: '<i class="ti ti-arrow-left text-body"></i> '
-				},
-			},
-			"scrollX": false,         // Enable horizontal scrolling
-			"scrollCollapse": true,  // Adjust table size when the scroll is used
-			"responsive": true,
-			"autoWidth": false,
-            "info": true,
+            // "bFilter": true,
+			// "sDom": 'fBtlpi',  
+			// "ordering": true,
+			// "language": {
+			// 	search: ' ',
+			// 	sLengthMenu: '_MENU_',
+			// 	searchPlaceholder: "Search",
+			// 	sLengthMenu: 'Row Per Page _MENU_ Entries',
+			// 	info: "_START_ - _END_ of _TOTAL_ items",
+			// 	paginate: {
+			// 		next: '<i class="ti ti-arrow-right"></i>',
+			// 		previous: '<i class="ti ti-arrow-left text-body"></i> '
+			// 	},
+			// },
+			// "scrollX": false,         // Enable horizontal scrolling
+			// "scrollCollapse": true,  // Adjust table size when the scroll is used
+			// "responsive": true,
+			// "autoWidth": false,
+            // "info": true,
+            destroy: true,
+            info: true,
+            responsive: true,
+            lengthChange: true,
+            searching: true,
+            paging: true,
             "columns": [
                 { 
                     data: null,
@@ -151,31 +157,32 @@
     });
 
     window.addEventListener('DOMContentLoaded', () => {
-        // Hide all buttons
+        // hide all first
         document.getElementById('btn-consult').classList.add('d-none');
         document.getElementById('btn-referral').classList.add('d-none');
         document.getElementById('btn-extraction').classList.add('d-none');
 
-        // Show Consultation button by default
+        // show default (active tab)
         document.getElementById('btn-consult').classList.remove('d-none');
     });
 
-    document.querySelectorAll('a[data-bs-toggle="tab"]').forEach(tab => {
+    // listen to BUTTON tabs
+    document.querySelectorAll('button[data-bs-toggle="pill"]').forEach(tab => {
         tab.addEventListener('shown.bs.tab', function (e) {
 
-            // Hide all buttons
+            // hide all buttons
             document.getElementById('btn-consult').classList.add('d-none');
             document.getElementById('btn-referral').classList.add('d-none');
             document.getElementById('btn-extraction').classList.add('d-none');
 
-            // Show button based on active tab
-            const target = e.target.getAttribute('href');
+            // get target correctly
+            const target = e.target.getAttribute('data-bs-target');
 
-            if (target === '#consult') {
+            if (target === '#pills-one') {
                 document.getElementById('btn-consult').classList.remove('d-none');
-            } else if (target === '#referral') {
+            } else if (target === '#pills-two') {
                 document.getElementById('btn-referral').classList.remove('d-none');
-            } else if (target === '#toothextraction') {
+            } else if (target === '#pills-three') {
                 document.getElementById('btn-extraction').classList.remove('d-none');
             }
         });
@@ -220,25 +227,31 @@
                 "url": "{{ route('getwalkinreferral.walkin', ['id' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
-            "bFilter": true,
-			"sDom": 'fBtlpi',  
-			"ordering": true,
-			"language": {
-				search: ' ',
-				sLengthMenu: '_MENU_',
-				searchPlaceholder: "Search",
-				sLengthMenu: 'Row Per Page _MENU_ Entries',
-				info: "_START_ - _END_ of _TOTAL_ items",
-				paginate: {
-					next: '<i class="ti ti-arrow-right"></i>',
-					previous: '<i class="ti ti-arrow-left text-body"></i> '
-				},
-			},
-			"scrollX": false,         // Enable horizontal scrolling
-			"scrollCollapse": true,  // Adjust table size when the scroll is used
-			"responsive": true,
-			"autoWidth": false,
-            "info": true,
+            // "bFilter": true,
+			// "sDom": 'fBtlpi',  
+			// "ordering": true,
+			// "language": {
+			// 	search: ' ',
+			// 	sLengthMenu: '_MENU_',
+			// 	searchPlaceholder: "Search",
+			// 	sLengthMenu: 'Row Per Page _MENU_ Entries',
+			// 	info: "_START_ - _END_ of _TOTAL_ items",
+			// 	paginate: {
+			// 		next: '<i class="ti ti-arrow-right"></i>',
+			// 		previous: '<i class="ti ti-arrow-left text-body"></i> '
+			// 	},
+			// },
+			// "scrollX": false,         // Enable horizontal scrolling
+			// "scrollCollapse": true,  // Adjust table size when the scroll is used
+			// "responsive": true,
+			// "autoWidth": false,
+            // "info": true,
+            destroy: true,
+            info: true,
+            responsive: true,
+            lengthChange: true,
+            searching: true,
+            paging: true,
             "columns": [
                 { 
                     data: null,

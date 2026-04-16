@@ -1,158 +1,124 @@
 @extends('layouts.app')
 
-@section('body')    
-    <!-- Start Content -->
-    <div class="content pb-0">
+@section('body')
+    <div class="row ">
+        <div class="col-12">
+            <div class="mb-6">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h1 class="fs-3">Walkin Consultations</h1>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="d-flex align-items-center flex-wrap gap-2">
+                            <button id="btn-consult" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalwalkinconsult">
+                                <i class="ti ti-plus"></i> Add New Consultation
+                            </button>
+                            <button id="btn-referral" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalwalkinreferral">
+                                <i class="ti ti-plus"></i> Add New Referral
+                            </button>
+                            <button id="btn-extraction" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalwalkintoothextraction">
+                                <i class="ti ti-plus"></i> Add New Tooth Extraction
+                            </button>
+                            {{-- <a href="javascript:void(0);" class="btn btn-outline-primary d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_consult_appointment"><i class="ti ti-plus me-1"></i>New Appointment</a> --}}
+                            {{-- <a href="javascript:void(0);" class="btn btn-outline-white bg-white d-inline-flex align-items-center"><i class="ti ti-calendar-time me-1"></i>Schedule Availability</a> --}}
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row g-4 mb-5">
+                    <div class="col-md-12">
+                        <ul class="nav nav-pills bg-light p-2 rounded-2" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-one-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-one" type="button" role="tab"
+                                    aria-controls="pills-one" aria-selected="true"> <i class="ti ti-user-bolt"></i>
+                                    Consultation
+                                </button>
+                            </li>
+                            &nbsp;
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-two-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-two" type="button" role="tab"
+                                    aria-controls="pills-two" aria-selected="false" tabindex="-1"> <i class="ti ti-user-code"></i>
+                                    Referral
+                                </button>
+                            </li>
+                            &nbsp;
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-three-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-three" type="button" role="tab"
+                                    aria-controls="pills-three" aria-selected="false" tabindex="-1"> <i class="ti ti-users"></i>
+                                    Tooth Extraction
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="tab-content mt-1" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-one" role="tabpanel" aria-labelledby="pills-one-tab" tabindex="0">
+                                        <div class="table-responsive mt-2 p-3">
+                                            <table id="consultationTable" class="table table-hover" style="width: 100%">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Patient</th>
+                                                        <th>Date</th>
+                                                        <th>Time</th>
+                                                        <th>Chief Complaint</th>
+                                                        <th>Treatment</th>
+                                                        <th>Medicine</th>
+                                                        <th>Quantity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="font-size: 10pt;">
 
-        <!-- Page Header -->
-        <div class="d-flex align-items-sm-center justify-content-between flex-wrap gap-2 pb-3 mb-3 border-1 border-bottom">
-            <div>
-                <h4 class="fw-bold mb-0 d-flex align-items-center"> <a href="{{ route('appointment.walkin') }}" class="text-dark"> <i class="ti ti-chevron-left me-1"></i>Walk-In Consultation</a></h4>
-            </div>
-            <div class="d-flex align-items-center flex-wrap gap-2">
-                <button id="btn-consult" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodalwalkinconsult">
-                    <i class="ti ti-plus me-1"></i> Add New Consultation
-                </button>
-                <button id="btn-referral" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodalwalkinreferral">
-                    <i class="ti ti-plus me-1"></i> Add New Referral
-                </button>
-                <button id="btn-extraction" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodalwalkintoothextraction">
-                    <i class="ti ti-plus me-1"></i> Add New Tooth Extraction
-                </button>
-                {{-- <a href="javascript:void(0);" class="btn btn-outline-primary d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_consult_appointment"><i class="ti ti-plus me-1"></i>New Appointment</a> --}}
-                {{-- <a href="javascript:void(0);" class="btn btn-outline-white bg-white d-inline-flex align-items-center"><i class="ti ti-calendar-time me-1"></i>Schedule Availability</a> --}}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-two" role="tabpanel" aria-labelledby="pills-two-tab" tabindex="0">
+                                        <div class="table-responsive mt-2 p-3">
+                                            <table id="referlisttab" class="table table-striped" style="width: 100%">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Patient</th>
+                                                        <th>Date</th>
+                                                        <th>Time</th>
+                                                        <th>Referred from</th>
+                                                        <th>Referred to</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="font-size: 10pt;">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-three" role="tabpanel" aria-labelledby="pills-three-tab" tabindex="0">
+                                        <div class="table-responsive mt-2 p-3">
+                                            <table id="toothextractlisttab" class="table table-striped" style="width: 100%">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Patient</th>
+                                                        <th>Date</th>
+                                                        <th>Time</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="font-size: 10pt;">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- End Page Header -->
-
-        <!-- row start -->
-        <div class="row">
-            <!-- tab start -->
-            <ul class="nav nav-tabs nav-bordered mb-3">
-                <li class="nav-item">
-                    <a href="#consult" data-bs-toggle="tab" aria-expanded="false" class="nav-link active bg-transparent">
-                        <span>Consultation</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#referral" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
-                        <span>Referral</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#toothextraction" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
-                        <span>Tooth Extraction</span>
-                    </a>
-                </li>
-            </ul>
-            <!-- tab end -->
-
-            <div class="tab-content">
-                <div class="tab-pane show active" id="consult">
-                    <div class="table-responsive">
-                        <table id="consultationTable" class="table table-hover" style="width: 100%">
-                            <thead class="">
-                                <tr>
-                                    <th>Patient</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Chief Complaint</th>
-                                    <th>Treatment</th>
-                                    <th>Medicine</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody style="font-size: 10pt;">
-                                {{-- <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <a href="patient-details.html" class="avatar avatar-md me-2">
-                                                <img src="{{ asset('assets/img/user.png') }}" alt="product" class="rounded-circle">
-                                            </a>
-                                            <a href="patient-details.html" class="text-dark fw-semibold">Alberto Ripley <span class="text-body fs-13 fw-normal d-block"> 26, Male </span>  </a>
-                                        </div>
-                                    </td>
-                                    <td>+1 41245 54132</td>                                
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <a href="doctor-details.html" class="avatar me-2 flex-shrink-0">
-                                                <img src="{{ asset('assets/img/doctors/doctor-01.jpg') }}" alt="img" class="rounded-circle">
-                                            </a>
-                                            <div>
-                                            <h6 class="fs-14 mb-1"><a href="doctor-details.html" class="fw-semibold">Dr. Mick Thompson</a></h6>
-                                            <p class="mb-0 fs-13">Cardiologist</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Miami, Florida</td>
-                                    <td>30 Apr 2025</td>
-                                    <td><span class="badge badge-soft-success rounded text-success border border-success fs-13 fw-medium">Available</span></td>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-1">
-                                            <a href="appointments.html" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1">
-                                                <i class="ti ti-calendar-cog"></i>
-                                            </a>
-                                            <a href="javascript:void(0);" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                            <ul class="dropdown-menu p-2">
-                                                <li>
-                                                    <a href="edit-patient.html" class="dropdown-item d-flex align-items-center">Edit</a>
-                                                </li>
-                                                <li>
-                                                    <a href="patient-details.html" class="dropdown-item d-flex align-items-center">View</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#delete_modal">Delete</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr> --}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="tab-pane" id="referral">
-                    <div class="table-responsive">
-                        <table id="referlisttab" class="table table-striped" style="width: 100%">
-                            <thead class="">
-                                <tr>
-                                    <th>Patient</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Referred from</th>
-                                    <th>Referred to</th>
-                                </tr>
-                            </thead>
-                            <tbody style="font-size: 10pt;">
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="tab-pane" id="toothextraction">
-                    <div class="table-responsive">
-                        <table id="toothextractlisttab" class="table table-striped" style="width: 100%">
-                            <thead class="">
-                                <tr>
-                                    <th>Patient</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-                            <tbody style="font-size: 10pt;">
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> 
-        </div>
-        <!-- row end -->
-                        
     </div>
-    <!-- End Content -->
 
     <!-- Center modal content -->
     <div class="modal fade" id="centermodalwalkinconsult" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -670,6 +636,3 @@
         </div>
     </div>
 @endsection
-
-
-

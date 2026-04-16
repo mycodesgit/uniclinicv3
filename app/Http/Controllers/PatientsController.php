@@ -41,15 +41,23 @@ class PatientsController extends Controller
         $campus = 'MC';
         $search = $request->query('search');
 
-        $students = Student::where('campus', $campus)
+        $students = Student::join(
+                DB::raw('(SELECT MAX(id) as id, studentID FROM program_en_history GROUP BY studentID) as latest'),
+                'students.stud_id',
+                '=',
+                'latest.studentID'
+            )
+            ->join('program_en_history', 'program_en_history.id', '=', 'latest.id')
+            ->select('students.*', 'program_en_history.course as enhiscourse')
+            ->where('students.campus', $campus)
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
-                    $q->where('lname', 'LIKE', "%{$search}%")
-                      ->orWhere('fname', 'LIKE', "%{$search}%")
-                      ->orWhere('stud_id', 'LIKE', "%{$search}%");
+                    $q->where('students.lname', 'LIKE', "%{$search}%")
+                    ->orWhere('students.fname', 'LIKE', "%{$search}%")
+                    ->orWhere('students.stud_id', 'LIKE', "%{$search}%");
                 });
             })
-            ->orderBy('lname')
+            ->orderBy('students.lname')
             ->paginate(10);
 
         return response()->json($students);
@@ -68,9 +76,9 @@ class PatientsController extends Controller
 
         $regions = Region::all();
 
-        $student = DB::connection('enrollment')
-            ->table('students')
-            ->where('id', $id)
+        $student = Student::join('program_en_history', 'students.stud_id', '=', 'program_en_history.studentID')
+            ->select('students.*', 'program_en_history.course as enhiscourse')
+            ->where('students.id', $id)
             ->first();
 
         $patientVisit = Patientvisit::where('stid', $student->id)->get();

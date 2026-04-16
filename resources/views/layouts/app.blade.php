@@ -1,472 +1,239 @@
-
 <!DOCTYPE html>
-<html lang="en" data-color="teal">
+<html lang="en">
 
 <head>
-
-	<!-- Meta Tags -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>MDHU - Medical Dental & Health Unit</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <title>CPSU || MDHU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-	<meta name="author" content="Dreams Technologies">
-    <meta name="description" content="Preclinic - Medical & Hospital - Bootstrap 5 Admin Template">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('uilibs/images/cpsulogov4.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('uilibs/images/cpsulogov4.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('uilibs/images/cpsulogov4.png') }}">
 
-    <!-- Theme Config Js -->
-    <script src="{{ asset('assets/js/theme-script.js') }}" type="c69ced46290eea12272fe16a-text/javascript"></script>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-
-    <!-- Fontawesome CSS -->
-	<link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/all.min.css') }}">
-
-    <!-- Tabler Icon CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/tabler-icons/tabler-icons.min.css') }}">
-
-    <!-- Select2 CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
-
-    <!-- Sweetalert2 CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}">
-
-    <!-- Choices CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/choices.js/public/assets/styles/choices.min.css') }}">
-
-    <!-- Daterangepikcer CSS -->
-	<link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
-
-    <!-- Datetimepicker CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}">
-
-    <!-- Simplebar CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/simplebar/simplebar.min.css') }}">
-
-    <!-- Toatr CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
-
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" id="app-style">
-
-    <!-- Logo  -->
-    <link rel="shortcut icon" type="" href="{{ asset('assets/img/CPSU_L.png') }}">
+    <link rel="stylesheet" href="{{ asset('uilibs/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('uilibs/css/custom.css') }}">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{{ asset('uilibs/plugins/fontawesome-free-V6/css/all.min.css') }}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('uilibs/plugins/toastr/toastr.min.css') }}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('uilibs/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('uilibs/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('uilibs/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <!-- DataTables  -->
+    <link rel="stylesheet" href="{{ asset('uilibs/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('uilibs/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('uilibs/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <!-- fullCalendar -->
+    <link rel="stylesheet" href="{{ asset('uilibs/plugins/fullcalendar/fullcalendar.css') }}">
 
     <style>
-        .readonlytext {
-            background-color: #e9e9e9 !important; border: 1px solid #aaa;"
+        .nav-link {
+            font-size: 14px;
         }
-        .toast-top-center {
-            margin-top: 45px;
+
+        .nav-link:hover {
+            background-color: #f8f9fa;
+            border-radius: 6px;
         }
-        ::-webkit-scrollbar {
-            width: 5px !important;
+
+        .collapse .nav-link {
+            color: #555;
         }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1 !important;
+        .sidebar .nav-link.active {
+            color: #000000 !important;
+            background-color: #65ac86 !important;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #888 !important;
-            border-radius: 5px !important;
+        /* When sidebar is collapsed, remove active background */
+        .sidebar.collapsed .nav-link.active,
+        .sidebar.collapsed .nav-link:hover {
+            background-color: transparent !important;
+            color: inherit !important;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555 !important;
+        /* main {
+            background-color: #f4f6f9;
+        } */
+        .fc-event {
+            border-color: #198754; background-color: #198754;
+        }
+        @media (max-width: 768px) {
+            .fc .fc-daygrid-day-frame {
+                min-height: 45px;
+            }
+        }
+        .card-hover {
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card-hover:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        .sidebar .nav-link .fa {
+            font-size: 18px !important;
+        }
+        .fa {
+            font-family: tabler-icons !important;
+            speak: none;
+            font-style: normal;
+            font-weight: 400;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
     </style>
-
 </head>
 
 <body>
+    <div id="overlay" class="overlay"></div>
+    <!-- TOPBAR -->
+    <nav id="topbar" class="navbar bg-white border-bottom fixed-top topbar px-3">
+        <button id="toggleBtn" class="d-none d-lg-inline-flex btn btn-light btn-icon btn-sm ">
+            <i class="fas fa-bars"></i>
+        </button>
 
-    <!-- Begin Wrapper -->
-    <div class="main-wrapper">
-
-        <!-- Topbar Start -->
-        <header class="navbar-header">
-            <div class="page-container topbar-menu">
-                <div class="d-flex align-items-center gap-2">
-
-                    <!-- Logo -->
-                    <a href="index.html" class="logo">
-
-                        <!-- Logo Normal -->
-                        <span class="logo-light">
-                            <span class="logo-lg"><img src="{{ asset('assets/img/logo.svg') }}" alt="logo"></span>
-                            <span class="logo-sm"><img src="{{ asset('assets/img/logo-small.svg') }}" alt="small logo"></span>
-                        </span>
-
-                        <!-- Logo Dark -->
-                        <span class="logo-dark">
-                            <span class="logo-lg"><img src="{{ asset('assets/img/logo-white.svg') }}" alt="dark logo"></span>
-                        </span>
+        <!-- MOBILE -->
+        <button id="mobileBtn" class="btn btn-light btn-icon btn-sm d-lg-none me-2">
+            <i class="ti ti-layout-sidebar-left-expand"></i>
+        </button>
+        <div>
+            <!-- Navbar nav -->
+            <ul class="list-unstyled d-flex align-items-center mb-0 gap-1">
+                <!-- Dropdown -->
+                <li class="ms-3 dropdown">
+                    <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{ asset('uilibs/images/user.png') }}" alt="" class="avatar avatar-sm rounded-circle" /> {{ Auth::guard('web')->user()->fname }} {{ Auth::guard('web')->user()->lname }}
                     </a>
+                    <div class="dropdown-menu dropdown-menu-end p-0" style="min-width: 200px;">
+                        <div>
+                            <div class="d-flex gap-3 align-items-center border-dashed border-bottom px-3 py-3">
+                                <img src="{{ asset('uilibs/images/user.png') }}" alt="" class="avatar avatar-md rounded-circle" />
+                                <div>
+                                    <h5 class="mb-0 small">{{ Auth::guard('web')->user()->email }}</h5>
+                                    @php
+                                        $roles = [
+                                            0 => 'Administrator',
+                                            1 => 'Administer QA',
+                                            2 => 'Administer QA Staff',
+                                            3 => 'Administer Result',
+                                            4 => 'Administer Result Staff',
+                                        ];
 
-                    <!-- Sidebar Mobile Button -->
-                    <a id="mobile_btn" class="mobile-btn" href="#sidebar">
-                        <i class="ti ti-menu-deep fs-24"></i>
-                    </a>
-                       
-                    <button class="sidenav-toggle-btn btn border-0 p-0 active" id="toggle_btn2"> 
-                        <i class="ti ti-arrow-right"></i>
-                    </button>  
-					
-                    {{-- <div class="me-auto d-flex align-items-center header-search d-lg-flex d-none">
-                        <div class="input-icon-start position-relative me-2">
-                            <span class="input-icon-addon">
-                                <i class="ti ti-search"></i>
-                            </span>
-                           <input type="text" class="form-control shadow-sm" placeholder="Search">
-                           <span class="input-icon-addon text-dark shadow fs-18 d-inline-flex p-0 header-search-icon"><i class="ti ti-command"></i></span>
-                        </div>
-                    </div> --}}
-					
-                </div>
-
-                <div class="d-flex align-items-center">
-				
-                    <!-- Search for Mobile -->
-                    {{-- <div class="header-item d-flex d-lg-none me-2">
-                        <button class="topbar-link btn btn-icon" data-bs-toggle="modal" data-bs-target="#searchModal" type="button">
-                            <i class="ti ti-search fs-16"></i>
-                        </button>
-                    </div>
-
-                    <div class="header-item">
-                        <div class="dropdown me-2">
-                            <a href="doctors-appointments.html" class="btn topbar-link"><i class="ti ti-calendar-due"></i></a>
-                        </div>
-                    </div>                    
-
-                    <div class="header-item">
-                        <div class="dropdown me-2">
-                            <a href="doctors-profile-settings.html" class="btn topbar-link"><i class="ti ti-settings-2"></i></a>
-                        </div> 
-                    </div> --}}
-
-                    <!-- Light/Dark Mode Button -->
-                    <div class="header-item d-none d-sm-flex me-2">
-                        <button class="topbar-link btn btn-icon topbar-link" id="light-dark-mode" type="button">
-                            <i class="ti ti-moon fs-16"></i>
-                        </button>
-                    </div>
-                    
-					
-					<!-- Notification Dropdown -->
-                    {{-- <div class="header-item">
-						<div class="dropdown me-3">
-							<button class="topbar-link btn btn-icon topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown" data-bs-offset="0,24" type="button" aria-haspopup="false" aria-expanded="false">
-								<i class="ti ti-bell-check fs-16 animate-ring"></i>
-								<span class="notification-badge"></span>
-							</button>
-							<div class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-lg" style="min-height: 300px;">
-								<div class="p-2 border-bottom">
-									<div class="row align-items-center">
-										<div class="col">
-											<h6 class="m-0 fs-16 fw-semibold"> Notifications</h6>
-										</div>
-									</div>
-								</div>
-								<div class="notification-body position-relative z-2 rounded-0" data-simplebar>
-									<div class="dropdown-item notification-item py-3 text-wrap border-bottom" id="notification-1">
-										<div class="d-flex">
-											<div class="me-2 position-relative flex-shrink-0">
-												<img src="{{ asset('assets/img/doctors/doctor-01.jpg') }}" class="avatar-md rounded-circle" alt="">
-											</div>
-											<div class="flex-grow-1">
-												<p class="mb-0 fw-medium text-dark">Dr. Smith</p>
-												<p class="mb-1 text-wrap">
-													updated the <span class="fw-medium text-dark">surgery</span> schedule. 
-												</p>
-												<div class="d-flex justify-content-between align-items-center">
-													<span class="fs-12"><i class="ti ti-clock me-1"></i>4 min ago</span>
-													<div class="notification-action d-flex align-items-center float-end gap-2">
-														<a href="javascript:void(0);" class="notification-read rounded-circle bg-danger" data-bs-toggle="tooltip" title="" data-bs-original-title="Make as Read" aria-label="Make as Read"></a>
-														<button class="btn rounded-circle p-0" data-dismissible="#notification-1">
-															<i class="ti ti-x"></i>
-														</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-							
-									<div class="dropdown-item notification-item py-3 text-wrap border-bottom" id="notification-2">
-										<div class="d-flex">
-											<div class="me-2 position-relative flex-shrink-0">
-												<img src="{{ asset('assets/img/doctors/doctor-06.jpg') }}" class="avatar-md rounded-circle" alt="">
-											</div>
-											<div class="flex-grow-1">
-												<p class="mb-0 fw-medium text-dark">Dr. Patel</p>
-												<p class="mb-1 text-wrap">
-                                                    completed a <span class="fw-medium text-dark">follow-up</span> report for patient <span class="fw-medium text-dark">Emily</span>.
-												</p>
-												<div class="d-flex justify-content-between align-items-center">
-													<span class="fs-12"><i class="ti ti-clock me-1"></i>8 min ago</span>
-													<div class="notification-action d-flex align-items-center float-end gap-2">
-														<a href="javascript:void(0);" class="notification-read rounded-circle bg-danger" data-bs-toggle="tooltip" title="" data-bs-original-title="Make as Read" aria-label="Make as Read"></a>
-														<button class="btn rounded-circle p-0" data-dismissible="#notification-2">
-															<i class="ti ti-x"></i>
-														</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									
-									<div class="dropdown-item notification-item py-3 text-wrap border-bottom" id="notification-3">
-										<div class="d-flex">
-											<div class="me-2 position-relative flex-shrink-0">
-												<img src="{{ asset('assets/img/doctors/doctor-02.jpg') }}" class="avatar-md rounded-circle" alt="">
-											</div>
-											<div class="flex-grow-1">
-												<p class="mb-0 fw-medium text-dark">Emily</p>
-												<p class="mb-1 text-wrap">
-                                                    booked an appointment with <span class="fw-medium text-dark">Dr. Patel</span> for <span class="fw-medium text-dark">April 15</span>
-												</p>
-												<div class="d-flex justify-content-between align-items-center">
-													<span class="fs-12"><i class="ti ti-clock me-1"></i>15 min ago</span>
-													<div class="notification-action d-flex align-items-center float-end gap-2">
-														<a href="javascript:void(0);" class="notification-read rounded-circle bg-danger" data-bs-toggle="tooltip" title="" data-bs-original-title="Make as Read" aria-label="Make as Read"></a>
-														<button class="btn rounded-circle p-0" data-dismissible="#notification-3">
-															<i class="ti ti-x"></i>
-														</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									
-									<div class="dropdown-item notification-item py-3 text-wrap" id="notification-4">
-										<div class="d-flex">
-											<div class="me-2 position-relative flex-shrink-0">
-												<img src="{{ asset('assets/img/doctors/doctor-07.jpg') }}" class="avatar-md rounded-circle" alt="">
-											</div>
-											<div class="flex-grow-1">
-												<p class="mb-0 fw-medium text-dark">Amelia</p>
-												<p class="mb-1 text-wrap">
-                                                    completed the <span class="fw-medium text-dark">pre-visit</span> health questionnaire.
-												</p>
-												<div class="d-flex justify-content-between align-items-center">
-													<span class="fs-12"><i class="ti ti-clock me-1"></i>20 min ago</span>
-													<div class="notification-action d-flex align-items-center float-end gap-2">
-														<a href="javascript:void(0);" class="notification-read rounded-circle bg-danger" data-bs-toggle="tooltip" title="" data-bs-original-title="Make as Read" aria-label="Make as Read"></a>
-														<button class="btn rounded-circle p-0" data-dismissible="#notification-4">
-															<i class="ti ti-x"></i>
-														</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="p-2 rounded-bottom border-top text-center">
-									<a href="doctors-notifications.html" class="text-center text-decoration-underline fs-14 mb-0">
-										View All Notifications
-									</a>
-								</div> 
-							</div>
-						</div>
-					</div> --}}
-					
-					<!-- User Dropdown -->
-					<div class="dropdown profile-dropdown d-flex align-items-center justify-content-center">
-                        <a href="javascript:void(0);" class="topbar-link dropdown-toggle drop-arrow-none position-relative" data-bs-toggle="dropdown" data-bs-offset="0,22" aria-haspopup="false" aria-expanded="false">
-                            <img src="{{ asset('assets/img/user.png') }}" width="32" class="rounded-circle d-flex" alt="user-image">
-                            <span class="online text-success"><i class="ti ti-circle-filled d-flex bg-white rounded-circle border border-1 border-white"></i></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-md p-2">
-                        
-                            <div class="d-flex align-items-center bg-light rounded-3 p-2 mb-2">
-                                <img src="{{ asset('assets/img/user.png') }}" class="rounded-circle" width="42" height="42" alt="">
-                                <div class="ms-2">
-                                    <p class="fw-medium text-dark mb-0">{{ Auth::guard('web')->user()->fname }} {{ Auth::guard('web')->user()->lname }}</p>
-                                    <span class="d-block fs-13">{{ Auth::guard('web')->user()->role }}</span>
+                                        $userRole = Auth::guard('web')->user()->role;
+                                    @endphp
+                                    <p class="mb-0 small text-warning">{{ $roles[$userRole] ?? 'Unknown Role' }}</p>
                                 </div>
                             </div>
-
-                            <!-- Item-->
-                            <a href="#" class="dropdown-item">
-                                <i class="ti ti-user-circle me-1 align-middle"></i>
-                                <span class="align-middle">Profile Settings</span>
-                            </a>
-
-                            <!-- item -->
-                            <div class="form-check form-switch form-check-reverse d-flex align-items-center justify-content-between dropdown-item mb-0">
-                                <label class="form-check-label" for="notify"><i class="ti ti-bell me-1"></i>Notifications</label>
-                                <input class="form-check-input me-0" type="checkbox" role="switch" id="notify">
-                            </div>
-
-                            <!-- Item-->
-                            <a href="#" class="dropdown-item">
-                                <i class="ti ti-receipt me-1 align-middle"></i>
-                                <span class="align-middle">Activity Logs</span>
-                            </a>
-
-                             <!-- Item-->
-                             <a href="#" class="dropdown-item">
-                                <i class="ti ti-help me-1 align-middle"></i>
-                                <span class="align-middle">Help & Support</span>
-                            </a>
-                                        
-                            
-                            <!-- Item-->
-                            <div class="pt-2 mt-2 border-top">
-                                <a href="{{ route('logout') }}" class="dropdown-item text-danger">
-                                    <i class="ti ti-logout me-1 fs-17 align-middle"></i>
-                                    <span class="align-middle">Log Out</span>
+                            <div class="p-3 d-flex flex-column gap-1 medium lh-lg">
+                                <a href="#!" class="text-secondary">
+                                    <i class="ti ti-settings"></i> <span>Account Settings</span>
+                                </a>
+                                <a href="#!" class="text-success">
+                                    <i class="ti ti-message"></i><span> Chat Message</span>
+                                </a>
+                                <a href="{{ route('logout') }}" class="text-danger">
+                                    <i class="ti ti-logout"></i><span> Signout</span>
                                 </a>
                             </div>
-                        </div>
-                    </div>
-						
-                </div>
-            </div>
-        </header>
-        <!-- Topbar End -->
 
-        <!-- Search Modal -->
-        <div class="modal fade" id="searchModal">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content bg-transparent">
-                    <div class="card shadow-none mb-0">
-                        <div class="px-3 py-2 d-flex flex-row align-items-center" id="search-top">
-                            <i class="ti ti-search fs-22"></i>
-                            <input type="search" class="form-control border-0" placeholder="Search">
-                            <button type="button" class="btn p-0" data-bs-dismiss="modal" aria-label="Close"><i class="ti ti-x fs-22"></i></button>
                         </div>
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
 
-        <!-- Sidenav Menu Start -->
-        <div class="sidebar" id="sidebar">
-            
-            <!-- Start Logo -->
-            <div class="sidebar-logo">
-                <div>
-                    <!-- Logo Normal -->
-                    <a href="./" class="logo logo-normal" style="margin-top: -5px">
-                        <img src="{{ asset('assets/img/MDHULogoblack.png') }}" alt="Logo">
-                    </a>
+    </nav>
 
-                    <!-- Logo Small -->
-                    <a href="index.html" class="logo-small">
-                        <img src="{{ asset('assets/img/logo-small.svg') }}" alt="Logo">
-                    </a>
-
-                    <!-- Logo Dark -->
-                    <a href="index.html" class="dark-logo">
-                        <img src="{{ asset('assets/img/logo-white.svg') }}" alt="Logo">
-                    </a>
-                </div>
-                {{-- <button class="sidenav-toggle-btn btn border-0 p-0 active" id="toggle_btn"> 
-                    <i class="ti ti-arrow-left text-body"></i>
-                </button> --}}
-
-                <!-- Sidebar Menu Close -->
-                <button class="sidebar-close">
-                    <i class="ti ti-x align-middle"></i>
-                </button>                
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar">
+        <div class="logo-area">
+            <div class="d-inline-flex">
+                <img src="{{ asset('uilibs/images/cpsulogov4.png') }}" alt="logo" width="24">
+                <span class="logo-text ms-2" style="font-weight: bold">CPSU MDHU</span>
             </div>
-            <!-- End Logo -->
-
-            <!-- Sidenav Menu -->
-            <div class="sidebar-inner" data-simplebar>                
-                <div id="sidebar-menu" class="sidebar-menu">
-                    @include('includes.sidebar')                   
-                </div>
-                {{-- <div class="sidebar-footer mt-5">
-                    <div class="trial-item mt-0 p-3 text-center">
-                        <div class="trial-item-icon rounded-4 mb-3 p-2 text-center shadow-sm d-inline-flex">
-                            <img src="{{ asset('assets/img/icons/sidebar-icon.svg') }}" alt="img">
-                        </div>
-                        <div>
-                            <h6 class="fs-14 fw-semibold mb-1">Upgrade To Pro</h6>
-                            <p class="fs-13 mb-0">Check 1 min video and begin use Preclinic like a pro</p>
-                        </div>
-                        <a href="javascript:void(0);" class="close-icon shadow-sm"><i class="ti ti-x"></i></a>
-                    </div>
-                </div> --}}
-            </div>
-
         </div>
-        <!-- Sidenav Menu End -->
+        @include('includes.sidebar')
 
-        <!-- ========================
-			Start Page Content
-		========================= -->
-         
-        <div class="page-wrapper">
+    </aside>
 
+    <!-- MAINmainCONTENT -->
+    <main id="content" class="content py-10">
+        <div class="container-fluid">
             @yield('body')
 
-            <!-- Footer Start -->
-            <div class="footer text-center bg-white p-2 border-top">
-                <p class="text-dark mb-0">2025 &copy; <a href="javascript:void(0);" class="link-primary">MDHU</a>, All Rights Reserved</p>
+            <div class="row">
+                <div class="col-12">
+                    <footer class="text-center py-2 mt-6 text-secondary fixed-bottom bg-white" style="z-index: 99">
+                        <p class="mb-0">CPSU OFES V.2.0: Maintained and Managed by Management Information System Office (MISO) under the Leadership of Dr. Aladino C. Moraca.</p>
+                    </footer>
+                </div>
             </div>
-            <!-- Footer End -->
 
         </div>
+    </main>
 
-        <!-- ========================
-			End Page Content
-		========================= -->
+    <!-- Bootstrap JS -->
 
-    </div>
-    <!-- End Wrapper -->
-    
-    
-    <!-- End Add New Appointment-->
-
+    <script type="text/javascript" src="{{ asset('uilibs/js/main.js') }}"></script>
     <!-- jQuery -->
-    <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('uilibs/plugins/jquery/jquery.min.js') }}"></script>
 
-	<!-- Simplebar JS -->
-	<script src="{{ asset('assets/plugins/simplebar/simplebar.min.js') }}" type="text/javascript"></script>
-
-    <!-- Bootstrap Core JS -->
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>    
-
-    <!-- Chart JS -->
-    <script src="{{ asset('assets/plugins/apexchart/apexcharts.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/plugins/apexchart/chart-data.js') }}" type="text/javascript"></script>
-    
-    <!-- Daterangepikcer JS -->
-	<script src="{{ asset('assets/js/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
-    
-    <!-- Select2 JS -->
-    <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
-
-    <!-- Datetimepicker JS -->
-    <script src="{{ asset('assets/js/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script> 
-    <script src="{{ asset('assets/plugins/choices.js/public/assets/scripts/choices.min.js') }}" type="text/javascript"></script>
-
-    <!-- Datatable JS -->
-    <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/js/dataTables.bootstrap5.min.js') }}" type="text/javascript"></script>
-
-    <!-- Toastr JS -->
-    <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}" type="text/javascript"></script>
-
-    <!-- Sweet Alerts js -->
-    <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}" type="text/javascript"></script>
-
-    <!-- Chart JS -->
-    <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}" type="text/javascript"></script>
-
+    <!-- DataTables  & Plugins -->
+    <script src="{{ asset('uilibs/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    <!-- fullCalendar 2.2.5 -->
+    <script src="{{ asset('uilibs/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/fullcalendar/fullcalendar.js') }}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{{ asset('uilibs/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- Toastr -->
+    <script src="{{ asset('uilibs/plugins/toastr/toastr.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('uilibs/plugins/select2/js/select2.full.min.js') }}"></script>
+    <!-- ChartJS -->
+    <script src="{{ asset('uilibs/plugins/chart.js/Chart.min.js') }}"></script>
     <!-- Validation JS -->
-    <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('uilibs/plugins/jquery-validation/additional-methods.min.js') }}"></script>
 
-    <!-- Main JS -->
-    <script src="{{ asset('assets/js/script.js') }}" type="text/javascript"></script>
+    <script>
+        $(function () {
+            $('.select2').each(function () {
+                $(this).select2({
+                    dropdownParent: $(this).closest('.modal'),
+                });
+            });
 
-    @if (request()->routeIs('dashboard'))
+            $('.select2bs4').select2({
+                theme: 'bootstrap4',
+                height: '100',
+            })
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            const cards = document.querySelectorAll('.card-animate');
+
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, index * 90); // stagger effect
+            });
+        });
+    </script>
+
+    @if (request()->routeIs('dashboard.index'))
         @include('script.dash.dashScript')
         <script>
             var collegeCountsdaily = {!! json_encode($collegeCountsdaily) !!};
@@ -476,7 +243,6 @@
             var collegeAcronymsmonth = {!! json_encode($collegeAcronymsmonth) !!};
         </script>
     @endif
-
     @if (request()->routeIs('patients.students'))
         @include('script.patient.guestscript')
         @include('script.validations.patientsvalidation')
@@ -508,7 +274,5 @@
     @if (request()->routeIs('users.list'))
         @include('script.userl.usersscript')
     @endif
-
 </body>
-
 </html>

@@ -49,9 +49,10 @@
                                 student.campus
                             }</td>
                             <td>${student.civil_status}</td>
+                            <td>${student.enhiscourse}</td>
                             <td>
                                 <div class="d-flex align-items-center gap-1">
-                                    <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal" title="View Details">
+                                    <a href="${detailsUrl}" class="btn btn-success btn-sm text-light" title="View Details">
                                         <i class="ti ti-eye" style="color:#fff"></i>
                                     </a>
                                 </div>
@@ -80,10 +81,10 @@
         // ✅ Validation FIRST
         $('#searchForm').validate({
             rules: {
-                searchStud: { required: true },
+                searchstud: { required: true },
             },
             messages: {
-                searchStud: { required: "Please Enter Student Last Name or Student ID" },
+                searchstud: { required: "Please Enter Student Last Name or Student ID" },
             },
             errorElement: 'span',
             errorPlacement: function (error, element) {
@@ -158,7 +159,7 @@
                             <td>${emp.civil_status}</td>
                             <td>
                                 <div class="d-flex align-items-center gap-1">
-                                    <a href="${detailsUrl}" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal" title="View Details">
+                                    <a href="${detailsUrl}" class="btn btn-success btn-sm text-light" title="View Details">
                                         <i class="ti ti-eye" style="color:#fff"></i>
                                     </a>
                                 </div>

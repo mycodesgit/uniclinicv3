@@ -199,26 +199,12 @@
                 "url": "{{ route('getwalkinconsult.walkin', ['id' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
-            "bFilter": true,
-			"sDom": 'fBtlpi',  
-			"ordering": true,
-			"language": {
-				search: ' ',
-				sLengthMenu: '_MENU_',
-				searchPlaceholder: "Search",
-				sLengthMenu: 'Row Per Page _MENU_ Entries',
-				info: "_START_ - _END_ of _TOTAL_ items",
-				paginate: {
-					next: '<i class="ti ti-arrow-right"></i>',
-					previous: '<i class="ti ti-arrow-left text-body"></i> '
-				},
-			},
-			"scrollX": false,         // Enable horizontal scrolling
-			"scrollCollapse": true,  // Adjust table size when the scroll is used
-			"responsive": true,
-			"autoWidth": false,
-            "info": true,
-            "searching": false,
+            destroy: true,
+            info: true,
+            responsive: true,
+            lengthChange: true,
+            searching: true,
+            paging: true,
             "columns": [
                 { 
                     data: null,
@@ -276,26 +262,32 @@
                 "url": "{{ route('getwalkinreferral.walkin', ['id' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
-            "bFilter": true,
-			"sDom": 'fBtlpi',  
-			"ordering": true,
-			"language": {
-				search: ' ',
-				sLengthMenu: '_MENU_',
-				searchPlaceholder: "Search",
-				sLengthMenu: 'Row Per Page _MENU_ Entries',
-				info: "_START_ - _END_ of _TOTAL_ items",
-				paginate: {
-					next: '<i class="ti ti-arrow-right"></i>',
-					previous: '<i class="ti ti-arrow-left text-body"></i> '
-				},
-			},
-			"scrollX": false,         // Enable horizontal scrolling
-			"scrollCollapse": true,  // Adjust table size when the scroll is used
-			"responsive": true,
-			"autoWidth": false,
-            "info": true,
-            "searching": false,
+            // "bFilter": true,
+			// "sDom": 'fBtlpi',  
+			// "ordering": true,
+			// "language": {
+			// 	search: ' ',
+			// 	sLengthMenu: '_MENU_',
+			// 	searchPlaceholder: "Search",
+			// 	sLengthMenu: 'Row Per Page _MENU_ Entries',
+			// 	info: "_START_ - _END_ of _TOTAL_ items",
+			// 	paginate: {
+			// 		next: '<i class="ti ti-arrow-right"></i>',
+			// 		previous: '<i class="ti ti-arrow-left text-body"></i> '
+			// 	},
+			// },
+			// "scrollX": false,        
+			// "scrollCollapse": true, 
+			// "responsive": true,
+			// "autoWidth": false,
+            // "info": true,
+            // "searching": false,
+            destroy: true,
+            info: true,
+            responsive: true,
+            lengthChange: true,
+            searching: true,
+            paging: true,
             "columns": [
                 { 
                     data: null,

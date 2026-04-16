@@ -1,24 +1,27 @@
 <script>
     window.addEventListener('DOMContentLoaded', () => {
-        // Hide button by default on page load
-        document.getElementById('btn-guestpatient').classList.add('d-none');
+        const btn = document.getElementById('btn-guestpatient');
 
-        // If outsiders tab is active on load, show it
-        const activeTab = document.querySelector('a[data-bs-toggle="tab"].active');
-        if (activeTab && activeTab.getAttribute('href') === '#outsiders') {
-            document.getElementById('btn-guestpatient').classList.remove('d-none');
+        // Hide by default
+        btn.classList.add('d-none');
+
+        // Check active tab on load
+        const activeTab = document.querySelector('[data-bs-toggle="pill"].active');
+        if (activeTab && activeTab.getAttribute('data-bs-target') === '#pills-three') {
+            btn.classList.remove('d-none');
         }
     });
 
-    document.querySelectorAll('a[data-bs-toggle="tab"]').forEach(tab => {
+    document.querySelectorAll('[data-bs-toggle="pill"]').forEach(tab => {
         tab.addEventListener('shown.bs.tab', function (e) {
+            const btn = document.getElementById('btn-guestpatient');
 
-            // Always hide first
-            document.getElementById('btn-guestpatient').classList.add('d-none');
+            // Hide first
+            btn.classList.add('d-none');
 
-            // Show ONLY for outsiders tab
-            if (e.target.getAttribute('href') === '#outsiders') {
-                document.getElementById('btn-guestpatient').classList.remove('d-none');
+            // Show only for Guest tab
+            if (e.target.getAttribute('data-bs-target') === '#pills-three') {
+                btn.classList.remove('d-none');
             }
         });
     });
@@ -90,7 +93,6 @@
                     render: function(data, type, row) {
                         var firstname = data.fname;
                         var middleInitial = data.mname ? data.mname.substr(0, 1) + '.' : '';
-                        // Only display ext if it's not null, not 'N/A', and not empty
                         var ext = (data.ext && data.ext !== 'N/A') ? ' ' + data.ext : '';
                         var lastNameWithExt = data.lname + ext;
                         return firstname + ' ' + middleInitial + ' ' + lastNameWithExt;
@@ -104,7 +106,7 @@
                     render: function(data, type, row) {
                         if (type === 'display') {
                             var dropdown = '<div class="btn-group" role="group">' +
-                                '<button type="button" class="btn btn-teal btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>' +
+                                '<button type="button" class="btn btn-success btn-sm dropdown-toggle text-light" data-bs-toggle="dropdown" aria-expanded="false"></button>' +
                                 '<ul class="dropdown-menu">' +
                                 '<a href="#" class="dropdown-item btn-mededit" data-id="' + row.id + '" data-category="' + row.category + '" data-medicine="' + row.medicine + '" data-qty="' + row.qty + '" data-measure="' + row.measure + '" data-lotno="' + row.lotno + '" data-expirydate="' + row.expirydate + '" data-refnoid="' + row.refnoid + '">' +
                                 '<i class="fas fa-pen"></i> Edit' +

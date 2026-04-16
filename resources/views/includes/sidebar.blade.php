@@ -1,55 +1,37 @@
 @php
     $current_route=request()->route()->getName();
+
+    $walkInActive = in_array($current_route, ['appointment.walkin', 'appointment.walkin.details']) ? 'active' : '';
+    $onlineActive = in_array($current_route, ['appointment.online']) ? 'active' : '';
 @endphp
 
-<ul>
-    <li class="menu-title"><span>Main Menu</span></li>
-    <li>
-        <ul>
-            <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
-                <a href="{{ route('dashboard') }}">
-                    <i class="ti ti-layout-dashboard"></i><span>Dashboard</span>
-                </a>
-            </li>
-            <li class="{{ request()->is('patient/*') ? 'active' : '' }}">
-                <a href="{{ route('patients.students') }}">
-                    <i class="ti ti-users"></i><span>Patients</span>
-                </a>
-            </li>
-            <li class="submenu">
-                <a href="javascript:void(0);" class="{{ request()->is('appointment/*') ? 'active subdrop' : '' }}">
-                    <i class="ti ti-calendar-check"></i><span>Appointments</span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul>
-                    <li class="{{ request()->is('appointment/walkins/*') ? 'active' : '' }}"><a href="{{ route('appointment.walkin') }}">Walkin Consultation</a></li>
-                    <li class="{{ request()->is('appointment/online/*') ? 'active' : '' }}"><a href="{{ route('appointment.online') }}">Online Consultations</a></li>
-                </ul>
-            </li>
-            <li class="{{ request()->is('all/*') ? 'active' : '' }}">
-                <a href="{{ route('medicine.list') }}">
-                    <i class="ti ti-prescription"></i><span>Medicines</span>
-                </a>
-            </li>
-
-            <li class="submenu">
-                <a href="javascript:void(0);" class="{{ request()->is('generate/*') ? 'active subdrop' : '' }}">
-                    <i class="ti ti-calendar-check"></i><span>Reports</span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul>
-                    <li class="{{ request()->is('generate/reports/consultation/*') ? 'active' : '' }}"><a href="{{ route('reports.walkinsearch') }}">Walkin Consultation</a>
-                </ul>
-            </li>
-            
-            @if(Auth::guard('web')->user()->role == 'Administrator')
-                <li class="{{ request()->is('users/*') ? 'active' : '' }}">
-                    <a href="{{ route('users.list') }}">
-                        <i class="ti ti-users"></i><span>Users</span>
-                    </a>
-                </li>
-            @endif
-        </ul>
+<ul class="nav flex-column">
+    <li class="px-4 py-2">
+        <small class="nav-text text-muted">Main</small>
     </li>
-                    
+
+    <li>
+        <a class="nav-link {{$current_route=='dashboard.index'?'active':''}}" href="{{ route('dashboard.index') }}">
+            <i class="ti ti-layout-grid"></i><span class="nav-text">Dashboard</span>
+        </a>
+    </li>
+    
+    <li>
+        <a class="nav-link {{ request()->is('patient/*') ? 'active' : '' }}" href="{{ route('patients.students') }}">
+            <i class="ti ti-users"></i><span class="nav-text">Patients</span>
+        </a>
+    </li>
+    <li class="px-4 py-2">
+        <small class="nav-text text-muted">Appointments</small>
+    </li>
+    <li>
+        <a class="nav-link {{ $walkInActive }}" href="{{ route('appointment.walkin') }}">
+            <i class="ti ti-calendar-check"></i><span class="nav-text">Walkin Consultations</span>
+        </a>
+    </li>
+    <li>
+        <a class="nav-link {{ $onlineActive }}" href="{{ route('appointment.online') }}">
+            <i class="ti ti-calendar-check"></i><span class="nav-text">Online Consultations</span>
+        </a>
+    </li>
 </ul>

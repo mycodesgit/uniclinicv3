@@ -33,7 +33,7 @@ class LoginController extends Controller
         ], $request->remember);
 
         if ($validated) {
-            return redirect()->route('dashboard')->with('success', 'Login Successfully');
+            return redirect()->route('dashboard.index')->with('success', 'Login Successfully');
         } else {
             return redirect()->back()->with('error', 'Invalid Credentials');
         }

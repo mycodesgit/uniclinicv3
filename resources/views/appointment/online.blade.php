@@ -1,127 +1,64 @@
 @extends('layouts.app')
 
-@section('body')    
-    <!-- Start Content -->
-    <div class="content pb-0">
-
-        <!-- Page Header -->
-        <div class="d-flex align-items-sm-center justify-content-between flex-wrap gap-2 pb-3 mb-3 border-1 border-bottom">
-            <div>
-                <h4 class="fw-bold mb-0">Online Consultation</h4>
-            </div>
-        </div>
-        <!-- End Page Header -->
-
-        <!-- row start -->
-        <div class="row">
-            <!-- tab start -->
-            <ul class="nav nav-tabs nav-bordered mb-3">
-                <li class="nav-item">
-                    <a href="#consult" data-bs-toggle="tab" aria-expanded="false" class="nav-link active bg-transparent">
-                        <span>Consultation</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#referral" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
-                        <span>Referral</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#toothextraction" data-bs-toggle="tab" aria-expanded="true" class="nav-link bg-transparent">
-                        <span>Tooth Extraction</span>
-                    </a>
-                </li>
-            </ul>
-            <!-- tab end -->
-
-            <div class="tab-content">
-                <div class="tab-pane show active" id="consult">
-                    {{-- <div class="table-responsive">
-                        <table class="table datatable table-nowrap">
-                            <thead class="">
-                                <tr>
-                                    <th>Patient</th>
-                                    <th>Phone</th>
-                                    <th>Doctor</th>
-                                    <th>Address</th>
-                                    <th>Last Visit</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <a href="patient-details.html" class="avatar avatar-md me-2">
-                                                <img src="{{ asset('assets/img/users/user-08.jpg') }}" alt="product" class="rounded-circle">
-                                            </a>
-                                            <a href="patient-details.html" class="text-dark fw-semibold">Alberto Ripley <span class="text-body fs-13 fw-normal d-block"> 26, Male </span>  </a>
-                                        </div>
-                                    </td>
-                                    <td>+1 41245 54132</td>                                
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <a href="doctor-details.html" class="avatar me-2 flex-shrink-0">
-                                                <img src="{{ asset('assets/img/doctors/doctor-01.jpg') }}" alt="img" class="rounded-circle">
-                                            </a>
-                                            <div>
-                                            <h6 class="fs-14 mb-1"><a href="doctor-details.html" class="fw-semibold">Dr. Mick Thompson</a></h6>
-                                            <p class="mb-0 fs-13">Cardiologist</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Miami, Florida</td>
-                                    <td>30 Apr 2025</td>
-                                    <td><span class="badge badge-soft-success rounded text-success border border-success fs-13 fw-medium">Available</span></td>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-1">
-                                            <a href="appointments.html" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1">
-                                                <i class="ti ti-calendar-cog"></i>
-                                            </a>
-                                            <a href="javascript:void(0);" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                            <ul class="dropdown-menu p-2">
-                                                <li>
-                                                    <a href="edit-patient.html" class="dropdown-item d-flex align-items-center">Edit</a>
-                                                </li>
-                                                <li>
-                                                    <a href="patient-details.html" class="dropdown-item d-flex align-items-center">View</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#delete_modal">Delete</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div> --}}
-                    <div class="w-100 overflow-hidden position-relative flex-wrap d-block vh-100 coming-soon-cover">
-                        <img src="{{ asset('assets/img/bg/coming-soon-bg.png') }}" alt="" class="img-fluid position-absolute bottom-0">
-
-                        <!-- start row -->
-                        <div class="row justify-content-center align-items-center vh-100 overflow-auto flex-wrap">
-                            <div class="col-lg-6 mx-auto">
-                                <div class="card bg-transparent border-0">
-                                    <div class="comming-soon-pg d-flex flex-column align-items-center justify-content-center">
-                                        <div style="margin-top: -190px;">
+@section('body')
+    <div class="row ">
+        <div class="col-12">
+            <div class="mb-6">
+                <h1 class="fs-3 mb-4">Online Consultations</h1>
+                <hr>
+                <div class="row g-4 mb-5">
+                    <div class="col-md-12">
+                        <ul class="nav nav-pills bg-light p-2 rounded-2" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-one-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-one" type="button" role="tab"
+                                    aria-controls="pills-one" aria-selected="true"> <i class="ti ti-user-bolt"></i>
+                                    Students
+                                </button>
+                            </li>
+                            &nbsp;
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-two-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-two" type="button" role="tab"
+                                    aria-controls="pills-two" aria-selected="false" tabindex="-1"> <i class="ti ti-user-code"></i>
+                                    Employees
+                                </button>
+                            </li>
+                            &nbsp;
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-three-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-three" type="button" role="tab"
+                                    aria-controls="pills-three" aria-selected="false" tabindex="-1"> <i class="ti ti-users"></i>
+                                    Guest
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="tab-content mt-1" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-one" role="tabpanel" aria-labelledby="pills-one-tab" tabindex="0">
+                                        <div style="text-align: center;">
                                             <img src="{{ asset('assets/img/bg/coming-soon.svg') }}" alt="logo" class="img-fluid">
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade" id="pills-two" role="tabpanel" aria-labelledby="pills-two-tab" tabindex="0">
+                                        
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-three" role="tabpanel" aria-labelledby="pills-three-tab" tabindex="0">
+                                         
+                                    </div>
                                 </div>
-                            </div><!-- end col -->
+                            </div>
                         </div>
-                        <!-- end row -->
-
                     </div>
                 </div>
             </div>
         </div>
-        <!-- row end -->
-                        
     </div>
-    <!-- End Content -->
+
+    <script>
+        var studentsReadRoute = "{{ route('patients.show') }}";
+    </script>
 @endsection
