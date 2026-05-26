@@ -1,6 +1,8 @@
 @php
     $current_route=request()->route()->getName();
 
+    $preenrolmentActive = in_array($current_route, ['admission.index', 'admission.store']) ? 'active' : '';
+
     $walkInActive = in_array($current_route, ['appointment.walkin', 'appointment.walkin.details']) ? 'active' : '';
     $onlineActive = in_array($current_route, ['appointment.online']) ? 'active' : '';
 @endphp
@@ -21,6 +23,17 @@
             <i class="ti ti-users"></i><span class="nav-text">Patients</span>
         </a>
     </li>
+
+    <li class="px-4 py-2">
+        <small class="nav-text text-muted">Admission</small>
+    </li>
+
+    <li>
+        <a class="nav-link {{ $preenrolmentActive }}" href="{{ route('admission.index') }}">
+            <i class="ti ti-users-group"></i><span class="nav-text">Pre-enrollment</span>
+        </a>
+    </li>
+
     <li class="px-4 py-2">
         <small class="nav-text text-muted">Appointments</small>
     </li>

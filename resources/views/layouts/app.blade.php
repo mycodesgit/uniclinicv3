@@ -167,7 +167,7 @@
             <div class="row">
                 <div class="col-12">
                     <footer class="text-center py-2 mt-6 text-secondary fixed-bottom bg-white" style="z-index: 99">
-                        <p class="mb-0">CPSU OFES V.2.0: Maintained and Managed by Management Information System Office (MISO) under the Leadership of Dr. Aladino C. Moraca.</p>
+                        <p class="mb-0">CPSU MDHU V.1.0: Maintained and Managed by Management Information System Office (MISO) under the Leadership of Dr. Aladino C. Moraca.</p>
                     </footer>
                 </div>
             </div>
@@ -250,6 +250,9 @@
     @if (request()->routeIs('patients.details'))
         @include('script.patient.studentscript')
         @include('script.patient.patientaddressscript')
+    @endif
+    @if (request()->routeIs('admission.store'))
+        @include('script.admssion.confirmjs')
     @endif
     @if (request()->routeIs('appointment.walkin'))
         @include('script.validations.appointmentvalidation')

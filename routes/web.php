@@ -7,6 +7,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\PatientEmpController;
+
+use App\Http\Controllers\AdConfirmApplicantController;
+
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\PDFreportController;
 use App\Http\Controllers\MedicineController;
@@ -55,6 +58,12 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/portal/barangays/{city_id}', [PatientsController::class, 'getPortalBarangays'])->name('getPortalBarangays');
 
         Route::get('/students/prehe-report/{id}', [PDFreportController::class,'showprehepdf'])->name('showprehepdf');
+    });
+
+    Route::prefix('/admission')->group(function () {
+        Route::get('/pre-enrollment',[AdConfirmApplicantController::class,'index'])->name('admission.index');
+        Route::get('/pre-enrollment/search',[AdConfirmApplicantController::class,'store'])->name('admission.store');
+        Route::get('/pre-enrollment/search/fetch',[AdConfirmApplicantController::class,'show'])->name('admission.show');
     });
 
     Route::prefix('/appointment')->group(function () {

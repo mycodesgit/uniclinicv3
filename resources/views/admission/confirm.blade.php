@@ -1,0 +1,85 @@
+@extends('layouts.app')
+
+@section('body')
+    <div class="row ">
+        <div class="col-12">
+            <div class="mb-6">
+                <h1 class="fs-3 mb-4">Pre-enrollment</h1>
+                <hr>
+                <div class="row g-4 mb-5">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form method="GET" action="{{ route('admission.store') }}">
+                                    @csrf
+
+                                    <div class="form-group">
+                                        <div class="row g-3">
+                                            <div class="col-md-2">
+                                                <label>Year: <span class="text-danger">*</span></label>
+                                                <select class="form-control form-control-sm" id="year" name="year">
+                                                    @foreach($curryear as $datacurryear)
+                                                        <option>{{ $datacurryear->adyear }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label>Campus: <span class="text-danger">*</span></label>
+                                                <select class="form-control form-control-sm" name="campus" id="campus">
+                                                    <option value="{{Auth::user()->campus}}">
+                                                        @if (Auth::user()->campus == 'MC') Main 
+                                                            @elseif(Auth::user()->campus == 'VC') Victorias 
+                                                            @elseif(Auth::user()->campus == 'SCC') San Carlos 
+                                                            @elseif(Auth::user()->campus == 'HC') Hinigaran 
+                                                            @elseif(Auth::user()->campus == 'MP') Moises Padilla 
+                                                            @elseif(Auth::user()->campus == 'IC') Ilog 
+                                                            @elseif(Auth::user()->campus == 'CA') Candoni 
+                                                            @elseif(Auth::user()->campus == 'CC') Cauayan 
+                                                            @elseif(Auth::user()->campus == 'SC') Sipalay 
+                                                            @elseif(Auth::user()->campus == 'HinC') Hinobaan 
+                                                            @elseif(Auth::user()->campus == 'VE') Valladolid 
+                                                        @endif
+                                                    </option>
+                                                    @if(Auth::user()->role == 0 || (Auth::user()->campus == 'MC' && Auth::user()->role == 1))
+                                                        <option value="MC">Main</option>
+                                                        <option value="VC">Victorias</option>
+                                                        <option value="SCC">San Carlos</option>
+                                                        <option value="HC">Hinigaran</option>
+                                                        <option value="MP">Moises Padilla</option>
+                                                        <option value="IC">Ilog</option>
+                                                        <option value="CA">Candoni</option>
+                                                        <option value="CC">Cauayan</option>
+                                                        <option value="SC">Sipalay</option>
+                                                        <option value="HinC">Hinobaan</option>
+                                                        <option value="VE">Valladolid</option>
+                                                    @else
+                                                    @endif
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label>Strand: <span class="text-danger">*</span></label>
+                                                <select class="form-control  form-control-sm" name="strand">
+                                                    <option value=""> --Select-- </option>
+                                                    @foreach($strand as $datastrand)
+                                                        <option value="{{ $datastrand->code }}">{{ $datastrand->strand }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label>&nbsp;</label>
+                                                <button type="submit" class="form-control form-control-sm btn btn-success btn-sm">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
