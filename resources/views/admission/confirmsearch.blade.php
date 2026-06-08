@@ -275,7 +275,7 @@
                 </div>
                 <form id="pushtoAcceptForm">
                     <div class="modal-body">
-                        <input type="text" name="id" id="mdhuapplicantId">
+                        <input type="hidden" name="id" id="mdhuapplicantId">
                         <div class="form-group">
                             <div class="row g-3">
                                 <div class="col-md-12">
