@@ -302,6 +302,7 @@
     <script>
         var allresultRoute = "{{ route('admission.show') }}";
         var updateMDHUdocsRoute = "{{ route('admission.updateMDHUdocs',  ['id' => ':id']) }}";
+        var appidEncryptRoute = "{{ route('idcrypt') }}";
 
         var isCampus = '{{ Auth::guard('web')->user()->campus }}';
         var requestedCampus = '{{ request('campus') }}'

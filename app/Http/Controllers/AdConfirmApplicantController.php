@@ -84,4 +84,11 @@ class AdConfirmApplicantController extends Controller
             return response()->json(['error' => true, 'message' => 'No applicant found.'], 422);
         }
     }
+
+    public function idcrypt(Request $request) 
+    {
+        $enrcryptedID = encrypt($request->data);
+
+        return $enrcryptedID;
+    }
 }
