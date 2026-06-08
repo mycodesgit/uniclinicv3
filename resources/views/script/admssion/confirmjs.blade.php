@@ -68,7 +68,18 @@
                 },
                 {data: 'campus'},
                 {data: 'appstrand'},
-                {data: null, orderable: false, searchable: false},
+                {
+                    data: 'status',
+                    render: function(data) {
+                        if (data == 1) {
+                            return '<td><small><span class="badge bg-danger" style="font-size: 7pt">No Documents</span></small></td>';
+                        } else if (data == 2) {
+                            return '<td><small><span class="badge bg-warning" style="font-size: 7pt">Pending</span></small></td>';
+                        } else if (data == 3) {
+                            return '<td><small><span class="badge bg-success" style="font-size: 7pt">Complete</span></small></td>';
+                        }
+                    }
+                },
                 {
                     data: 'adid',
                     className: "action-column",
@@ -82,20 +93,9 @@
                                 dropdown += '<a href="#" class="dropdown-item btn-viewappdata" data-id="' + row.adid + '" data-admissionid="' + row.admission_id + '" data-type="' + row.type + '" data-campus="' + row.campus + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-hnum="' + row.hnum + '" data-brgy="' + row.brgy + '" data-city="' + row.city + '" data-province="' + row.province + '" data-region="' + row.region + '" data-zcode="' + row.zcode + '" data-gender="' + row.gender + '" data-bday="' + row.bday + '" data-civilstat="' + row.civil_status + '" data-contact="' + row.contact + '" data-email="' + row.email + '" data-address="' + row.address + '" data-lsa="' + row.lstsch_attended + '" data-strand="' + row.strand + '" data-cula="' + row.suc_lst_attended + '" data-culac="' + row.course + '" data-cp1="' + row.preference_1 + '" data-cp2="' + row.preference_2 + '">' +
                                     '<i class="fas fa-eye"></i> View Data' +
                                     '</a>' +
-                                    '<a href="srchexamineeResultList/view/' + row.adid + '" class="dropdown-item btn-edit" target="_blank">' +
-                                    '<i class="fas fa-file-pdf"></i> Generate Pre-Enrollment' +
-                                    '</a>' +
-                                    '<a href="#" class="dropdown-item btn-updateresultexam" data-id="' + row.adid + '" data-rawscore="' + row.raw_score + '" data-percentile="' + row.percentile + '" data-qualifier="' + row.qualifier + '">' +
-                                    '<i class="fas fa-file-lines"></i> Update Test Result' +
+                                    '<a href="#" class="dropdown-item btn-edit btn-mdhudoc" data-id="' + row.adid + '">' +
+                                    '<i class="fas fa-file"></i> Documents' +
                                     '</a>';
-
-                                    if (row.percentile == 'Qualified' || row.percentile == 'Passed' || row.qualifier == 2) {
-                                        dropdown += '<a href="#" class="dropdown-item btn-pushtocnfrm" data-id="' + row.adid + '">' +
-                                            '<i class="fas fa-check"></i> Push Examinee' +
-                                            '</a>';
-                                    } else {
-                                        dropdown += '<span class="dropdown-item disabled"><i class="fas fa-check"></i> Push Examinee</span>';
-                                    }
                             } else {
                                 dropdown += '<span class="dropdown-item disabled"><i class="fas fa-eye"></i> View</span>' +
                                     '<span class="dropdown-item disabled"><i class="fas fa-trash"></i> Delete</span>';
@@ -114,8 +114,142 @@
                 $(row).attr('id', 'tr-' + data.id); 
             }
         });
-        $(document).on('rslttable', function() {
+        $(document).on('interrslttable', function() {
             dataTable.ajax.reload();
+        });
+    });
+
+    $(document).on('click', '.btn-viewappdata', function() {
+        var id = $(this).data('id');
+        var admissionid = $(this).data('admissionid');
+        var type = $(this).data('type');
+        var campus = $(this).data('campus');
+        var fname = $(this).data('fname');
+        var mname = $(this).data('mname');
+        var lname = $(this).data('lname');
+        var ext = $(this).data('ext');
+        var gender = $(this).data('gender');
+        var bday = $(this).data('bday');
+        var civilstat = $(this).data('civilstat');
+        var contact = $(this).data('contact');
+        var email = $(this).data('email');
+        var address = $(this).data('address');
+        var lsa = $(this).data('lsa');
+        var strand = $(this).data('strand');
+        var cula = $(this).data('cula');
+        var culac = $(this).data('culac');
+        var cp1 = $(this).data('cp1');
+        var cp2 = $(this).data('cp2');
+
+        $('#viewdataresultexamId').val(id);
+
+        var typeDisplay;
+        if(type == 1) {
+            typeDisplay = "New";
+        } else if(type == 2) {
+            typeDisplay = "Returnee";
+        } else if(type == 3) {
+            typeDisplay = "Transferee";
+        } else {
+            typeDisplay = "Unknown";
+        }
+
+        $('#viewdataresultexamType').val(typeDisplay);
+
+        var campusDisplay;
+        if(campus == 'MC') {
+            campusDisplay = "Main";
+        } else if(campus == 'VC') {
+            campusDisplay = "Victorias";
+        } else if(campus == 'SCC') {
+            campusDisplay = "San Carlos";
+        } else if(campus == 'HC') {
+            campusDisplay = "Hinigaran";
+        } else if(campus == 'MP') {
+            campusDisplay = "Moises Padilla";
+        } else if(campus == 'IC') {
+            campusDisplay = "Ilog";
+        } else if(campus == 'CA') {
+            campusDisplay = "Candoni";
+        } else if(campus == 'CC') {
+            campusDisplay = "Cauayan";
+        } else if(campus == 'SC') {
+            campusDisplay = "Sipalay";
+        } else if(campus == 'HinC') {
+            campusDisplay = "Hinobaan";
+        } else {
+            campusDisplay = "Unknown";
+        }
+
+        $('#viewdataresultexamCampus').val(campusDisplay);
+        $('#viewdataresultexamAdID').val(admissionid);
+        $('#viewdataresultexamFname').val(fname);
+        $('#viewdataresultexamMname').val(mname);
+        $('#viewdataresultexamLname').val(lname);
+        $('#viewdataresultexamExt').val(ext);
+        $('#viewdataresultexamGender').val(gender);
+        $('#viewdataresultexamBday').val(bday);
+        $('#viewdataresultexamcvilstat').val(civilstat);
+        $('#viewdataresultexamMobile').val(contact);
+        $('#viewdataresultexamEmail').val(email);
+        $('#viewdataresultexamAddress').val(address);
+        $('#viewdataresultexamLSA').val(lsa);
+        $('#viewdataresultexamStrand').val(strand);
+        $('#viewdataresultexamCUla').val(cula);
+        $('#viewdataresultexamCUlac').val(culac);
+        $('#viewdataresultexamCP1').val(cp1);
+        $('#viewdataresultexamCP2').val(cp2);
+
+        $('#viewdataresultexamModal').modal('show');
+        
+        $.ajax({
+            url: appidEncryptRoute,
+            type: "POST",
+            data: { data: $('#viewdataresultexamId').val() },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                //alert(response); 
+                $('#viewdataresultexamId').val(response)
+            },
+            error: function(xhr, status, error) {
+                alert('Error: ' + error); 
+            }
+        });
+    });
+
+    $(document).on('click', '.btn-mdhudoc', function() {
+        var id = $(this).data('id');
+        $('#mdhuapplicantId').val(id);
+        $('#mdhudocsModal').modal('show');
+    });
+
+    $('#pushtoAcceptForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: updateMDHUdocsRoute,
+            type: "POST",
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if(response.success) {
+                    toastr.success(response.message);
+                    document.activeElement.blur();
+                    $('#mdhudocsModal').modal('hide');
+                    $(document).trigger('interrslttable');
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error, message) {
+                var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                toastr.error(errorMessage);
+            }
         });
     });
 </script>
