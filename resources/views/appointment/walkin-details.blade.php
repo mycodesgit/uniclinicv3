@@ -8,21 +8,7 @@
                     <div class="col-md-10">
                         <h1 class="fs-3">Walkin Consultations</h1>
                     </div>
-                    <div class="col-md-2">
-                        <div class="d-flex align-items-center flex-wrap gap-2">
-                            <button id="btn-consult" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalwalkinconsult">
-                                <i class="ti ti-plus"></i> Add New Consultation
-                            </button>
-                            <button id="btn-referral" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalwalkinreferral">
-                                <i class="ti ti-plus"></i> Add New Referral
-                            </button>
-                            <button id="btn-extraction" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalwalkintoothextraction">
-                                <i class="ti ti-plus"></i> Add New Tooth Extraction
-                            </button>
-                            {{-- <a href="javascript:void(0);" class="btn btn-outline-primary d-inline-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#new_consult_appointment"><i class="ti ti-plus me-1"></i>New Appointment</a> --}}
-                            {{-- <a href="javascript:void(0);" class="btn btn-outline-white bg-white d-inline-flex align-items-center"><i class="ti ti-calendar-time me-1"></i>Schedule Availability</a> --}}
-                        </div>
-                    </div>
+                    <!-- Removed buttons from here -->
                 </div>
                 <hr>
                 <div class="row g-4 mb-5">
@@ -57,7 +43,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="tab-content mt-1" id="pills-tabContent">
+                                    <!-- Consultation Tab -->
                                     <div class="tab-pane fade show active" id="pills-one" role="tabpanel" aria-labelledby="pills-one-tab" tabindex="0">
+                                        <div class="d-flex justify-content-end align-items-center mb-3">
+                                            <button id="btn-consult" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalwalkinconsult">
+                                                <i class="ti ti-plus"></i> Add New Consultation
+                                            </button>
+                                        </div>
                                         <div class="table-responsive mt-2 p-3">
                                             <table id="consultationTable" class="table table-hover" style="width: 100%">
                                                 <thead class="">
@@ -77,7 +69,14 @@
                                             </table>
                                         </div>
                                     </div>
+                                    
+                                    <!-- Referral Tab -->
                                     <div class="tab-pane fade" id="pills-two" role="tabpanel" aria-labelledby="pills-two-tab" tabindex="0">
+                                        <div class="d-flex justify-content-end align-items-center mb-3">
+                                            <button id="btn-referral" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalwalkinreferral">
+                                                <i class="ti ti-plus"></i> Add New Referral
+                                            </button>
+                                        </div>
                                         <div class="table-responsive mt-2 p-3">
                                             <table id="referlisttab" class="table table-striped" style="width: 100%">
                                                 <thead class="">
@@ -95,7 +94,14 @@
                                             </table>
                                         </div>
                                     </div>
+                                    
+                                    <!-- Tooth Extraction Tab -->
                                     <div class="tab-pane fade" id="pills-three" role="tabpanel" aria-labelledby="pills-three-tab" tabindex="0">
+                                        <div class="d-flex justify-content-end align-items-center mb-3">
+                                            <button id="btn-extraction" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalwalkintoothextraction">
+                                                <i class="ti ti-plus"></i> Add New Tooth Extraction
+                                            </button>
+                                        </div>
                                         <div class="table-responsive mt-2 p-3">
                                             <table id="toothextractlisttab" class="table table-striped" style="width: 100%">
                                                 <thead class="">

@@ -48,7 +48,7 @@ class PatientsController extends Controller
                 'latest.studentID'
             )
             ->join('program_en_history', 'program_en_history.id', '=', 'latest.id')
-            ->select('students.*', 'program_en_history.course as enhiscourse')
+            ->select('students.*', 'students.id as adid', 'program_en_history.course as enhiscourse')
             ->where('students.campus', $campus)
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
@@ -60,8 +60,8 @@ class PatientsController extends Controller
             ->orderBy('students.lname')
             ->paginate(10);
 
-        $students->transform(function ($item) {
-            $item->adid = Crypt::encryptString($item->adid);
+        $students->getCollection()->transform(function ($item) {
+            $item->adid = Crypt::encryptString((string) $item->adid);
             return $item;
         });
 

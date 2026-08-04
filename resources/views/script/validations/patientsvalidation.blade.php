@@ -1,7 +1,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        const patientDetailsRoute = "{{ route('patients.details', ['id' => ':id']) }}";
+        const patientDetailsRoute = "{{ route('patients.details', ['adid' => ':id']) }}";
         const form = document.getElementById('searchForm');
         const input = document.getElementById('searchInput');
         const tableBody = document.getElementById('studentsTable');
@@ -30,7 +30,8 @@
                 }
 
                 res.data.forEach(student => {
-                    const detailsUrl = patientDetailsRoute.replace(':id', student.id);
+                    const encryptedId = encodeURIComponent(student.adid);
+                    const detailsUrl = patientDetailsRoute.replace(':id', encryptedId);
                     tableBody.innerHTML += `
                         <tr>
                             <td>${student.lname}, ${student.fname}</td>

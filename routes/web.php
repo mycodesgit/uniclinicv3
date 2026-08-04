@@ -43,7 +43,7 @@ Route::group(['middleware'=>['login_auth']],function(){
     Route::prefix('/patient')->group(function () {
         Route::get('/students',[PatientsController::class,'index'])->name('patients.students');
         Route::get('/students/search',[PatientsController::class,'show'])->name('patients.show');
-        Route::get('/students/{id}',[PatientsController::class,'showdetails'])->name('patients.details');
+        Route::get('/students/{adid}',[PatientsController::class,'showdetails'])->name('patients.details');
         Route::post('/student/show/moreinfo/update', [PatientsController::class, 'update'])->name('patients.update');
         Route::post('/student/show/moreinfo/historyupdate', [PatientsController::class, 'studentsHistory'])->name('patients.studentsHistory');
 

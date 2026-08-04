@@ -258,7 +258,7 @@
         @include('script.validations.appointmentvalidation')
     @endif
     @if (request()->routeIs('appointment.walkin.details'))
-        @include('script.walkin.consultScript')
+        {{-- @include('script.walkin.consultScript') --}}
     @endif
     @if (request()->routeIs('appointment.walkin.empdetails'))
         @include('script.walkin.consultEmpScript')
