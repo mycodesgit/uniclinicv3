@@ -95,6 +95,9 @@
                                     '</a>' +
                                     '<a href="#" class="dropdown-item btn-edit btn-mdhudoc" data-id="' + row.adid + '">' +
                                     '<i class="fas fa-file"></i> Documents' +
+                                    '</a>' +
+                                    '<a href="srchconfirmList/view/' + row.adid + '" class="dropdown-item btn-edit btn-mdhudoc" data-id="' + row.adid + '">' +
+                                    '<i class="fas fa-file-pdf"></i> PEHE' +
                                     '</a>';
                             } else {
                                 dropdown += '<span class="dropdown-item disabled"><i class="fas fa-eye"></i> View</span>' +

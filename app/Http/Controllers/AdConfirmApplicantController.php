@@ -54,7 +54,7 @@ class AdConfirmApplicantController extends Controller
                         ->select('ad_applicant_admission.*', 'ad_applicant_admission.id as adid', 'ad_applicant_admission.strand as appstrand', 'ad_examinee_result.*', 'ad_applicant_clinic.*')
                         ->where('ad_applicant_admission.year', $year)
                         ->where('ad_applicant_admission.campus', $campus)
-                        ->where('p_status', '=', 3);
+                        ->whereIn('p_status', [3, 4, 5, 6]);
         
         if ($strand) {
             $query->where('ad_applicant_admission.strand', $strand);

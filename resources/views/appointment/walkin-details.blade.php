@@ -176,7 +176,7 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label for="choices-multiple-remove-button" class="form-label mb-1 text-dark fs-14 fw-medium">Chief Complaint <span class="text-danger">*</span></label>
-                                    <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="chief_complaint[]" multiple>
+                                    <select class="form-control select2" id="choices-multiple-remove-button" name="chief_complaint[]" multiple="multiple">
                                         @foreach ($complaints as $complaint)
                                             <option style="color:black" value="{{ $complaint->id }}">
                                                 {{ $complaint->complaintname }}

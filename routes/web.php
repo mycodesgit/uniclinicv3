@@ -66,6 +66,7 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/pre-enrollment/search/fetch',[AdConfirmApplicantController::class,'show'])->name('admission.show');
         Route::post('/pre-enrollment/search/update',[AdConfirmApplicantController::class,'updateMDHUdocs'])->name('admission.updateMDHUdocs');
         Route::post('/collegelist/encrypt', [AdConfirmApplicantController::class, 'idcrypt'])->name('idcrypt');
+        Route::get('/pre-enrollment/search/view/{id}',[PatientsController::class,'showdetails'])->name('patients.pehedetails');
     });
 
     Route::prefix('/appointment')->group(function () {

@@ -60,6 +60,11 @@ class PatientsController extends Controller
             ->orderBy('students.lname')
             ->paginate(10);
 
+        $students->transform(function ($item) {
+            $item->adid = Crypt::encryptString($item->adid);
+            return $item;
+        });
+
         return response()->json($students);
     }
 
@@ -72,16 +77,17 @@ class PatientsController extends Controller
 
     public function showdetails($id)
     {
-        $patients = Student::findOrFail($id);
+        $decryptedId = Crypt::decryptString($id);
+        $patients = Student::findOrFail($decryptedId);
 
         $regions = Region::all();
 
         $student = Student::join('program_en_history', 'students.stud_id', '=', 'program_en_history.studentID')
             ->select('students.*', 'program_en_history.course as enhiscourse')
-            ->where('students.id', $id)
+            ->where('students.id', $decryptedId)
             ->first();
 
-        $patientVisit = Patientvisit::where('stid', $student->id)->get();
+        $patientVisit = Patientvisit::where('stid', $student->decryptedId)->get();
 
         return view('patient.details', compact('patients', 'regions', 'patientVisit'));
     }
