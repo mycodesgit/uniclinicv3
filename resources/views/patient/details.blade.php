@@ -19,7 +19,7 @@
                                         <div>
                                             <p class="mb-0 d-inline-flex align-items-center mb-1">
                                                 <i class="ti ti-id me-1 text-dark"></i>Student ID No. : <span class="text-primary ms-1" style="font-weight: bold">{{ $patients->stud_id }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <i class="ti ti-school me-1 text-dark"></i>Course : <span class="text-primary ms-1" style="font-weight: bold">{{ $patients->enhiscourse }}</span>
+                                                <i class="ti ti-school me-1 text-dark"></i>Course : <span class="text-primary ms-1" style="font-weight: bold">{{ $student->enhiscourse ?? 'N/A' }}</span>
                                             </p>
                                             <h5 class="mb-1"><span style="color: teal; font-weight: bold">{{ $patients->fname }} {{ $patients->lname }}</span></h5>
                                             <p class="mb-3">{{ $patients->address }}</p>
@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="col-xl-3 col-lg-4">
                                     <div class="p-3 text-lg-end">
-                                        <a href="{{ route('showprehepdf', $patients->id) }}" target="_blank" class="btn btn-success text-light"><i class="ti ti-calendar-event me-1"></i>Pre-entrance Health Examination</a>
+                                        <a href="{{ route('showprehepdf', $encryptedStudentId) }}" target="_blank" class="btn btn-success text-light"><i class="ti ti-calendar-event me-1"></i>Pre-entrance Health Examination</a>
                                     </div>
                                 </div>
                             </div>

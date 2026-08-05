@@ -85,11 +85,14 @@ class PatientsController extends Controller
         $student = Student::join('program_en_history', 'students.stud_id', '=', 'program_en_history.studentID')
             ->select('students.*', 'program_en_history.course as enhiscourse')
             ->where('students.id', $decryptedId)
+            ->orderBy('program_en_history.created_at', 'desc')
             ->first();
+            
+        $encryptedStudentId = Crypt::encryptString($decryptedId);
 
         $patientVisit = Patientvisit::where('stid', $student->decryptedId)->get();
 
-        return view('patient.details', compact('patients', 'regions', 'patientVisit'));
+        return view('patient.details', compact('patients', 'student', 'regions', 'encryptedStudentId', 'patientVisit'));
     }
 
     public function create(Request $request)

@@ -26,6 +26,8 @@ class PDFreportController extends Controller
 {
     public function showprehepdf($id)
     {
+        $decryptedId = Crypt::decryptString($id);
+
         $patients = Student::join('program_en_history', 'students.stud_id', '=', 'program_en_history.studentID')
             ->join('coasv2_db_schedule.college', function ($join) {
                 $join->on(
@@ -34,7 +36,7 @@ class PDFreportController extends Controller
                     'coasv2_db_schedule.college.college_abbr'
                 );
             })
-            ->where('students.id', $id)
+            ->where('students.id', $decryptedId)
             ->select(
                 'students.*',
                 'students.created_at as createdas',
