@@ -76,7 +76,7 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/walkins/fetch/{adid}',[AppointmentsController::class,'getwalkinconsult'])->name('getwalkinconsult.walkin');
         Route::get('/walkins/fetchemp/{emp_ID}',[AppointmentsController::class,'getwalkinempconsult'])->name('getwalkinempconsult.walkin');
         Route::post('/walkins/add',[AppointmentsController::class,'createWalkinConsultation'])->name('appointment.walkinconsult.store');
-        Route::get('/walkins/delete/{id}', [AppointmentsController::class, 'fundDelete'])->name('fundDelete');
+        Route::get('/walkins/delete/{id}', [AppointmentsController::class, 'walkinConsultDelete'])->name('appointment.walkinconsult.delete');
 
         Route::get('/walkins/referralfetch/{adid}',[AppointmentsController::class,'getwalkinreferral'])->name('getwalkinreferral.walkin');
         Route::get('/walkins/referralfetchemp/{emp_ID}',[AppointmentsController::class,'getwalkinempreferral'])->name('getwalkinempreferral.walkin');

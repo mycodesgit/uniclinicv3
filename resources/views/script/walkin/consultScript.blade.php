@@ -103,7 +103,7 @@
                     render: function(data, type, row) {
                         if (type === 'display') {
                             var buttons = '<button type="button" class="btn btn-sm btn-success btn-formsview mr-1 text-light" data-id="' + row.id + '"  data-toggle="tooltip" data-placement="top" title="View Forms"><i class="fas fa-eye"></i></button>'+'&nbsp;';
-                                buttons += '<button type="button" class="btn btn-sm btn-danger btn-docsview mr-1" data-id="' + row.id + '"  data-toggle="tooltip" data-placement="top" title="View Clearances & Documents"><i class="ti ti-trash"></i></button>'+'&nbsp;';
+                                buttons += '<button type="button" class="btn btn-sm btn-danger btn-deletewalkin mr-1" value="' + data + '"  data-toggle="tooltip" data-placement="top" title="View Clearances & Documents"><i class="ti ti-trash"></i></button>'+'&nbsp;';
                             return buttons;
                         } else {
                             return data;
@@ -295,7 +295,7 @@
         });
     });
 
-    $(document).on('click', '.fund-delete', function(e) {
+    $(document).on('click', '.btn-deletewalkin', function(e) {
         var id = $(this).val();
         $.ajaxSetup({
             headers: {
@@ -314,7 +314,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: "GET",
-                    url: fundDeleteRoute.replace(':id', id),
+                    url: walkinconsultDeleteRoute.replace(':id', id),
                     success: function(response) {
                         $("#tr-" + id).delay(1000).fadeOut();
                         Swal.fire({
