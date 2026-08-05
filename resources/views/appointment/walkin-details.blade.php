@@ -61,6 +61,7 @@
                                                         <th>Treatment</th>
                                                         <th>Medicine</th>
                                                         <th>Quantity</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style="font-size: 10pt;">
@@ -78,7 +79,7 @@
                                             </button>
                                         </div>
                                         <div class="table-responsive mt-2 p-3">
-                                            <table id="referlisttab" class="table table-striped" style="width: 100%">
+                                            <table id="" class="table table-striped" style="width: 100%">
                                                 <thead class="">
                                                     <tr>
                                                         <th>Patient</th>
@@ -299,7 +300,7 @@
                                     <div id="dynamic-fields" class="mb-3">
                                         <div class="row mb-3 align-items-end">
                                             <div class="col-md-7">
-                                                <select name="medicine[]" class="form-select form-control-sm">
+                                                <select name="medicine[]" class="form-control form-control-sm">
                                                     <option value="">Select Medicine</option>
                                                     @foreach ($medicines as $medicine)
                                                         <option value="{{ $medicine->id }}" >

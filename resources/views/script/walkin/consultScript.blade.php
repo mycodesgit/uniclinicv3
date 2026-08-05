@@ -32,11 +32,11 @@
             });
         });
 
-        const walkinId = {{ $id }};
+        const walkinId = @json($adid);
 
         var dataTable = $('#consultationTable').DataTable({
             "ajax": {
-                "url": "{{ route('getwalkinconsult.walkin', ['id' => '__ID__']) }}".replace('__ID__', walkinId),
+                "url": "{{ route('getwalkinconsult.walkin', ['adid' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
             // "bFilter": true,
@@ -98,19 +98,18 @@
                 { data: 'treatment' },
                 { data: 'medicinename' },
                 { data: 'qty' },
-                // { 
-                //     data: 'id',
-                //     render: function(data, type, row) {
-                //         if (type === 'display') {
-                //             var editLink = '<a href="#" class="btn btn-outline-primary btn-sm btn-studdataview"  data-id="' + row.id + '" data-studid="' + row.stud_id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-gender="' + row.gender + '" data-bday="' + row.bday + '" data-pbirth="' + row.pbirth + '" data-contact="' + row.contact + '" data-email="' + row.email + '" data-religion="' + row.religion + '" data-address="' + row.address + '" data-civil="' + row.civil_status + '" data-hnum="' + row.hnum + '" data-brgy="' + row.brgy + '" data-city="' + row.city + '" data-province="' + row.province + '" data-region="' + row.region + '" data-zcode="' + row.zcode + '" data-father="' + row.stud_father + '" data-mother="' + row.stud_mother + '" data-guardian="' + row.stud_guardian + '" data-income="' + row.monthly_income + '" data-pcontact="' + row.guardian_contact + '" data-lstschattended="' + row.lstsch_attended + '" data-lstschattendedyear="' + row.lst_sch_attended_year + '" data-suclstattended="' + row.suc_lst_attended + '" data-dateadmission="' + row.date_admission + '">' +
-                //                 '<i class="ti ti-eye"></i>' +
-                //                 '</a>';
-                //             return editLink;
-                //         } else {
-                //             return data;
-                //         }
-                //     },
-                // },
+                {
+                    data: 'id',
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            var buttons = '<button type="button" class="btn btn-sm btn-success btn-formsview mr-1 text-light" data-id="' + row.id + '"  data-toggle="tooltip" data-placement="top" title="View Forms"><i class="fas fa-eye"></i></button>'+'&nbsp;';
+                                buttons += '<button type="button" class="btn btn-sm btn-danger btn-docsview mr-1" data-id="' + row.id + '"  data-toggle="tooltip" data-placement="top" title="View Clearances & Documents"><i class="ti ti-trash"></i></button>'+'&nbsp;';
+                            return buttons;
+                        } else {
+                            return data;
+                        }
+                    },
+                },
             ],
             "createdRow": function (row, data, index) {
                 $(row).attr('id', 'tr-' + data.id); 
@@ -220,11 +219,11 @@
             });
         });
 
-        const walkinId = {{ $id }};
+        const walkinId = @json($adid);
         
         var dataTable = $('#referlisttab').DataTable({
             "ajax": {
-                "url": "{{ route('getwalkinreferral.walkin', ['id' => '__ID__']) }}".replace('__ID__', walkinId),
+                "url": "{{ route('getwalkinreferral.walkin', ['adid' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
             // "bFilter": true,
@@ -296,4 +295,42 @@
         });
     });
 
+    $(document).on('click', '.fund-delete', function(e) {
+        var id = $(this).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to recover this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "GET",
+                    url: fundDeleteRoute.replace(':id', id),
+                    success: function(response) {
+                        $("#tr-" + id).delay(1000).fadeOut();
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Successfully Deleted!',
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        if(response.success) {
+                            toastr.success(response.message);
+                            console.log(response);
+                        }
+                    }
+                });
+            }
+        })
+    });
 </script>

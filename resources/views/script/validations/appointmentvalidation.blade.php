@@ -1,7 +1,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        const patientDetailsRoute = "{{ route('appointment.walkin.details', ['id' => ':id']) }}";
+        const patientDetailsRoute = "{{ route('appointment.walkin.details', ['adid' => ':id']) }}";
         const input = document.getElementById('searchInput');
         const tableBody = document.getElementById('studentsTable');
         const pagination = document.getElementById('paginationLinks');
@@ -29,7 +29,8 @@
                 }
 
                 res.data.forEach(student => {
-                    const detailsUrl = patientDetailsRoute.replace(':id', student.id);
+                    const encryptedId = encodeURIComponent(student.adid);
+                    const detailsUrl = patientDetailsRoute.replace(':id', encryptedId);
                     tableBody.innerHTML += `
                         <tr>
                             <td>${student.lname}, ${student.fname}</td>

@@ -30,20 +30,22 @@ class AppointmentsController extends Controller
         return view('appointment.walkin');
     }
 
-    public function walkinconsultdetails($id)
+    public function walkinconsultdetails($adid)
     {
-        $patients = Student::findOrFail($id);
+        $decryptedId = Crypt::decryptString($adid);
+        $patients = Student::findOrFail($decryptedId);
+        
         $complaints =  Complaint::all();
         $medicines = Medicine::all();
 
         $student = DB::connection('enrollment')
             ->table('students')
-            ->where('id', $id)
+            ->where('id', $decryptedId)
             ->first();
 
         $patientVisit = Patientvisit::where('stid', $student->id)->get();
 
-        return view('appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'patientVisit', 'id'));
+        return view('appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'patientVisit', 'adid'));
     }
 
     public function walkinconsultempdetails($emp_ID)
@@ -62,12 +64,14 @@ class AppointmentsController extends Controller
         return view('appointment.walkin-empdetails', compact('patients', 'complaints', 'medicines', 'patientVisit', 'emp_ID'));
     }
 
-    public function getwalkinconsult($id)
+    public function getwalkinconsult($adid)
     {
+        $decryptedId = Crypt::decryptString($adid);
+        
         $student = DB::connection('enrollment')
             ->table('students')
             ->select('id', 'lname', 'fname', 'mname', 'ext')
-            ->where('id', $id)
+            ->where('id', $decryptedId)
             ->first();
 
         if (!$student) {
@@ -131,6 +135,14 @@ class AppointmentsController extends Controller
         });
 
         return response()->json(['data' => $data]);
+    }
+
+    public function walkinConsultDelete($id) 
+    {
+        $pvisit = Patientvisit::find($id);
+        $pvisit->delete();
+
+        return response()->json(['success'=> true, 'message'=>'Deleted Successfully',]);
     }
     
     public function getwalkinempconsult($emp_ID)
