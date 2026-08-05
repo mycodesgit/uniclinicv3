@@ -624,13 +624,13 @@
                                             <div class="col-md-3">
                                                 <div class="mb-3">
                                                     <label class="form-label mb-1 fw-medium">Menarche</label>
-                                                    <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="nenarche" value="{{ ucfirst(strtolower($patients->menarche)) }}" placeholder="">
+                                                    <input type="text" class="form-control form-control-sm update-field" name="menarche" data-column-id="{{ $patients->id }}" data-column-name="menarche" value="{{ ucfirst(strtolower($patients->menarche)) }}" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="mb-3">
                                                     <label class="form-label mb-1 fw-medium">Duration</label>
-                                                    <input type="text" class="form-control form-control-sm update-field" data-column-id="{{ $patients->id }}" data-column-name="Duration" value="{{ ucfirst(strtolower($patients->studuration)) }}" placeholder="">
+                                                    <input type="text" class="form-control form-control-sm update-field" name="studuration" data-column-id="{{ $patients->id }}" data-column-name="studuration" value="{{ ucfirst(strtolower($patients->studuration)) }}" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -698,9 +698,9 @@
                                             </div>
                                             <div class="col-md-2 text-center">
                                                 <div>
-                                                    <input type="radio" class="form-check-input update-field1" id="enskinyes" name="en_pexam" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="0" value="1">
+                                                    <input type="radio" class="form-check-input update-field1" id="enskinyes" name="en_pexam" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="0" value="1" {{ isset(explode(',', $patients->en_pexam)[1]) && explode(',', $patients->en_pexam)[1] == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3" for="enskinyes">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" id="enskinno" name="en_pexam" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="0" value="0">
+                                                    <input type="radio" class="form-check-input update-field1" id="enskinno" name="en_pexam" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="0" value="" {{ isset(explode(',', $patients->en_pexam)[0]) && explode(',', $patients->en_pexam)[0] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="enskinno">No</label>
                                                 </div>
                                             </div>
@@ -730,7 +730,7 @@
                                                 <div class="">
                                                     <input type="radio" class="form-check-input update-field1" id="enheadyes" name="en_pexam1" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="1" value="1" {{ isset(explode(',', $patients->en_pexam)[1]) && explode(',', $patients->en_pexam)[1] == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3" for="enheadyes">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" id="enheadno" name="en_pexam1" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="1" value="" {{ isset(explode(',', $patients->en_pexam)[1]) && explode(',', $patients->en_pexam)[1] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" id="enheadno" name="en_pexam1" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="1" value="" {{ isset(explode(',', $patients->en_pexam)[1]) && explode(',', $patients->en_pexam)[1] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="enheadno">No</label>
                                                 </div>
                                             </div>
@@ -754,9 +754,9 @@
                                             </div>
                                             <div class="col-md-2 text-center">
                                                 <div>
-                                                    <input type="radio" class="form-check-input update-field1" id="eneyesyes" name="en_pexam2" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="2" value="1" {{ isset(explode(',', $patients->en_pexam)[2]) && explode(',', $patients->en_pexam)[2] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" id="eneyesyes" name="en_pexam2" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="2" value="1" {{ isset(explode(',', $patients->en_pexam)[2]) && explode(',', $patients->en_pexam)[2] == 2 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3" for="eneyesyes">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" id="eneyesno" name="en_pexam2" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="2" value="" {{ isset(explode(',', $patients->en_pexam)[2]) && explode(',', $patients->en_pexam)[2] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" id="eneyesno" name="en_pexam2" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="2" value="" {{ isset(explode(',', $patients->en_pexam)[2]) && explode(',', $patients->en_pexam)[2] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="eneyesno">No</label>
                                                 </div>
                                             </div>
@@ -786,7 +786,7 @@
                                                 <div>
                                                     <input type="radio" class="form-check-input update-field1" name="en_pexam3" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="3" value="1" {{ isset(explode(',', $patients->en_pexam)[3]) && explode(',', $patients->en_pexam)[3] == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam3" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="3" value="" {{ isset(explode(',', $patients->en_pexam)[3]) && explode(',', $patients->en_pexam)[3] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam3" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="3" value="" {{ isset(explode(',', $patients->en_pexam)[3]) && explode(',', $patients->en_pexam)[3] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label">No</label>
                                                 </div>
                                             </div>
@@ -814,9 +814,9 @@
                                             </div>
                                             <div class="col-md-2 text-center">
                                                 <div>
-                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam4" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="4" value="1" {{ isset(explode(',', $patients->en_pexam)[4]) && explode(',', $patients->en_pexam)[4] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam4" data-column-id="{{ $patients->id }}" data-column-name="en_pexam4" data-array="4" value="1" {{ isset(explode(',', $patients->en_pexam)[4]) && explode(',', $patients->en_pexam)[4] == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam4" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="4" value="" {{ isset(explode(',', $patients->en_pexam)[4]) && explode(',', $patients->en_pexam)[4] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam4" data-column-id="{{ $patients->id }}" data-column-name="en_pexam4" data-array="4" value="" {{ isset(explode(',', $patients->en_pexam)[4]) && explode(',', $patients->en_pexam)[4] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label">No</label>
                                                 </div>
                                             </div>
@@ -846,7 +846,7 @@
                                                 <div>
                                                     <input type="radio" class="form-check-input update-field1" name="en_pexam5" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="5" value="1" {{ isset(explode(',', $patients->en_pexam)[5]) && explode(',', $patients->en_pexam)[5] == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam5" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="5" value="" {{ isset(explode(',', $patients->en_pexam)[5]) && explode(',', $patients->en_pexam)[5] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam5" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="5" value="" {{ isset(explode(',', $patients->en_pexam)[5]) && explode(',', $patients->en_pexam)[5] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label">No</label>
                                                 </div>
                                             </div>
@@ -876,7 +876,7 @@
                                                 <div>
                                                     <input type="radio" class="form-check-input update-field1" name="en_pexam6" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="6" value="1" {{ isset(explode(',', $patients->en_pexam)[6]) && explode(',', $patients->en_pexam)[6] == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam6" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="6" value="" {{ isset(explode(',', $patients->en_pexam)[6]) && explode(',', $patients->en_pexam)[6] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam6" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="6" value="" {{ isset(explode(',', $patients->en_pexam)[6]) && explode(',', $patients->en_pexam)[6] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label">No</label>
                                                 </div>
                                             </div>
@@ -906,7 +906,7 @@
                                                 <div>
                                                     <input type="radio" class="form-check-input update-field1" name="en_pexam7" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="7" value="1" {{ isset(explode(',', $patients->en_pexam)[7]) && explode(',', $patients->en_pexam)[7] == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam7" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="7" value="" {{ isset(explode(',', $patients->en_pexam)[7]) && explode(',', $patients->en_pexam)[7] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam7" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="7" value="" {{ isset(explode(',', $patients->en_pexam)[7]) && explode(',', $patients->en_pexam)[7] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label">No</label>
                                                 </div>
                                             </div>
@@ -936,7 +936,7 @@
                                                 <div>
                                                     <input type="radio" class="form-check-input update-field1" name="en_pexam8" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="8" value="1" {{ isset(explode(',', $patients->en_pexam)[8]) && explode(',', $patients->en_pexam)[8] == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam8" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="8" value="" {{ isset(explode(',', $patients->en_pexam)[8]) && explode(',', $patients->en_pexam)[8] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam8" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="8" value="" {{ isset(explode(',', $patients->en_pexam)[8]) && explode(',', $patients->en_pexam)[8] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label">No</label>
                                                 </div>
                                             </div>
@@ -966,7 +966,7 @@
                                                 <div>
                                                     <input type="radio" class="form-check-input update-field1" name="en_pexam9" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="9" value="1" {{ isset(explode(',', $patients->en_pexam)[9]) && explode(',', $patients->en_pexam)[9] == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam9" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="9" value="" {{ isset(explode(',', $patients->en_pexam)[9]) && explode(',', $patients->en_pexam)[9] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam9" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="9" value="" {{ isset(explode(',', $patients->en_pexam)[9]) && explode(',', $patients->en_pexam)[9] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label">No</label>
                                                 </div>
                                             </div>
@@ -994,7 +994,7 @@
                                                 <div>
                                                     <input type="radio" class="form-check-input update-field1" name="en_pexam10" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="10" value="1" {{ isset(explode(',', $patients->en_pexam)[10]) && explode(',', $patients->en_pexam)[10] == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam10" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="10" value="" {{ isset(explode(',', $patients->en_pexam)[10]) && explode(',', $patients->en_pexam)[10] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam10" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="10" value="" {{ isset(explode(',', $patients->en_pexam)[10]) && explode(',', $patients->en_pexam)[10] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label">No</label>
                                                 </div>
                                             </div>
@@ -1054,7 +1054,7 @@
                                                 <div>
                                                     <input type="radio" class="form-check-input update-field1" name="en_pexam112" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="12" value="1" {{ isset(explode(',', $patients->en_pexam)[12]) && explode(',', $patients->en_pexam)[12] == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label mr-3">Yes</label>&emsp;
-                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam112" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="12" value="" {{ isset(explode(',', $patients->en_pexam)[12]) && explode(',', $patients->en_pexam)[12] == 1 ? 'checked' : '' }}>
+                                                    <input type="radio" class="form-check-input update-field1" name="en_pexam112" data-column-id="{{ $patients->id }}" data-column-name="en_pexam" data-array="12" value="" {{ isset(explode(',', $patients->en_pexam)[12]) && explode(',', $patients->en_pexam)[12] == '' ? 'checked' : '' }}>
                                                     <label class="form-check-label">No</label>
                                                 </div>
                                             </div>
