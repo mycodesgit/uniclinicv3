@@ -110,11 +110,24 @@ class AppointmentsController extends Controller
 
             return [
                 'id'        => $visit->id,
+                'consultID' => $visit->consultID,
                 'date'      => $visit->date,
                 'time'      => $visit->time,
-                'treatment' => $visit->treatment,
                 'qty'       => $visit->qty,
-                'consultID' => $visit->consultID,
+
+                'chief_complaint' => $visit->chief_complaint,
+                'bp' => $visit->bp,
+                'pr' => $visit->pr,
+                'rr' => $visit->rr,
+                'spo' => $visit->spo,
+                'btemp' => $visit->btemp,
+                'lmp' => $visit->lmp,
+                'pheight' => $visit->pheight,
+                'pweight' => $visit->pweight,
+                'treatment' => $visit->treatment,
+                'certificate' => $visit->certificate,
+                'medicine' => $visit->medicine,
+                'qty' => $visit->qty,
 
                 'lname' => $student->lname,
                 'fname' => $student->fname,
