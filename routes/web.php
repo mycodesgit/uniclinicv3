@@ -14,6 +14,7 @@ use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\PDFreportController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\ReportsMedicalStatisticController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -100,6 +101,8 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/reports/consultation',[ReportsController::class,'walkinsearch'])->name('reports.walkinsearch');
         Route::get('/reports/consultation/show/walkin-search-result',[ReportsController::class,'walkinsearchresult'])->name('walkin.search.result');
         Route::get('/reports/consultation/show/walkin-search-result/json',[ReportsController::class,'walkinsearchresultJson'])->name('walkin.search.result.json');
+
+        Route::get('/reports/medical/statistic',[ReportsMedicalStatisticController::class,'index'])->name('reports.medical.statistic');
     });
 
     Route::prefix('/users')->group(function () {
