@@ -192,11 +192,11 @@
 
 <script>
     $(document).ready(function() {
-        const walkinId = {{ request()->route('id') }};
+        const walkinId = {{ request()->route('adid') }};
 
         var dataTable = $('#consultationTable').DataTable({
             "ajax": {
-                "url": "{{ route('getwalkinconsult.walkin', ['id' => '__ID__']) }}".replace('__ID__', walkinId),
+                "url": "{{ route('getwalkinconsult.walkin', ['adid' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
             destroy: true,
@@ -255,11 +255,11 @@
     });
 
     $(document).ready(function() {
-        const walkinId = {{ request()->route('id') }};
+        const walkinId = {{ request()->route('adid') }};
         
         var dataTable = $('#referlisttab').DataTable({
             "ajax": {
-                "url": "{{ route('getwalkinreferral.walkin', ['id' => '__ID__']) }}".replace('__ID__', walkinId),
+                "url": "{{ route('getwalkinreferral.walkin', ['adid' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
             // "bFilter": true,
