@@ -315,6 +315,135 @@ class AppointmentsController extends Controller
         return response()->json(['success' => true, 'message' => 'Added Successfully']);
     }
 
+    public function updateWalkinConsultation(Request $request)
+    {
+        // 1. FORM VALIDATION
+        $validatedData = $request->validate([
+            'id'              => 'required|exists:patientvisits,id',
+            'date'              => 'required|date',
+            'time'              => 'required',
+            'chief_complaint'   => 'required|array|min:1',
+            'chief_complaint.*' => 'required',
+            'medicine'          => 'nullable|array',
+            'medicine.*'        => 'nullable',
+            'qty'               => 'nullable|array',
+            'qty.*'             => 'nullable|integer|min:1',
+            'bp'                => 'nullable|string',
+            'pr'                => 'nullable|string',
+            'rr'                => 'nullable|string',
+            'spo'               => 'nullable|string',
+            'btemp'             => 'nullable|string',
+            'lmp'               => 'nullable|string',
+            'pheight'           => 'nullable|string',
+            'pweight'           => 'nullable|string',
+            'treatment'         => 'nullable|string',
+            'certificate'       => 'nullable|boolean',
+        ]);
+
+        // 2. TRY-CATCH BLOCK WITH DATABASE TRANSACTION
+        try {
+            DB::beginTransaction();
+
+            $patient = Patientvisit::findOrFail($validatedData['id']);
+
+            // Update basic patient fields
+            $patient->date        = $validatedData['date'];
+            $patient->time        = $validatedData['time'];
+            $patient->treatment   = $request->input('treatment');
+            $patient->certificate = $request->input('certificate');
+            $patient->bp          = $request->input('bp');
+            $patient->pr          = $request->input('pr');
+            $patient->rr          = $request->input('rr');
+            $patient->spo         = $request->input('spo');
+            $patient->btemp       = $request->input('btemp');
+            $patient->lmp         = $request->input('lmp');
+            $patient->pheight     = $request->input('pheight');
+            $patient->pweight     = $request->input('pweight');
+
+            // Process Chief Complaints Array -> CSV
+            $complaints = array_filter($validatedData['chief_complaint'], fn($val) => !is_null($val) && $val !== '');
+            $patient->chief_complaint = implode(',', $complaints);
+
+            // ----------------------------------------------------
+            // A. RESTORE OLD INVENTORY STOCK
+            // ----------------------------------------------------
+            $oldMedicines  = array_filter(explode(',', $patient->medicine));
+            $oldQuantities = array_filter(explode(',', $patient->qty));
+
+            foreach ($oldMedicines as $index => $oldMedId) {
+                if (!empty($oldMedId)) {
+                    $medModel = Medicine::find($oldMedId);
+                    if ($medModel) {
+                        $restoredQty = isset($oldQuantities[$index]) ? (int)$oldQuantities[$index] : 0;
+                        $medModel->increment('qty', $restoredQty);
+                    }
+                }
+            }
+
+            // ----------------------------------------------------
+            // B. DEDUCT NEW INVENTORY STOCK
+            // ----------------------------------------------------
+            $newMedicines = array_filter($request->input('medicine', []), fn($val) => !is_null($val) && $val !== '');
+            $newQtys      = array_filter($request->input('qty', []), fn($val) => !is_null($val) && $val !== '');
+
+            $processedMeds = [];
+            $processedQtys = [];
+
+            foreach ($newMedicines as $index => $medId) {
+                $qtyToDeduct = isset($newQtys[$index]) ? (int)$newQtys[$index] : 0;
+
+                $medicineModel = Medicine::find($medId);
+                if ($medicineModel) {
+                    // Check if enough stock exists
+                    if ($medicineModel->qty < $qtyToDeduct) {
+                        // Rollback transaction if stock is insufficient
+                        DB::rollBack();
+                        return response()->json([
+                            'success' => false,
+                            'message' => "Insufficient stock for {$medicineModel->medicine}. Available: {$medicineModel->qty}"
+                        ], 422);
+                    }
+
+                    // Deduct medicine quantity
+                    $medicineModel->decrement('qty', $qtyToDeduct);
+
+                    $processedMeds[] = $medId;
+                    $processedQtys[] = $qtyToDeduct;
+                }
+            }
+
+            // Save new CSV strings
+            $patient->medicine = implode(',', $processedMeds);
+            $patient->qty      = implode(',', $processedQtys);
+
+            // Save record
+            $patient->save();
+
+            // Commit transaction if all database operations succeeded
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Consultation updated successfully!'
+            ]);
+
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'errors'  => $e->errors(),
+                'message' => 'Validation failed. Please check your inputs.'
+            ], 422);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while updating: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 
     public function getwalkinreferral($id) 
     {

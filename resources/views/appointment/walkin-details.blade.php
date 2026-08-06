@@ -652,7 +652,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="adPVisit" method="POST">
+                    <form id="editPVisit" method="POST">
                         @csrf
                         <input type="hidden" name="id" id="editWalkinConsultId" class="form-control rounded bg-light" readonly>
                         <input type="hidden" name="stid" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
@@ -862,5 +862,6 @@
 
     <script>
         var walkinconsultDeleteRoute = "{{ route('appointment.walkinconsult.delete', ['id' => ':id']) }}";
+        var walkinconsultUpdateRoute = "{{ route('appointment.walkinconsult.update', ['id' => ':id']) }}";
     </script>
 @endsection
