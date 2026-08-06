@@ -79,7 +79,7 @@
                                             </button>
                                         </div>
                                         <div class="table-responsive mt-2 p-3">
-                                            <table id="" class="table table-striped" style="width: 100%">
+                                            <table id="referlisttab" class="table table-striped" style="width: 100%">
                                                 <thead class="">
                                                     <tr>
                                                         <th>Patient</th>
@@ -87,6 +87,7 @@
                                                         <th>Time</th>
                                                         <th>Referred from</th>
                                                         <th>Referred to</th>
+                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style="font-size: 10pt;">
@@ -330,7 +331,7 @@
                         <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
                             <div class=" d-flex justify-content-end gap-2">
                                 <button type="button" class="btn btn-outline-danger btn-md" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-outline-primary btn-md">
+                                <button type="submit" class="btn btn-success btn-md">
                                     <i class="fas fa-save"></i> Save Data
                                 </button>
                             </div>
@@ -534,7 +535,7 @@
                         <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
                             <div class=" d-flex justify-content-end gap-2">
                                 <button type="button" class="btn btn-outline-danger btn-md" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-outline-primary btn-md">
+                                <button type="submit" class="btn btn-success btn-md">
                                     <i class="fas fa-save"></i> Save Data
                                 </button>
                             </div>
@@ -648,7 +649,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="myCenterModalLabel">Add New Consultation</h6>
+                    <h6 class="modal-title" id="myCenterModalLabel">Edit Consultation</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -860,8 +861,198 @@
         </div>
     </div>
 
+    <!-- Edit Center modal content -->
+    <div class="modal fade" id="editcentermodalwalkinreferral" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="myCenterModalLabel">Edit Referral</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editPReferral" method="POST">
+                        @csrf
+
+                        <input type="hidden" name="id" id="editWalkinReferralId" class="form-control rounded bg-light" readonly>
+                        <input type="hidden" name="stid" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
+                        <input type="hidden" name="stdntID" class="form-control rounded bg-light" value="{{ $patients->stud_id }}" readonly>
+
+                        <!-- start row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Referral ID <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" name="referralID" class="form-control rounded bg-light" value="STUD-RWI-{{ \Carbon\Carbon::now()->format('Ymd') }}-{{ substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 10) }}" readonly>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded bg-light" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Date<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="date" name="date" id="editWalkinReferralDate" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Time<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="time" name="time" id="editWalkinReferralTime" class="form-control form-control-sm" value="{{ date('h:i A') }}">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">BP<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="bp" id="editWalkinReferralBP" placeholder="e.g. 120/80 mmHg">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">PR<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="pr" id="editWalkinReferralPR" placeholder="e.g. 72 bpm">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">RR<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="rr" id="editWalkinReferralRR" placeholder="e.g. 16 bpm">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">SPO2<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="spo" id="editWalkinReferralSPO2" placeholder="e.g. 98%">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">T<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="btemp" id="editWalkinReferralBodyTemp" placeholder="e.g. 37°C">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">LMP<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="lmp" id="editWalkinReferralLMP" placeholder="e.g. 120/80 mmHg">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Height<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="pheight" id="editWalkinReferralHeight" placeholder="e.g. 170 cm">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Weight<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded" name="pweight" id="editWalkinReferralWeight" placeholder="e.g. 70 kg">
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Reffered From</label><br>
+                                    <select name="preferfrom" id="editWalkinReferralFrom" class="form-control">
+                                        <option disabled selected> --Select-- </option>
+                                        <option value="Medical Doctor">Medical Doctor</option>
+                                        <option value="School Nurse">School Nurse</option>
+                                        <option value="Dentist">Dentist</option>
+                                    </select>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Reffered To</label><br>
+                                    <select name="preferto" id="editWalkinReferralTo" class="form-control">
+                                        <option disabled selected> --Select-- </option>
+                                        <option value="Medical Doctor">Medical Doctor</option>
+                                        <option value="CHO">CHO</option>
+                                        <option value="Dentist">Dentist</option>
+                                        <option value="Radiologist">Radiologist</option>
+                                    </select>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Reason for Referral</label><br>
+                                    <textarea name="reasonrefer" id="editWalkinReferralReason" cols="30" rows="3" class="form-control"></textarea>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Tentative Diagnosis</label><br>
+                                    <textarea name="tentdiagnose" id="editWalkinReferralTentativeDiagnosis" cols="30" rows="3" class="form-control form-control-sm"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Treatment/Medication Given</label><br>
+                                    <textarea name="treatmentmedgiven" id="editWalkinReferralTreatment" cols="30" rows="3" class="form-control form-control-sm"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row-->
+                        <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
+                            <div class=" d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-outline-danger btn-md" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success btn-md">
+                                    <i class="fas fa-save"></i> Save Data
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        var walkinconsultDeleteRoute = "{{ route('appointment.walkinconsult.delete', ['id' => ':id']) }}";
         var walkinconsultUpdateRoute = "{{ route('appointment.walkinconsult.update', ['id' => ':id']) }}";
+        var walkinconsultDeleteRoute = "{{ route('appointment.walkinconsult.delete', ['id' => ':id']) }}";
+
+        var walkinreferralUpdateRoute = "{{ route('appointment.walkinreferral.update', ['id' => ':id']) }}";
+        var walkinreferralDeleteRoute = "{{ route('appointment.walkinreferral.delete', ['id' => ':id']) }}";
     </script>
 @endsection

@@ -150,14 +150,6 @@ class AppointmentsController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    public function walkinConsultDelete($id) 
-    {
-        $pvisit = Patientvisit::find($id);
-        $pvisit->delete();
-
-        return response()->json(['success'=> true, 'message'=>'Deleted Successfully',]);
-    }
-    
     public function getwalkinempconsult($emp_ID)
     {
         $emps = DB::connection('hremp')
@@ -444,13 +436,22 @@ class AppointmentsController extends Controller
         }
     }
 
-
-    public function getwalkinreferral($id) 
+    public function walkinConsultDelete($id) 
     {
+        $pvisit = Patientvisit::find($id);
+        $pvisit->delete();
+
+        return response()->json(['success'=> true, 'message'=>'Deleted Successfully',]);
+    }
+
+    public function getwalkinreferral($adid) 
+    {
+        $decryptedId = Crypt::decryptString($adid);
+
         $student = DB::connection('enrollment')
             ->table('students')
             ->select('id', 'lname', 'fname', 'mname', 'ext')
-            ->where('id', $id)
+            ->where('id', $decryptedId)
             ->first();
 
         if (!$student) {
@@ -458,6 +459,7 @@ class AppointmentsController extends Controller
         }
 
         $refer = PatientReferral::where('stid', $student->id)
+            ->select('patientreferral.*')
             ->orderBy('date', 'desc')
             ->get();
         
@@ -471,6 +473,14 @@ class AppointmentsController extends Controller
                 'id'                    => $visit->id,
                 'date'                  => $visit->date,
                 'time'                  => $visit->time,
+                'bp'                    => $visit->bp,
+                'pr'                    => $visit->pr,
+                'rr'                    => $visit->rr,
+                'spo'                  => $visit->spo,
+                'btemp'                 => $visit->btemp,
+                'lmp'                   => $visit->lmp,
+                'pheight'               => $visit->pheight,
+                'pweight'               => $visit->pweight,
                 'preferfrom'            => $visit->preferfrom,
                 'preferto'              => $visit->preferto,
                 'reasonrefer'           => $visit->reasonrefer,
@@ -572,6 +582,87 @@ class AppointmentsController extends Controller
                 return response()->json(['error' => true, 'message' => 'Failed to store Referral'], 404);
             }
         }
+    }
+
+    public function updateWalkinReferral(Request $request)
+    {
+        // 1. FORM VALIDATION
+        $validatedData = $request->validate([
+            'id'              => 'required|exists:patientreferral,id',
+            'date'              => 'required|date',
+            'time'              => 'required',
+            'bp'                => 'nullable|string',
+            'pr'                => 'nullable|string',
+            'rr'                => 'nullable|string',
+            'spo'               => 'nullable|string',
+            'btemp'             => 'nullable|string',
+            'lmp'               => 'nullable|string',
+            'pheight'           => 'nullable|string',
+            'pweight'           => 'nullable|string',
+            'preferfrom'        => 'nullable|string',
+            'preferto'          => 'nullable|string',
+            'reasonrefer'       => 'nullable|string',
+            'tentdiagnose'      => 'nullable|string',
+            'treatmentmedgiven' => 'nullable|string',
+        ]);
+
+        // 2. TRY-CATCH BLOCK WITH DATABASE TRANSACTION
+        try {
+            DB::beginTransaction();
+
+            $patient = PatientReferral::findOrFail($validatedData['id']);
+
+            // Update basic patient fields
+            $patient->date        = $validatedData['date'];
+            $patient->time        = $validatedData['time'];
+            $patient->bp          = $request->input('bp');
+            $patient->pr          = $request->input('pr');
+            $patient->rr          = $request->input('rr');
+            $patient->spo         = $request->input('spo');
+            $patient->btemp       = $request->input('btemp');
+            $patient->lmp         = $request->input('lmp');
+            $patient->pheight     = $request->input('pheight');
+            $patient->pweight     = $request->input('pweight');
+            $patient->preferfrom   = $request->input('preferfrom');
+            $patient->preferto     = $request->input('preferto');
+            $patient->reasonrefer  = $request->input('reasonrefer');
+            $patient->tentdiagnose = $request->input('tentdiagnose');
+            $patient->treatmentmedgiven = $request->input('treatmentmedgiven');
+
+            // Save record
+            $patient->save();
+
+            // Commit transaction if all database operations succeeded
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Consultation updated successfully!'
+            ]);
+
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'errors'  => $e->errors(),
+                'message' => 'Validation failed. Please check your inputs.'
+            ], 422);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while updating: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function walkinReferralDelete($id) 
+    {
+        $pvisit = PatientReferral::find($id);
+        $pvisit->delete();
+
+        return response()->json(['success'=> true, 'message'=>'Deleted Successfully',]);
     }
 
     public function onlineappoint()

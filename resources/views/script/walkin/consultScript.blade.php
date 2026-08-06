@@ -150,112 +150,6 @@
     });
 
     $(document).ready(function() {
-        $('#adPReferral').submit(function(event) {
-            event.preventDefault();
-            var formData = $(this).serialize();
-
-            $.ajax({
-                url: "{{route('appointment.walkinreferral.store') }}",
-                type: "POST",
-                data: formData,
-                success: function(response) {
-                    if(response.success) {
-                        toastr.success(response.message);
-                        console.log(response);
-                        $(document).trigger('referralAdded');
-                        $('#centermodalwalkinreferral').modal('hide');
-                        $('textarea[name="reasonrefer"]').val('');
-                        $('textarea[name="tentdiagnose"]').val('');
-                        $('textarea[name="treatmentmedgiven"]').val('');
-                    } else {
-                        toastr.error(response.message);
-                        console.log(response);
-                    }
-                },
-                error: function(xhr, status, error, message) {
-                    var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
-                    toastr.error(errorMessage);
-                }
-            });
-        });
-
-        const walkinId = @json($adid);
-        
-        var dataTable = $('#referlisttab').DataTable({
-            "ajax": {
-                "url": "{{ route('getwalkinreferral.walkin', ['adid' => '__ID__']) }}".replace('__ID__', walkinId),
-                "type": "GET",
-            },
-            // "bFilter": true,
-			// "sDom": 'fBtlpi',  
-			// "ordering": true,
-			// "language": {
-			// 	search: ' ',
-			// 	sLengthMenu: '_MENU_',
-			// 	searchPlaceholder: "Search",
-			// 	sLengthMenu: 'Row Per Page _MENU_ Entries',
-			// 	info: "_START_ - _END_ of _TOTAL_ items",
-			// 	paginate: {
-			// 		next: '<i class="ti ti-arrow-right"></i>',
-			// 		previous: '<i class="ti ti-arrow-left text-body"></i> '
-			// 	},
-			// },
-			// "scrollX": false,         // Enable horizontal scrolling
-			// "scrollCollapse": true,  // Adjust table size when the scroll is used
-			// "responsive": true,
-			// "autoWidth": false,
-            // "info": true,
-            destroy: true,
-            info: true,
-            responsive: true,
-            lengthChange: true,
-            searching: true,
-            paging: true,
-            "columns": [
-                { 
-                    data: null,
-                    render: function(data, type, row) {
-                        var firstname = data.fname;
-                        var middleInitial = data.mname ? data.mname.substr(0, 1) + '.' : '';
-                        // Only display ext if it's not null, not 'N/A', and not empty
-                        var ext = (data.ext && data.ext !== 'N/A') ? ' ' + data.ext : '';
-                        var lastNameWithExt = data.lname + ext;
-                        return firstname + ' ' + middleInitial + ' ' + lastNameWithExt;
-                    }
-                },
-                {
-                    data: 'date',
-                    render: function(data, type, row) {
-                        if (type === 'display' && data) {
-                            var dateObj = new Date(data);
-                            var options = { year: 'numeric', month: 'long', day: '2-digit' };
-                            return dateObj.toLocaleDateString('en-US', options);
-                        }
-                        return data;
-                    }
-                },
-                {
-                    data: 'time',
-                    render: function(data, type, row) {
-                        if (type === 'display' && data) {
-                            return moment(data, 'HH:mm').format('hh:mm A');
-                        }
-                        return data;
-                    }
-                },
-                {data: 'preferfrom'},
-                {data: 'preferto'},
-            ],
-            "createdRow": function (row, data, index) {
-                $(row).attr('id', 'tr-' + data.id); 
-            }
-        });
-        $(document).on('referralAdded', function() {
-            dataTable.ajax.reload();
-        });
-    });
-
-    $(document).ready(function() {
 
         // ------------------------------------
         // 1. OPEN MODAL & POPULATE DATA
@@ -418,7 +312,6 @@
                     type: "GET",
                     url: walkinconsultDeleteRoute.replace(':id', id),
                     success: function(response) {
-                        $("#tr-" + id).delay(1000).fadeOut();
                         Swal.fire({
                             title: 'Deleted!',
                             text: 'Successfully Deleted!',
@@ -426,6 +319,11 @@
                             showConfirmButton: false,
                             timer: 1500
                         });
+                        if ($.fn.DataTable.isDataTable('#consultationTable')) {
+                            $('#consultationTable').DataTable().ajax.reload(null, false);
+                        } else {
+                            $("#tr-" + id).fadeOut();
+                        }
                         if(response.success) {
                             toastr.success(response.message);
                             console.log(response);
@@ -504,6 +402,258 @@
     });
 
 
+    $(document).ready(function() {
+        $('#adPReferral').submit(function(event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
 
-    
+            $.ajax({
+                url: "{{route('appointment.walkinreferral.store') }}",
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    if(response.success) {
+                        toastr.success(response.message);
+                        console.log(response);
+                        $(document).trigger('referralAdded');
+                        $('#centermodalwalkinreferral').modal('hide');
+                        $('textarea[name="reasonrefer"]').val('');
+                        $('textarea[name="tentdiagnose"]').val('');
+                        $('textarea[name="treatmentmedgiven"]').val('');
+                    } else {
+                        toastr.error(response.message);
+                        console.log(response);
+                    }
+                },
+                error: function(xhr, status, error, message) {
+                    var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                    toastr.error(errorMessage);
+                }
+            });
+        });
+
+        const walkinId = @json($adid);
+        
+        var dataTable = $('#referlisttab').DataTable({
+            "ajax": {
+                "url": "{{ route('getwalkinreferral.walkin', ['adid' => '__ID__']) }}".replace('__ID__', walkinId),
+                "type": "GET",
+            },
+            // "bFilter": true,
+			// "sDom": 'fBtlpi',  
+			// "ordering": true,
+			// "language": {
+			// 	search: ' ',
+			// 	sLengthMenu: '_MENU_',
+			// 	searchPlaceholder: "Search",
+			// 	sLengthMenu: 'Row Per Page _MENU_ Entries',
+			// 	info: "_START_ - _END_ of _TOTAL_ items",
+			// 	paginate: {
+			// 		next: '<i class="ti ti-arrow-right"></i>',
+			// 		previous: '<i class="ti ti-arrow-left text-body"></i> '
+			// 	},
+			// },
+			// "scrollX": false,         // Enable horizontal scrolling
+			// "scrollCollapse": true,  // Adjust table size when the scroll is used
+			// "responsive": true,
+			// "autoWidth": false,
+            // "info": true,
+            destroy: true,
+            info: true,
+            responsive: true,
+            lengthChange: true,
+            searching: true,
+            paging: true,
+            "columns": [
+                { 
+                    data: null,
+                    render: function(data, type, row) {
+                        var firstname = data.fname;
+                        var middleInitial = data.mname ? data.mname.substr(0, 1) + '.' : '';
+                        // Only display ext if it's not null, not 'N/A', and not empty
+                        var ext = (data.ext && data.ext !== 'N/A') ? ' ' + data.ext : '';
+                        var lastNameWithExt = data.lname + ext;
+                        return firstname + ' ' + middleInitial + ' ' + lastNameWithExt;
+                    }
+                },
+                {
+                    data: 'date',
+                    render: function(data, type, row) {
+                        if (type === 'display' && data) {
+                            var dateObj = new Date(data);
+                            var options = { year: 'numeric', month: 'long', day: '2-digit' };
+                            return dateObj.toLocaleDateString('en-US', options);
+                        }
+                        return data;
+                    }
+                },
+                {
+                    data: 'time',
+                    render: function(data, type, row) {
+                        if (type === 'display' && data) {
+                            return moment(data, 'HH:mm').format('hh:mm A');
+                        }
+                        return data;
+                    }
+                },
+                {data: 'preferfrom'},
+                {data: 'preferto'},
+                {
+                    data: 'id',
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+
+                            var buttons = `
+                                <button type="button"
+                                    class="btn btn-sm btn-success btn-walkineditreferral mr-1 text-light"
+                                    data-id="${row.id}"
+                                    data-refdate="${row.date}"
+                                    data-reftime="${row.time}"
+                                    data-refbp="${row.bp}"
+                                    data-refpr="${row.pr}"
+                                    data-refrr="${row.rr}"
+                                    data-refspo="${row.spo}"
+                                    data-refbtemp="${row.btemp}"
+                                    data-reflmp="${row.lmp}"
+                                    data-refpheight="${row.pheight}"
+                                    data-refpweight="${row.pweight}"
+                                    data-refpreferfrom="${row.preferfrom}"
+                                    data-refpreferto="${row.preferto}"
+                                    data-refreasonrefer="${row.reasonrefer}"
+                                    data-reftentdiagnose="${row.tentdiagnose}"
+                                    data-reftreatmentmedgiven="${row.treatmentmedgiven}"
+                                    title="View Forms">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+
+                                <button type="button"
+                                    class="btn btn-sm btn-danger btn-deletereferral mr-1"
+                                    value="${data}">
+                                    <i class="ti ti-trash"></i>
+                                </button>
+                            `;
+
+                            return buttons;
+                        }
+
+                        return data;
+                    }
+                }
+            ],
+            "createdRow": function (row, data, index) {
+                $(row).attr('id', 'tr-' + data.id); 
+            }
+        });
+        $(document).on('referralAdded', function() {
+            dataTable.ajax.reload();
+        });
+    });
+
+    $(document).on('click', '.btn-walkineditreferral', function() {
+        var id = $(this).data('id');
+        var referraldate = $(this).data('refdate');
+        var referraltime = $(this).data('reftime');
+        var referralbp = $(this).data('refbp');
+        var referralpr = $(this).data('refpr');
+        var referralrr = $(this).data('refrr');
+        var referralspo = $(this).data('refspo');
+        var referralbtemp = $(this).data('refbtemp');
+        var referrallmp = $(this).data('reflmp');
+        var referralpheight = $(this).data('refpheight');
+        var referralpweight = $(this).data('refpweight');
+        var referralpreferfrom = $(this).data('refpreferfrom');
+        var referralpreferto = $(this).data('refpreferto');
+        var reasonrefer = $(this).data('refreasonrefer');
+        var tentdiagnose = $(this).data('reftentdiagnose');
+        var treatmentmedgiven = $(this).data('reftreatmentmedgiven');
+
+        $('#editWalkinReferralId').val(id);
+        $('#editWalkinReferralDate').val(referraldate);
+        $('#editWalkinReferralTime').val(referraltime);
+        $('#editWalkinReferralBP').val(referralbp);
+        $('#editWalkinReferralPR').val(referralpr);
+        $('#editWalkinReferralRR').val(referralrr);
+        $('#editWalkinReferralSPO2').val(referralspo);
+        $('#editWalkinReferralBodyTemp').val(referralbtemp);
+        $('#editWalkinReferralLMP').val(referrallmp);
+        $('#editWalkinReferralHeight').val(referralpheight);
+        $('#editWalkinReferralWeight').val(referralpweight);
+        $('#editWalkinReferralFrom').val(referralpreferfrom);
+        $('#editWalkinReferralTo').val(referralpreferto);
+        $('#editWalkinReferralReason').val(reasonrefer);
+        $('#editWalkinReferralTentativeDiagnosis').val(tentdiagnose);
+        $('#editWalkinReferralTreatment').val(treatmentmedgiven);                                       
+
+        $('#editcentermodalwalkinreferral').modal('show');
+    });
+
+    $('#editPReferral').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: walkinreferralUpdateRoute,
+            type: "POST",
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if(response.success) {
+                    toastr.success(response.message);
+                    $('#editcentermodalwalkinreferral').modal('hide');
+                    $(document).trigger('referralAdded');
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error, message) {
+                var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                toastr.error(errorMessage);
+            }
+        });
+    });
+
+    $(document).on('click', '.btn-deletereferral', function(e) {
+        var id = $(this).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to recover this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "GET",
+                    url: walkinreferralDeleteRoute.replace(':id', id),
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Successfully Deleted!',
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        if ($.fn.DataTable.isDataTable('#referlisttab')) {
+                            $('#referlisttab').DataTable().ajax.reload(null, false);
+                        } else {
+                            $("#tr-" + id).fadeOut();
+                        }
+                        if(response.success) {
+                            toastr.success(response.message);
+                            console.log(response);
+                        }
+                    }
+                });
+            }
+        })
+    });
 </script>
