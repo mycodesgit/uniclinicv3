@@ -274,6 +274,9 @@
         @include('script.reprts.studappointreps')
         @include('script.validations.reportsvalidation')
     @endif
+    @if (request()->routeIs(['reports.medical.statistic', 'reports.medical.statistic.store']))
+        @include('script.validations.reportsmedstatisticvalidation')
+    @endif
     @if (request()->routeIs(['reports.medicine', 'reports.medicine.store']))
         @include('script.validations.reportsmedvalidation')
     @endif
