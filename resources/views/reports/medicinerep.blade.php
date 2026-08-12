@@ -15,7 +15,7 @@
                                 </h6>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('reports.medicine.store') }}" method="GET">
+                                <form action="{{ route('reports.medicine.store') }}" method="GET" id="medForm">
                                     @csrf
                                     
                                     <div class="row g-3">

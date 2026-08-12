@@ -274,8 +274,12 @@
         @include('script.reprts.studappointreps')
         @include('script.validations.reportsvalidation')
     @endif
-    @if (request()->routeIs('reports.stockmedicine'))
+    @if (request()->routeIs(['reports.medicine', 'reports.medicine.store']))
+        @include('script.validations.reportsmedvalidation')
+    @endif
+    @if (request()->routeIs(['reports.stockmedicine', 'reports.stockmedicine.store']))
         @include('script.reprts.medstockpopulatejs')
+        @include('script.validations.reportsmedstockvalidation')
     @endif
     @if (request()->routeIs('users.list'))
         @include('script.userl.usersscript')
