@@ -37,9 +37,17 @@ class ReportsMedicineController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'month' => 'required|numeric|between:1,12',
-        ]);
+        $request->validate(
+            [
+                'month' => 'required|numeric|between:1,12',
+            ],
+            [
+                // Custom validation messages
+                'month.required' => 'Please select a month before generating the report.',
+                'month.numeric'  => 'The selected month must be a valid number.',
+                'month.between'  => 'Please select a valid month from the list.',
+            ]
+        );
 
         $monthselected = sprintf('%02d', $request->input('month'));
         $currentYear = now()->year;

@@ -57,17 +57,17 @@
     </li>
     <li>
         <a class="nav-link {{ $reportsActive }}" href="{{ route('reports.medical.statistic') }}">
-            <i class="ti ti-file-excel"></i><span class="nav-text">Medical Statistics</span>
+            <i class="ti ti-file-type-pdf"></i><span class="nav-text">Medical Statistics</span>
         </a>
     </li>
     <li>
         <a class="nav-link {{ $reportsMedicineActive }}" href="{{ route('reports.medicine') }}">
-            <i class="ti ti-file-excel"></i><span class="nav-text">Medicines Report</span>
+            <i class="ti ti-file-type-pdf"></i><span class="nav-text">Medicines Report</span>
         </a>
     </li>
     <li>
         <a class="nav-link {{ $reportsStockMedicineActive }}" href="{{ route('reports.stockmedicine') }}">
-            <i class="ti ti-file-excel"></i><span class="nav-text">Medicines Stock Report</span>
+            <i class="ti ti-file-type-pdf"></i><span class="nav-text">Medicines Stock Report</span>
         </a>
     </li>
 </ul>

@@ -19,14 +19,17 @@
                                     @csrf
                                     
                                     <div class="row g-3">
-                                        {{-- Reporting Period --}}
-                                        <div class="col-md-2">
-                                            <label for="reporting_period" class="form-label fw-bold">Medicine: <span class="text-danger">*</span></label>
-                                            <select class="form-control form-control-sm" id="medicine-dropdown" name="medicine">
+                                        <div class="col-md-3">
+                                            <label for="medicine-dropdown" class="form-label fw-bold">Medicine: <span class="text-danger">*</span></label>
+                                            <select class="form-control form-control-sm @error('medicine') is-invalid @enderror" id="medicine-dropdown" name="medicine">
                                                 <option disabled selected> --Select-- </option>
                                             </select>
-                                            @error('reporting_period')
-                                                <div class="invalid-feedback">{{ $message }}</div>
+
+                                            {{-- Error Message Output --}}
+                                            @error('medicine')
+                                                <div class="invalid-feedback d-block">
+                                                    {{ $message }}
+                                                </div>
                                             @enderror
                                         </div>
 

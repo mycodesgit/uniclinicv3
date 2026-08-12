@@ -51,6 +51,18 @@ class ReportsStockMedicineController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate(
+            [
+                'medicine' => 'required|numeric|between:1,12',
+            ],
+            [
+                // Custom validation messages
+                'medicine.required' => 'Please select a medicine before generating the report.',
+                'medicine.numeric'  => 'The selected medicine must be a valid number.',
+                'medicine.between'  => 'Please select a valid medicine from the list.',
+            ]
+        );
+
         return view('reports.medicinestockrepresult');
     }
 

@@ -22,7 +22,7 @@
                                         {{-- Reporting Period --}}
                                         <div class="col-md-2">
                                             <label for="reporting_period" class="form-label fw-bold">Reporting Period: <span class="text-danger">*</span></label>
-                                            <select class="form-control form-control-sm @error('reporting_period') is-invalid @enderror" id="reporting_period" name="reporting_period" required onchange="handlePeriodChange(this.value)">
+                                            <select class="form-control form-control-sm @error('reporting_period') is-invalid @enderror" id="reporting_period" name="reporting_period" onchange="handlePeriodChange(this.value)">
                                                 <option value="" selected disabled>Select Period Type</option>
                                                 <option value="monthly" {{ old('reporting_period') == 'monthly' ? 'selected' : '' }}>Monthly</option>
                                                 <option value="quarterly" {{ old('reporting_period') == 'quarterly' ? 'selected' : '' }}>Quarterly</option>
