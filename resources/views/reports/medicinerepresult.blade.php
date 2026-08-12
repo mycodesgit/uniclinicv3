@@ -21,7 +21,7 @@
                                     <div class="row g-3">
                                         <div class="col-md-2">
                                             <label for="reporting_period" class="form-label fw-bold">Month: <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="month" id="monthSelect">
+                                            <select class="form-control form-control-sm" name="month" id="monthSelect">
                                                 <option disabled selected> --Select-- </option>
                                                 @foreach(range(1,12) as $m)
                                                     <option value="{{ sprintf('%02d', $m) }}" {{ request()->get('month') == sprintf('%02d', $m) ? 'selected' : '' }}>
@@ -37,7 +37,7 @@
                                         {{-- Submit Button --}}
                                         <div class="col-md-2">
                                             <label class="form-label fw-bold">&nbsp;</label>
-                                            <button type="submit" class="btn btn-success form-control">
+                                            <button type="submit" class="btn btn-success btn-sm form-control">
                                                 <i class="bi bi-file-earmark-pdf me-1"></i> Generate Report
                                             </button>
                                         </div>

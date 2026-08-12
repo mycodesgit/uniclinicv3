@@ -32,40 +32,42 @@ class ReportsStockMedicineController extends Controller
 {
     public function index()
     {
-        return view('reports.stockmedicinerep');
+        return view('reports.medicinestockrep');
+    }
+
+    public function fetch(Request $request)
+    {
+        $search = $request->get('q'); // search term (optional)
+        
+        $medicines = Medicine::select('id', 'medicine')
+            ->when($search, function($query, $search) {
+                return $query->where('medicine', 'like', "%{$search}%");
+            })
+            ->limit(20) // load only 20 at a time
+            ->get();
+
+        return response()->json($medicines);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'reporting_period' => 'required|in:monthly,quarterly,yearly',
-            'period_value'     => 'required',
-            'prepared_by'      => 'required|string',
-            'position'         => 'required|string',
-        ]);
-
-        // Process data and queries using shared helper
-        $data = $this->getReportData($request);
-
-        return view('reports.stockmedicinerepresult', $data);
+        return view('reports.medicinestockrepresult');
     }
 
     public function generate(Request $request)
     {
-        $request->validate([
-            'reporting_period' => 'required|in:monthly,quarterly,yearly',
-            'period_value'     => 'required',
-        ]);
+        $medicineselected = $request->input('medicine');
 
-        // Fetch data using the query helper
-        $data = $this->getReportData($request);
+        $stockmed = Medicine::where('id', $medicineselected)
+                ->select('medicines.*')
+                ->get();
+        $data = [
+            'stockmed' => $stockmed,
+            'medicineselected' => $medicineselected,
+        ];
 
-        // Generate PDF or return view based on request
-        if ($request->has('pdf')) {
-            $pdf = PDF::loadView('reports.stockmedicinerepresult', $data);
-            return $pdf->download('stock_medicine_report.pdf');
-        }
+        $pdf = PDF::loadView('reports.pdf.medicinestockpdf', $data)->setPaper('Legal', 'portrait');
 
-        return view('reports.stockmedicinerepresult', $data);
+        return $pdf->stream();
     }
 }

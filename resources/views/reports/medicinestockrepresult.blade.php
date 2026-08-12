@@ -4,7 +4,7 @@
     <div class="row ">
         <div class="col-12">
             <div class="mb-6">
-                <h1 class="fs-3 mb-4">Medicine Report</h1>
+                <h1 class="fs-3 mb-4">Medicine Stock Report</h1>
                 <hr>
                 <div class="row g-4 mb-5">
                     <div class="col-md-12">
@@ -15,20 +15,15 @@
                                 </h6>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('reports.medicine.store') }}" method="GET">
+                                <form action="{{ route('reports.stockmedicine.store') }}" method="GET">
                                     @csrf
                                     
                                     <div class="row g-3">
                                         {{-- Reporting Period --}}
                                         <div class="col-md-2">
-                                            <label for="reporting_period" class="form-label fw-bold">Month: <span class="text-danger">*</span></label>
-                                            <select class="form-control form-control-sm" name="month" id="monthSelect">
+                                            <label for="reporting_period" class="form-label fw-bold">Medicine: <span class="text-danger">*</span></label>
+                                            <select class="form-control form-control-sm" id="medicine-dropdown" name="medicine">
                                                 <option disabled selected> --Select-- </option>
-                                                @foreach(range(1,12) as $m)
-                                                    <option value="{{ sprintf('%02d', $m) }}" {{ request()->get('month') == sprintf('%02d', $m) ? 'selected' : '' }}>
-                                                        {{ DateTime::createFromFormat('!m', $m)->format('F') }}
-                                                    </option>
-                                                @endforeach
                                             </select>
                                             @error('reporting_period')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -44,6 +39,15 @@
                                         </div>
                                     </div>
                                 </form>
+
+                                <div class="page-header mt-3" style="border-bottom: 1px solid #04401f;"></div>
+
+                                <iframe id="pdfIframe" 
+                                        src="{{ route('reports.stockmedicine.generate', request()->all()) }}"
+                                        style="width: 100%; height: 580px;" 
+                                        frameborder="0" 
+                                        class="mt-3">
+                                </iframe>
                             </div>
                         </div>
                     </div>

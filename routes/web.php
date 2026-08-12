@@ -113,6 +113,7 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/reports/medicine/generate',[ReportsMedicineController::class,'generate'])->name('reports.medicine.generate');
 
         Route::get('/reports/stock/medicine',[ReportsStockMedicineController::class,'index'])->name('reports.stockmedicine');
+        Route::get('/reports/stock/medicine/fetch',[ReportsStockMedicineController::class,'fetch'])->name('getStockMedicines');
         Route::get('/reports/stock/medicine/view',[ReportsStockMedicineController::class,'store'])->name('reports.stockmedicine.store');
         Route::get('/reports/stock/medicine/generate',[ReportsStockMedicineController::class,'generate'])->name('reports.stockmedicine.generate');
     });

@@ -22,7 +22,7 @@
                                         {{-- Reporting Period --}}
                                         <div class="col-md-2">
                                             <label for="reporting_period" class="form-label fw-bold">Reporting Period: <span class="text-danger">*</span></label>
-                                            <select class="form-select @error('reporting_period') is-invalid @enderror" id="reporting_period" name="reporting_period" required onchange="handlePeriodChange(this.value)">
+                                            <select class="form-control form-control-sm @error('reporting_period') is-invalid @enderror" id="reporting_period" name="reporting_period" required onchange="handlePeriodChange(this.value)">
                                                 <option value="" selected disabled>Select Period Type</option>
                                                 <option value="monthly" {{ old('reporting_period') == 'monthly' ? 'selected' : '' }}>Monthly</option>
                                                 <option value="quarterly" {{ old('reporting_period') == 'quarterly' ? 'selected' : '' }}>Quarterly</option>
@@ -38,11 +38,11 @@
                                             <label for="period_value" class="form-label fw-bold" id="period_label">Month / Quarter / Year: <span class="text-danger">*</span></label>
 
                                             {{-- Default / Placeholder Input (Disabled by default) --}}
-                                            <input type="text" class="form-control period-input" id="period_default" placeholder="Select a period first" disabled>
+                                            <input type="text" class="form-control form-control-sm period-input" id="period_default" placeholder="Select a period first" disabled>
 
                                             {{-- 1. Monthly Input (Values: 01 to 12) --}}
                                             <div id="wrapper_monthly" class="period-wrapper d-none">
-                                                <select class="form-select period-input @error('period_value') is-invalid @enderror" name="period_value" disabled>
+                                                <select class="form-control form-control-sm from period-input @error('period_value') is-invalid @enderror" name="period_value" disabled>
                                                     <option value="" selected disabled>Select Month</option>
                                                     <option value="01">01 - January</option>
                                                     <option value="02">02 - February</option>
@@ -61,7 +61,7 @@
 
                                             {{-- 2. Quarterly Input (Values: 01, 02, 03, 04) --}}
                                             <div id="wrapper_quarterly" class="period-wrapper d-none">
-                                                <select class="form-select period-input @error('period_value') is-invalid @enderror" name="period_value" disabled>
+                                                <select class="form-control form-control-sm from period-input @error('period_value') is-invalid @enderror" name="period_value" disabled>
                                                     <option value="" selected disabled>Select Quarter</option>
                                                     <option value="01">Q1 (1st Quarter)</option>
                                                     <option value="02">Q2 (2nd Quarter)</option>
@@ -72,7 +72,7 @@
 
                                             {{-- 3. Yearly Input (Values: YYYY) --}}
                                             <div id="wrapper_yearly" class="period-wrapper d-none">
-                                                <select class="form-select period-input @error('period_value') is-invalid @enderror" name="period_value" disabled>
+                                                <select class="form-control form-control-sm from period-input @error('period_value') is-invalid @enderror" name="period_value" disabled>
                                                     <option value="" selected disabled>Select Year</option>
                                                     @php $currentYear = date('Y'); @endphp
                                                     @for ($year = $currentYear; $year >= $currentYear - 10; $year--)
@@ -89,7 +89,7 @@
                                         {{-- Prepared By --}}
                                         <div class="col-md-2">
                                             <label for="prepared_by" class="form-label fw-bold">Prepared By: <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('prepared_by') is-invalid @enderror" id="prepared_by" name="prepared_by" value="{{ Auth::user()->fname ?? '' }} {{ Auth::user()->lname ?? '' }}" required readonly>
+                                            <input type="text" class="form-control form-control-sm @error('prepared_by') is-invalid @enderror" id="prepared_by" name="prepared_by" value="{{ Auth::user()->fname ?? '' }} {{ Auth::user()->lname ?? '' }}" required readonly>
                                             @error('prepared_by')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -98,7 +98,7 @@
                                         {{-- Position --}}
                                         <div class="col-md-2">
                                             <label for="position" class="form-label fw-bold">Position: <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('position') is-invalid @enderror" id="position" name="position" value="{{ Auth::user()->role ?? '' }}" required readonly>
+                                            <input type="text" class="form-control form-control-sm @error('position') is-invalid @enderror" id="position" name="position" value="{{ Auth::user()->role ?? '' }}" required readonly>
                                             @error('position')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -107,7 +107,7 @@
                                         {{-- Submit Button --}}
                                         <div class="col-md-2">
                                             <label class="form-label fw-bold">&nbsp;</label>
-                                            <button type="submit" class="btn btn-success form-control">
+                                            <button type="submit" class="btn btn-success btn-sm form-control">
                                                 <i class="bi bi-file-earmark-pdf me-1"></i> Generate Report
                                             </button>
                                         </div>

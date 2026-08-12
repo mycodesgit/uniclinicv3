@@ -8,6 +8,7 @@
 
     $reportsActive = in_array($current_route, ['reports.medical.statistic', 'reports.medical.statistic.store']) ? 'active' : '';
     $reportsMedicineActive = in_array($current_route, ['reports.medicine', 'reports.medicine.store']) ? 'active' : '';
+    $reportsStockMedicineActive = in_array($current_route, ['reports.stockmedicine', 'reports.stockmedicine.store']) ? 'active' : '';
 @endphp
 
 <ul class="nav flex-column">
@@ -62,6 +63,11 @@
     <li>
         <a class="nav-link {{ $reportsMedicineActive }}" href="{{ route('reports.medicine') }}">
             <i class="ti ti-file-excel"></i><span class="nav-text">Medicines Report</span>
+        </a>
+    </li>
+    <li>
+        <a class="nav-link {{ $reportsStockMedicineActive }}" href="{{ route('reports.stockmedicine') }}">
+            <i class="ti ti-file-excel"></i><span class="nav-text">Medicines Stock Report</span>
         </a>
     </li>
 </ul>
