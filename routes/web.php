@@ -15,6 +15,8 @@ use App\Http\Controllers\PDFreportController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ReportsMedicalStatisticController;
+use App\Http\Controllers\ReportsMedicineController;
+use App\Http\Controllers\ReportsStockMedicineController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -105,6 +107,14 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/reports/medical/statistic',[ReportsMedicalStatisticController::class,'index'])->name('reports.medical.statistic');
         Route::get('/reports/medical/statistic/view',[ReportsMedicalStatisticController::class,'store'])->name('reports.medical.statistic.store');
         Route::get('/reports/medical/statistic/generate',[ReportsMedicalStatisticController::class,'generate'])->name('reports.medical.statistic.generate');
+
+        Route::get('/reports/medicine',[ReportsMedicineController::class,'index'])->name('reports.medicine');
+        Route::get('/reports/medicine/view',[ReportsMedicineController::class,'store'])->name('reports.medicine.store');
+        Route::get('/reports/medicine/generate',[ReportsMedicineController::class,'generate'])->name('reports.medicine.generate');
+
+        Route::get('/reports/stock/medicine',[ReportsStockMedicineController::class,'index'])->name('reports.stockmedicine');
+        Route::get('/reports/stock/medicine/view',[ReportsStockMedicineController::class,'store'])->name('reports.stockmedicine.store');
+        Route::get('/reports/stock/medicine/generate',[ReportsStockMedicineController::class,'generate'])->name('reports.stockmedicine.generate');
     });
 
     Route::prefix('/users')->group(function () {

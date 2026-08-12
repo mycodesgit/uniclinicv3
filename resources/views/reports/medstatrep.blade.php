@@ -21,7 +21,7 @@
                                     <div class="row g-3">
                                         {{-- Reporting Period --}}
                                         <div class="col-md-2">
-                                            <label for="reporting_period" class="form-label fw-bold">Reporting Period</label>
+                                            <label for="reporting_period" class="form-label fw-bold">Reporting Period: <span class="text-danger">*</span></label>
                                             <select class="form-select @error('reporting_period') is-invalid @enderror" id="reporting_period" name="reporting_period" required onchange="handlePeriodChange(this.value)">
                                                 <option value="" selected disabled>Select Period Type</option>
                                                 <option value="monthly" {{ old('reporting_period') == 'monthly' ? 'selected' : '' }}>Monthly</option>
@@ -35,7 +35,7 @@
 
                                         {{-- Dynamic Period Value Container --}}
                                         <div class="col-md-3">
-                                            <label for="period_value" class="form-label fw-bold" id="period_label">Month / Quarter / Year</label>
+                                            <label for="period_value" class="form-label fw-bold" id="period_label">Month / Quarter / Year: <span class="text-danger">*</span></label>
 
                                             {{-- Default / Placeholder Input (Disabled by default) --}}
                                             <input type="text" class="form-control period-input" id="period_default" placeholder="Select a period first" disabled>
@@ -88,7 +88,7 @@
 
                                         {{-- Prepared By --}}
                                         <div class="col-md-2">
-                                            <label for="prepared_by" class="form-label fw-bold">Prepared By</label>
+                                            <label for="prepared_by" class="form-label fw-bold">Prepared By: <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control @error('prepared_by') is-invalid @enderror" id="prepared_by" name="prepared_by" value="{{ Auth::user()->fname ?? '' }} {{ Auth::user()->lname ?? '' }}" required readonly>
                                             @error('prepared_by')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -97,7 +97,7 @@
 
                                         {{-- Position --}}
                                         <div class="col-md-2">
-                                            <label for="position" class="form-label fw-bold">Position</label>
+                                            <label for="position" class="form-label fw-bold">Position: <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control @error('position') is-invalid @enderror" id="position" name="position" value="{{ Auth::user()->role ?? '' }}" required readonly>
                                             @error('position')
                                                 <div class="invalid-feedback">{{ $message }}</div>

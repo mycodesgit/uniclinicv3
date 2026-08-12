@@ -7,6 +7,7 @@
     $onlineActive = in_array($current_route, ['appointment.online']) ? 'active' : '';
 
     $reportsActive = in_array($current_route, ['reports.medical.statistic', 'reports.medical.statistic.store']) ? 'active' : '';
+    $reportsMedicineActive = in_array($current_route, ['reports.medicine', 'reports.medicine.store']) ? 'active' : '';
 @endphp
 
 <ul class="nav flex-column">
@@ -56,6 +57,11 @@
     <li>
         <a class="nav-link {{ $reportsActive }}" href="{{ route('reports.medical.statistic') }}">
             <i class="ti ti-file-excel"></i><span class="nav-text">Medical Statistics</span>
+        </a>
+    </li>
+    <li>
+        <a class="nav-link {{ $reportsMedicineActive }}" href="{{ route('reports.medicine') }}">
+            <i class="ti ti-file-excel"></i><span class="nav-text">Medicines Report</span>
         </a>
     </li>
 </ul>
