@@ -12,14 +12,10 @@
             padding: 20px;
             max-width: 900px;
             color: #333;
-            background-color: #f9f9f9;
         }
 
         .report-card {
-            background: #fff;
-            padding: 30px;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            
         }
 
         h1 {
@@ -41,10 +37,34 @@
         }
 
         .grid-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            width: 100%;
             margin-bottom: 25px;
+            clear: both;
+        }
+
+        .info-group {
+            width: 48%;
+            display: inline-block;
+            margin-bottom: 12px;
+            vertical-align: bottom;
+        }
+
+        .info-label {
+            font-weight: bold;
+            font-size: 13px;
+            color: #333333;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .info-value {
+            display: inline-block;
+            border-bottom: 1px solid #000000;
+            font-size: 13px;
+            padding-left: 5px;
+            padding-bottom: 2px;
+            min-width: 120px; /* Ensures underline exists even if value is empty */
+            font-weight: 500;
         }
 
         .form-group {
@@ -163,21 +183,21 @@
 
         <!-- Header Info -->
         <div class="grid-info">
-            <div class="form-group">
-                <label>Reporting Period:</label> <!--[cite: 1] -->
-                <input type="text">
+            <div class="info-group">
+                <span class="info-label">Reporting Period:</span>
+                <span class="info-value">{{ $reportingPeriodLabel }}</span>
             </div>
-            <div class="form-group">
-                <label>Month/Quarter/Year:</label> <!--[cite: 1] -->
-                <input type="text">
+            <div class="info-group">
+                <span class="info-label">Month/Quarter/Year:</span>
+                <span class="info-value">{{ $formattedPeriodValue }}</span>
             </div>
-            <div class="form-group">
-                <label>Prepared by:</label> <!--[cite: 1] -->
-                <input type="text">
+            <div class="info-group">
+                <span class="info-label">Prepared by:</span>
+                <span class="info-value">{{ $preparedBy }}</span>
             </div>
-            <div class="form-group">
-                <label>Position:</label> <!--[cite: 1] -->
-                <input type="text">
+            <div class="info-group">
+                <span class="info-label">Position:</span>
+                <span class="info-value">{{ $position }}</span>
             </div>
         </div>
 

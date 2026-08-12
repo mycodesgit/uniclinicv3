@@ -103,6 +103,8 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/reports/consultation/show/walkin-search-result/json',[ReportsController::class,'walkinsearchresultJson'])->name('walkin.search.result.json');
 
         Route::get('/reports/medical/statistic',[ReportsMedicalStatisticController::class,'index'])->name('reports.medical.statistic');
+        Route::get('/reports/medical/statistic/view',[ReportsMedicalStatisticController::class,'store'])->name('reports.medical.statistic.store');
+        Route::get('/reports/medical/statistic/generate',[ReportsMedicalStatisticController::class,'generate'])->name('reports.medical.statistic.generate');
     });
 
     Route::prefix('/users')->group(function () {

@@ -5,6 +5,8 @@
 
     $walkInActive = in_array($current_route, ['appointment.walkin', 'appointment.walkin.details']) ? 'active' : '';
     $onlineActive = in_array($current_route, ['appointment.online']) ? 'active' : '';
+
+    $reportsActive = in_array($current_route, ['reports.medical.statistic', 'reports.medical.statistic.store']) ? 'active' : '';
 @endphp
 
 <ul class="nav flex-column">
@@ -45,6 +47,15 @@
     <li>
         <a class="nav-link {{ $onlineActive }}" href="{{ route('appointment.online') }}">
             <i class="ti ti-calendar-check"></i><span class="nav-text">Online Consultations</span>
+        </a>
+    </li>
+
+    <li class="px-4 py-2">
+        <small class="nav-text text-muted">Reports</small>
+    </li>
+    <li>
+        <a class="nav-link {{ $reportsActive }}" href="{{ route('reports.medical.statistic') }}">
+            <i class="ti ti-file-excel"></i><span class="nav-text">Medical Statistics</span>
         </a>
     </li>
 </ul>
