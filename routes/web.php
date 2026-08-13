@@ -92,7 +92,7 @@ Route::group(['middleware'=>['login_auth']],function(){
     });
 
     Route::prefix('/all')->group(function () {
-        Route::get('/medicine',[MedicineController::class,'index'])->name('medicine.list');
+        Route::get('/medicine',[MedicineController::class,'index'])->name('medicine.index');
         Route::get('/medicine/list/ajax', [MedicineController::class, 'getmedicineRead'])->name('getmedicineRead');
         Route::post('/medicine/add', [MedicineController::class, 'medicineCreate'])->name('medicineCreate');
         Route::post('/medicineUpdate', [MedicineController::class, 'medicineUpdate'])->name('medicineUpdate');

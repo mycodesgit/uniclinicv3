@@ -132,7 +132,6 @@ class ReportsMedicalStatisticController extends Controller
         $reports = $query->get();
 
         // --- 3. Extract IDs for Cross-Database Lookups ---
-
         // A. Students (pcat = 1) -> Enrollment DB
         $studentIds = $reports->where('pcat', 1)
                             ->pluck('stdntID')
@@ -170,7 +169,7 @@ class ReportsMedicalStatisticController extends Controller
         $categories = [
             1 => 'Students',
             2 => 'Faculty',
-            3 => 'Administrative Staff',
+            3 => 'Administrative Personnel',
             4 => 'Contractual/Job Order Personnel',
             5 => 'Visitors',
         ];

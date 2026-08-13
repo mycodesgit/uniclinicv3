@@ -169,7 +169,7 @@
                                     <select class="form-control select2" id="choices-multiple-remove-button" name="pcat">
                                         <option> --Select-- </option>
                                         <option value="2"> Faculty </option>
-                                        <option value="3"> Administrative Staff </option>
+                                        <option value="3"> Administrative Personnel </option>
                                         <option value="4"> Contractual/Job Order Personnel </option>
                                     </select>
                                 </div>

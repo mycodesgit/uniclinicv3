@@ -39,25 +39,31 @@
                 "url": "{{ route('getmedicineRead') }}",
                 "type": "GET",
             },
-            "bFilter": true,
-			"sDom": 'fBtlpi',  
-			"ordering": true,
-			"language": {
-				search: ' ',
-				sLengthMenu: '_MENU_',
-				searchPlaceholder: "Search",
-				sLengthMenu: 'Row Per Page _MENU_ Entries',
-				info: "_START_ - _END_ of _TOTAL_ items",
-				paginate: {
-					next: '<i class="ti ti-arrow-right"></i>',
-					previous: '<i class="ti ti-arrow-left text-body"></i> '
-				},
-			},
-			"scrollX": false,         // Enable horizontal scrolling
-			"scrollCollapse": true,  // Adjust table size when the scroll is used
-			"responsive": false,
-			"autoWidth": false,
-            "info": true,
+            // "bFilter": true,
+			// "sDom": 'fBtlpi',  
+			// "ordering": true,
+			// "language": {
+			// 	search: ' ',
+			// 	sLengthMenu: '_MENU_',
+			// 	searchPlaceholder: "Search",
+			// 	sLengthMenu: 'Row Per Page _MENU_ Entries',
+			// 	info: "_START_ - _END_ of _TOTAL_ items",
+			// 	paginate: {
+			// 		next: '<i class="ti ti-arrow-right"></i>',
+			// 		previous: '<i class="ti ti-arrow-left text-body"></i> '
+			// 	},
+			// },
+			// "scrollX": false,         // Enable horizontal scrolling
+			// "scrollCollapse": true,  // Adjust table size when the scroll is used
+			// "responsive": false,
+			// "autoWidth": false,
+            // "info": true,
+            destroy: true,
+            info: true,
+            responsive: true,
+            lengthChange: true,
+            searching: true,
+            paging: true,
             "columns": [
                 {data: 'category'},
                 {data: 'medicine'},
