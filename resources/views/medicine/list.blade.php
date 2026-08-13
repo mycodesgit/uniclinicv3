@@ -64,51 +64,52 @@
                     <form id="medicineForm" method="POST">
                         @csrf
 
-                        <!-- start row-->
-                        <div class="row">
+                        <div class="row g-3">
+                            <!-- Category & Medicine Name -->
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Category <span class="text-danger">*</span></label>
+                                <input type="text" name="category" class="form-control form-control-sm text-capitalize" autocomplete="off" placeholder="e.g., Antibiotics, Analgesics" required>
+                            </div> 
+
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name <span class="text-danger">*</span></label>
+                                <input type="text" name="medicine" class="form-control form-control-sm text-capitalize" autocomplete="off" placeholder="e.g., Amoxicillin, Paracetamol" required>
+                            </div> 
+
+                            <!-- Quantity & Unit Measure -->
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity <span class="text-danger">*</span></label>
+                                <input type="number" name="qty" class="form-control form-control-sm" min="1" autocomplete="off" placeholder="e.g., 100" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure <span class="text-danger">*</span></label>
+                                <input type="text" name="measure" class="form-control form-control-sm" autocomplete="off" placeholder="e.g., mg, ml, Tablets, Boxes" required>
+                            </div>
+
+                            <!-- Lot No., Expiry Date, Reference ID -->
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No. <span class="text-danger">*</span></label>
+                                <input type="text" name="lotno" class="form-control form-control-sm text-uppercase" autocomplete="off" placeholder="e.g., LOT-12345" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date <span class="text-danger">*</span></label>
+                                <input type="date" name="expirydate" class="form-control form-control-sm" required>
+                            </div>
+
                             <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Category: <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input type="text" name="category" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Category">
-                                </div>
-                            </div> 
-
-                            <div class="col-md-12 mt-2">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name: <span class="text-danger">*</span></label><br>
-                                <input type="text" name="medicine" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Medicine">
-                            </div> 
-
-                            <div class="col-md-12 mt-2">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity: <span class="text-danger">*</span></label><br>
-                                <input type="number" name="qty"  class="form-control form-control-sm" autocomplete="off" placeholder="Enter Quantity">
-                            </div>
-
-                            <div class="col-md-12 mt-2">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure: <span class="text-danger">*</span></label><br>
-                                <input type="text" name="measure" class="form-control form-control-sm" autocomplete="off" placeholder="Unit Measure">
-                            </div>
-
-                            <div class="col-md-12 mt-2">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No.: <span class="text-danger">*</span></label><br>
-                                <input type="text" name="lotno" class="form-control form-control-sm" autocomplete="off" placeholder="Lot No.">
-                            </div>
-
-                            <div class="col-md-12 mt-2">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date: <span class="text-danger">*</span></label><br>
-                                <input type="date" name="expirydate" class="form-control form-control-sm" autocomplete="off" placeholder="Expiry Date">
-                            </div>
-
-                            <div class="col-md-12 mt-2">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID: <span class="text-danger">*</span></label><br>
-                                <input type="text" name="refnoid" class= "form-control form-control-sm" autocomplete="off" placeholder="Reference ID">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID <span class="text-danger">*</span></label>
+                                <input type="text" name="refnoid" class="form-control form-control-sm text-uppercase" autocomplete="off" placeholder="e.g., REF-2024-001" required>
                             </div>
                         </div>
-                        <!-- end row-->
-                        <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
-                            <div class=" d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-outline-danger btn-md" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success btn-md">
-                                    <i class="fas fa-save"></i> Save Data
+
+                        <!-- Form Footer Actions -->
+                        <div class="offcanvas-footer mb-1 mt-4 pt-3 border-top">
+                            <div class="d-flex justify-content-between gap-2">
+                                <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success px-3">
+                                    <i class="fas fa-save me-1"></i> Save Data
                                 </button>
                             </div>
                         </div>
@@ -123,57 +124,62 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="myCenterModalLabel">Edit Medicine</h6>
+                    <h4 class="modal-title" id="myCenterModalLabel">Edit Medicine</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editMedicineForm" method="POST">
+                        @csrf
+
+                        <!-- Hidden ID Field -->
                         <input type="hidden" name="id" id="editMedicineId">
-                        
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Category<span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input type="text" name="category" id="editMedicineCategory" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Category">
-                                </div>
+
+                        <div class="row g-3">
+                            <!-- Category & Medicine Name -->
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Category <span class="text-danger">*</span></label>
+                                <input type="text" name="category" id="editMedicineCategory" class="form-control form-control-sm text-capitalize" autocomplete="off" placeholder="e.g., Antibiotics, Analgesics" required>
                             </div> 
 
-                            <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name</label><br>
-                                <input type="text" name="medicine" id="editMedicineName" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Medicine">
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name <span class="text-danger">*</span></label>
+                                <input type="text" name="medicine" id="editMedicineName" class="form-control form-control-sm text-capitalize" autocomplete="off" placeholder="e.g., Amoxicillin, Paracetamol" required>
                             </div>
 
-                            <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity</label><br>
-                                <input type="number" name="qty" id="editMedicineQty" class="form-control form-control-sm" autocomplete="off" placeholder="Enter Quantity">
+                            <!-- Quantity & Unit Measure -->
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity <span class="text-danger">*</span></label>
+                                <input type="number" name="qty" id="editMedicineQty" class="form-control form-control-sm" min="0" autocomplete="off" placeholder="Enter Quantity" required>
                             </div> 
 
-                            <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure</label><br>
-                                <input type="text" name="measure" id="editMedicineUnit" class="form-control form-control-sm" autocomplete="off" placeholder="Unit Measure"></div>
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure <span class="text-danger">*</span></label>
+                                <input type="text" name="measure" id="editMedicineUnit" class="form-control form-control-sm" autocomplete="off" placeholder="e.g., mg, ml, Tablets" required>
+                            </div>
+
+                            <!-- Lot No., Expiry Date, Reference ID -->
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No. <span class="text-danger">*</span></label>
+                                <input type="text" name="lotno" id="editMedicineLotNo" class="form-control form-control-sm text-uppercase" autocomplete="off" placeholder="Lot No." required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date <span class="text-danger">*</span></label>
+                                <input type="date" name="expirydate" id="editMedicineExpiry" class="form-control form-control-sm" required>
                             </div>
 
                             <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No.</label><br>
-                                <input type="text" name="lotno" id="editMedicineLotNo" class="form-control form-control-sm" autocomplete="off" placeholder="Lot No.">
-                            </div>
-
-                            <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date</label><br>
-                                <input type="date" name="expirydate" id="editMedicineExpiry" class="form-control form-control-sm" autocomplete="off" placeholder="Expiry Date">
-                            </div>
-
-                            <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID</label><br>
-                                <input type="text" name="refnoid" id="editMedicineReference" class= "form-control form-control-sm" autocomplete="off" placeholder="Reference ID">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID <span class="text-danger">*</span></label>
+                                <input type="text" name="refnoid" id="editMedicineReference" class="form-control form-control-sm text-uppercase" autocomplete="off" placeholder="Reference ID" required>
                             </div>
                         </div>
-                        <!-- end row-->
-                        <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
-                            <div class=" d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-outline-danger btn-md" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-outline-primary btn-md">
-                                    <i class="fas fa-save"></i> Save Data
+
+                        <!-- Form Footer Actions -->
+                        <div class="offcanvas-footer mb-1 mt-4 pt-3 border-top">
+                            <div class="d-flex justify-content-between gap-2">
+                                <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success px-3">
+                                    <i class="fas fa-save me-1"></i> Update Changes
                                 </button>
                             </div>
                         </div>

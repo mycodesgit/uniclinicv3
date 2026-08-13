@@ -32,7 +32,7 @@
     toastr.options = {
         "closeButton": true,
         "progressBar": true,
-        "positionClass": "toast-top-center"
+        "positionClass": "toast-top-right"
     };
     $(document).ready(function() {
         $('#guestpatientform').submit(function(event) {
@@ -49,7 +49,7 @@
                         console.log(response);
                         $(document).trigger('guestAdded');
                         $('#guestpatientform')[0].reset();
-                        $('#new_patient_outsider').offcanvas('hide');
+                        $('#centermodalAddNewGuestPatient').modal('hide');
                     } else {
                         toastr.error(response.message);
                         console.log(response);
@@ -68,24 +68,30 @@
                 "type": "GET",
             },
             "bFilter": true,
-			"sDom": 'fBtlpi',  
+			//"sDom": 'fBtlpi',  
 			"ordering": true,
-			"language": {
-				search: ' ',
-				sLengthMenu: '_MENU_',
-				searchPlaceholder: "Search",
-				sLengthMenu: 'Row Per Page _MENU_ Entries',
-				info: "_START_ - _END_ of _TOTAL_ items",
-				paginate: {
-					next: '<i class="ti ti-arrow-right"></i>',
-					previous: '<i class="ti ti-arrow-left text-body"></i> '
-				},
-			},
+			// "language": {
+			// 	search: ' ',
+			// 	sLengthMenu: '_MENU_',
+			// 	searchPlaceholder: "Search",
+			// 	sLengthMenu: 'Row Per Page _MENU_ Entries',
+			// 	info: "_START_ - _END_ of _TOTAL_ items",
+			// 	paginate: {
+			// 		next: '<i class="ti ti-arrow-right"></i>',
+			// 		previous: '<i class="ti ti-arrow-left text-body"></i> '
+			// 	},
+			// },
 			"scrollX": false,         // Enable horizontal scrolling
 			"scrollCollapse": true,  // Adjust table size when the scroll is used
 			"responsive": false,
 			"autoWidth": false,
             "info": true,
+            // destroy: true,
+            // info: true,
+            // responsive: true,
+            // lengthChange: true,
+            // searching: true,
+            // paging: true,
             "columns": [
                 {data: 'patientID'},
                 { 

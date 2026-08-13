@@ -84,6 +84,9 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+        .select2-container--open {
+            z-index: 99999 !important;
+        }
     </style>
 </head>
 

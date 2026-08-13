@@ -148,7 +148,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation ID <span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation ID: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" name="consultID" class="form-control rounded bg-light" value="STUD-CWI-{{ \Carbon\Carbon::now()->format('Ymd') }}-{{ substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 10) }}" readonly>
                                     </div>
@@ -157,16 +157,29 @@
 
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded bg-light" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}" readonly>
                                     </div>
                                 </div>
                             </div> <!-- end col-->
 
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Type of Consultation: <span class="text-danger">*</span></label>
+                                    <select class="form-control select2" id="choices-multiple-remove-button" name="type_of_consultation">
+                                        <option> --Select-- </option>
+                                        <option value="New Cases"> New Cases </option>
+                                        <option value="Follow-up Cases"> Follow-up Cases </option>
+                                        <option value="Emergency Cases"> Emergency Cases </option>
+                                        <option value="Teleconsultation"> Teleconsultation </option>
+                                    </select>
+                                </div>
+                            </div> <!-- end col-->
+
                             <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Date<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Date: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="date" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                                     </div>
@@ -175,7 +188,7 @@
 
                             <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Time<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Time: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="time" name="time" class="form-control form-control-sm" value="{{ date('h:i A') }}">
                                     </div>
@@ -184,7 +197,7 @@
 
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label for="choices-multiple-remove-button" class="form-label mb-1 text-dark fs-14 fw-medium">Chief Complaint <span class="text-danger">*</span></label>
+                                    <label for="choices-multiple-remove-button" class="form-label mb-1 text-dark fs-14 fw-medium">Chief Complaint: <span class="text-danger">*</span></label>
                                     <select class="form-control select2" id="choices-multiple-remove-button" name="chief_complaint[]" multiple="multiple">
                                         @foreach ($complaints as $complaint)
                                             <option style="color:black" value="{{ $complaint->id }}">
@@ -197,7 +210,7 @@
 
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">BP<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">BP: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded" name="bp" placeholder="e.g. 120/80 mmHg">
                                     </div>
@@ -206,7 +219,7 @@
 
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">PR<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">PR:<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded" name="pr" placeholder="e.g. 72 bpm">
                                     </div>
@@ -215,7 +228,7 @@
 
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">RR<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">RR: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded" name="rr" placeholder="e.g. 16 bpm">
                                     </div>
@@ -224,7 +237,7 @@
 
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">SPO2<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">SPO2: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded" name="spo" placeholder="e.g. 98%">
                                     </div>
@@ -233,7 +246,7 @@
 
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">T<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">T: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded" name="btemp" placeholder="e.g. 37°C">
                                     </div>
@@ -242,7 +255,7 @@
 
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">LMP<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">LMP: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded" name="lmp" placeholder="e.g. 120/80 mmHg">
                                     </div>
@@ -251,7 +264,7 @@
 
                             <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Height<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Height: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded" name="pheight" placeholder="e.g. 170 cm">
                                     </div>
@@ -260,7 +273,7 @@
 
                             <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Weight<span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Weight: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded" name="pweight" placeholder="e.g. 70 kg">
                                     </div>
@@ -270,7 +283,7 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <div>
-                                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation Treatment</label>
+                                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation Treatment: <span class="text-danger">*</span></label>
                                         <textarea rows="4" name="treatment" class="form-control rounded"> </textarea>
                                     </div>
                                 </div>
@@ -278,7 +291,7 @@
 
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 fw-medium text-center">Certificate</label>
+                                    <label class="form-label mb-1 fw-medium text-center">Certificate: <span class="text-danger">*</span></label>
                                     <div>
                                         <input type="radio" class="form-check-input" name="certificate" id="certificate" value="1">
                                         <label class="form-check-label mr-3" for="certificate">Yes</label>&emsp;

@@ -85,7 +85,7 @@
                     render: function(data, type, row) {
                         if (type === 'display') {
                             var dropdown = '<div class="btn-group" role="group">' +
-                                '<button type="button" class="btn btn-teal btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>' +
+                                '<button type="button" class="btn btn-success btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>' +
                                 '<ul class="dropdown-menu">' +
                                 '<a href="#" class="dropdown-item btn-mededit" data-id="' + row.id + '" data-category="' + row.category + '" data-medicine="' + row.medicine + '" data-qty="' + row.qty + '" data-measure="' + row.measure + '" data-lotno="' + row.lotno + '" data-expirydate="' + row.expirydate + '" data-refnoid="' + row.refnoid + '">' +
                                 '<i class="fas fa-pen"></i> Edit' +
