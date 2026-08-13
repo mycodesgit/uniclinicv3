@@ -34,30 +34,36 @@
 
         const walkinId = @json($emp_ID);
 
-        var dataTable = $('#consultationTable').DataTable({
+        var dataTable = $('#consultationEmpTable').DataTable({
             "ajax": {
                 "url": "{{ route('getwalkinempconsult.walkin', ['emp_ID' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
-            "bFilter": true,
-			"sDom": 'fBtlpi',  
-			"ordering": true,
-			"language": {
-				search: ' ',
-				sLengthMenu: '_MENU_',
-				searchPlaceholder: "Search",
-				sLengthMenu: 'Row Per Page _MENU_ Entries',
-				info: "_START_ - _END_ of _TOTAL_ items",
-				paginate: {
-					next: '<i class="ti ti-arrow-right"></i>',
-					previous: '<i class="ti ti-arrow-left text-body"></i> '
-				},
-			},
-			"scrollX": false,         // Enable horizontal scrolling
-			"scrollCollapse": true,  // Adjust table size when the scroll is used
-			"responsive": true,
-			"autoWidth": false,
-            "info": true,
+            // "bFilter": true,
+			// "sDom": 'fBtlpi',  
+			// "ordering": true,
+			// "language": {
+			// 	search: ' ',
+			// 	sLengthMenu: '_MENU_',
+			// 	searchPlaceholder: "Search",
+			// 	sLengthMenu: 'Row Per Page _MENU_ Entries',
+			// 	info: "_START_ - _END_ of _TOTAL_ items",
+			// 	paginate: {
+			// 		next: '<i class="ti ti-arrow-right"></i>',
+			// 		previous: '<i class="ti ti-arrow-left text-body"></i> '
+			// 	},
+			// },
+			// "scrollX": false,         // Enable horizontal scrolling
+			// "scrollCollapse": true,  // Adjust table size when the scroll is used
+			// "responsive": true,
+			// "autoWidth": false,
+            // "info": true,
+            destroy: true,
+            info: true,
+            responsive: true,
+            lengthChange: true,
+            searching: true,
+            paging: true,
             "columns": [
                 { 
                     data: null,
@@ -92,19 +98,19 @@
                 { data: 'treatment' },
                 { data: 'medicinename' },
                 { data: 'qty' },
-                // { 
-                //     data: 'id',
-                //     render: function(data, type, row) {
-                //         if (type === 'display') {
-                //             var editLink = '<a href="#" class="btn btn-outline-primary btn-sm btn-studdataview"  data-id="' + row.id + '" data-studid="' + row.stud_id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-gender="' + row.gender + '" data-bday="' + row.bday + '" data-pbirth="' + row.pbirth + '" data-contact="' + row.contact + '" data-email="' + row.email + '" data-religion="' + row.religion + '" data-address="' + row.address + '" data-civil="' + row.civil_status + '" data-hnum="' + row.hnum + '" data-brgy="' + row.brgy + '" data-city="' + row.city + '" data-province="' + row.province + '" data-region="' + row.region + '" data-zcode="' + row.zcode + '" data-father="' + row.stud_father + '" data-mother="' + row.stud_mother + '" data-guardian="' + row.stud_guardian + '" data-income="' + row.monthly_income + '" data-pcontact="' + row.guardian_contact + '" data-lstschattended="' + row.lstsch_attended + '" data-lstschattendedyear="' + row.lst_sch_attended_year + '" data-suclstattended="' + row.suc_lst_attended + '" data-dateadmission="' + row.date_admission + '">' +
-                //                 '<i class="ti ti-eye"></i>' +
-                //                 '</a>';
-                //             return editLink;
-                //         } else {
-                //             return data;
-                //         }
-                //     },
-                // },
+                { 
+                    data: 'id',
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            var editLink = '<a href="#" class="btn btn-outline-primary btn-sm btn-studdataview"  data-id="' + row.id + '" data-studid="' + row.stud_id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-gender="' + row.gender + '" data-bday="' + row.bday + '" data-pbirth="' + row.pbirth + '" data-contact="' + row.contact + '" data-email="' + row.email + '" data-religion="' + row.religion + '" data-address="' + row.address + '" data-civil="' + row.civil_status + '" data-hnum="' + row.hnum + '" data-brgy="' + row.brgy + '" data-city="' + row.city + '" data-province="' + row.province + '" data-region="' + row.region + '" data-zcode="' + row.zcode + '" data-father="' + row.stud_father + '" data-mother="' + row.stud_mother + '" data-guardian="' + row.stud_guardian + '" data-income="' + row.monthly_income + '" data-pcontact="' + row.guardian_contact + '" data-lstschattended="' + row.lstsch_attended + '" data-lstschattendedyear="' + row.lst_sch_attended_year + '" data-suclstattended="' + row.suc_lst_attended + '" data-dateadmission="' + row.date_admission + '">' +
+                                '<i class="ti ti-eye"></i>' +
+                                '</a>';
+                            return editLink;
+                        } else {
+                            return data;
+                        }
+                    },
+                },
             ],
             "createdRow": function (row, data, index) {
                 $(row).attr('id', 'tr-' + data.id); 
@@ -214,30 +220,36 @@
 
         const walkinId = @json($emp_ID);
         
-        var dataTable = $('#referlisttab').DataTable({
+        var dataTable = $('#referlistEmptab').DataTable({
             "ajax": {
                 "url": "{{ route('getwalkinempreferral.walkin', ['emp_ID' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
-            "bFilter": true,
-			"sDom": 'fBtlpi',  
-			"ordering": true,
-			"language": {
-				search: ' ',
-				sLengthMenu: '_MENU_',
-				searchPlaceholder: "Search",
-				sLengthMenu: 'Row Per Page _MENU_ Entries',
-				info: "_START_ - _END_ of _TOTAL_ items",
-				paginate: {
-					next: '<i class="ti ti-arrow-right"></i>',
-					previous: '<i class="ti ti-arrow-left text-body"></i> '
-				},
-			},
-			"scrollX": false,         // Enable horizontal scrolling
-			"scrollCollapse": true,  // Adjust table size when the scroll is used
-			"responsive": true,
-			"autoWidth": false,
-            "info": true,
+            // "bFilter": true,
+			// "sDom": 'fBtlpi',  
+			// "ordering": true,
+			// "language": {
+			// 	search: ' ',
+			// 	sLengthMenu: '_MENU_',
+			// 	searchPlaceholder: "Search",
+			// 	sLengthMenu: 'Row Per Page _MENU_ Entries',
+			// 	info: "_START_ - _END_ of _TOTAL_ items",
+			// 	paginate: {
+			// 		next: '<i class="ti ti-arrow-right"></i>',
+			// 		previous: '<i class="ti ti-arrow-left text-body"></i> '
+			// 	},
+			// },
+			// "scrollX": false,         // Enable horizontal scrolling
+			// "scrollCollapse": true,  // Adjust table size when the scroll is used
+			// "responsive": true,
+			// "autoWidth": false,
+            // "info": true,
+            destroy: true,
+            info: true,
+            responsive: true,
+            lengthChange: true,
+            searching: true,
+            paging: true,
             "columns": [
                 { 
                     data: null,
@@ -272,6 +284,47 @@
                 },
                 {data: 'preferfrom'},
                 {data: 'preferto'},
+                {
+                    data: 'id',
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+
+                            var buttons = `
+                                <button type="button"
+                                    class="btn btn-sm btn-success btn-walkineditreferral mr-1 text-light"
+                                    data-id="${row.id}"
+                                    data-refdate="${row.date}"
+                                    data-reftime="${row.time}"
+                                    data-refbp="${row.bp}"
+                                    data-refpr="${row.pr}"
+                                    data-refrr="${row.rr}"
+                                    data-refspo="${row.spo}"
+                                    data-refbtemp="${row.btemp}"
+                                    data-reflmp="${row.lmp}"
+                                    data-refpheight="${row.pheight}"
+                                    data-refpweight="${row.pweight}"
+                                    data-refpreferfrom="${row.preferfrom}"
+                                    data-refpreferto="${row.preferto}"
+                                    data-refreasonrefer="${row.reasonrefer}"
+                                    data-reftentdiagnose="${row.tentdiagnose}"
+                                    data-reftreatmentmedgiven="${row.treatmentmedgiven}"
+                                    title="View Forms">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+
+                                <button type="button"
+                                    class="btn btn-sm btn-danger btn-deletereferral mr-1"
+                                    value="${data}">
+                                    <i class="ti ti-trash"></i>
+                                </button>
+                            `;
+
+                            return buttons;
+                        }
+
+                        return data;
+                    }
+                }
             ],
             "createdRow": function (row, data, index) {
                 $(row).attr('id', 'tr-' + data.id); 

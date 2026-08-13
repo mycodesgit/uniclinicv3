@@ -202,52 +202,32 @@
         </div>
 
         <!-- I. Summary of Patient Consultations -->
-        <h2>Summary of Patient Consultations</h2> <!--[cite: 1] -->
+        <h2>Summary of Patient Consultations</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Nature of Consultation</th> <!--[cite: 1] -->
-                    <th class="center" style="width: 15%;">Male</th> <!--[cite: 1] -->
-                    <th class="center" style="width: 15%;">Female</th> <!--[cite: 1] -->
-                    <th class="center" style="width: 15%;">Total</th> <!--[cite: 1] -->
+                    <th>Nature of Consultation</th>
+                    <th class="center" style="width: 15%;">Male</th>
+                    <th class="center" style="width: 15%;">Female</th>
+                    <th class="center" style="width: 15%;">Total</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Students</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Faculty</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Administrative Staff</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Contractual/Job Order Personnel</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Visitors</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
+                @foreach($consultations as $pcatId => $data)
+                    <tr>
+                        <td>{{ $data['label'] }}</td>
+                        <td class="center">{{ $data['male'] > 0 ? $data['male'] : 0 }}</td>
+                        <td class="center">{{ $data['female'] > 0 ? $data['female'] : 0 }}</td>
+                        <td class="center">{{ $data['total'] > 0 ? $data['total'] : 0 }}</td>
+                    </tr>
+                @endforeach
+
+                {{-- GRAND TOTAL ROW --}}
                 <tr class="total-row">
-                    <td>TOTAL</td> <!--[cite: 1] -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><strong>TOTAL</strong></td>
+                    <td class="center"><strong>{{ $grandTotal['male'] }}</strong></td>
+                    <td class="center"><strong>{{ $grandTotal['female'] }}</strong></td>
+                    <td class="center"><strong>{{ $grandTotal['total'] }}</strong></td>
                 </tr>
             </tbody>
         </table>

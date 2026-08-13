@@ -6,7 +6,7 @@
             <div class="mb-6">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="fs-3">Walkin Consultations</h1>
+                        <h1 class="fs-3"><a href="#" class="text-dark"><i class="ti ti-chevron-left me-1"></i> Walkin Student Consultations</h1>
                     </div>
                     <!-- Removed buttons from here -->
                 </div>
@@ -142,6 +142,7 @@
 
                         <input type="hidden" name="stid" class="form-control rounded bg-light" value="{{ $patients->id }}" readonly>
                         <input type="hidden" name="stdntID" class="form-control rounded bg-light" value="{{ $patients->stud_id }}" readonly>
+                        <input type="hidden" name="pcat" class="form-control rounded bg-light" value="1" readonly>
 
                         <!-- start row-->
                         <div class="row">

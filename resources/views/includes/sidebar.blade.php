@@ -3,7 +3,7 @@
 
     $preenrolmentActive = in_array($current_route, ['admission.index', 'admission.store']) ? 'active' : '';
 
-    $walkInActive = in_array($current_route, ['appointment.walkin', 'appointment.walkin.details']) ? 'active' : '';
+    $walkInActive = in_array($current_route, ['appointment.walkin', 'appointment.walkin.details', 'appointment.walkin.empdetails']) ? 'active' : '';
     $onlineActive = in_array($current_route, ['appointment.online']) ? 'active' : '';
 
     $reportsActive = in_array($current_route, ['reports.medical.statistic', 'reports.medical.statistic.store']) ? 'active' : '';
