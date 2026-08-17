@@ -2,6 +2,7 @@
     $current_route=request()->route()->getName();
 
     $medicineActive = in_array($current_route, ['medicine.index']) ? 'active' : '';
+    $complaintActive = in_array($current_route, ['complaint.index']) ? 'active' : '';
 
     $preenrolmentActive = in_array($current_route, ['admission.index', 'admission.store']) ? 'active' : '';
 
@@ -32,6 +33,11 @@
             <i class="ti ti-pills"></i><span class="nav-text">Medicines</span>
         </a>
     </li>
+    <li>
+        <a class="nav-link {{ $complaintActive }}" href="{{ route('complaint.index') }}">
+            <i class="ti ti-details"></i><span class="nav-text">Chief Complaints</span>
+        </a>
+    </li>
 
     <li class="px-4 py-2">
         <small class="nav-text text-muted">Admission</small>
@@ -46,14 +52,14 @@
     </li>
     <li>
         <a class="nav-link {{ $walkInActive }}" href="{{ route('appointment.walkin') }}">
-            <i class="ti ti-calendar-check"></i><span class="nav-text">Walkin Consultations</span>
+            <i class="ti ti-calendar-check"></i><span class="nav-text">Consultations</span>
         </a>
     </li>
-    <li>
+    {{-- <li>
         <a class="nav-link {{ $onlineActive }}" href="{{ route('appointment.online') }}">
             <i class="ti ti-calendar-check"></i><span class="nav-text">Online Consultations</span>
         </a>
-    </li>
+    </li> --}}
 
     <li class="px-4 py-2">
         <small class="nav-text text-muted">Reports</small>

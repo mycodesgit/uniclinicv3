@@ -7,12 +7,13 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\PatientEmpController;
+use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\ChiefComplaintController;
 
 use App\Http\Controllers\AdConfirmApplicantController;
 
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\PDFreportController;
-use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ReportsMedicalStatisticController;
 use App\Http\Controllers\ReportsMedicineController;
@@ -63,6 +64,18 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/students/prehe-report/{id}', [PDFreportController::class,'showprehepdf'])->name('showprehepdf');
     });
 
+    Route::prefix('/all')->group(function () {
+        Route::get('/medicine',[MedicineController::class,'index'])->name('medicine.index');
+        Route::get('/medicine/list/ajax', [MedicineController::class, 'getmedicineRead'])->name('getmedicineRead');
+        Route::post('/medicine/add', [MedicineController::class, 'medicineCreate'])->name('medicineCreate');
+        Route::post('/medicineUpdate', [MedicineController::class, 'medicineUpdate'])->name('medicineUpdate');
+        Route::post('/medicineDelete/{id}', [MedicineController::class, 'medicineDelete'])->name('medicineDelete');
+    });
+    
+    Route::prefix('/complaints')->group(function () {
+        Route::get('/chief',[ChiefComplaintController::class,'index'])->name('complaint.index');
+    });
+
     Route::prefix('/admission')->group(function () {
         Route::get('/pre-enrollment',[AdConfirmApplicantController::class,'index'])->name('admission.index');
         Route::get('/pre-enrollment/search',[AdConfirmApplicantController::class,'store'])->name('admission.store');
@@ -89,14 +102,6 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/walkins/referral/delete/{id}', [AppointmentsController::class, 'walkinReferralDelete'])->name('appointment.walkinreferral.delete');
 
         Route::get('/online',[AppointmentsController::class,'onlineappoint'])->name('appointment.online');
-    });
-
-    Route::prefix('/all')->group(function () {
-        Route::get('/medicine',[MedicineController::class,'index'])->name('medicine.index');
-        Route::get('/medicine/list/ajax', [MedicineController::class, 'getmedicineRead'])->name('getmedicineRead');
-        Route::post('/medicine/add', [MedicineController::class, 'medicineCreate'])->name('medicineCreate');
-        Route::post('/medicineUpdate', [MedicineController::class, 'medicineUpdate'])->name('medicineUpdate');
-        Route::post('/medicineDelete/{id}', [MedicineController::class, 'medicineDelete'])->name('medicineDelete');
     });
 
     Route::prefix('/generate')->group(function () {

@@ -6,7 +6,7 @@
             <div class="mb-6">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="fs-3"><a href="#" class="text-dark"><i class="ti ti-chevron-left me-1"></i> Walkin Student Consultations</h1>
+                        <h1 class="fs-3"><a href="#" class="text-dark"><i class="ti ti-chevron-left me-1"></i> Student Consultations</h1>
                     </div>
                     <!-- Removed buttons from here -->
                 </div>
@@ -166,13 +166,14 @@
 
                             <div class="col-lg-12">
                                 <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Type of Consultation: <span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Classification of Consultation: <span class="text-danger">*</span></label>
                                     <select class="form-control select2" id="choices-multiple-remove-button" name="type_of_consultation">
                                         <option> --Select-- </option>
                                         <option value="New Cases"> New Cases </option>
                                         <option value="Follow-up Cases"> Follow-up Cases </option>
                                         <option value="Emergency Cases"> Emergency Cases </option>
                                         <option value="Teleconsultation"> Teleconsultation </option>
+                                        <option value="Walk-in Consultation"> Walk-in Consultation </option>
                                     </select>
                                 </div>
                             </div> <!-- end col-->
@@ -181,7 +182,7 @@
                                 <div class="mb-3">
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Date: <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="date" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                        <input type="date" name="date" class="form-control" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                                     </div>
                                 </div>
                             </div> <!-- end col-->
@@ -190,7 +191,7 @@
                                 <div class="mb-3">
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Time: <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="time" name="time" class="form-control form-control-sm" value="{{ date('h:i A') }}">
+                                        <input type="time" name="time" class="form-control" value="{{ date('h:i A') }}">
                                     </div>
                                 </div>
                             </div> <!-- end col-->
