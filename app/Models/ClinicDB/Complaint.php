@@ -11,7 +11,8 @@ class Complaint extends Model
     protected $table ='complaint'; 
 
     protected $fillable = [
+        'categoryname',
         'complaintname',
-        'colorcode', 
+        'specificcondition',
     ];
 }

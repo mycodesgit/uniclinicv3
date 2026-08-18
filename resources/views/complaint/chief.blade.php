@@ -59,41 +59,32 @@
 
                         <div class="row g-3">
                             <!-- Category & Medicine Name -->
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="form-label mb-1 text-dark fs-14 fw-medium">Category <span class="text-danger">*</span></label>
-                                <input type="text" name="category" class="form-control form-control-sm text-capitalize" autocomplete="off" placeholder="e.g., Antibiotics, Analgesics" required>
-                            </div> 
-
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name <span class="text-danger">*</span></label>
-                                <input type="text" name="medicine" class="form-control form-control-sm text-capitalize" autocomplete="off" placeholder="e.g., Amoxicillin, Paracetamol" required>
-                            </div> 
-
-                            <!-- Quantity & Unit Measure -->
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity <span class="text-danger">*</span></label>
-                                <input type="number" name="qty" class="form-control form-control-sm" min="1" autocomplete="off" placeholder="e.g., 100" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure <span class="text-danger">*</span></label>
-                                <input type="text" name="measure" class="form-control form-control-sm" autocomplete="off" placeholder="e.g., mg, ml, Tablets, Boxes" required>
-                            </div>
-
-                            <!-- Lot No., Expiry Date, Reference ID -->
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No. <span class="text-danger">*</span></label>
-                                <input type="text" name="lotno" class="form-control form-control-sm text-uppercase" autocomplete="off" placeholder="e.g., LOT-12345" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date <span class="text-danger">*</span></label>
-                                <input type="date" name="expirydate" class="form-control form-control-sm" required>
+                                <select name="categoryname" class="form-select form-select-sm" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Cardiovascular System">Cardiovascular System</option>
+                                    <option value="Dermatologic (Skin)">Dermatologic (Skin)</option>
+                                    <option value="Eye (Ophthalmologic)">Eye (Ophthalmologic)</option>
+                                    <option value="Endocrine/Metabolic System">Endocrine/Metabolic System</option>
+                                    <option value="Ear, Nose and Throat (ENT)">Ear, Nose and Throat (ENT)</option>
+                                    <option value="Gastrointestinal System">Gastrointestinal System</option>
+                                    <option value="Mental and Behavioral Health">Mental and Behavioral Health</option>
+                                    <option value="Musculoskeletal System">Musculoskeletal System</option>
+                                    <option value="Neurologic System">Neurologic System</option>
+                                    <option value="Respiratory System">Respiratory System</option>
+                                    <option value="Reproductive System (Female)">Reproductive System (Female)</option>
+                                </select>
                             </div>
 
                             <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID <span class="text-danger">*</span></label>
-                                <input type="text" name="refnoid" class="form-control form-control-sm text-uppercase" autocomplete="off" placeholder="e.g., REF-2024-001" required>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Chief Complaint <span class="text-danger">*</span></label>
+                                <input type="text" name="complaintname" class="form-control form-control-sm" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Specific condition: <span class="text-danger">*</span></label>
+                                <input type="text" name="specificcondition" class="form-control form-control-sm text-uppercase" autocomplete="off" required>
                             </div>
                         </div>
 

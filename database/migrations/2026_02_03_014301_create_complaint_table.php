@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('complaint', function (Blueprint $table) {
             $table->id();
+            $table->string('categoryname');
             $table->string('complaintname');
-            $table->string('colorcode')->nullable();
+            $table->string('specificcondition')->nullable();
             $table->timestamps();
         });
     }
