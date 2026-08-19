@@ -32,7 +32,7 @@ class ReportsMedicineController extends Controller
 {
     public function index()
     {
-        return view('reports.medicinerep');
+        return view('pages.reports.medicinerep');
     }
 
     public function store(Request $request)
@@ -56,7 +56,7 @@ class ReportsMedicineController extends Controller
                             ->whereMonth('created_at', $monthselected)
                             ->get();
 
-        return view('reports.medicinerepresult', compact('monthmed', 'monthselected', 'currentYear'));
+        return view('pages.reports.medicinerepresult', compact('monthmed', 'monthselected', 'currentYear'));
     }
 
     public function generate(Request $request)
@@ -89,7 +89,7 @@ class ReportsMedicineController extends Controller
         ];
 
         // 6. Generate PDF
-        $pdf = PDF::loadView('reports.pdf.medicinepdf', $data)
+        $pdf = PDF::loadView('pages.reports.pdf.medicinepdf', $data)
                 ->setPaper('Legal', 'landscape');
 
         // Return as inline stream (ideal for iframe embedding)

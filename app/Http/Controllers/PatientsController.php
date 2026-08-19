@@ -33,7 +33,7 @@ class PatientsController extends Controller
     {
         $regions = Region::all();
 
-        return view('patient.plist', compact('regions'));
+        return view('pages.patient.plist', compact('regions'));
     }
 
     public function show(Request $request)
@@ -92,7 +92,7 @@ class PatientsController extends Controller
 
         $patientVisit = Patientvisit::where('stid', $student->decryptedId)->get();
 
-        return view('patient.details', compact('patients', 'student', 'regions', 'encryptedStudentId', 'patientVisit'));
+        return view('pages.patient.details', compact('patients', 'student', 'regions', 'encryptedStudentId', 'patientVisit'));
     }
 
     public function create(Request $request)

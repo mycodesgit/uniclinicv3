@@ -94,7 +94,7 @@ class DashboardController extends Controller
             $collegeCountsdaily[]  = $count;
         }
 
-        return view('home.dashboard', compact('ptodayvisits', 'pthismonthvisits', 'collegeAcronymsmonth', 'collegeCountsmonth', 'collegeAcronymsdaily', 'collegeCountsdaily'));
+        return view('pages.home.dashboard', compact('ptodayvisits', 'pthismonthvisits', 'collegeAcronymsmonth', 'collegeCountsmonth', 'collegeAcronymsdaily', 'collegeCountsdaily'));
     }
 
     public function logout()

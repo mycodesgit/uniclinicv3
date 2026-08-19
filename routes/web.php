@@ -9,6 +9,7 @@ use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\PatientEmpController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\ChiefComplaintController;
+use App\Http\Controllers\MedicalServicesController;
 
 use App\Http\Controllers\AdConfirmApplicantController;
 
@@ -78,6 +79,12 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::post('/chief/add',[ChiefComplaintController::class,'create'])->name('complaint.create');
         Route::post('/chief/update',[ChiefComplaintController::class,'update'])->name('complaint.update');
         Route::post('/chief/destroy/{id}',[ChiefComplaintController::class,'delete'])->name('complaint.delete');
+    });
+    
+    Route::prefix('/medical')->group(function () {
+        Route::get('services/list',[MedicalServicesController::class,'index'])->name('medservices.index');
+        Route::get('services/show',[MedicalServicesController::class,'show'])->name('medservices.show');
+        Route::post('services/add',[MedicalServicesController::class,'create'])->name('medservices.create');
     });
 
     Route::prefix('/admission')->group(function () {

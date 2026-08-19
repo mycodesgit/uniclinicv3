@@ -78,6 +78,6 @@ class PatientEmpController extends Controller
 
         $patientVisit = Patientvisit::where('stid', $emps->id)->get();
 
-        return view('patient.empdetails', compact('patients', 'regions', 'patientinfo', 'patientVisit'));
+        return view('pages.patient.empdetails', compact('patients', 'regions', 'patientinfo', 'patientVisit'));
     }
 }

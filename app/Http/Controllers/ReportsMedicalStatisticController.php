@@ -34,7 +34,7 @@ class ReportsMedicalStatisticController extends Controller
 {
     public function index()
     {
-        return view('reports.medstatrep');
+        return view('pages.reports.medstatrep');
     }
 
     public function store(Request $request)
@@ -49,7 +49,7 @@ class ReportsMedicalStatisticController extends Controller
         // Process data and queries using shared helper
         $data = $this->getReportData($request);
 
-        return view('reports.medstatrepresult', $data);
+        return view('pages.reports.medstatrepresult', $data);
     }
 
     public function generate(Request $request)
@@ -62,7 +62,7 @@ class ReportsMedicalStatisticController extends Controller
         // Fetch data using the query helper
         $data = $this->getReportData($request);
 
-        $pdf = PDF::loadView('reports.pdf.medicalstatisticpdf', $data)
+        $pdf = PDF::loadView('pages.reports.pdf.medicalstatisticpdf', $data)
                 ->setPaper('Legal', 'portrait');
 
         // Return inline stream instead of forcing a download

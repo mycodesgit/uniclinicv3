@@ -15,7 +15,7 @@ class ChiefComplaintController extends Controller
 {
     public function index()
     {
-        return view('complaint.chief');
+        return view('pages.complaint.chief');
     }
 
     public function create(Request $request) 

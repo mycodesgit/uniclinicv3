@@ -5,15 +5,14 @@ namespace App\Models\ClinicDB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Complaint extends Model
+class MedicalServicesRendered extends Model
 {
     use HasFactory;
-    
-    protected $table ='complaint'; 
+
+    protected $table ='medicalservices'; 
 
     protected $fillable = [
-        'categoryname',
-        'complaintname',
-        'specificcondition',
+        'medservrender',
+        'status'
     ];
 }

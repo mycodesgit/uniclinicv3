@@ -21,7 +21,7 @@ class MedicineController extends Controller
 {
     public function index()
     {
-        return view('medicine.list');
+        return view('pages.medicine.list');
     }
 
     public function getmedicineRead() 

@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function index() 
     {
-        return view("users.list");
+        return view("pages.users.list");
     }
 
     public function show() 

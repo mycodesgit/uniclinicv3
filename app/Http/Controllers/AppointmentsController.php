@@ -27,7 +27,7 @@ class AppointmentsController extends Controller
 {
     public function index()
     {
-        return view('appointment.walkin');
+        return view('pages.appointment.walkin');
     }
 
     public function walkinconsultdetails($adid)
@@ -45,7 +45,7 @@ class AppointmentsController extends Controller
 
         $patientVisit = Patientvisit::where('stid', $student->id)->get();
 
-        return view('appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'patientVisit', 'adid'));
+        return view('pages.appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'patientVisit', 'adid'));
     }
 
     public function walkinconsultempdetails($emp_ID)
@@ -61,7 +61,7 @@ class AppointmentsController extends Controller
 
         $patientVisit = Patientvisit::where('stdntID', $emps->emp_ID)->get();
 
-        return view('appointment.walkin-empdetails', compact('patients', 'complaints', 'medicines', 'patientVisit', 'emp_ID'));
+        return view('pages.appointment.walkin-empdetails', compact('patients', 'complaints', 'medicines', 'patientVisit', 'emp_ID'));
     }
 
     public function getwalkinconsult($adid)
@@ -668,6 +668,6 @@ class AppointmentsController extends Controller
 
     public function onlineappoint()
     {
-        return view('appointment.online');
+        return view('pages.appointment.online');
     }
 }

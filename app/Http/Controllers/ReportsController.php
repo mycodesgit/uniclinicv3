@@ -30,12 +30,12 @@ class ReportsController extends Controller
 {
     public function walkinsearch()
     {
-        return view('reports.walkinconsultrep');
+        return view('pages.reports.walkinconsultrep');
     }
 
     public function walkinsearchresult(Request $request)
     {
-        return view('reports.walkinconsultrepresult');
+        return view('pages.reports.walkinconsultrepresult');
     }
 
     public function walkinsearchresultJson(Request $request)

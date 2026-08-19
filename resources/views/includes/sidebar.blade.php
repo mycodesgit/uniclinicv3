@@ -3,6 +3,7 @@
 
     $medicineActive = in_array($current_route, ['medicine.index']) ? 'active' : '';
     $complaintActive = in_array($current_route, ['complaint.index']) ? 'active' : '';
+    $medserviceActive = in_array($current_route, ['medservices.index']) ? 'active' : '';
 
     $preenrolmentActive = in_array($current_route, ['admission.index', 'admission.store']) ? 'active' : '';
 
@@ -36,6 +37,11 @@
     <li>
         <a class="nav-link {{ $complaintActive }}" href="{{ route('complaint.index') }}">
             <i class="ti ti-details"></i><span class="nav-text">Chief Complaints</span>
+        </a>
+    </li>
+    <li>
+        <a class="nav-link {{ $medserviceActive }}" href="{{ route('medservices.index') }}">
+            <i class="ti ti-server"></i><span class="nav-text">Medical Services</span>
         </a>
     </li>
 

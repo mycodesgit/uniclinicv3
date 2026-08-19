@@ -32,7 +32,7 @@ class ReportsStockMedicineController extends Controller
 {
     public function index()
     {
-        return view('reports.medicinestockrep');
+        return view('pages.reports.medicinestockrep');
     }
 
     public function fetch(Request $request)
@@ -63,7 +63,7 @@ class ReportsStockMedicineController extends Controller
             ]
         );
 
-        return view('reports.medicinestockrepresult');
+        return view('pages.reports.medicinestockrepresult');
     }
 
     public function generate(Request $request)
@@ -78,7 +78,7 @@ class ReportsStockMedicineController extends Controller
             'medicineselected' => $medicineselected,
         ];
 
-        $pdf = PDF::loadView('reports.pdf.medicinestockpdf', $data)->setPaper('Legal', 'portrait');
+        $pdf = PDF::loadView('pages.reports.pdf.medicinestockpdf', $data)->setPaper('Legal', 'portrait');
 
         return $pdf->stream();
     }

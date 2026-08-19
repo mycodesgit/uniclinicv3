@@ -32,7 +32,7 @@ class AdConfirmApplicantController extends Controller
         $strand = Strands::all();
         $curryear = Year::orderBy('adyear', 'DESC')->get();
 
-        return view('admission.confirm', compact('strand', 'curryear'));
+        return view('pages.admission.confirm', compact('strand', 'curryear'));
     }
     
     public function store(Request $request)
@@ -40,7 +40,7 @@ class AdConfirmApplicantController extends Controller
         $strand = Strands::all();
         $curryear = Year::orderBy('adyear', 'DESC')->get();
 
-        return view('admission.confirmsearch', compact('strand', 'curryear'));
+        return view('pages.admission.confirmsearch', compact('strand', 'curryear'));
     }
 
     public function show(Request $request)

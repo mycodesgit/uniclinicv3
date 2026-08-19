@@ -273,6 +273,9 @@
     @if (request()->routeIs('complaint.index'))
         @include('script.complaint.chiefcomplaintjs')
     @endif
+    @if (request()->routeIs('medservices.index'))
+        @include('script.servrender.medservrenderjs')
+    @endif
     @if (request()->routeIs('reports.walkinsearch'))
         @include('script.validations.reportsvalidation')
     @endif
