@@ -13,22 +13,18 @@
                                 <h6 class="card-title">
                                     <i class="ti ti-details"></i> List of Chief Complaints
                                 </h6>
-                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalmedadd">
+                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#centercomplaintAddModal">
                                     <i class="fas fa-plus me-1"></i> Add New Chief Complaint
                                 </button>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive mt-2 p-2">
-                                    <table id="medlistab" class="table table-hover" style="width: 100%">
+                                    <table id="chiefcomplaintlistab" class="table table-hover" style="width: 100%">
                                         <thead class="">
                                             <tr>
                                                 <th>Category</th>
-                                                <th>Medicine</th>
-                                                <th>Quantity</th>
-                                                <th>Unit Measure</th>
-                                                <th>Lot No.</th>
-                                                <th>Expiry Date</th>
-                                                <th>Reference ID</th>
+                                                <th>Complaint</th>
+                                                <th>Sepcific</th>
                                                 <th class="text-center" width="7%">Action</th>
                                             </tr>
                                         </thead>
@@ -46,7 +42,7 @@
     </div>
 
     <!-- Center modal content -->
-    <div class="modal fade" id="centermodalmedadd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="centercomplaintAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -54,14 +50,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="medicineForm" method="POST">
+                    <form id="chiefComplaintForm" method="POST">
                         @csrf
 
                         <div class="row g-3">
-                            <!-- Category & Medicine Name -->
+                            <!-- Category & Chief Complaint Name -->
                             <div class="col-md-12">
                                 <label class="form-label mb-1 text-dark fs-14 fw-medium">Category <span class="text-danger">*</span></label>
-                                <select name="categoryname" class="form-select form-select-sm" required>
+                                <select name="categoryname" class="form-control" required>
                                     <option value="">Select Category</option>
                                     <option value="Cardiovascular System">Cardiovascular System</option>
                                     <option value="Dermatologic (Skin)">Dermatologic (Skin)</option>
@@ -79,12 +75,12 @@
 
                             <div class="col-md-12">
                                 <label class="form-label mb-1 text-dark fs-14 fw-medium">Chief Complaint <span class="text-danger">*</span></label>
-                                <input type="text" name="complaintname" class="form-control form-control-sm" required>
+                                <input type="text" name="complaintname" class="form-control" required>
                             </div>
 
                             <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Specific condition: <span class="text-danger">*</span></label>
-                                <input type="text" name="specificcondition" class="form-control form-control-sm text-uppercase" autocomplete="off" required>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Specific condition: </label>
+                                <input type="text" name="specificcondition" class="form-control text-uppercase" autocomplete="off">
                             </div>
                         </div>
 
@@ -104,57 +100,48 @@
     </div>
 
     <!-- Center modal content -->
-    <div class="modal fade" id="editMedicineModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal fade" id="editChiefComplaintModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myCenterModalLabel">Edit Chief Complaint</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editMedicineForm" method="POST">
+                    <form id="editChiefComplaintForm" method="POST">
                         @csrf
 
                         <!-- Hidden ID Field -->
-                        <input type="hidden" name="id" id="editMedicineId">
+                        <input type="hidden" name="id" id="editChiefComplaintId">
 
                         <div class="row g-3">
                             <!-- Category & Medicine Name -->
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Category <span class="text-danger">*</span></label>
-                                <input type="text" name="category" id="editMedicineCategory" class="form-control form-control-sm text-capitalize" autocomplete="off" placeholder="e.g., Antibiotics, Analgesics" required>
+                            <div class="col-md-12">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium" for="editCategoryname">Category: <span class="text-danger">*</span></label>
+                                <select name="categoryname" class="form-control" required id="editCategoryname">
+                                    <option value="">Select Category</option>
+                                    <option value="Cardiovascular System">Cardiovascular System</option>
+                                    <option value="Dermatologic (Skin)">Dermatologic (Skin)</option>
+                                    <option value="Eye (Ophthalmologic)">Eye (Ophthalmologic)</option>
+                                    <option value="Endocrine/Metabolic System">Endocrine/Metabolic System</option>
+                                    <option value="Ear, Nose and Throat (ENT)">Ear, Nose and Throat (ENT)</option>
+                                    <option value="Gastrointestinal System">Gastrointestinal System</option>
+                                    <option value="Mental and Behavioral Health">Mental and Behavioral Health</option>
+                                    <option value="Musculoskeletal System">Musculoskeletal System</option>
+                                    <option value="Neurologic System">Neurologic System</option>
+                                    <option value="Respiratory System">Respiratory System</option>
+                                    <option value="Reproductive System (Female)">Reproductive System (Female)</option>
+                                </select>
                             </div> 
-
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine Name <span class="text-danger">*</span></label>
-                                <input type="text" name="medicine" id="editMedicineName" class="form-control form-control-sm text-capitalize" autocomplete="off" placeholder="e.g., Amoxicillin, Paracetamol" required>
-                            </div>
-
-                            <!-- Quantity & Unit Measure -->
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity <span class="text-danger">*</span></label>
-                                <input type="number" name="qty" id="editMedicineQty" class="form-control form-control-sm" min="0" autocomplete="off" placeholder="Enter Quantity" required>
-                            </div> 
-
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Unit Measure <span class="text-danger">*</span></label>
-                                <input type="text" name="measure" id="editMedicineUnit" class="form-control form-control-sm" autocomplete="off" placeholder="e.g., mg, ml, Tablets" required>
-                            </div>
-
-                            <!-- Lot No., Expiry Date, Reference ID -->
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Lot No. <span class="text-danger">*</span></label>
-                                <input type="text" name="lotno" id="editMedicineLotNo" class="form-control form-control-sm text-uppercase" autocomplete="off" placeholder="Lot No." required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Expiry Date <span class="text-danger">*</span></label>
-                                <input type="date" name="expirydate" id="editMedicineExpiry" class="form-control form-control-sm" required>
-                            </div>
 
                             <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Reference ID <span class="text-danger">*</span></label>
-                                <input type="text" name="refnoid" id="editMedicineReference" class="form-control form-control-sm text-uppercase" autocomplete="off" placeholder="Reference ID" required>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium" for="editComplaint">Compliant: <span class="text-danger">*</span></label>
+                                <input type="text" name="complaintname" class="form-control" id="editComplaint" required>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium" for="editSpecific">Sepcific: </label>
+                                <input type="text" name="specificcondition" class="form-control" id="editSpecific" required>
                             </div>
                         </div>
 

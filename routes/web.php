@@ -74,6 +74,10 @@ Route::group(['middleware'=>['login_auth']],function(){
     
     Route::prefix('/complaints')->group(function () {
         Route::get('/chief',[ChiefComplaintController::class,'index'])->name('complaint.index');
+        Route::get('/chief/show',[ChiefComplaintController::class,'show'])->name('complaint.show');
+        Route::post('/chief/add',[ChiefComplaintController::class,'create'])->name('complaint.create');
+        Route::post('/chief/update',[ChiefComplaintController::class,'update'])->name('complaint.update');
+        Route::post('/chief/destroy/{id}',[ChiefComplaintController::class,'delete'])->name('complaint.delete');
     });
 
     Route::prefix('/admission')->group(function () {

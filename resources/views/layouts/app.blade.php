@@ -270,6 +270,9 @@
         @include('script.med.medScript')
         @include('script.validations.medicinevalidation')
     @endif
+    @if (request()->routeIs('complaint.index'))
+        @include('script.complaint.chiefcomplaintjs')
+    @endif
     @if (request()->routeIs('reports.walkinsearch'))
         @include('script.validations.reportsvalidation')
     @endif
