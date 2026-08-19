@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('medicalservices', function (Blueprint $table) {
             $table->id();
-            $table->string('medservrender');
+            $table->text('medservrender');
             $table->enum('status', [1, 2])->default(1);
             $table->timestamps();
         });

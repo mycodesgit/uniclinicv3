@@ -22,6 +22,7 @@ use App\Models\ClinicDB\Patientvisit;
 use App\Models\ClinicDB\PatientReferral;
 use App\Models\ClinicDB\Medicine;
 use App\Models\ClinicDB\Complaint;
+use App\Models\ClinicDB\MedicalServicesRendered;
 
 class AppointmentsController extends Controller
 {
@@ -37,6 +38,7 @@ class AppointmentsController extends Controller
         
         $complaints =  Complaint::all();
         $medicines = Medicine::all();
+        $medserverender = MedicalServicesRendered::all();
 
         $student = DB::connection('enrollment')
             ->table('students')
@@ -45,7 +47,7 @@ class AppointmentsController extends Controller
 
         $patientVisit = Patientvisit::where('stid', $student->id)->get();
 
-        return view('pages.appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'patientVisit', 'adid'));
+        return view('pages.appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'medserverender', 'patientVisit', 'adid'));
     }
 
     public function walkinconsultempdetails($emp_ID)

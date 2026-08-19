@@ -164,7 +164,7 @@
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Classification of Consultation: <span class="text-danger">*</span></label>
                                     <select class="form-control select2" id="choices-multiple-remove-button" name="type_of_consultation">
@@ -178,7 +178,7 @@
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Date: <span class="text-danger">*</span></label>
                                     <div class="input-group">
@@ -187,7 +187,7 @@
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Time: <span class="text-danger">*</span></label>
                                     <div class="input-group">
@@ -278,6 +278,19 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control rounded" name="pweight" placeholder="e.g. 70 kg">
                                     </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label for="choices-multiple-remove-button" class="form-label mb-1 text-dark fs-14 fw-medium">Medical Service Rendered: <span class="text-danger">*</span></label>
+                                    <select class="form-control select2" id="choices-multiple-remove-button" name="chief_complaint[]" multiple="multiple">
+                                        @foreach ($medserverender as $servrender)
+                                            <option style="color:black" value="{{ $servrender->id }}">
+                                                {{ $servrender->medservrender }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div> <!-- end col-->
 
