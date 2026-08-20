@@ -17,32 +17,31 @@
                             <div class="card-body">
                                 <form action="{{ route('reports.medical.statistic.store') }}" method="GET" id="medStatisticForm">
                                     @csrf
-                                    
                                     <div class="row g-3">
-                                        {{-- Reporting Period --}}
+                                        {{-- 1. Reporting Period Type --}}
                                         <div class="col-md-2">
                                             <label for="reporting_period" class="form-label fw-bold">Reporting Period: <span class="text-danger">*</span></label>
                                             <select class="form-control form-control-sm @error('reporting_period') is-invalid @enderror" id="reporting_period" name="reporting_period" onchange="handlePeriodChange(this.value)">
                                                 <option value="" selected disabled>Select Period Type</option>
-                                                <option value="monthly" {{ old('reporting_period') == 'monthly' ? 'selected' : '' }}>Monthly</option>
-                                                <option value="quarterly" {{ old('reporting_period') == 'quarterly' ? 'selected' : '' }}>Quarterly</option>
-                                                <option value="yearly" {{ old('reporting_period') == 'yearly' ? 'selected' : '' }}>Yearly</option>
+                                                <option value="monthly" {{ request('reporting_period') == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                                                <option value="quarterly" {{ request('reporting_period') == 'quarterly' ? 'selected' : '' }}>Quarterly</option>
+                                                <option value="yearly" {{ request('reporting_period') == 'yearly' ? 'selected' : '' }}>Yearly</option>
                                             </select>
                                             @error('reporting_period')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
 
-                                        {{-- Dynamic Period Value Container --}}
-                                        <div class="col-md-3">
-                                            <label for="period_value" class="form-label fw-bold" id="period_label">Month / Quarter / Year: <span class="text-danger">*</span></label>
+                                        {{-- 2. Dynamic Period Value Container --}}
+                                        <div class="col-md-2">
+                                            <label for="period_value" class="form-label fw-bold" id="period_label">Period Value: <span class="text-danger">*</span></label>
 
-                                            {{-- Default / Placeholder Input (Disabled by default) --}}
-                                            <input type="text" class="form-control form-control-sm period-input" id="period_default" placeholder="Select a period first" disabled>
+                                            {{-- Default / Placeholder Input --}}
+                                            <input type="text" class="form-control form-control-sm period-input" id="period_default" placeholder="Select type first" disabled>
 
-                                            {{-- 1. Monthly Input (Values: 01 to 12) --}}
+                                            {{-- Monthly Input --}}
                                             <div id="wrapper_monthly" class="period-wrapper d-none">
-                                                <select class="form-control form-control-sm from period-input @error('period_value') is-invalid @enderror" name="period_value" disabled>
+                                                <select class="form-control form-control-sm period-input @error('period_value') is-invalid @enderror" name="period_value" disabled>
                                                     <option value="" selected disabled>Select Month</option>
                                                     <option value="01">01 - January</option>
                                                     <option value="02">02 - February</option>
@@ -59,9 +58,9 @@
                                                 </select>
                                             </div>
 
-                                            {{-- 2. Quarterly Input (Values: 01, 02, 03, 04) --}}
+                                            {{-- Quarterly Input --}}
                                             <div id="wrapper_quarterly" class="period-wrapper d-none">
-                                                <select class="form-control form-control-sm from period-input @error('period_value') is-invalid @enderror" name="period_value" disabled>
+                                                <select class="form-control form-control-sm period-input @error('period_value') is-invalid @enderror" name="period_value" disabled>
                                                     <option value="" selected disabled>Select Quarter</option>
                                                     <option value="01">Q1 (1st Quarter)</option>
                                                     <option value="02">Q2 (2nd Quarter)</option>
@@ -70,15 +69,9 @@
                                                 </select>
                                             </div>
 
-                                            {{-- 3. Yearly Input (Values: YYYY) --}}
+                                            {{-- Yearly Option Text Output (when Yearly selected) --}}
                                             <div id="wrapper_yearly" class="period-wrapper d-none">
-                                                <select class="form-control form-control-sm from period-input @error('period_value') is-invalid @enderror" name="period_value" disabled>
-                                                    <option value="" selected disabled>Select Year</option>
-                                                    @php $currentYear = date('Y'); @endphp
-                                                    @for ($year = $currentYear; $year >= $currentYear - 10; $year--)
-                                                        <option value="{{ $year }}">{{ $year }}</option>
-                                                    @endfor
-                                                </select>
+                                                <input type="text" class="form-control form-control-sm period-input" name="period_value" value="Full Year" readonly disabled>
                                             </div>
 
                                             @error('period_value')
@@ -86,7 +79,23 @@
                                             @enderror
                                         </div>
 
-                                        {{-- Prepared By --}}
+                                        {{-- 3. Dedicated Year Dropdown --}}
+                                        <div class="col-md-2" id="year_container">
+                                            <label for="year" class="form-label fw-bold">Year: <span class="text-danger">*</span></label>
+                                            <select class="form-control form-control-sm @error('year') is-invalid @enderror" id="year" name="year">
+                                                @php $currentYear = date('Y'); @endphp
+                                                @for ($y = $currentYear; $y >= $currentYear - 10; $y--)
+                                                    <option value="{{ $y }}" {{ request('year', $currentYear) == $y ? 'selected' : '' }}>
+                                                        {{ $y }}
+                                                    </option>
+                                                @endfor
+                                            </select>
+                                            @error('year')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        {{-- 4. Prepared By --}}
                                         <div class="col-md-2">
                                             <label for="prepared_by" class="form-label fw-bold">Prepared By: <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control form-control-sm @error('prepared_by') is-invalid @enderror" id="prepared_by" name="prepared_by" value="{{ Auth::user()->fname ?? '' }} {{ Auth::user()->lname ?? '' }}" required readonly>
@@ -95,7 +104,7 @@
                                             @enderror
                                         </div>
 
-                                        {{-- Position --}}
+                                        {{-- 5. Position --}}
                                         <div class="col-md-2">
                                             <label for="position" class="form-label fw-bold">Position: <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control form-control-sm @error('position') is-invalid @enderror" id="position" name="position" value="{{ Auth::user()->role ?? '' }}" required readonly>
@@ -104,7 +113,7 @@
                                             @enderror
                                         </div>
 
-                                        {{-- Submit Button --}}
+                                        {{-- 6. Submit Button --}}
                                         <div class="col-md-2">
                                             <label class="form-label fw-bold">&nbsp;</label>
                                             <button type="submit" class="btn btn-success btn-sm form-control">
@@ -131,33 +140,41 @@
     </div>
 
     <script>
-        function handlePeriodChange(selectedPeriod) {
-            // Hide default placeholder
-            document.getElementById('period_default').classList.add('d-none');
+        function handlePeriodChange(type) {
+            // Hide all wrappers and disable all inputs
+            document.querySelectorAll('.period-wrapper').forEach(el => el.classList.add('d-none'));
+            document.querySelectorAll('.period-input').forEach(el => el.disabled = true);
 
-            // Reset all dynamic wrappers and disable inputs (so disabled inputs don't submit via HTTP GET)
-            document.querySelectorAll('.period-wrapper').forEach(wrapper => {
-                wrapper.classList.add('d-none');
-                const selectElement = wrapper.querySelector('select');
-                selectElement.disabled = true;
-                selectElement.removeAttribute('required');
-            });
+            const defaultInput = document.getElementById('period_default');
 
-            // Show and enable target wrapper base on selection
-            const activeWrapper = document.getElementById(`wrapper_${selectedPeriod}`);
-            if (activeWrapper) {
+            if (type === 'monthly') {
+                defaultInput.classList.add('d-none');
+                const activeWrapper = document.getElementById('wrapper_monthly');
                 activeWrapper.classList.remove('d-none');
-                const activeSelect = activeWrapper.querySelector('select');
-                activeSelect.disabled = false;
-                activeSelect.setAttribute('required', 'required');
+                activeWrapper.querySelector('.period-input').disabled = false;
+                
+            } else if (type === 'quarterly') {
+                defaultInput.classList.add('d-none');
+                const activeWrapper = document.getElementById('wrapper_quarterly');
+                activeWrapper.classList.remove('d-none');
+                activeWrapper.querySelector('.period-input').disabled = false;
+
+            } else if (type === 'yearly') {
+                defaultInput.classList.add('d-none');
+                const activeWrapper = document.getElementById('wrapper_yearly');
+                activeWrapper.classList.remove('d-none');
+                activeWrapper.querySelector('.period-input').disabled = false;
+
+            } else {
+                defaultInput.classList.remove('d-none');
             }
         }
 
-        // Trigger state check on page load to preserve old inputs after validation errors
-        document.addEventListener('DOMContentLoaded', function () {
-            const periodSelect = document.getElementById('reporting_period');
-            if (periodSelect.value) {
-                handlePeriodChange(periodSelect.value);
+        // Trigger initial setup on page load if old inputs exist
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedType = document.getElementById('reporting_period').value;
+            if (selectedType) {
+                handlePeriodChange(selectedType);
             }
         });
     </script>

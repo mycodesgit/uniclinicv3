@@ -284,7 +284,7 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <label for="choices-multiple-remove-button" class="form-label mb-1 text-dark fs-14 fw-medium">Medical Service Rendered: <span class="text-danger">*</span></label>
-                                    <select class="form-control select2" id="choices-multiple-remove-button" name="chief_complaint[]" multiple="multiple">
+                                    <select class="form-control select2" id="choices-multiple-remove-buttons" name="medservrendered[]" multiple="multiple">
                                         @foreach ($medserverender as $servrender)
                                             <option style="color:black" value="{{ $servrender->id }}">
                                                 {{ $servrender->medservrender }}

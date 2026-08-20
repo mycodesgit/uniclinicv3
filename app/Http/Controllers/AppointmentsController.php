@@ -223,16 +223,17 @@ class AppointmentsController extends Controller
     }
 
     public function createWalkinConsultation(Request $request)
-    {
+{
+    return DB::transaction(function () use ($request) {
         $patient = new Patientvisit();
+        
+        // Single fields
         $patient->stid = $request->input('stid');
         $patient->stdntID = $request->input('stdntID');
         $patient->consultID = $request->input('consultID');
         $patient->date = $request->input('date');
         $patient->time = $request->input('time');
         $patient->pcat = $request->input('pcat');
-
-        $patient->chief_complaint = $request->input('chief_complaint');
         $patient->treatment = $request->input('treatment');
         $patient->certificate = $request->input('certificate');
         $patient->bp = $request->input('bp');
@@ -244,71 +245,41 @@ class AppointmentsController extends Controller
         $patient->pheight = $request->input('pheight');
         $patient->pweight = $request->input('pweight');
 
-        $input1 = $request->input('qty', []);  
-        $input2 = $request->input('medicine', []);
-        $input3 = $request->input('chief_complaint', []);
+        // Array inputs
+        $quantities = array_filter($request->input('qty', []));
+        $medicines = array_filter($request->input('medicine', []));
+        $complaints = array_filter((array) $request->input('chief_complaint', []));
+        $services = array_filter($request->input('medservrendered', []));
 
-        $maxCount = max(count($input1), count($input2), count($input3));
-        
-        $input1 = array_pad($input1, $maxCount, '');  
-        $input2 = array_pad($input2, $maxCount, '');
-        $input3 = array_pad($input3, $maxCount, '');
-        
-        $input1 = array_map(function($value) {
-            return $value === null ? '' : $value;
-        }, $input1);
-        
-        $input2 = array_map(function($value) {
-            return $value === null ? '' : $value;
-        }, $input2);
-        
-        $input3 = array_map(function($value) {
-            return $value === null ? '' : $value;
-        }, $input3);
-        
-        $complaint = implode(',', $input3);
-        
-        if (substr($complaint, -1) === ',') {
-            $complaint = rtrim($complaint, ',');
-        }
-        $quantity = implode(',', $input1);
-        $medicine = implode(',', $input2);
-        
-        $patient->medicine = $medicine;
-        
-        $medicinesDetails = [];
-        $medicines = explode(',', $medicine);
-        $quantities = explode(',', $quantity);
-        
-        $quantityvisit = explode(',', $patient->qty);
-        
-        foreach ($medicines as $index => $med) {
-            $medicine2 = Medicine::select('qty', 'id', 'medicine')->where('id', $med)->first();
+        // Format and assign multi-select/array values
+        $patient->medicine = implode(',', $medicines);
+        $patient->qty = implode(',', $quantities);
+        $patient->chief_complaint = implode(',', $complaints);
+        $patient->medservrendered = implode(',', $services); // Added missing assignment
+
+        // Process Medicine Inventory Deductions
+        foreach ($medicines as $index => $medId) {
+            $requestedQty = (int) ($quantities[$index] ?? 0);
             
-            if ($medicine2) {
-                $visitQuantity = isset($quantityvisit[$index]) ? $quantityvisit[$index] : 0;
-                $newQuantity = ((int)$medicine2->qty + (int)$visitQuantity) - (int)$quantities[$index];
-        
-                if ($newQuantity >= 0) {
-                    $medicine2->update(['qty' => $newQuantity]);
-        
-                    $medicinesDetails[] = [
-                        'id' => $medicine2->id,
-                        'medicine' => $medicine2->medicine,
-                        'quantity' => $newQuantity
-                    ];
+            if ($medId && $requestedQty > 0) {
+                $medRecord = Medicine::find($medId);
+                
+                if ($medRecord) {
+                    // Prevent inventory from dropping below zero
+                    $newQty = max(0, (int)$medRecord->qty - $requestedQty);
+                    $medRecord->update(['qty' => $newQty]);
                 }
             }
         }
-        
-        $patient->chief_complaint = $complaint;
-        
-        $patient->qty = $quantity;
-        
+
         $patient->save();
 
-        return response()->json(['success' => true, 'message' => 'Added Successfully']);
-    }
+        return response()->json([
+            'success' => true, 
+            'message' => 'Walk-in consultation saved successfully.'
+        ]);
+    });
+}
 
     public function updateWalkinConsultation(Request $request)
     {

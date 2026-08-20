@@ -35,6 +35,7 @@ return new class extends Migration
             $table->string('qty')->nullable()->default(',,,,,');
             $table->string('certificate')->nullable();
             $table->string('defaultfunction')->nullable();
+            $table->text('medservrendered')->nullable();
             $table->timestamps();
         });
     }
