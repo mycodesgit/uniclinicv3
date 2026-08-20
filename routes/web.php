@@ -92,7 +92,7 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('injury/list',[AccidentInjuryController::class,'index'])->name('accident.index');
         Route::get('injury/show',[AccidentInjuryController::class,'show'])->name('accident.show');
         Route::post('injury/add',[AccidentInjuryController::class,'create'])->name('accident.create');
-        Route::post('injury/add',[AccidentInjuryController::class,'update'])->name('accident.update');p
+        Route::post('injury/add',[AccidentInjuryController::class,'update'])->name('accident.update');
     });
 
     Route::prefix('/admission')->group(function () {
