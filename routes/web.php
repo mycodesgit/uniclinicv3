@@ -10,6 +10,7 @@ use App\Http\Controllers\PatientEmpController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\ChiefComplaintController;
 use App\Http\Controllers\MedicalServicesController;
+use App\Http\Controllers\AccidentInjuryController;
 
 use App\Http\Controllers\AdConfirmApplicantController;
 
@@ -85,6 +86,12 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('services/list',[MedicalServicesController::class,'index'])->name('medservices.index');
         Route::get('services/show',[MedicalServicesController::class,'show'])->name('medservices.show');
         Route::post('services/add',[MedicalServicesController::class,'create'])->name('medservices.create');
+    });
+    
+    Route::prefix('/nature')->group(function () {
+        Route::get('injury/list',[AccidentInjuryController::class,'index'])->name('accident.index');
+        Route::get('injury/show',[AccidentInjuryController::class,'show'])->name('accident.show');
+        Route::post('injury/add',[AccidentInjuryController::class,'create'])->name('accident.create');
     });
 
     Route::prefix('/admission')->group(function () {

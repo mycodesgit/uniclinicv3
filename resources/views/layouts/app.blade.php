@@ -276,6 +276,9 @@
     @if (request()->routeIs('medservices.index'))
         @include('script.servrender.medservrenderjs')
     @endif
+    @if (request()->routeIs('accident.index'))
+        @include('script.accidnts.injuryjs')
+    @endif
     @if (request()->routeIs('reports.walkinsearch'))
         @include('script.validations.reportsvalidation')
     @endif

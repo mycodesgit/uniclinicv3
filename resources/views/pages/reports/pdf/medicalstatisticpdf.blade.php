@@ -8,8 +8,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px auto;
-            padding: 20px;
+            margin: 10px auto;
             max-width: 900px;
             color: #333;
         }
@@ -292,477 +291,45 @@
         </table>
 
         <!-- Morbidity / Diagnoses Table -->
-        <h2>Morbidity Report / System Diagnoses</h2>
+        <h2>IV. Morbidity Report / System Diagnoses</h2>
         <table>
             <thead>
                 <tr>
-                    <th style="width: 25%;">Body System</th> <!--[cite: 1] -->
-                    <th>Diagnosis/Condition</th> <!--[cite: 1] -->
-                    <th class="center" style="width: 10%;">Male</th> <!--[cite: 1] -->
-                    <th class="center" style="width: 10%;">Female</th> <!--[cite: 1] -->
-                    <th class="center" style="width: 10%;">Total</th> <!--[cite: 1] -->
+                    <th>Body System / Category</th>
+                    <th>Diagnosis / Complaint</th>
+                    <th>Male</th>
+                    <th>Female</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Respiratory -->
-                <tr>
-                    <td rowspan="7"><strong>Respiratory System</strong></td>
-                    <td>Upper Respiratory Tract Infection (URTI)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Lower Respiratory Tract Infection</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Influenza/Flu-like Illness</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Bronchial Asthma</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Allergic Rhinitis</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Hyperventilation</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Pneumonia</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
+                @foreach ($morbidityData as $category => $items)
+                    @php $isFirst = true; @endphp
+                    @foreach ($items as $item)
+                        <tr>
+                            @if ($isFirst)
+                                <td rowspan="{{ count($items) }}">
+                                    <strong>{{ $category }}</strong>
+                                </td>
+                                @php $isFirst = false; @endphp
+                            @endif
 
-                <!-- Cardiovascular -->
-                <tr>
-                    <td rowspan="6"><strong>Cardiovascular System</strong></td>
-                    <td>Hypertension</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Hypotension</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Chest Pain</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Palpitations</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Tachycardia</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Syncope/Fainting</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-
-                <!-- Gastrointestinal -->
-                <tr>
-                    <td rowspan="6"><strong>Gastrointestinal System</strong></td>
-                    <td>Acute Gastroenteritis</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Abdominal Pain</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Hyperacidity/Gastritis</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Diarrhea</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Constipation</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Nausea/Vomiting</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-
-                <!-- Musculoskeletal -->
-                <tr>
-                    <td rowspan="6"><strong>Musculoskeletal System</strong></td>
-                    <td>Muscle Pain (Myalgia)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Low Back Pain</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Neck Pain</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Joint Pain (Arthralgia)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Sprain/Strain</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Sports Injury</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-
-                <!-- Neurologic -->
-                <tr>
-                    <td rowspan="5"><strong>Neurologic System</strong></td>
-                    <td>Headache</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Migraine</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Dizziness/Vertigo</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Loss of Consciousness</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Seizure</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-
-                <!-- Dermatologic -->
-                <tr>
-                    <td rowspan="9"><strong>Dermatologic (Skin)</strong></td>
-                    <td>Dermatitis</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Skin Allergy</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Fungal Infection</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Scabies</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Cellulitis</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Wounds/Lacerations</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Burns</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Animal/Insect Bites</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Boils</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-
-                <!-- Eye -->
-                <tr>
-                    <td rowspan="4"><strong>Eye (Ophthalmologic)</strong></td>
-                    <td>Conjunctivitis</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Eye Irritation</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Eye Injury</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Blurred Vision</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-
-                <!-- ENT / Genitourinary -->
-                <tr>
-                    <td rowspan="7"><strong>Ear, Nose and Throat (ENT)</strong></td>
-                    <td>Ear Infection (Otitis)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Ear Pain</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Sore Throat (Pharyngitis)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Tonsillitis</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Epistaxis (Nosebleed)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Dysuria</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Hematuria</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-
-                <!-- Reproductive System (Female) -->
-                <tr>
-                    <td rowspan="3"><strong>Reproductive System (Female)</strong></td>
-                    <td>Dysmenorrhea</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Menstrual Irregularities</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Amenorrhea</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-
-                <!-- Endocrine/Metabolic -->
-                <tr>
-                    <td rowspan="3"><strong>Endocrine/Metabolic System</strong></td>
-                    <td>Diabetes Mellitus</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Hypoglycemia</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Hyperglycemia</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-
-                <!-- Mental Health -->
-                <tr>
-                    <td rowspan="3"><strong>Mental and Behavioral Health</strong></td>
-                    <td>Anxiety</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Panic Attack</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Sleep Disturbance</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-
-                <!-- Dental -->
-                <tr>
-                    <td rowspan="4"><strong>Dental/Oral Health</strong></td>
-                    <td>Toothache</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Dental Caries</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Gingivitis</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Oral Ulcer</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-
-                <!-- Communicable Diseases -->
-                <tr>
-                    <td rowspan="7"><strong>Communicable Diseases</strong></td>
-                    <td>COVID-19</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Dengue Fever</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Chickenpox</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Measles</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Hand, Foot and Mouth Disease</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Mumps</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Herpes Zoster</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
+                            <td>{{ $item['name'] }}</td>
+                            <td>{{ $item['male'] }}</td>
+                            <td>{{ $item['female'] }}</td>
+                            <td><strong>{{ $item['total'] }}</strong></td>
+                        </tr>
+                    @endforeach
+                @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="2">GRAND TOTAL</th>
+                    <th>{{ $morbidityGrandTotal['male'] }}</th>
+                    <th>{{ $morbidityGrandTotal['female'] }}</th>
+                    <th>{{ $morbidityGrandTotal['total'] }}</th>
+                </tr>
+            </tfoot>
         </table>
 
         <!-- Accidents and Injuries -->

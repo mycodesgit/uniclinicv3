@@ -75,12 +75,12 @@
 
                             <div class="col-md-12">
                                 <label class="form-label mb-1 text-dark fs-14 fw-medium">Chief Complaint <span class="text-danger">*</span></label>
-                                <input type="text" name="complaintname" class="form-control" required>
+                                <input type="text" name="complaintname" class="form-control" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" required>
                             </div>
 
                             <div class="col-md-12">
                                 <label class="form-label mb-1 text-dark fs-14 fw-medium">Specific condition: </label>
-                                <input type="text" name="specificcondition" class="form-control text-uppercase" autocomplete="off">
+                                <input type="text" name="specificcondition" class="form-control text-uppercase" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" autocomplete="off">
                             </div>
                         </div>
 

@@ -37,6 +37,14 @@
                                     Tooth Extraction
                                 </button>
                             </li>
+                            &nbsp;
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-four-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-four" type="button" role="tab"
+                                    aria-controls="pills-four" aria-selected="false" tabindex="-1"> <i class="ti ti-stethoscope"></i>
+                                    Accidents & Injuries
+                                </button>
+                            </li>
                         </ul>
                     </div>
                     <div class="col-md-12">
@@ -111,6 +119,30 @@
                                                         <th>Patient</th>
                                                         <th>Date</th>
                                                         <th>Time</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="font-size: 10pt;">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- Accident & Injuries Tab -->
+                                    <div class="tab-pane fade" id="pills-four" role="tabpanel" aria-labelledby="pills-four-tab" tabindex="0">
+                                        <div class="d-flex justify-content-end align-items-center mb-3">
+                                            <button id="btn-extraction" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalwalkintoothextraction">
+                                                <i class="ti ti-plus"></i> Add New
+                                            </button>
+                                        </div>
+                                        <div class="table-responsive mt-2 p-3">
+                                            <table id="accidentinjurylisttab" class="table table-striped" style="width: 100%">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th>Patient</th>
+                                                        <th>Date</th>
+                                                        <th>Time</th>
+                                                        <th>Accident & Injury</th>
+                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style="font-size: 10pt;">

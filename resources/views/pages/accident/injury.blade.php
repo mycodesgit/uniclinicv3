@@ -4,24 +4,24 @@
     <div class="row ">
         <div class="col-12">
             <div class="mb-6">
-                <h1 class="fs-3 mb-4">Medical Services</h1>
+                <h1 class="fs-3 mb-4">Accident & Injury</h1>
                 <hr>
                 <div class="row g-3 mb-5">
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-header pt-2 d-flex justify-content-between align-items-center">
                                 <h6 class="card-title">
-                                    <i class="ti ti-plus"></i> Add New Medical Services
+                                    <i class="ti ti-plus"></i> Add New Accident & Injury
                                 </h6>
                             </div>
                             <div class="card-body">
-                                <form id="medservrenderForm" method="POST">
+                                <form id="accidentForm" method="POST">
                                     @csrf
 
                                     <div class="row g-3">
                                         <div class="col-md-12">
-                                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Medical Services: <span class="text-danger">*</span></label>
-                                            <input type="text" name="medservrender" class="form-control" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" required>
+                                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Accident & Injury: <span class="text-danger">*</span></label>
+                                            <input type="text" name="name" class="form-control" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" required>
                                         </div>
                                     </div>
 
@@ -42,15 +42,15 @@
                         <div class="card">
                             <div class="card-header pt-2 d-flex justify-content-between align-items-center">
                                 <h6 class="card-title">
-                                    <i class="ti ti-server"></i> List of Medical Services
+                                    <i class="ti ti-server"></i> List of Accident Injuries
                                 </h6>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive mt-2 p-2">
-                                    <table id="medserviceslistab" class="table table-hover" style="width: 100%">
+                                    <table id="injurylistab" class="table table-hover" style="width: 100%">
                                         <thead class="">
                                             <tr>
-                                                <th>Services</th>
+                                                <th>Nature of Injury</th>
                                                 <th>Status</th>
                                                 <th class="text-center" width="7%">Action</th>
                                             </tr>

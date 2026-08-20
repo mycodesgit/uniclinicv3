@@ -239,6 +239,94 @@ class ReportsMedicalStatisticController extends Controller
         }
         $totalServicesRendered = array_sum(array_column($servicesRenderedCounts, 'count')) + $otherServicesCount;
 
+
+        // IV. SYSTEM DIAGNOSES / MORBIDITY REPORT
+        // 1. Fetch all active complaints grouped by system category
+        $allComplaints = Complaint::orderBy('categoryname', 'ASC')
+            ->orderBy('complaintname', 'ASC')
+            ->get();
+
+        // 2. Initialize morbidity data structure
+        $morbidityData = [];
+        foreach ($allComplaints as $complaint) {
+            $cat = $complaint->categoryname ?? 'Uncategorized';
+            $morbidityData[$cat][$complaint->id] = [
+                'name'   => $complaint->complaintname,
+                'male'   => 0,
+                'female' => 0,
+                'total'  => 0,
+            ];
+        }
+
+        // 3. Process filtered $reports visits to count gender totals per diagnosis
+        foreach ($reports as $visit) {
+            if (empty($visit->chief_complaint)) {
+                continue;
+            }
+
+            // Determine gender using pre-loaded arrays from Section I
+            $pcat = (int) $visit->pcat;
+            $gender = null;
+
+            if ($pcat === 1) {
+                $gender = $studentsGenders[$visit->stdntID] ?? null;
+            } elseif (in_array($pcat, [2, 3, 4])) {
+                $empKey = $visit->emp_ID ?? $visit->stdntID;
+                $gender = $employeeGenders[$empKey] ?? null;
+            } else {
+                $gender = $visit->gender ?? null;
+            }
+
+            $gender = strtolower(trim($gender ?? ''));
+
+            // Parse chief complaints (supports single ID/name or comma-separated list)
+            $complaintKeys = explode(',', $visit->chief_complaint);
+
+            foreach ($complaintKeys as $key) {
+                $key = trim($key);
+                if (empty($key)) {
+                    continue;
+                }
+                foreach ($morbidityData as $cat => &$complaintList) {
+                    if (isset($complaintList[$key])) {
+                        $target = &$complaintList[$key];
+                    } else {
+                        $target = null;
+                        foreach ($complaintList as &$compItem) {
+                            if (strcasecmp($compItem['name'], $key) === 0) {
+                                $target = &$compItem;
+                                break;
+                            }
+                        }
+                    }
+                    if ($target) {
+                        if ($gender === 'male' || $gender === 'm') {
+                            $target['male']++;
+                        } elseif ($gender === 'female' || $gender === 'f') {
+                            $target['female']++;
+                        }
+                        $target['total'] = $target['male'] + $target['female'];
+                        break;
+                    }
+                }
+                unset($target);
+            }
+        }
+        // 4. Calculate Morbidity Grand Totals
+        $morbidityGrandTotal = [
+            'male'   => 0,
+            'female' => 0,
+            'total'  => 0,
+        ];
+
+        foreach ($morbidityData as $category => $items) {
+            foreach ($items as $item) {
+                $morbidityGrandTotal['male']   += $item['male'];
+                $morbidityGrandTotal['female'] += $item['female'];
+                $morbidityGrandTotal['total']  += $item['total'];
+            }
+        }
+
         return compact(
             'reports',
             'consultations',
@@ -248,6 +336,8 @@ class ReportsMedicalStatisticController extends Controller
             'servicesRenderedCounts',
             'otherServicesCount',
             'totalServicesRendered',
+            'morbidityData',       
+            'morbidityGrandTotal',
             'reportingPeriodLabel',
             'formattedPeriodValue',
             'preparedBy',
