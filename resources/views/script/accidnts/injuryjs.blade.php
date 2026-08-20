@@ -84,7 +84,7 @@
                             var dropdown = '<div class="btn-group" role="group">' +
                                 '<button type="button" class="btn btn-success btn-sm text-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>' +
                                 '<ul class="dropdown-menu">' +
-                                '<a href="#" class="dropdown-item btn-mededit" data-id="' + row.id + '" data-category="' + row.category + '" data-medicine="' + row.medicine + '" data-qty="' + row.qty + '" data-measure="' + row.measure + '" data-lotno="' + row.lotno + '" data-expirydate="' + row.expirydate + '" data-refnoid="' + row.refnoid + '">' +
+                                '<a href="#" class="dropdown-item btn-injuryedit" data-id="' + row.id + '" data-name="' + row.name + '">' +
                                 '<i class="fas fa-pen"></i> Edit' +
                                 '</a>' +
                                 '<button type="button" value="' + data + '" class="dropdown-item med-delete">' +
@@ -108,25 +108,14 @@
         });
     });
 
-    $(document).on('click', '.btn-mededit', function() {
+    $(document).on('click', '.btn-injuryedit', function() {
         var id = $(this).data('id');
-        var medCat = $(this).data('category');
-        var medName = $(this).data('medicine');
-        var qtyCount = $(this).data('qty');
-        var medUnit = $(this).data('measure');
-        var medLot = $(this).data('lotno');
-        var expiryDate = $(this).data('expirydate');
-        var referenceNo = $(this).data('refnoid');
+        var natureInjury = $(this).data('name');
 
         $('#editMedicineId').val(id);
-        $('#editMedicineCategory').val(medName);
-        $('#editMedicineName').val(medName);
-        $('#editMedicineQty').val(qtyCount);
-        $('#editMedicineUnit').val(medUnit);
-        $('#editMedicineLotNo').val(medLot);
-        $('#editMedicineExpiry').val(expiryDate);
-        $('#editMedicineReference').val(referenceNo);
-        $('#editMedicineModal').modal('show');
+        $('#editNatureinhury').val(natureInjury);
+        
+        $('#injuryModal').modal('show');
     });
 
     $('#editMedicineForm').submit(function(event) {

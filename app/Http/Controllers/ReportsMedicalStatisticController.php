@@ -16,11 +16,12 @@ use App\Models\EnrollmentDB\Student;
 use App\Models\ScheduleDB\College;
 use App\Models\ScheduleDB\EnPrograms;
 
+use App\Models\ClinicDB\AccidentInjury;
+use App\Models\ClinicDB\Complaint;
 use App\Models\ClinicDB\GuestPatient;
 use App\Models\ClinicDB\Patientvisit;
 use App\Models\ClinicDB\PatientReferral;
 use App\Models\ClinicDB\Medicine;
-use App\Models\ClinicDB\Complaint;
 use App\Models\ClinicDB\MedicalServicesRendered;
 
 use App\Models\SettingDB\ConfigureCurrent;
@@ -327,6 +328,45 @@ class ReportsMedicalStatisticController extends Controller
             }
         }
 
+
+        // V. ACCIDENTS AND INJURIES
+        // 1. Fetch active injury master list sorted alphabetically
+        $injuriesMasterList = AccidentInjury::where('status', 1)
+            ->orderBy('name', 'ASC')
+            ->get();
+
+        // 2. Initialize counting array
+        $injuryCounts = [];
+        foreach ($injuriesMasterList as $injury) {
+            $injuryCounts[$injury->id] = [
+                'name'  => $injury->name,
+                'count' => 0,
+            ];
+        }
+
+        // 3. Process filtered $reports visits
+        // Assumes patient_visits table stores selected injury ID(s) in $visit->accident_injury column
+        $otherInjuriesCount = 0;
+
+        foreach ($reports as $visit) {
+            if (!empty($visit->accident_injury)) {
+                // Split comma-separated IDs if multiple values are stored
+                $injuryIds = array_filter(explode(',', $visit->accident_injury));
+
+                foreach ($injuryIds as $id) {
+                    $id = trim($id);
+                    if (isset($injuryCounts[$id])) {
+                        $injuryCounts[$id]['count']++;
+                    } else {
+                        $otherInjuriesCount++;
+                    }
+                }
+            }
+        }
+
+        // 4. Calculate total injuries
+        $totalInjuries = array_sum(array_column($injuryCounts, 'count')) + $otherInjuriesCount;
+
         return compact(
             'reports',
             'consultations',
@@ -338,6 +378,9 @@ class ReportsMedicalStatisticController extends Controller
             'totalServicesRendered',
             'morbidityData',       
             'morbidityGrandTotal',
+            'injuryCounts',         
+            'otherInjuriesCount',    
+            'totalInjuries',
             'reportingPeriodLabel',
             'formattedPeriodValue',
             'preparedBy',

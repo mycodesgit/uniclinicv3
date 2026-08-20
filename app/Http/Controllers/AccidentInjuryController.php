@@ -52,4 +52,28 @@ class AccidentInjuryController extends Controller
             }
         }
     }
+
+    public function update(Request $request) 
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        try {
+            $natureInjruyName = $request->input('name');
+            $existingMedicine = AccidentInjury::where('name', $medinatureInjruyNamecineName)->where('id', '!=', $request->input('id'))->first();
+
+            if ($existingMedicine) {
+                return response()->json(['error' => true, 'message' => 'Nature of Injury already exists'], 404);
+            }
+
+            $injured = AccidentInjury::findOrFail($request->input('id'));
+            $injured->update([
+                'name' => $natureInjruyName,
+        ]);
+            return response()->json(['success' => true, 'message' => 'Nature of Injury update successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => true, 'message' => 'Failed to Update Nature of Injury'], 404);
+        }
+    }
 }
