@@ -237,34 +237,22 @@
         <table>
             <thead>
                 <tr>
-                    <th>Type of Consultation</th> <!--[cite: 1] -->
-                    <th class="center" style="width: 25%;">Number</th> <!--[cite: 1] -->
+                    <th>Type of Consultation</th>
+                    <th class="center" style="width: 25%;">Number</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>New Cases</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Follow-up Cases</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Emergency Cases</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Walk-in Consultations</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Teleconsultation</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
+                @foreach($consultationTypes as $type)
+                    <tr>
+                        <td>{{ $type['label'] }}</td>
+                        <td class="center">{{ $type['count'] }}</td>
+                    </tr>
+                @endforeach
+
+                {{-- TOTAL ROW --}}
                 <tr class="total-row">
-                    <td>TOTAL</td> <!--[cite: 1] -->
-                    <td></td>
+                    <td><strong>TOTAL</strong></td>
+                    <td class="center"><strong>{{ $totalClassifications }}</strong></td>
                 </tr>
             </tbody>
         </table>
@@ -279,61 +267,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Medical Consultation</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Blood Pressure Monitoring</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Blood Sugar Monitoring</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>First Aid Treatment</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Wound Dressing</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Nebulization</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Physical Examination</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Medical Certificate Issued</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Referral to Hospital</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Referral to Specialist</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Ambulance Assistance</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Emergency Transport</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Others</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
+                {{-- Loop through services active in MedicalServicesRendered model --}}
+                @foreach($servicesRenderedCounts as $service)
+                    <tr>
+                        <td>{{ $service['name'] }}</td>
+                        <td class="center">{{ $service['count'] }}</td>
+                    </tr>
+                @endforeach
+
+                {{-- Show 'Others' row if untracked/inactive IDs exist --}}
+                @if($otherServicesCount > 0)
+                    <tr>
+                        <td>Others</td>
+                        <td class="center">{{ $otherServicesCount }}</td>
+                    </tr>
+                @endif
+
+                {{-- TOTAL ROW --}}
                 <tr class="total-row">
-                    <td>TOTAL</td> <!--[cite: 1] -->
-                    <td></td>
+                    <td><strong>TOTAL</strong></td>
+                    <td class="center"><strong>{{ $totalServicesRendered }}</strong></td>
                 </tr>
             </tbody>
         </table>

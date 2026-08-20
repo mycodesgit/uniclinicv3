@@ -167,13 +167,13 @@
                             <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label class="form-label mb-1 text-dark fs-14 fw-medium">Classification of Consultation: <span class="text-danger">*</span></label>
-                                    <select class="form-control select2" id="choices-multiple-remove-button" name="type_of_consultation">
+                                    <select class="form-control select2" id="choices-multiple-remove-button" name="typeofconsultation">
                                         <option> --Select-- </option>
-                                        <option value="New Cases"> New Cases </option>
-                                        <option value="Follow-up Cases"> Follow-up Cases </option>
-                                        <option value="Emergency Cases"> Emergency Cases </option>
-                                        <option value="Teleconsultation"> Teleconsultation </option>
-                                        <option value="Walk-in Consultation"> Walk-in Consultation </option>
+                                        <option value="1"> New Cases </option>
+                                        <option value="2"> Follow-up Cases </option>
+                                        <option value="3"> Emergency Cases </option>
+                                        <option value="4"> Teleconsultation </option>
+                                        <option value="5"> Walk-in Consultation </option>
                                     </select>
                                 </div>
                             </div> <!-- end col-->

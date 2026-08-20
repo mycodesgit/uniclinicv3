@@ -16,6 +16,7 @@ class Patientvisit extends Model
         'stdntID',
         'consultID',
         'pcat',
+        'typeofconsultation',
         'date',
         'time',
         'chief_complaint',
@@ -31,5 +32,6 @@ class Patientvisit extends Model
         'medicine',
         'qty',
         'certificate',
+        'medservrendered'
     ];
 }
