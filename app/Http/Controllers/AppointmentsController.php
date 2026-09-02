@@ -223,65 +223,65 @@ class AppointmentsController extends Controller
     }
 
     public function createWalkinConsultation(Request $request)
-{
-    return DB::transaction(function () use ($request) {
-        $patient = new Patientvisit();
-        
-        // Single fields
-        $patient->stid = $request->input('stid');
-        $patient->stdntID = $request->input('stdntID');
-        $patient->consultID = $request->input('consultID');
-        $patient->pcat = $request->input('pcat');
-        $patient->typeofconsultation = $request->input('typeofconsultation');
-        $patient->date = $request->input('date');
-        $patient->time = $request->input('time');
-        $patient->pcat = $request->input('pcat');
-        $patient->treatment = $request->input('treatment');
-        $patient->certificate = $request->input('certificate');
-        $patient->bp = $request->input('bp');
-        $patient->pr = $request->input('pr');
-        $patient->rr = $request->input('rr');
-        $patient->spo = $request->input('spo');
-        $patient->btemp = $request->input('btemp');
-        $patient->lmp = $request->input('lmp');
-        $patient->pheight = $request->input('pheight');
-        $patient->pweight = $request->input('pweight');
-
-        // Array inputs
-        $quantities = array_filter($request->input('qty', []));
-        $medicines = array_filter($request->input('medicine', []));
-        $complaints = array_filter((array) $request->input('chief_complaint', []));
-        $services = array_filter($request->input('medservrendered', []));
-
-        // Format and assign multi-select/array values
-        $patient->medicine = implode(',', $medicines);
-        $patient->qty = implode(',', $quantities);
-        $patient->chief_complaint = implode(',', $complaints);
-        $patient->medservrendered = implode(',', $services); // Added missing assignment
-
-        // Process Medicine Inventory Deductions
-        foreach ($medicines as $index => $medId) {
-            $requestedQty = (int) ($quantities[$index] ?? 0);
+    {
+        return DB::transaction(function () use ($request) {
+            $patient = new Patientvisit();
             
-            if ($medId && $requestedQty > 0) {
-                $medRecord = Medicine::find($medId);
+            // Single fields
+            $patient->stid = $request->input('stid');
+            $patient->stdntID = $request->input('stdntID');
+            $patient->consultID = $request->input('consultID');
+            $patient->pcat = $request->input('pcat');
+            $patient->typeofconsultation = $request->input('typeofconsultation');
+            $patient->date = $request->input('date');
+            $patient->time = $request->input('time');
+            $patient->pcat = $request->input('pcat');
+            $patient->treatment = $request->input('treatment');
+            $patient->certificate = $request->input('certificate');
+            $patient->bp = $request->input('bp');
+            $patient->pr = $request->input('pr');
+            $patient->rr = $request->input('rr');
+            $patient->spo = $request->input('spo');
+            $patient->btemp = $request->input('btemp');
+            $patient->lmp = $request->input('lmp');
+            $patient->pheight = $request->input('pheight');
+            $patient->pweight = $request->input('pweight');
+
+            // Array inputs
+            $quantities = array_filter($request->input('qty', []));
+            $medicines = array_filter($request->input('medicine', []));
+            $complaints = array_filter((array) $request->input('chief_complaint', []));
+            $services = array_filter($request->input('medservrendered', []));
+
+            // Format and assign multi-select/array values
+            $patient->medicine = implode(',', $medicines);
+            $patient->qty = implode(',', $quantities);
+            $patient->chief_complaint = implode(',', $complaints);
+            $patient->medservrendered = implode(',', $services); // Added missing assignment
+
+            // Process Medicine Inventory Deductions
+            foreach ($medicines as $index => $medId) {
+                $requestedQty = (int) ($quantities[$index] ?? 0);
                 
-                if ($medRecord) {
-                    // Prevent inventory from dropping below zero
-                    $newQty = max(0, (int)$medRecord->qty - $requestedQty);
-                    $medRecord->update(['qty' => $newQty]);
+                if ($medId && $requestedQty > 0) {
+                    $medRecord = Medicine::find($medId);
+                    
+                    if ($medRecord) {
+                        // Prevent inventory from dropping below zero
+                        $newQty = max(0, (int)$medRecord->qty - $requestedQty);
+                        $medRecord->update(['qty' => $newQty]);
+                    }
                 }
             }
-        }
 
-        $patient->save();
+            $patient->save();
 
-        return response()->json([
-            'success' => true, 
-            'message' => 'Walk-in consultation saved successfully.'
-        ]);
-    });
-}
+            return response()->json([
+                'success' => true, 
+                'message' => 'Walk-in consultation saved successfully.'
+            ]);
+        });
+    }
 
     public function updateWalkinConsultation(Request $request)
     {

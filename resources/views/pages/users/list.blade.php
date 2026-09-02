@@ -20,7 +20,7 @@
                                 <h6 class="card-title">
                                     <i class="fas fa-users"></i> List of Users
                                 </h6>
-                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalmedadd">
+                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodaluseradd">
                                     <i class="fas fa-plus me-1"></i> Add New User
                                 </button>
                             </div>
