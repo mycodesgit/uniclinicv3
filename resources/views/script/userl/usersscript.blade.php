@@ -37,25 +37,31 @@
                 "url": "{{ route('user.show') }}",
                 "type": "GET",
             },
-            "bFilter": true,
-			"sDom": 'fBtlpi',  
-			"ordering": true,
-			"language": {
-				search: ' ',
-				sLengthMenu: '_MENU_',
-				searchPlaceholder: "Search",
-				sLengthMenu: 'Row Per Page _MENU_ Entries',
-				info: "_START_ - _END_ of _TOTAL_ items",
-				paginate: {
-					next: '<i class="ti ti-arrow-right"></i>',
-					previous: '<i class="ti ti-arrow-left text-body"></i> '
-				},
-			},
-			"scrollX": false,         // Enable horizontal scrolling
-			"scrollCollapse": true,  // Adjust table size when the scroll is used
-			"responsive": false,
-			"autoWidth": false,
-            "info": true,
+            // "bFilter": true,
+			// "sDom": 'fBtlpi',  
+			// "ordering": true,
+			// "language": {
+			// 	search: ' ',
+			// 	sLengthMenu: '_MENU_',
+			// 	searchPlaceholder: "Search",
+			// 	sLengthMenu: 'Row Per Page _MENU_ Entries',
+			// 	info: "_START_ - _END_ of _TOTAL_ items",
+			// 	paginate: {
+			// 		next: '<i class="ti ti-arrow-right"></i>',
+			// 		previous: '<i class="ti ti-arrow-left text-body"></i> '
+			// 	},
+			// },
+			// "scrollX": false,         // Enable horizontal scrolling
+			// "scrollCollapse": true,  // Adjust table size when the scroll is used
+			// "responsive": false,
+			// "autoWidth": false,
+            // "info": true,
+            destroy: true,
+            info: true,
+            responsive: true,
+            lengthChange: true,
+            searching: true,
+            paging: true,
             "columns": [
                 { 
                     data: null,
@@ -73,13 +79,13 @@
                         let roleBadge = '';
 
                         if (data.role == "Administrator") {
-                            roleBadge = '<span class="badge badge-outline-info">Administrator</span>';
+                            roleBadge = '<span class="badge bg-info">Administrator</span>';
                         } else if (data.role == "Nurse") {
-                            roleBadge = '<span class="badge badge-outline-secondary">Nurse</span>';
+                            roleBadge = '<span class="badge bg-secondary">Nurse</span>';
                         } else if (data.role == "Nurse Staff") {
-                            roleBadge = '<span class="badge badge-outline-light">Nurse Staff</span>';
+                            roleBadge = '<span class="badge bg-light">Nurse Staff</span>';
                         } else {
-                            roleBadge = '<span class="badge badge-outline-dark">Unknown Role</span>';
+                            roleBadge = '<span class="badge bg-dark">Unknown Role</span>';
                         }
                         return roleBadge;
                     }
@@ -90,9 +96,9 @@
                         let statususer = '';
 
                         if (data.status == 1) {
-                            statususer = '<span class="badge badge-outline-success">Enabled</span>';
+                            statususer = '<span class="badge bg-success">Enabled</span>';
                         } else {
-                            statususer = '<span class="badge badge-outline-danger">Disabled</span>';
+                            statususer = '<span class="badge bg-danger">Disabled</span>';
                         } 
                         return statususer;
                     }
@@ -102,7 +108,7 @@
                     render: function(data, type, row) {
                         if (type === 'display') {
                             var dropdown = '<div class="d-flex align-items-center gap-1">' +
-                                '<a href="#" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal btn-useredit" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-email="' + row.email + '" data-campus="' + row.campus + '" data-gender="' + row.gender + '" data-role="' + row.role + '" title="View Details"><i class="ti ti-eye" style="color: #fff"></i></a>' +
+                                '<a href="#" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1 bg-teal btn-useredit" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-email="' + row.email + '" data-campus="' + row.campus + '" data-gender="' + row.gender + '" data-role="' + row.role + '" title="View Details"><i class="ti ti-eye"></i></a>' +
                                 '<a href="javascript:void(0);" class="shadow-sm fs-14 d-inline-flex border rounded-2 p-1 me-1" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></a>' +
                                 '<ul class="dropdown-menu p-2">' +
                                 '<li><a href="#" class="dropdown-item d-flex align-items-center btn-userpass" data-id="' + row.id + '" data-password="' + row.password + '"><i class="fas fa-key" style="color: green"></i>&nbsp;Edit Password</a></li>' +

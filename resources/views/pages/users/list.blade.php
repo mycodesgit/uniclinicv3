@@ -1,45 +1,53 @@
 @extends('layouts.app')
 
-@section('body')    
-    <!-- Start Content -->
-    <div class="content pb-0">
-
-        <!-- Page Header -->
-        <div class="d-flex align-items-sm-center justify-content-between flex-wrap gap-2 pb-3 mb-3 border-1 border-bottom">
-            <div>
-                <h4 class="fw-bold mb-0">Users</h4>
-            </div>
-            <div class="d-flex align-items-center flex-wrap gap-2">
-                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodaluseradd">
-                    <i class="ti ti-plus me-1"></i> Add New User
-                </button>
+@section('body')
+    <div class="row ">
+        <div class="col-12">
+            <div class="mb-6">
+                <h1 class="fs-3 mb-4">Users</h1>
+                <hr>
+                {{-- <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="fs-3 mb-0">Medicines</h1>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#centermodalmedadd">
+                        + Add New Medicine
+                    </button>
+                </div>
+                <hr> --}}
+                <div class="row g-4 mb-5">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header pt-2 d-flex justify-content-between align-items-center">
+                                <h6 class="card-title">
+                                    <i class="fas fa-users"></i> List of Users
+                                </h6>
+                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalmedadd">
+                                    <i class="fas fa-plus me-1"></i> Add New User
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive mt-2 p-2">
+                                    <table id="userlistab" class="table table-hover" style="width: 100%">
+                                        <thead class="">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Status</th>
+                                                <th class="text-center" width="7%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="font-size: 10pt;">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- End Page Header -->
-
-        <!-- row start -->
-        <div class="row">
-            <div class="table-responsive">
-                <table id="userlistab" class="table datatable table-nowrap" style="width: 100%">
-                    <thead class="">
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                            <th class="text-center" width="7%">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody style="font-size: 10pt;">
-                        
-                    </tbody>
-                </table>
-            </div> 
-        </div>
-        <!-- row end -->
-                        
     </div>
-    <!-- End Content -->
 
     <!-- Center add modal content -->
     <div class="modal fade" id="centermodaluseradd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">

@@ -14,6 +14,8 @@
     $reportsActive = in_array($current_route, ['reports.medical.statistic', 'reports.medical.statistic.store']) ? 'active' : '';
     $reportsMedicineActive = in_array($current_route, ['reports.medicine', 'reports.medicine.store']) ? 'active' : '';
     $reportsStockMedicineActive = in_array($current_route, ['reports.stockmedicine', 'reports.stockmedicine.store']) ? 'active' : '';
+
+    $usersActive = in_array($current_route, ['users.list']) ? 'active' : '';
 @endphp
 
 <ul class="nav flex-column">
@@ -89,6 +91,15 @@
     <li>
         <a class="nav-link {{ $reportsStockMedicineActive }}" href="{{ route('reports.stockmedicine') }}">
             <i class="ti ti-file-type-pdf"></i><span class="nav-text">Medicines Stock Report</span>
+        </a>
+    </li>
+
+    <li class="px-4 py-2">
+        <small class="nav-text text-muted">User Management</small>
+    </li>
+    <li>
+        <a class="nav-link {{ $usersActive }}" href="{{ route('users.list') }}">
+            <i class="ti ti-users"></i><span class="nav-text">Users</span>
         </a>
     </li>
 </ul>
