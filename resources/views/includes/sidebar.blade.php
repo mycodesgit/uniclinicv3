@@ -94,12 +94,14 @@
         </a>
     </li>
 
-    <li class="px-4 py-2">
-        <small class="nav-text text-muted">User Management</small>
-    </li>
-    <li>
-        <a class="nav-link {{ $usersActive }}" href="{{ route('users.list') }}">
-            <i class="ti ti-users"></i><span class="nav-text">Users</span>
-        </a>
-    </li>
+    @if(Auth::guard('web')->user()->role == 'Administrator')
+        <li class="px-4 py-2">
+            <small class="nav-text text-muted">User Management</small>
+        </li>
+        <li>
+            <a class="nav-link {{ $usersActive }}" href="{{ route('users.list') }}">
+                <i class="ti ti-users"></i><span class="nav-text">Users</span>
+            </a>
+        </li>
+    @endif  
 </ul>
