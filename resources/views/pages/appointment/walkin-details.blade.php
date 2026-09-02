@@ -890,8 +890,8 @@
                         </div>
                         <!-- end row-->
                         <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
-                            <div class=" d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-outline-danger btn-md" data-bs-dismiss="modal">Close</button>
+                            <div class=" d-flex justify-content-between gap-2">
+                                <button type="button" class="btn btn-secondary btn-md" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-success btn-md">
                                     <i class="fas fa-save"></i> Save Data
                                 </button>

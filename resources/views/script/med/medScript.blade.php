@@ -122,7 +122,7 @@
         var referenceNo = $(this).data('refnoid');
 
         $('#editMedicineId').val(id);
-        $('#editMedicineCategory').val(medName);
+        $('#editMedicineCategory').val(medCat);
         $('#editMedicineName').val(medName);
         $('#editMedicineQty').val(qtyCount);
         $('#editMedicineUnit').val(medUnit);
