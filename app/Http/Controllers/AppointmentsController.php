@@ -231,6 +231,8 @@ class AppointmentsController extends Controller
         $patient->stid = $request->input('stid');
         $patient->stdntID = $request->input('stdntID');
         $patient->consultID = $request->input('consultID');
+        $patient->pcat = $request->input('pcat');
+        $patient->typeofconsultation = $request->input('typeofconsultation');
         $patient->date = $request->input('date');
         $patient->time = $request->input('time');
         $patient->pcat = $request->input('pcat');
