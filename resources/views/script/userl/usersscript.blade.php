@@ -19,7 +19,7 @@
                         console.log(response);
                         $('#centermodaluseradd').modal('hide');
                         $(document).trigger('userAdded');
-                        //$('input[name="fund_name"]').val('');
+                        $('#userForm')[0].reset();
                     } else {
                         toastr.error(response.message);
                         console.log(response);
