@@ -31,7 +31,9 @@
                                             <tr>
                                                 <th>Category</th>
                                                 <th>Medicine</th>
-                                                <th>Quantity</th>
+                                                <th>Qty Stock</th>
+                                                <th>Qty Despense</th>
+                                                <th>Total</th>
                                                 <th>Unit Measure</th>
                                                 <th>Lot No.</th>
                                                 <th>Expiry Date</th>

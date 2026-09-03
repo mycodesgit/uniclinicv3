@@ -226,8 +226,8 @@ class AppointmentsController extends Controller
     {
         return DB::transaction(function () use ($request) {
             $patient = new Patientvisit();
-            
-            // Single fields
+
+            // Assign single inputs...
             $patient->stid = $request->input('stid');
             $patient->stdntID = $request->input('stdntID');
             $patient->consultID = $request->input('consultID');
@@ -235,7 +235,6 @@ class AppointmentsController extends Controller
             $patient->typeofconsultation = $request->input('typeofconsultation');
             $patient->date = $request->input('date');
             $patient->time = $request->input('time');
-            $patient->pcat = $request->input('pcat');
             $patient->treatment = $request->input('treatment');
             $patient->certificate = $request->input('certificate');
             $patient->bp = $request->input('bp');
@@ -247,37 +246,50 @@ class AppointmentsController extends Controller
             $patient->pheight = $request->input('pheight');
             $patient->pweight = $request->input('pweight');
 
-            // Array inputs
-            $quantities = array_filter($request->input('qty', []));
-            $medicines = array_filter($request->input('medicine', []));
+            // Process multi-select array inputs safely
             $complaints = array_filter((array) $request->input('chief_complaint', []));
-            $services = array_filter($request->input('medservrendered', []));
+            $services = array_filter((array) $request->input('medservrendered', []));
 
-            // Format and assign multi-select/array values
-            $patient->medicine = implode(',', $medicines);
-            $patient->qty = implode(',', $quantities);
             $patient->chief_complaint = implode(',', $complaints);
-            $patient->medservrendered = implode(',', $services); // Added missing assignment
+            $patient->medservrendered = implode(',', $services);
 
-            // Process Medicine Inventory Deductions
-            foreach ($medicines as $index => $medId) {
-                $requestedQty = (int) ($quantities[$index] ?? 0);
-                
-                if ($medId && $requestedQty > 0) {
+            // Process dynamic Medicine & Quantity entries
+            $rawMedicines = $request->input('medicine', []);
+            $rawQuantities = $request->input('qty', []);
+
+            $savedMedicines = [];
+            $savedQuantities = [];
+
+            foreach ($rawMedicines as $index => $medId) {
+                $requestedQty = (int) ($rawQuantities[$index] ?? 0);
+
+                if (!empty($medId) && $requestedQty > 0) {
                     $medRecord = Medicine::find($medId);
-                    
+
                     if ($medRecord) {
-                        // Prevent inventory from dropping below zero
-                        $newQty = max(0, (int)$medRecord->qty - $requestedQty);
-                        $medRecord->update(['qty' => $newQty]);
+                        // Check if enough stock exists before dispensing
+                        if ($medRecord->qty >= $requestedQty) {
+                            // 1. Reduce remaining stock
+                            $medRecord->decrement('qty', $requestedQty);
+
+                            // 2. Increase total dispensed amount
+                            $medRecord->increment('dispensed_qty', $requestedQty);
+
+                            $savedMedicines[] = $medId;
+                            $savedQuantities[] = $requestedQty;
+                        }
                     }
                 }
             }
 
+            // Store selected medicines and quantities in consultation record
+            $patient->medicine = implode(',', $savedMedicines);
+            $patient->qty = implode(',', $savedQuantities);
+
             $patient->save();
 
             return response()->json([
-                'success' => true, 
+                'success' => true,
                 'message' => 'Walk-in consultation saved successfully.'
             ]);
         });
@@ -414,10 +426,43 @@ class AppointmentsController extends Controller
 
     public function walkinConsultDelete($id) 
     {
-        $pvisit = Patientvisit::find($id);
-        $pvisit->delete();
+        return DB::transaction(function () use ($id) {
+            // 1. Find the consultation record
+            $consultation = Patientvisit::findOrFail($id);
 
-        return response()->json(['success'=> true, 'message'=>'Deleted Successfully',]);
+            // 2. Extract saved medicines and quantities into arrays
+            $medicines = array_filter(explode(',', $consultation->medicine ?? ''));
+            $quantities = array_filter(explode(',', $consultation->qty ?? ''));
+
+            // 3. Restore inventory for each prescribed medicine
+            foreach ($medicines as $index => $medId) {
+                $qtyToRestore = (int) ($quantities[$index] ?? 0);
+
+                if (!empty($medId) && $qtyToRestore > 0) {
+                    $medRecord = Medicine::find($medId);
+
+                    if ($medRecord) {
+                        // Put stock BACK into available stock
+                        $medRecord->increment('qty', $qtyToRestore);
+
+                        // REDUCE total dispensed count (ensure it doesn't drop below 0)
+                        if ($medRecord->dispensed_qty >= $qtyToRestore) {
+                            $medRecord->decrement('dispensed_qty', $qtyToRestore);
+                        } else {
+                            $medRecord->update(['dispensed_qty' => 0]);
+                        }
+                    }
+                }
+            }
+
+            // 4. Delete the consultation record
+            $consultation->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Consultation deleted and medicine stock restored successfully.'
+            ]);
+        });
     }
 
     public function getwalkinreferral($adid) 

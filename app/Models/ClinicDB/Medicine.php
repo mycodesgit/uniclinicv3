@@ -14,6 +14,7 @@ class Medicine extends Model
         'category',
         'medicine',
         'qty',
+        'dispensed_qty',
         'measure',
         'lotno',
         'expirydate',

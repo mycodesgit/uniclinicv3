@@ -68,6 +68,16 @@
                 {data: 'category'},
                 {data: 'medicine'},
                 {data: 'qty'},
+                {data: 'dispensed_qty'},
+                { 
+                    title: 'Total Overall', 
+                    data: null, // No direct backend key needed
+                    render: function (data, type, row) {
+                        const qty = parseInt(row.qty) || 0;
+                        const dispensed = parseInt(row.dispensed_qty) || 0;
+                        return qty + dispensed;
+                    }
+                },
                 {data: 'measure'},
                 {data: 'lotno'},
                 {data: 'expirydate',
