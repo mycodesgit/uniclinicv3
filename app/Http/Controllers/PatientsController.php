@@ -96,63 +96,63 @@ class PatientsController extends Controller
     }
 
     public function create(Request $request)
-{
-    if ($request->isMethod('post')) {
+    {
+        if ($request->isMethod('post')) {
 
-        $request->validate([
-            'lname' => 'required',
-            'fname' => 'required',
-            'mname' => 'required',
-            'gender' => 'required',
-            'civil_status' => 'required',
-        ]);
-
-        $lname = $request->input('lname');
-        $fname = $request->input('fname');
-        $mname = $request->input('mname');
-
-        // ✅ KEEP THIS (unchanged)
-        $existingGuestPatient = GuestPatient::where('lname', $lname)
-            ->where('fname', $fname)
-            ->where('mname', $mname)
-            ->first();
-
-        if ($existingGuestPatient) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Guest Patient already exists'
-            ], 404);
-        }
-
-        try {
-            // ✅ SAFE auto-increment
-            $lastPatient = GuestPatient::orderBy('id', 'desc')->first();
-            $nextNumber = $lastPatient ? $lastPatient->id + 1 : 1;
-
-            GuestPatient::create([
-                'patientID' => 'GSTP-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT),
-                'lname' => $lname,
-                'fname' => $fname,
-                'mname' => $mname,
-                'ext' => $request->input('ext'),
-                'gender' => $request->input('gender'),
-                'civil_status' => $request->input('civil_status'),
-                'address' => $request->input('address'),
+            $request->validate([
+                'lname' => 'required',
+                'fname' => 'required',
+                'mname' => 'required',
+                'gender' => 'required',
+                'civil_status' => 'required',
             ]);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Guest Patient created successfully'
-            ], 200);
+            $lname = $request->input('lname');
+            $fname = $request->input('fname');
+            $mname = $request->input('mname');
 
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Failed to create Guest Patient'
-            ], 500);
+            // ✅ KEEP THIS (unchanged)
+            $existingGuestPatient = GuestPatient::where('lname', $lname)
+                ->where('fname', $fname)
+                ->where('mname', $mname)
+                ->first();
+
+            if ($existingGuestPatient) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Guest Patient already exists'
+                ], 404);
+            }
+
+            try {
+                // ✅ SAFE auto-increment
+                $lastPatient = GuestPatient::orderBy('id', 'desc')->first();
+                $nextNumber = $lastPatient ? $lastPatient->id + 1 : 1;
+
+                GuestPatient::create([
+                    'patientID' => 'GSTP-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT),
+                    'lname' => $lname,
+                    'fname' => $fname,
+                    'mname' => $mname,
+                    'ext' => $request->input('ext'),
+                    'gender' => $request->input('gender'),
+                    'civil_status' => $request->input('civil_status'),
+                    'address' => $request->input('address'),
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Guest Patient created successfully'
+                ], 200);
+
+            } catch (\Exception $e) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Failed to create Guest Patient'
+                ], 500);
+            }
         }
     }
-}
 
 
     public function getPortalProvinces($region_id) 

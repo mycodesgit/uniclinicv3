@@ -144,205 +144,194 @@
                         <input type="hidden" name="stdntID" class="form-control rounded bg-light" value="{{ $patients->emp_ID }}" readonly>
 
                         <!-- start row-->
-                        <div class="row">
+                        <div class="row g-3">
                             <div class="col-lg-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation ID <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" name="consultID" class="form-control rounded bg-light" value="EMP-CWI-{{ \Carbon\Carbon::now()->format('Ymd') }}-{{ substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 10) }}" readonly>
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation ID <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" name="consultID" class="form-control form-control-sm" value="EMP-CWI-{{ \Carbon\Carbon::now()->format('Ymd') }}-{{ substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 10) }}" readonly>
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-lg-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control rounded bg-light" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}" readonly>
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}" readonly>
                                 </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Classification of Consultation: <span class="text-danger">*</span></label>
+                                <select class="form-control form-control-sm select2" id="choices-multiple-remove-button" name="typeofconsultation">
+                                    <option> --Select-- </option>
+                                    <option value="1"> New Cases </option>
+                                    <option value="2"> Follow-up Cases </option>
+                                    <option value="3"> Emergency Cases </option>
+                                    <option value="4"> Teleconsultation </option>
+                                    <option value="5"> Walk-in Consultation </option>
+                                </select>
                             </div> <!-- end col-->
                             
-                            <div class="col-lg-12">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Type<span class="text-danger">*</span></label>
-                                    <select class="form-control select2" id="choices-multiple-remove-button" name="pcat">
-                                        <option> --Select-- </option>
-                                        <option value="2"> Faculty </option>
-                                        <option value="3"> Administrative Personnel </option>
-                                        <option value="4"> Contractual/Job Order Personnel </option>
-                                    </select>
+                            <div class="col-lg-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Type<span class="text-danger">*</span></label>
+                                <select class="form-control form-control-sm select2" id="choices-multiple-remove-button" name="pcat">
+                                    <option> --Select-- </option>
+                                    <option value="2"> Faculty </option>
+                                    <option value="3"> Administrative Personnel </option>
+                                    <option value="4"> Contractual/Job Order Personnel </option>
+                                </select>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-6">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Date<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="date" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Date<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="date" name="date" class="form-control form-control-sm" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
-                                    </div>
-                                </div>
-                            </div> <!-- end col-->
-
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Time<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="time" name="time" class="form-control form-control-sm" value="{{ date('h:i A') }}">
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Time<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="time" name="time" class="form-control form-control-sm" value="{{ date('H:i') }}">
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-lg-12">
-                                <div class="mb-3">
-                                    <label for="choices-multiple-remove-button" class="form-label mb-1 text-dark fs-14 fw-medium">Chief Complaint <span class="text-danger">*</span></label>
-                                    <select class="form-control select2" id="choices-multiple-remove-button" name="chief_complaint[]" multiple="multiple">
-                                        @foreach ($complaints as $complaint)
-                                            <option style="color:black" value="{{ $complaint->id }}">
-                                                {{ $complaint->complaintname }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                <label for="choices-multiple-remove-button" class="form-label mb-1 text-dark fs-14 fw-medium">Chief Complaint <span class="text-danger">*</span></label>
+                                <select class="form-control form-control-sm select2" id="choices-multiple-remove-button" name="chief_complaint[]" multiple="multiple">
+                                    @foreach ($complaints as $complaint)
+                                        <option style="color:black" value="{{ $complaint->id }}">
+                                            {{ $complaint->complaintname }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-4">
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">BP<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm" name="bp" placeholder="e.g. 120/80 mmHg">
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">BP<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control rounded" name="bp" placeholder="e.g. 120/80 mmHg">
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">PR<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm" name="pr" placeholder="e.g. 72 bpm">
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">PR<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control rounded" name="pr" placeholder="e.g. 72 bpm">
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">RR<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm" name="rr" placeholder="e.g. 16 bpm">
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">RR<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control rounded" name="rr" placeholder="e.g. 16 bpm">
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">SPO2<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm" name="spo" placeholder="e.g. 98%">
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">SPO2<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control rounded" name="spo" placeholder="e.g. 98%">
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">T<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm" name="btemp" placeholder="e.g. 37°C">
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">T<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control rounded" name="btemp" placeholder="e.g. 37°C">
-                                    </div>
-                                </div>
-                            </div> <!-- end col-->
-
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">LMP<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control rounded" name="lmp" placeholder="e.g. 120/80 mmHg">
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">LMP<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm" name="lmp" placeholder="e.g. 120/80 mmHg">
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Height<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control rounded" name="pheight" placeholder="e.g. 170 cm">
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Height<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm" name="pheight" placeholder="e.g. 170 cm">
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Weight<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control rounded" name="pweight" placeholder="e.g. 70 kg">
-                                    </div>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium">Weight<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm" name="pweight" placeholder="e.g. 70 kg">
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-lg-12">
-                                <div class="mb-3">
-                                    <div>
-                                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation Treatment</label>
-                                        <textarea rows="4" name="treatment" class="form-control rounded"> </textarea>
-                                    </div>
+                                <label for="choices-multiple-remove-button" class="form-label mb-1 text-dark fs-14 fw-medium">Medical Service Rendered: <span class="text-danger">*</span></label>
+                                <select class="form-control form-control-sm select2" id="choices-multiple-remove-buttons" name="medservrendered[]" multiple="multiple">
+                                    @foreach ($medserverender as $servrender)
+                                        <option style="color:black" value="{{ $servrender->id }}">
+                                            {{ $servrender->medservrender }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div> <!-- end col-->
+
+                            <div class="col-lg-12">
+                                <div>
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Consultation Treatment</label>
+                                    <textarea rows="4" name="treatment" class="form-control form-control-sm"> </textarea>
                                 </div>
                             </div> <!-- end col-->
 
                             <div class="col-md-3">
-                                <div class="mb-3">
-                                    <label class="form-label mb-1 fw-medium text-center">Certificate</label>
-                                    <div>
-                                        <input type="radio" class="form-check-input" name="certificate" id="certificate" value="1">
-                                        <label class="form-check-label mr-3" for="certificate">Yes</label>&emsp;
-                                        <input type="radio" class="form-check-input" name="certificate" id="noCertificate" value="0">
-                                        <label class="form-check-label" for="noCertificate">No</label>
-                                    </div>
+                                <label class="form-label mb-1 fw-medium text-center">Certificate</label>
+                                <div>
+                                    <input type="radio" class="form-check-input" name="certificate" id="certificate" value="1">
+                                    <label class="form-check-label mr-3" for="certificate">Yes</label>&emsp;
+                                    <input type="radio" class="form-check-input" name="certificate" id="noCertificate" value="0">
+                                    <label class="form-check-label" for="noCertificate">No</label>
                                 </div>
                             </div>
 
                             <div class="col-md-9">
-                                <div class="mb-3">
-                                    <div class="row">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity</label>
+                                    </div>
+                                </div>
+
+                                <div id="dynamic-fields" class="mb-3">
+                                    <div class="row g-3 mb-3 align-items-end">
                                         <div class="col-md-7">
-                                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Medicine</label>
+                                            <select name="medicine[]" class="form-control form-control-sm">
+                                                <option value="">Select Medicine</option>
+                                                @foreach ($medicines as $medicine)
+                                                    <option value="{{ $medicine->id }}" >
+                                                        {{ $medicine->medicine }} (In Stock: {{ $medicine->qty }} | Dispensed: {{ $medicine->dispensed_qty ?? 0 }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-md-5">
-                                            <label class="form-label mb-1 text-dark fs-14 fw-medium">Quantity</label>
+                                            <input type="number" placeholder="Quantity" name="qty[]" class="form-control form-control-sm" min="1">
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div id="dynamic-fields" class="mb-3">
-                                        <div class="row mb-3 align-items-end">
-                                            <div class="col-md-7">
-                                                <select name="medicine[]" class="form-control form-control-sm">
-                                                    <option value="">Select Medicine</option>
-                                                    @foreach ($medicines as $medicine)
-                                                        <option value="{{ $medicine->id }}" >
-                                                            {{ $medicine->medicine }} - ({{ $medicine->qty }} left )
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <input type="number" placeholder="Quantity" name="qty[]" class="form-control form-control-sm" min="1">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-2">
-                                        <button type="button" class="btn btn-outline-success btn-sm add-button">
-                                            <i class="fas fa-plus"></i> Add
-                                        </button>
-                                        <button type="button" id="myremove" class="btn btn-danger btn-sm remove-button">
-                                            <i class="fas fa-minus"></i> Remove
-                                        </button>
-                                    </div>
+                                <div class="mt-2">
+                                    <button type="button" class="btn btn-outline-success btn-sm add-button">
+                                        <i class="fas fa-plus"></i> Add
+                                    </button>
+                                    <button type="button" id="myremove" class="btn btn-danger btn-sm remove-button">
+                                        <i class="fas fa-minus"></i> Remove
+                                    </button>
                                 </div>
                             </div>
                         </div>
                         <!-- end row-->
                         <div class="offcanvas-footer mb-1 mt-3 p-3 border-1 border-top">
-                            <div class=" d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-outline-danger btn-md" data-bs-dismiss="modal">Close</button>
+                            <div class=" d-flex justify-content-between gap-2">
+                                <button type="button" class="btn btn-secondary btn-md" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-success btn-md">
                                     <i class="fas fa-save"></i> Save Data
                                 </button>
@@ -351,13 +340,13 @@
                     </form>
 
                     <template id="medicine-row-template">
-                        <div class="row mb-3 align-items-end">
+                        <div class="row g-3 mb-3 align-items-end">
                             <div class="col-md-7">
-                                <select name="medicine[]" class="form-select form-control form-control-sm">
+                                <select name="medicine[]" class="form-control form-control-sm">
                                     <option value="">Select Medicine</option>
                                     @foreach ($medicines as $medicine)
                                         <option value="{{ $medicine->id }}">
-                                            {{ $medicine->medicine }} - ({{ $medicine->qty }} left )
+                                            {{ $medicine->medicine }} (In Stock: {{ $medicine->qty }} | Dispensed: {{ $medicine->dispensed_qty ?? 0 }})
                                         </option>
                                     @endforeach
                                 </select>

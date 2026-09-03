@@ -55,6 +55,7 @@ class AppointmentsController extends Controller
         $patients = Employees::where('emp_ID', $emp_ID)->firstOrFail();
         $complaints =  Complaint::all();
         $medicines = Medicine::all();
+        $medserverender = MedicalServicesRendered::all();
 
         $emps = DB::connection('hremp')
             ->table('employees')
@@ -63,7 +64,7 @@ class AppointmentsController extends Controller
 
         $patientVisit = Patientvisit::where('stdntID', $emps->emp_ID)->get();
 
-        return view('pages.appointment.walkin-empdetails', compact('patients', 'complaints', 'medicines', 'patientVisit', 'emp_ID'));
+        return view('pages.appointment.walkin-empdetails', compact('patients', 'complaints', 'medicines', 'medserverender', 'patientVisit', 'emp_ID'));
     }
 
     public function getwalkinconsult($adid)

@@ -123,10 +123,18 @@
         
         // Assign unique colors to each category bar
         const categoryColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+        const categoryLabelMap = {
+            '1': 'Student',
+            '2': 'Faculty',
+            '3': 'Administrative Personnel',
+            '4': 'Contractual/Job Order Personnel',
+            '5': 'Guest'
+        };
 
         const formattedCategoryDatasets = rawCategoryDatasets.map((dataset, index) => {
+            const customLabel = categoryLabelMap[dataset.label] || dataset.label;
             return {
-                label: dataset.label,
+                label: customLabel,
                 data: dataset.data,
                 backgroundColor: categoryColors[index % categoryColors.length],
                 borderRadius: 4
