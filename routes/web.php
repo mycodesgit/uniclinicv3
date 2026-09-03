@@ -69,7 +69,10 @@ Route::group(['middleware'=>['login_auth']],function(){
     Route::prefix('/all')->group(function () {
         Route::get('/medicine',[MedicineController::class,'index'])->name('medicine.index');
         Route::get('/medicine/list/ajax', [MedicineController::class, 'getmedicineRead'])->name('getmedicineRead');
+        Route::get('/medicine/batches/{id}', [MedicineController::class, 'medicineBatchesRead'])->name('medicineBatchesRead');
         Route::post('/medicine/add', [MedicineController::class, 'medicineCreate'])->name('medicineCreate');
+        Route::post('/medicine/batch/add', [MedicineController::class, 'medicineBatchCreate'])->name('medicineBatchCreate');
+        Route::post('/medicine/batch/update', [MedicineController::class, 'medicineBatchUpdate'])->name('medicineBatchUpdate');
         Route::post('/medicineUpdate', [MedicineController::class, 'medicineUpdate'])->name('medicineUpdate');
         Route::post('/medicineDelete/{id}', [MedicineController::class, 'medicineDelete'])->name('medicineDelete');
     });
