@@ -10,7 +10,7 @@
                     dropdown.append(
                         $('<option>', {
                             value: medicine.id,
-                            text: medicine.medicine
+                            text: medicine.code + ' - ' + medicine.name
                         })
                     );
                 });

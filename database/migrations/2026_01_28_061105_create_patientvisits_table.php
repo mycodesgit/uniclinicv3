@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('stdntID')->nullable();
             $table->string('consultID')->nullable();
             $table->enum('pcat', [1, 2, 3])->nullable();
+            $table->string('typeofconsultation')->nullable();
             $table->date('date')->nullable();
             $table->time('time')->nullable();
             $table->text('chief_complaint')->nullable();

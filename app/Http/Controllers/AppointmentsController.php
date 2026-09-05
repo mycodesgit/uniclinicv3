@@ -21,6 +21,8 @@ use App\Models\HrisDB\Barangay;
 use App\Models\ClinicDB\Patientvisit;
 use App\Models\ClinicDB\PatientReferral;
 use App\Models\ClinicDB\Medicine;
+use App\Models\ClinicDB\MedicineBatch;
+use App\Models\ClinicDB\MedicineTransaction;
 use App\Models\ClinicDB\Complaint;
 use App\Models\ClinicDB\MedicalServicesRendered;
 
@@ -228,7 +230,7 @@ class AppointmentsController extends Controller
         return DB::transaction(function () use ($request) {
             $patient = new Patientvisit();
 
-            // Assign single inputs...
+            // Assign single inputs
             $patient->stid = $request->input('stid');
             $patient->stdntID = $request->input('stdntID');
             $patient->consultID = $request->input('consultID');
@@ -254,6 +256,9 @@ class AppointmentsController extends Controller
             $patient->chief_complaint = implode(',', $complaints);
             $patient->medservrendered = implode(',', $services);
 
+            // Save patient visit record first to acquire its primary ID for transaction linking
+            $patient->save();
+
             // Process dynamic Medicine & Quantity entries
             $rawMedicines = $request->input('medicine', []);
             $rawQuantities = $request->input('qty', []);
@@ -265,16 +270,44 @@ class AppointmentsController extends Controller
                 $requestedQty = (int) ($rawQuantities[$index] ?? 0);
 
                 if (!empty($medId) && $requestedQty > 0) {
-                    $medRecord = Medicine::find($medId);
+                    $medicine = Medicine::find($medId);
 
-                    if ($medRecord) {
-                        // Check if enough stock exists before dispensing
-                        if ($medRecord->qty >= $requestedQty) {
-                            // 1. Reduce remaining stock
-                            $medRecord->decrement('qty', $requestedQty);
+                    if ($medicine) {
+                        // Fetch available active batches sorted by oldest expiration date (FIFO)
+                        $batches = MedicineBatch::where('medicine_id', $medId)
+                            ->where('quantity_remaining', '>', 0)
+                            ->orderBy('expiration_date', 'asc')
+                            ->get();
 
-                            // 2. Increase total dispensed amount
-                            $medRecord->increment('dispensed_qty', $requestedQty);
+                        $totalAvailable = $batches->sum('quantity_remaining');
+
+                        // Proceed if overall stock is sufficient
+                        if ($totalAvailable >= $requestedQty) {
+                            $qtyToDeduct = $requestedQty;
+
+                            foreach ($batches as $batch) {
+                                if ($qtyToDeduct <= 0) {
+                                    break;
+                                }
+
+                                $deductFromBatch = min($batch->quantity_remaining, $qtyToDeduct);
+
+                                // 1. Deduct quantity remaining from batch
+                                $batch->decrement('quantity_remaining', $deductFromBatch);
+
+                                // 2. Log transaction row for audit and PDF reports
+                                MedicineTransaction::create([
+                                    'medicine_id'     => $medId,
+                                    'batch_id'        => $batch->id,
+                                    'patientvisit_id' => $patient->id,
+                                    'transaction_type'=> 'dispense', // or 'issued'
+                                    'quantity'        => $deductFromBatch,
+                                    'remarks'         => 'Walk-in Consultation Dispense',
+                                    'created_by'      => Auth::id() ?? null,
+                                ]);
+
+                                $qtyToDeduct -= $deductFromBatch;
+                            }
 
                             $savedMedicines[] = $medId;
                             $savedQuantities[] = $requestedQty;
@@ -286,7 +319,6 @@ class AppointmentsController extends Controller
             // Store selected medicines and quantities in consultation record
             $patient->medicine = implode(',', $savedMedicines);
             $patient->qty = implode(',', $savedQuantities);
-
             $patient->save();
 
             return response()->json([

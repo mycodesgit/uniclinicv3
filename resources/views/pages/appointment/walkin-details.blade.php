@@ -328,7 +328,7 @@
                                                 <option value="">-- Choose Medicine --</option>
                                                 @foreach ($medicines as $medicine)
                                                     <option value="{{ $medicine->id }}">
-                                                        {{ $medicine->medicine }} (In Stock: {{ $medicine->qty }} | Dispensed: {{ $medicine->dispensed_qty ?? 0 }})
+                                                        {{ $medicine->code }} {{ $medicine->name }} (In Stock: {{ $medicine->quantity_remaining }} | Dispensed: {{ $medicine->dispensed_qty ?? 0 }})
                                                     </option>
                                                 @endforeach
                                             </select>

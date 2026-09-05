@@ -29,7 +29,7 @@ class LoginController extends Controller
         $validated = auth()->attempt([
             'email' => $request->email,
             'password' => $request->password,
-            'status' => 1,
+            'ustatus' => 1,
         ], $request->remember);
 
         if ($validated) {

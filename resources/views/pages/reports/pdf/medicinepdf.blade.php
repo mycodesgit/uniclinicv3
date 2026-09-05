@@ -76,22 +76,69 @@
 
                 @forelse ($monthmed as $category => $medicines)
                     <tr style="background:yellow; font-weight:bold;">
-                        <td colspan="11">{{ $letters[$loop->index] }}. {{ $category }}</td>
+                        <td colspan="11">{{ $letters[$loop->index] ?? '' }}. {{ $category }}</td>
                     </tr>
 
                     @foreach ($medicines as $med)
+                        @php
+                            $selectedMonth = request('month', date('m'));
+                            $selectedYear = $currentYear ?? date('Y');
+
+                            // Beginning Balance - Batches received BEFORE the selected month
+                            $begBal = $med->batches
+                                ->filter(function($batch) use ($selectedMonth, $selectedYear) {
+                                    if (!$batch->received_date) return false;
+                                    $date = \Carbon\Carbon::parse($batch->received_date);
+                                    return $date->year < $selectedYear || ($date->year == $selectedYear && $date->month < $selectedMonth);
+                                })
+                                ->sum('quantity_received');
+
+                            // Deliveries - Batches received DURING the selected month
+                            $currentBatches = $med->batches
+                                ->filter(function($batch) use ($selectedMonth, $selectedYear) {
+                                    if (!$batch->received_date) return false;
+                                    $date = \Carbon\Carbon::parse($batch->received_date);
+                                    return $date->year == $selectedYear && $date->month == $selectedMonth;
+                                });
+
+                            $delivQty = $currentBatches->sum('quantity_received');
+                            $stockRec = 0;   // (C)
+                            $stockTrans = 0; // (D)
+
+                            // Calculate Monthly Consumption (E) from MedicineTransaction logs
+                            $consumption = $med->transactions
+                                ->filter(function($transaction) use ($selectedMonth, $selectedYear) {
+                                    if (!$transaction->created_at) return false;
+                                    $date = \Carbon\Carbon::parse($transaction->created_at);
+                                    return $date->year == $selectedYear 
+                                        && $date->month == $selectedMonth 
+                                        && in_array(strtolower($transaction->transaction_type), ['dispensed', 'issued', 'dispense']);
+                                })
+                                ->sum('quantity');
+
+                            $expired = 0; // (F)
+
+                            // Lot/Batch details
+                            $batchDetails = $currentBatches->map(function($b) {
+                                $exp = $b->expiration_date ? \Carbon\Carbon::parse($b->expiration_date)->format('m/d/Y') : 'N/A';
+                                return $b->lotbatch_number . ' (' . $exp . ')';
+                            })->implode(', ');
+
+                            // Formula Calculation: (A + B + C) - (D + E + F)
+                            $endOfMonth = ($begBal + $delivQty + $stockRec) - ($stockTrans + $consumption + $expired);
+                        @endphp
                         <tr>
-                            <td>{{ $loop->iteration }}. {{ $med->medicine }} {{ $med->measure }}</td>
-                            <td>{{ $med->qty }}</td>
+                            <td>{{ $loop->iteration }}. {{ $med->code }} {{ $med->name }}</td>
+                            <td>{{ $begBal }}</td>
+                            <td>{{ $delivQty }}</td>
+                            <td>{{ $batchDetails }}</td>
                             <td></td>
+                            <td>{{ $stockRec }}</td>
+                            <td>{{ $stockTrans }}</td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $consumption }}</td>
+                            <td>{{ $expired }}</td>
+                            <td>{{ $endOfMonth }}</td>
                         </tr>
                     @endforeach
                 @empty

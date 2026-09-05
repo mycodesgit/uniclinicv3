@@ -28,7 +28,7 @@ class DashboardController extends Controller
             ->count();
         
         $medcount = Medicine::count();
-        $medoutstockcount = Medicine::where('qty', '<', 10)->count();
+        $medoutstockcount = Medicine::count();
 
         // 2. Fetch Colleges List (Default Database)
         $colleges = DB::table('college')

@@ -39,9 +39,9 @@ class ReportsStockMedicineController extends Controller
     {
         $search = $request->get('q'); // search term (optional)
         
-        $medicines = Medicine::select('id', 'medicine')
+        $medicines = Medicine::select('id', 'code', 'name')
             ->when($search, function($query, $search) {
-                return $query->where('medicine', 'like', "%{$search}%");
+                return $query->where('code', 'like', "%{$search}%");
             })
             ->limit(20) // load only 20 at a time
             ->get();
@@ -70,16 +70,47 @@ class ReportsStockMedicineController extends Controller
     {
         $medicineselected = $request->input('medicine');
 
-        $stockmed = Medicine::where('id', $medicineselected)
-                ->select('medicines.*')
-                ->get();
+        // Eager load both batches and transactions
+        $medicine = Medicine::with(['batches', 'transactions'])->findOrFail($medicineselected);
+
+        // Map batches to ledger entries (Receipts)
+        $receipts = $medicine->batches->map(function ($batch) {
+            return [
+                'date'      => $batch->received_date ? \Carbon\Carbon::parse($batch->received_date) : $batch->created_at,
+                'reference' => $batch->refnoid ?? 'DELIVERY',
+                'receipt'   => $batch->quantity_received,
+                'issue'     => null,
+                'office'    => null,
+            ];
+        });
+
+        // Map transactions to ledger entries (Issues)
+        $issues = $medicine->transactions
+            ->filter(function ($tx) {
+                return in_array(strtolower($tx->transaction_type), ['dispensed', 'issued', 'dispense']);
+            })
+            ->map(function ($tx) {
+                return [
+                    'date'      => $tx->created_at,
+                    'reference' => $tx->patientvisit_id ? 'VISIT #' . $tx->patientvisit_id : 'DISPENSE',
+                    'receipt'   => null,
+                    'issue'     => $tx->quantity,
+                    'office'    => $tx->remarks ?? 'Clinic',
+                ];
+            });
+
+        // Merge and sort chronologically by date
+        $stockCardEntries = $receipts->concat($issues)->sortBy('date');
+
         $data = [
-            'stockmed' => $stockmed,
+            'medicine'         => $medicine,
             'medicineselected' => $medicineselected,
+            'stockCardEntries' => $stockCardEntries,
         ];
 
-        $pdf = PDF::loadView('pages.reports.pdf.medicinestockpdf', $data)->setPaper('Legal', 'portrait');
+        $pdf = PDF::loadView('pages.reports.pdf.medicinestockpdf', $data)
+                ->setPaper('Legal', 'portrait');
 
-        return $pdf->stream();
+        return $pdf->stream("Stock_Card_{$medicine->code}.pdf");
     }
 }

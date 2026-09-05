@@ -20,6 +20,7 @@ use App\Models\ClinicDB\GuestPatient;
 use App\Models\ClinicDB\Patientvisit;
 use App\Models\ClinicDB\PatientReferral;
 use App\Models\ClinicDB\Medicine;
+use App\Models\ClinicDB\MedicineBatch;
 use App\Models\ClinicDB\Complaint;
 
 use App\Models\SettingDB\ConfigureCurrent;
@@ -74,9 +75,8 @@ class ReportsMedicineController extends Controller
         $monthName = \Carbon\Carbon::createFromDate($currentYear, (int)$monthselected, 1)->format('F');
 
         // 4. Fetch and group data
-        $monthmed = Medicine::whereYear('created_at', $currentYear)
-                            ->whereMonth('created_at', $monthselected)
-                            ->get();
+        $monthmed = Medicine::with(['batches', 'transactions'])
+                ->get();
 
         $grouped = $monthmed->groupBy('category');
 
