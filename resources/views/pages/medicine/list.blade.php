@@ -89,6 +89,11 @@
                                 <label class="form-label mb-1 fs-14 fw-medium">Reorder Alert Level</label>
                                 <input type="number" name="reorder_level" class="form-control form-control-sm" value="10" min="0">
                             </div>
+                            
+                            <div class="col-md-12">
+                                <label class="form-label mb-1 fs-14 fw-medium">Description</label>
+                                <textarea name="description" class="form-control form-control-sm" rows="3" placeholder="Optional: Add a brief description or notes about the medicine..."></textarea>
+                            </div>
                         </div>
 
                         <div class="mb-1 mt-4 pt-3 border-top">

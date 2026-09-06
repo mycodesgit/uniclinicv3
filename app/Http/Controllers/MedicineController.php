@@ -126,6 +126,7 @@ class MedicineController extends Controller
                 'quantity_remaining' => $qty,
                 'expiration_date'    => $request->input('expiration_date'),
                 'refnoid'            => $request->input('refnoid'),
+                'description'        => $request->input('description'),
             ]);
 
             MedicineTransaction::create([
