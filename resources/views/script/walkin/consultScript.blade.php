@@ -45,46 +45,45 @@
             lengthChange: true,
             searching: true,
             paging: true,
+            // Inside your DataTables column definition
             "columns": [
                 { 
                     data: null,
                     render: function(data, type, row) {
                         var firstname = data.fname;
                         var middleInitial = data.mname ? data.mname.substr(0, 1) + '.' : '';
-                        // Only display ext if it's not null, not 'N/A', and not empty
                         var ext = (data.ext && data.ext !== 'N/A') ? ' ' + data.ext : '';
                         var lastNameWithExt = data.lname + ext;
                         return firstname + ' ' + middleInitial + ' ' + lastNameWithExt;
                     }
                 },
-                { data: 'date',
+                { 
+                    data: 'date',
                     render: function (data, type, row) {
-                        if (type === 'display') {
-                            return moment(data).format('MMMM D, YYYY');
-                        } else {
-                            return data;
-                        }
+                        return type === 'display' ? moment(data).format('MMMM D, YYYY') : data;
                     }
                 },
                 {
                     data: 'time',
                     render: function(data, type, row) {
-                        if (type === 'display' && data) {
-                            return moment(data, 'HH:mm').format('hh:mm A');
-                        }
-                        return data;
+                        return (type === 'display' && data) ? moment(data, 'HH:mm').format('hh:mm A') : data;
                     }
                 },
                 { data: 'complaintname' },
                 { data: 'treatment' },
-                { data: 'code' },
-                { data: 'qty' },
+                { 
+                    data: 'code',
+                    defaultContent: 'N/A' 
+                },
+                { 
+                    data: 'qty',
+                    defaultContent: '0' 
+                },
                 {
                     data: 'id',
                     render: function(data, type, row) {
                         if (type === 'display') {
-
-                            var buttons = `
+                            return `
                                 <button type="button"
                                     class="btn btn-sm btn-success btn-walkineditconsult mr-1 text-light"
                                     data-id="${row.id}"
@@ -100,23 +99,19 @@
                                     data-pheight="${row.pheight}"
                                     data-pweight="${row.pweight}"
                                     data-treatment="${row.treatment}"
-                                    data-medicine="${row.medicine}"
+                                    data-code="${row.code}"
                                     data-qty="${row.qty}"
                                     data-certificate="${row.certificate}"
                                     title="View Forms">
                                     <i class="fas fa-eye"></i>
                                 </button>
-
                                 <button type="button"
                                     class="btn btn-sm btn-danger btn-deletewalkin mr-1"
                                     value="${data}">
                                     <i class="ti ti-trash"></i>
                                 </button>
                             `;
-
-                            return buttons;
                         }
-
                         return data;
                     }
                 }
@@ -208,7 +203,7 @@
 
             // Set the pre-selected values
             if (selectedMedId) {
-                $row.find('select[name="medicine[]"]').val(selectedMedId);
+                $row.find('select[name="code[]"]').val(selectedMedId);
             }
             if (selectedQty) {
                 $row.find('input[name="qty[]"]').val(selectedQty);

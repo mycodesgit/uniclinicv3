@@ -34,4 +34,9 @@ class Patientvisit extends Model
         'certificate',
         'medservrendered'
     ];
+
+    public function transactions()
+    {
+        return $this->hasMany(MedicineTransaction::class, 'patientvisit_id');
+    }
 }

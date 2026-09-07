@@ -38,8 +38,37 @@ class AppointmentsController extends Controller
         $decryptedId = Crypt::decryptString($adid);
         $patients = Student::findOrFail($decryptedId);
         
-        $complaints =  Complaint::all();
-        $medicines = Medicine::all();
+        $complaints = Complaint::all();
+
+        $medicines = Medicine::with(['batches' => function ($query) {
+                $query->where('quantity_remaining', '>', 0)
+                    ->orderBy('expiration_date', 'asc');
+            }])
+            ->where('is_active', true)
+            ->get()
+            ->map(function ($medicine) {
+                $totalRemaining = $medicine->batches->sum('quantity_remaining');
+                
+                // Get first batch
+                $firstBatch = $medicine->batches->first();
+                
+                // Safely parse date using Carbon
+                $nearestExpiry = 'N/A';
+                if ($firstBatch && $firstBatch->expiration_date) {
+                    $nearestExpiry = \Carbon\Carbon::parse($firstBatch->expiration_date)->format('M d, Y');
+                }
+
+                return (object) [
+                    'id'                 => $medicine->id,
+                    'code'               => $medicine->code,
+                    'name'               => $medicine->name,
+                    'quantity_remaining' => $totalRemaining,
+                    'nearest_expiry'     => $nearestExpiry,
+                ];
+            })
+            ->filter(fn ($med) => $med->quantity_remaining > 0)
+            ->values();
+
         $medserverender = MedicalServicesRendered::all();
 
         $student = DB::connection('enrollment')
@@ -83,7 +112,9 @@ class AppointmentsController extends Controller
             return response()->json(['message' => 'Student not found'], 404);
         }
 
-        $visits = Patientvisit::where('stid', $student->id)
+        // Eager-load transactions with batch and medicine relations
+        $visits = Patientvisit::with(['transactions'])
+            ->where('stid', $student->id)
             ->orderBy('date', 'desc')
             ->get();
         
@@ -91,13 +122,8 @@ class AppointmentsController extends Controller
             return response()->json(['data' => []]);
         }
 
+        // Fetch complaint IDs
         $complaintIds = $visits->pluck('chief_complaint')
-            ->filter() // remove null
-            ->flatMap(fn ($v) => explode(',', $v))
-            ->filter()
-            ->unique();
-
-        $medicineIds = $visits->pluck('medicine')
             ->filter()
             ->flatMap(fn ($v) => explode(',', $v))
             ->filter()
@@ -107,46 +133,49 @@ class AppointmentsController extends Controller
             ? Complaint::whereIn('id', $complaintIds)->pluck('complaintname', 'id')
             : collect();
 
-        $medicines = $medicineIds->isNotEmpty()
-            ? Medicine::whereIn('id', $medicineIds)->pluck('medicine', 'id')
-            : collect();
+        $data = $visits->map(function ($visit) use ($student, $complaints) {
 
-        $data = $visits->map(function ($visit) use ($student, $complaints, $medicines) {
+            // Extract medicines linked to this visit via transactions
+            $medicineCodes = $visit->transactions->map(function ($tx) {
+                return $tx->batch->medicine->code ?? null;
+            })->filter()->unique()->implode(', ');
+
+            $medicineNames = $visit->transactions->map(function ($tx) {
+                return $tx->batch->medicine->name ?? null;
+            })->filter()->unique()->implode(', ');
+
+            $totalQty = $visit->transactions->sum('quantity');
 
             return [
-                'id'        => $visit->id,
-                'consultID' => $visit->consultID,
-                'date'      => $visit->date,
-                'time'      => $visit->time,
-                'qty'       => $visit->qty,
+                'id'              => $visit->id,
+                'consultID'       => $visit->consultID,
+                'date'            => $visit->date,
+                'time'            => $visit->time,
 
                 'chief_complaint' => $visit->chief_complaint,
-                'bp' => $visit->bp,
-                'pr' => $visit->pr,
-                'rr' => $visit->rr,
-                'spo' => $visit->spo,
-                'btemp' => $visit->btemp,
-                'lmp' => $visit->lmp,
-                'pheight' => $visit->pheight,
-                'pweight' => $visit->pweight,
-                'treatment' => $visit->treatment,
-                'certificate' => $visit->certificate,
-                'medicine' => $visit->medicine,
-                'qty' => $visit->qty,
+                'bp'              => $visit->bp,
+                'pr'              => $visit->pr,
+                'rr'              => $visit->rr,
+                'spo'             => $visit->spo,
+                'btemp'           => $visit->btemp,
+                'lmp'             => $visit->lmp,
+                'pheight'         => $visit->pheight,
+                'pweight'         => $visit->pweight,
+                'treatment'       => $visit->treatment,
+                'certificate'     => $visit->certificate,
 
-                'lname' => $student->lname,
-                'fname' => $student->fname,
-                'mname' => $student->mname,
-                'ext'   => $student->ext,
+                'lname'           => $student->lname,
+                'fname'           => $student->fname,
+                'mname'           => $student->mname,
+                'ext'             => $student->ext,
 
-                // SAFE string output
-                'complaintname' => collect(explode(',', (string) $visit->chief_complaint))
+                // Multi-relation outputs
+                'code'            => $medicineCodes ?: 'N/A',
+                'medicinename'    => $medicineNames ?: 'N/A',
+                'qty'             => $totalQty > 0 ? $totalQty : ($visit->qty ?? 0),
+
+                'complaintname'   => collect(explode(',', (string) $visit->chief_complaint))
                     ->map(fn ($id) => $complaints[$id] ?? null)
-                    ->filter()
-                    ->implode(', '),
-
-                'medicinename' => collect(explode(',', (string) $visit->medicine))
-                    ->map(fn ($id) => $medicines[$id] ?? null)
                     ->filter()
                     ->implode(', '),
             ];

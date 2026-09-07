@@ -322,13 +322,13 @@
                                 </div>
 
                                 <div id="dynamic-fields" class="mb-3">
-                                    <div class="row mb-3 align-items-end">
+                                    <div class="row g-3 mb-3 align-items-end">
                                         <div class="col-md-7">
-                                            <select name="medicine[]" class="form-select form-control-sm">
+                                            <select name="medicine[]" class="form-control form-control-sm select2">
                                                 <option value="">-- Choose Medicine --</option>
                                                 @foreach ($medicines as $medicine)
                                                     <option value="{{ $medicine->id }}">
-                                                        {{ $medicine->code }} {{ $medicine->name }} (In Stock: {{ $medicine->quantity_remaining }} | Dispensed: {{ $medicine->dispensed_qty ?? 0 }})
+                                                        {{ $medicine->code }} - {{ $medicine->name }} (In Stock: {{ $medicine->quantity_remaining }} | Exp: {{ $medicine->nearest_expiry }})
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -363,11 +363,11 @@
                     <template id="medicine-row-template">
                         <div class="row mb-3 align-items-end">
                             <div class="col-md-7">
-                                <select name="medicine[]" class="form-select form-control form-control-sm">
+                                <select name="medicine[]" class="form-control form-control-sm select2">
                                     <option value="">Select Medicine</option>
                                     @foreach ($medicines as $medicine)
                                         <option value="{{ $medicine->id }}">
-                                            {{ $medicine->medicine }} - ({{ $medicine->qty }} left )
+                                            {{ $medicine->code }} - {{ $medicine->name }} (In Stock: {{ $medicine->quantity_remaining }} | Exp: {{ $medicine->nearest_expiry }})
                                         </option>
                                     @endforeach
                                 </select>
@@ -868,7 +868,7 @@
                                     <option value="">Select Medicine</option>
                                     @foreach ($medicines as $medicine)
                                         <option value="{{ $medicine->id }}">
-                                            {{ $medicine->medicine }} - ({{ $medicine->qty }} left)
+                                            {{ $medicine->code }} - {{ $medicine->name }} (In Stock: {{ $medicine->quantity_remaining }} | Exp: {{ $medicine->nearest_expiry }})
                                         </option>
                                     @endforeach
                                 </select>
