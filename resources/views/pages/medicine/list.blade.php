@@ -97,7 +97,7 @@
                         </div>
 
                         <div class="mb-1 mt-4 pt-3 border-top">
-                            <div class="d-flex justify-content-end gap-2">
+                            <div class="d-flex justify-content-between gap-2">
                                 <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-success px-3">
                                     <i class="fas fa-save me-1"></i> Save Medicine
@@ -150,9 +150,9 @@
                         </div>
 
                         <div class="mb-1 mt-4 pt-3 border-top">
-                            <div class="d-flex justify-content-end gap-2">
+                            <div class="d-flex justify-content-between gap-2">
                                 <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary px-3">
+                                <button type="submit" class="btn btn-success px-3">
                                     <i class="fas fa-plus me-1"></i> Add Batch Stock
                                 </button>
                             </div>
