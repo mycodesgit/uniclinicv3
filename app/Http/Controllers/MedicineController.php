@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 
 use App\Models\ClinicDB\Medicine;
@@ -80,7 +81,15 @@ class MedicineController extends Controller
         $request->validate([
             'name'          => 'required|string|max:255',
             'unit'          => 'required|string|max:50',
-            'code'          => 'nullable|string|max:100|unique:medicines,code',
+            'code'          => [
+                'nullable',
+                'string',
+                'max:100',
+                Rule::unique('medicines')->where(function ($query) use ($request) {
+                    return $query->where('code', $request->input('code'))
+                                ->where('name', $request->input('name'));
+                }),
+            ],
             'generic_name'  => 'nullable|string|max:255',
             'dosage'        => 'nullable|string|max:100',
             'reorder_level' => 'nullable|integer|min:0',
