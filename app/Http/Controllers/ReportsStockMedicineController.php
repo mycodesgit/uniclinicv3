@@ -111,6 +111,9 @@ class ReportsStockMedicineController extends Controller
         $pdf = PDF::loadView('pages.reports.pdf.medicinestockpdf', $data)
                 ->setPaper('Legal', 'portrait');
 
-        return $pdf->stream("Stock_Card_{$medicine->code}.pdf");
+        // Clean slashes and backslashes from the filename code
+        $safeCode = str_replace(['/', '\\'], '-', $medicine->code);
+
+        return $pdf->stream("Stock_Card_{$safeCode}.pdf");
     }
 }

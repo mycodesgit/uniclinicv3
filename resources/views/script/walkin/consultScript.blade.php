@@ -39,25 +39,6 @@
                 "url": "{{ route('getwalkinconsult.walkin', ['adid' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
-            // "bFilter": true,
-			// "sDom": 'fBtlpi',  
-			// "ordering": true,
-			// "language": {
-			// 	search: ' ',
-			// 	sLengthMenu: '_MENU_',
-			// 	searchPlaceholder: "Search",
-			// 	sLengthMenu: 'Row Per Page _MENU_ Entries',
-			// 	info: "_START_ - _END_ of _TOTAL_ items",
-			// 	paginate: {
-			// 		next: '<i class="ti ti-arrow-right"></i>',
-			// 		previous: '<i class="ti ti-arrow-left text-body"></i> '
-			// 	},
-			// },
-			// "scrollX": false,         // Enable horizontal scrolling
-			// "scrollCollapse": true,  // Adjust table size when the scroll is used
-			// "responsive": true,
-			// "autoWidth": false,
-            // "info": true,
             destroy: true,
             info: true,
             responsive: true,
@@ -96,7 +77,7 @@
                 },
                 { data: 'complaintname' },
                 { data: 'treatment' },
-                { data: 'medicinename' },
+                { data: 'code' },
                 { data: 'qty' },
                 {
                     data: 'id',
