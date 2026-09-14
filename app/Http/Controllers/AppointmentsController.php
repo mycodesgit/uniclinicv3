@@ -331,7 +331,7 @@ class AppointmentsController extends Controller
                                     'patientvisit_id' => $patient->id,
                                     'transaction_type'=> 'dispense', // or 'issued'
                                     'quantity'        => $deductFromBatch,
-                                    'remarks'         => 'Walk-in Consultation Dispense',
+                                    'remarks'         => $request->input('pname'),
                                     'created_by'      => Auth::id() ?? null,
                                 ]);
 

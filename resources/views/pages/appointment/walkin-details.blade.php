@@ -188,7 +188,7 @@
                             <div class="col-lg-12">
                                 <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient: <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control form-control-sm" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}" readonly>
+                                    <input type="text" name="pname" class="form-control form-control-sm" value="{{ ucwords(strtolower($patients->fname)) }} {{ ucwords(strtolower($patients->mname)) }} {{ ucwords(strtolower($patients->lname)) }} {{ $patients->ext }}" readonly>
                                 </div>
                             </div> <!-- end col-->
 

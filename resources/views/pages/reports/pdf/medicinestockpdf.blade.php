@@ -78,7 +78,7 @@
                 <tr>
                     <th style="font-family: DejaVu Sans, sans-serif; font-weight: normal; text-align: center">Qty.</th>
                     <th style="font-family: DejaVu Sans, sans-serif; font-weight: normal; text-align: center">Qty.</th>
-                    <th style="font-family: DejaVu Sans, sans-serif; font-weight: normal; text-align: center">Office</th>
+                    <th style="font-family: DejaVu Sans, sans-serif; font-weight: normal; text-align: center">Office/Person</th>
                     <th style="font-family: DejaVu Sans, sans-serif; font-weight: normal; text-align: center">Qty.</th>
                 </tr>
             </thead>
