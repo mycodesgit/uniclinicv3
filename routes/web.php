@@ -89,6 +89,8 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('services/list',[MedicalServicesController::class,'index'])->name('medservices.index');
         Route::get('services/show',[MedicalServicesController::class,'show'])->name('medservices.show');
         Route::post('services/add',[MedicalServicesController::class,'create'])->name('medservices.create');
+        Route::post('/services/update',[MedicalServicesController::class,'update'])->name('medservices.update');
+        Route::post('services/destroy/{id}',[MedicalServicesController::class,'delete'])->name('medservices.delete');
     });
     
     Route::prefix('/nature')->group(function () {

@@ -69,7 +69,7 @@
     </div>
 
     <!-- Center modal content -->
-    <div class="modal fade" id="editChiefComplaintModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="editMedServiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -77,41 +77,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editChiefComplaintForm" method="POST">
+                    <form id="editMedServiceForm" method="POST">
                         @csrf
 
                         <!-- Hidden ID Field -->
-                        <input type="hidden" name="id" id="editChiefComplaintId">
+                        <input type="hidden" name="id" id="editMedServiceId">
 
                         <div class="row g-3">
                             <!-- Category & Medicine Name -->
                             <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium" for="editCategoryname">Category: <span class="text-danger">*</span></label>
-                                <select name="categoryname" class="form-control" required id="editCategoryname">
-                                    <option value="">Select Category</option>
-                                    <option value="Cardiovascular System">Cardiovascular System</option>
-                                    <option value="Dermatologic (Skin)">Dermatologic (Skin)</option>
-                                    <option value="Eye (Ophthalmologic)">Eye (Ophthalmologic)</option>
-                                    <option value="Endocrine/Metabolic System">Endocrine/Metabolic System</option>
-                                    <option value="Ear, Nose and Throat (ENT)">Ear, Nose and Throat (ENT)</option>
-                                    <option value="Gastrointestinal System">Gastrointestinal System</option>
-                                    <option value="Mental and Behavioral Health">Mental and Behavioral Health</option>
-                                    <option value="Musculoskeletal System">Musculoskeletal System</option>
-                                    <option value="Neurologic System">Neurologic System</option>
-                                    <option value="Respiratory System">Respiratory System</option>
-                                    <option value="Reproductive System (Female)">Reproductive System (Female)</option>
-                                </select>
+                                <label class="form-label mb-1 text-dark fs-14 fw-medium" for="editMedServe">Medical Services: <span class="text-danger">*</span></label>
+                                <input type="text" name="medservrender" class="form-control" id="editMedServe" required>
                             </div> 
-
-                            <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium" for="editComplaint">Compliant: <span class="text-danger">*</span></label>
-                                <input type="text" name="complaintname" class="form-control" id="editComplaint" required>
-                            </div>
-                            
-                            <div class="col-md-12">
-                                <label class="form-label mb-1 text-dark fs-14 fw-medium" for="editSpecific">Sepcific: </label>
-                                <input type="text" name="specificcondition" class="form-control" id="editSpecific" required>
-                            </div>
                         </div>
 
                         <!-- Form Footer Actions -->

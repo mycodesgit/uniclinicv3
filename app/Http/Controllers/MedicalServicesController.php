@@ -52,4 +52,37 @@ class MedicalServicesController extends Controller
             }
         }
     }
+
+    public function update(Request $request) 
+    {
+        $id = $request->input('id');
+
+        $request->validate([
+            'id'               => 'required|exists:medicalservices,id',
+            'medservrender'    => 'required|string|max:255',
+        ]);
+
+        try {
+            $medserve = MedicalServicesRendered::findOrFail($id);
+            $medserve->update([
+                'medservrender' => $request->input('medservrender'),
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Medical Services updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Failed to update Medical Services details'], 500);
+        }
+    }
+
+    public function delete($id) 
+    {
+        try {
+            $medserve = MedicalServicesRendered::findOrFail($id);
+            $medserve->delete();
+
+            return response()->json(['success' => true, 'message' => 'Medical Services deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Failed to delete Medical Services item'], 500);
+        }
+    }
 }

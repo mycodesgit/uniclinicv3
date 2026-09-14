@@ -2,7 +2,7 @@
     toastr.options = {
         "closeButton": true,
         "progressBar": true,
-        "positionClass": "toast-top-center"
+        "positionClass": "toast-top-right"
     };
     $(document).ready(function() {
         $('#medservrenderForm').submit(function(event) {
@@ -84,7 +84,7 @@
                             var dropdown = '<div class="btn-group" role="group">' +
                                 '<button type="button" class="btn btn-success btn-sm text-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>' +
                                 '<ul class="dropdown-menu">' +
-                                '<a href="#" class="dropdown-item btn-mededit" data-id="' + row.id + '" data-category="' + row.category + '" data-medicine="' + row.medicine + '" data-qty="' + row.qty + '" data-measure="' + row.measure + '" data-lotno="' + row.lotno + '" data-expirydate="' + row.expirydate + '" data-refnoid="' + row.refnoid + '">' +
+                                '<a href="#" class="dropdown-item btn-medserveedit" data-id="' + row.id + '" data-medservrender="' + row.medservrender + '">' +
                                 '<i class="fas fa-pen"></i> Edit' +
                                 '</a>' +
                                 '<button type="button" value="' + data + '" class="dropdown-item med-delete">' +
@@ -108,33 +108,22 @@
         });
     });
 
-    $(document).on('click', '.btn-mededit', function() {
+    $(document).on('click', '.btn-medserveedit', function() {
         var id = $(this).data('id');
-        var medCat = $(this).data('category');
-        var medName = $(this).data('medicine');
-        var qtyCount = $(this).data('qty');
-        var medUnit = $(this).data('measure');
-        var medLot = $(this).data('lotno');
-        var expiryDate = $(this).data('expirydate');
-        var referenceNo = $(this).data('refnoid');
+        var medservrender = $(this).data('medservrender');
 
-        $('#editMedicineId').val(id);
-        $('#editMedicineCategory').val(medName);
-        $('#editMedicineName').val(medName);
-        $('#editMedicineQty').val(qtyCount);
-        $('#editMedicineUnit').val(medUnit);
-        $('#editMedicineLotNo').val(medLot);
-        $('#editMedicineExpiry').val(expiryDate);
-        $('#editMedicineReference').val(referenceNo);
-        $('#editMedicineModal').modal('show');
+        $('#editMedServiceId').val(id);
+        $('#editMedServe').val(medservrender);
+
+        $('#editMedServiceModal').modal('show');
     });
 
-    $('#editMedicineForm').submit(function(event) {
+    $('#editMedServiceForm').submit(function(event) {
         event.preventDefault();
         var formData = $(this).serialize();
 
         $.ajax({
-            url: "{{ route('medicineUpdate') }}",
+            url: "{{ route('medservices.update') }}",
             type: "POST",
             data: formData,
             headers: {
@@ -143,8 +132,8 @@
             success: function(response) {
                 if(response.success) {
                     toastr.success(response.message);
-                    $('#editMedicineModal').modal('hide');
-                    $(document).trigger('medicineAdded');
+                    $('#editMedServiceModal').modal('hide');
+                    $(document).trigger('medserverenderAdded');
                 } else {
                     toastr.error(response.message);
                 }
@@ -175,7 +164,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('medicineDelete', '__id__') }}".replace('__id__', id),
+                    url: "{{ route('medservices.delete', '__id__') }}".replace('__id__', id),
                     success: function(response) {
                         $("#tr-" + id).delay(1000).fadeOut();
                         Swal.fire({
