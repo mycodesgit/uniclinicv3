@@ -9,6 +9,7 @@ use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\PatientEmpController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\ChiefComplaintController;
+use App\Http\Controllers\CategoryComplaintController;
 use App\Http\Controllers\MedicalServicesController;
 use App\Http\Controllers\AccidentInjuryController;
 
@@ -83,6 +84,10 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::post('/chief/add',[ChiefComplaintController::class,'create'])->name('complaint.create');
         Route::post('/chief/update',[ChiefComplaintController::class,'update'])->name('complaint.update');
         Route::post('/chief/destroy/{id}',[ChiefComplaintController::class,'delete'])->name('complaint.delete');
+
+        Route::get('/categorylist/view/fetch',[CategoryComplaintController::class,'show'])->name('category.show');
+        Route::post('/categorylist/view/add',[CategoryComplaintController::class,'create'])->name('category.create');
+        Route::post('/categorylist/view/update',[CategoryComplaintController::class,'update'])->name('category.update');
     });
 
     Route::prefix('/medical')->group(function () {

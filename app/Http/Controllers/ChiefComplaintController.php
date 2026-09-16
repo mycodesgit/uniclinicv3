@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 use App\Models\ClinicDB\Complaint;
+use App\Models\ClinicDB\CategoryComplaint;
 
 class ChiefComplaintController extends Controller
 {
@@ -18,7 +19,7 @@ class ChiefComplaintController extends Controller
         return view('pages.complaint.chief');
     }
 
-    public function create(Request $request) 
+    public function create(Request $request)
     {
         if ($request->isMethod('post')) {
             $request->validate([
@@ -53,14 +54,14 @@ class ChiefComplaintController extends Controller
         }
     }
 
-    public function show() 
+    public function show()
     {
         $data = Complaint::orderBy('id', 'ASC')->get();
 
         return response()->json(['data' => $data]);
     }
 
-    public function update(Request $request) 
+    public function update(Request $request)
     {
         $request->validate([
             'categoryname' => 'required',
@@ -88,7 +89,7 @@ class ChiefComplaintController extends Controller
         }
     }
 
-    public function delete($id) 
+    public function delete($id)
     {
         $chiefcomp = Complaint::find($id);
         $chiefcomp->delete();

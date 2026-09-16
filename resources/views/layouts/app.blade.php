@@ -241,7 +241,7 @@
         <script>
             var collegeCountsdaily = {!! json_encode($collegeCountsdaily) !!};
             var collegeAcronymsdaily = {!! json_encode($collegeAcronymsdaily) !!};
-            
+
             var collegeCountsmonth = {!! json_encode($collegeCountsmonth) !!};
             var collegeAcronymsmonth = {!! json_encode($collegeAcronymsmonth) !!};
         </script>
@@ -272,6 +272,7 @@
     @endif
     @if (request()->routeIs('complaint.index'))
         @include('script.complaint.chiefcomplaintjs')
+        @include('script.complaint.categoryjs')
     @endif
     @if (request()->routeIs('medservices.index'))
         @include('script.servrender.medservrenderjs')
