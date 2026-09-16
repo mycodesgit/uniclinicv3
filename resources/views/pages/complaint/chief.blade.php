@@ -153,6 +153,9 @@
                                     <option value="Neurologic System">Neurologic System</option>
                                     <option value="Respiratory System">Respiratory System</option>
                                     <option value="Reproductive System (Female)">Reproductive System (Female)</option>
+                                    @foreach ($catchief as $catech)
+                                        <option value="{{ $catech->category_name }}">{{ $catech->category_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

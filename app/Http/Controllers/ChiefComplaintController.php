@@ -16,7 +16,9 @@ class ChiefComplaintController extends Controller
 {
     public function index()
     {
-        return view('pages.complaint.chief');
+        $catchief = CategoryComplaint::get();
+
+        return view('pages.complaint.chief', compact('catchief'));
     }
 
     public function create(Request $request)
