@@ -140,19 +140,8 @@
                             <!-- Category & Chief Complaint Name -->
                             <div class="col-md-12">
                                 <label class="form-label mb-1 text-dark fs-14 fw-medium">Category <span class="text-danger">*</span></label>
-                                <select name="categoryname" class="form-control" required>
+                                <select name="categoryname" class="form-control select2" required>
                                     <option value="">Select Category</option>
-                                    <option value="Cardiovascular System">Cardiovascular System</option>
-                                    <option value="Dermatologic (Skin)">Dermatologic (Skin)</option>
-                                    <option value="Eye (Ophthalmologic)">Eye (Ophthalmologic)</option>
-                                    <option value="Endocrine/Metabolic System">Endocrine/Metabolic System</option>
-                                    <option value="Ear, Nose and Throat (ENT)">Ear, Nose and Throat (ENT)</option>
-                                    <option value="Gastrointestinal System">Gastrointestinal System</option>
-                                    <option value="Mental and Behavioral Health">Mental and Behavioral Health</option>
-                                    <option value="Musculoskeletal System">Musculoskeletal System</option>
-                                    <option value="Neurologic System">Neurologic System</option>
-                                    <option value="Respiratory System">Respiratory System</option>
-                                    <option value="Reproductive System (Female)">Reproductive System (Female)</option>
                                     @foreach ($catchief as $catech)
                                         <option value="{{ $catech->category_name }}">{{ $catech->category_name }}</option>
                                     @endforeach
