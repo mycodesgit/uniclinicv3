@@ -47,7 +47,7 @@
             paging: true,
             // Inside your DataTables column definition
             "columns": [
-                { 
+                {
                     data: null,
                     render: function(data, type, row) {
                         var firstname = data.fname;
@@ -57,7 +57,7 @@
                         return firstname + ' ' + middleInitial + ' ' + lastNameWithExt;
                     }
                 },
-                { 
+                {
                     data: 'date',
                     render: function (data, type, row) {
                         return type === 'display' ? moment(data).format('MMMM D, YYYY') : data;
@@ -71,13 +71,13 @@
                 },
                 { data: 'complaintname' },
                 { data: 'treatment' },
-                { 
+                {
                     data: 'code',
-                    defaultContent: 'N/A' 
+                    defaultContent: 'N/A'
                 },
-                { 
+                {
                     data: 'qty',
-                    defaultContent: '0' 
+                    defaultContent: '0'
                 },
                 {
                     data: 'id',
@@ -117,7 +117,7 @@
                 }
             ],
             "createdRow": function (row, data, index) {
-                $(row).attr('id', 'tr-' + data.id); 
+                $(row).attr('id', 'tr-' + data.id);
             }
         });
         $(document).on('pvisitAdded', function() {
@@ -145,7 +145,7 @@
             var pweight = $(this).data('pweight');
             let treatment = $(this).attr('data-treatment');
             var certificate = $(this).data('certificate');
-            
+
             // Parse CSV values into arrays
             var medicines = ($(this).attr('data-medicine') || '').split(',').filter(Boolean);
             var qtys = ($(this).attr('data-qty') || '').split(',').filter(Boolean);
@@ -160,7 +160,7 @@
             $('#editWalkinConsultId').val(id);
             $('#editWalkinConsultDate').val(date);
             $('#editWalkinConsultTime').val(time);
-            
+
             // Populate Select2 Chief Complaint
             $('#editWalkinConsultChiefComplaint').val(null).trigger('change');
             $('#editWalkinConsultChiefComplaint').val(selectedComplaints).trigger('change');
@@ -227,7 +227,7 @@
         // ------------------------------------
         $(document).on('click', '#editRemoveMedicine', function() {
             var $rows = $('#dynamic-fieldsedit .row');
-            
+
             // Remove the last row only if there is more than 1 row remaining
             if ($rows.length > 1) {
                 $rows.last().remove();
@@ -409,14 +409,14 @@
         });
 
         const walkinId = @json($adid);
-        
+
         var dataTable = $('#referlisttab').DataTable({
             "ajax": {
                 "url": "{{ route('getwalkinreferral.walkin', ['adid' => '__ID__']) }}".replace('__ID__', walkinId),
                 "type": "GET",
             },
             // "bFilter": true,
-			// "sDom": 'fBtlpi',  
+			// "sDom": 'fBtlpi',
 			// "ordering": true,
 			// "language": {
 			// 	search: ' ',
@@ -441,7 +441,7 @@
             searching: true,
             paging: true,
             "columns": [
-                { 
+                {
                     data: null,
                     render: function(data, type, row) {
                         var firstname = data.fname;
@@ -517,7 +517,7 @@
                 }
             ],
             "createdRow": function (row, data, index) {
-                $(row).attr('id', 'tr-' + data.id); 
+                $(row).attr('id', 'tr-' + data.id);
             }
         });
         $(document).on('referralAdded', function() {
@@ -558,7 +558,7 @@
         $('#editWalkinReferralTo').val(referralpreferto);
         $('#editWalkinReferralReason').val(reasonrefer);
         $('#editWalkinReferralTentativeDiagnosis').val(tentdiagnose);
-        $('#editWalkinReferralTreatment').val(treatmentmedgiven);                                       
+        $('#editWalkinReferralTreatment').val(treatmentmedgiven);
 
         $('#editcentermodalwalkinreferral').modal('show');
     });
@@ -608,7 +608,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     url: walkinreferralDeleteRoute.replace(':id', id),
                     success: function(response) {
                         Swal.fire({

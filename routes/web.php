@@ -45,7 +45,7 @@ Route::group(['middleware'=>['guest']],function(){
 Route::group(['middleware'=>['login_auth']],function(){
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard.index');
     Route::get('/logout',[DashboardController::class,'logout'])->name('logout');
-    
+
     Route::prefix('/patient')->group(function () {
         Route::get('/students',[PatientsController::class,'index'])->name('patients.students');
         Route::get('/students/search',[PatientsController::class,'show'])->name('patients.show');
@@ -76,7 +76,7 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::post('/medicineUpdate', [MedicineController::class, 'medicineUpdate'])->name('medicineUpdate');
         Route::post('/medicineDelete/{id}', [MedicineController::class, 'medicineDelete'])->name('medicineDelete');
     });
-    
+
     Route::prefix('/complaints')->group(function () {
         Route::get('/chief',[ChiefComplaintController::class,'index'])->name('complaint.index');
         Route::get('/chief/show',[ChiefComplaintController::class,'show'])->name('complaint.show');
@@ -84,7 +84,7 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::post('/chief/update',[ChiefComplaintController::class,'update'])->name('complaint.update');
         Route::post('/chief/destroy/{id}',[ChiefComplaintController::class,'delete'])->name('complaint.delete');
     });
-    
+
     Route::prefix('/medical')->group(function () {
         Route::get('services/list',[MedicalServicesController::class,'index'])->name('medservices.index');
         Route::get('services/show',[MedicalServicesController::class,'show'])->name('medservices.show');
@@ -92,7 +92,7 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::post('/services/update',[MedicalServicesController::class,'update'])->name('medservices.update');
         Route::post('services/destroy/{id}',[MedicalServicesController::class,'delete'])->name('medservices.delete');
     });
-    
+
     Route::prefix('/nature')->group(function () {
         Route::get('injury/list',[AccidentInjuryController::class,'index'])->name('accident.index');
         Route::get('injury/show',[AccidentInjuryController::class,'show'])->name('accident.show');
@@ -123,7 +123,7 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/walkins/referralfetchemp/{emp_ID}',[AppointmentsController::class,'getwalkinempreferral'])->name('getwalkinempreferral.walkin');
         Route::post('/walkins/referral/add',[AppointmentsController::class,'createWalkinReferral'])->name('appointment.walkinreferral.store');
         Route::post('/walkins/referral/update',[AppointmentsController::class,'updateWalkinReferral'])->name('appointment.walkinreferral.update');
-        Route::get('/walkins/referral/delete/{id}', [AppointmentsController::class, 'walkinReferralDelete'])->name('appointment.walkinreferral.delete');
+        Route::post('/walkins/referral/delete/{id}', [AppointmentsController::class, 'walkinReferralDelete'])->name('appointment.walkinreferral.delete');
 
         Route::get('/online',[AppointmentsController::class,'onlineappoint'])->name('appointment.online');
     });

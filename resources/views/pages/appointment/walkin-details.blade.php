@@ -78,7 +78,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Referral Tab -->
                                     <div class="tab-pane fade" id="pills-two" role="tabpanel" aria-labelledby="pills-two-tab" tabindex="0">
                                         <div class="d-flex justify-content-end align-items-center mb-3">
@@ -104,7 +104,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Tooth Extraction Tab -->
                                     <div class="tab-pane fade" id="pills-three" role="tabpanel" aria-labelledby="pills-three-tab" tabindex="0">
                                         <div class="d-flex justify-content-end align-items-center mb-3">

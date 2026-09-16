@@ -37,7 +37,7 @@ class AppointmentsController extends Controller
     {
         $decryptedId = Crypt::decryptString($adid);
         $patients = Student::findOrFail($decryptedId);
-        
+
         $complaints = Complaint::all();
 
         $medicines = Medicine::with(['batches' => function ($query) {
@@ -48,10 +48,10 @@ class AppointmentsController extends Controller
             ->get()
             ->map(function ($medicine) {
                 $totalRemaining = $medicine->batches->sum('quantity_remaining');
-                
+
                 // Get first batch
                 $firstBatch = $medicine->batches->first();
-                
+
                 // Safely parse date using Carbon
                 $nearestExpiry = 'N/A';
                 if ($firstBatch && $firstBatch->expiration_date) {
@@ -101,7 +101,7 @@ class AppointmentsController extends Controller
     public function getwalkinconsult($adid)
     {
         $decryptedId = Crypt::decryptString($adid);
-        
+
         $student = DB::connection('enrollment')
             ->table('students')
             ->select('id', 'lname', 'fname', 'mname', 'ext')
@@ -117,7 +117,7 @@ class AppointmentsController extends Controller
             ->where('stid', $student->id)
             ->orderBy('date', 'desc')
             ->get();
-        
+
         if ($visits->isEmpty()) {
             return response()->json(['data' => []]);
         }
@@ -486,48 +486,64 @@ class AppointmentsController extends Controller
         }
     }
 
-    public function walkinConsultDelete($id) 
+    public function walkinConsultDelete($id)
     {
-        return DB::transaction(function () use ($id) {
-            // 1. Find the consultation record
-            $consultation = Patientvisit::findOrFail($id);
+        try {
+            return DB::transaction(function () use ($id) {
+                // 1. Find the consultation record
+                $consultation = Patientvisit::findOrFail($id);
 
-            // 2. Extract saved medicines and quantities into arrays
-            $medicines = array_filter(explode(',', $consultation->medicine ?? ''));
-            $quantities = array_filter(explode(',', $consultation->qty ?? ''));
+                // 2. Extract saved medicines and quantities into arrays
+                $medicines = array_filter(explode(',', $consultation->medicine ?? ''));
+                $quantities = array_filter(explode(',', $consultation->qty ?? ''));
 
-            // 3. Restore inventory for each prescribed medicine
-            foreach ($medicines as $index => $medId) {
-                $qtyToRestore = (int) ($quantities[$index] ?? 0);
+                // 3. Restore inventory for each prescribed medicine into active batches
+                foreach ($medicines as $index => $medId) {
+                    $qtyToRestore = (int) ($quantities[$index] ?? 0);
 
-                if (!empty($medId) && $qtyToRestore > 0) {
-                    $medRecord = Medicine::find($medId);
+                    if (!empty($medId) && $qtyToRestore > 0) {
+                        $medRecord = Medicine::find($medId);
 
-                    if ($medRecord) {
-                        // Put stock BACK into available stock
-                        $medRecord->increment('qty', $qtyToRestore);
+                        if ($medRecord) {
+                            // Find the most recently updated or non-expired batch to return the stock into
+                            $batch = MedicineBatch::where('medicine_id', $medId)
+                                ->orderBy('expiration_date', 'DESC')
+                                ->first();
 
-                        // REDUCE total dispensed count (ensure it doesn't drop below 0)
-                        if ($medRecord->dispensed_qty >= $qtyToRestore) {
-                            $medRecord->decrement('dispensed_qty', $qtyToRestore);
-                        } else {
-                            $medRecord->update(['dispensed_qty' => 0]);
+                            if ($batch) {
+                                // Increment stock back into batch
+                                $batch->increment('quantity_remaining', $qtyToRestore);
+
+                                // Log restoration transaction
+                                MedicineTransaction::create([
+                                    'medicine_id'       => $medId,
+                                    'medicine_batch_id' => $batch->id,
+                                    'type'              => 'IN',
+                                    'quantity'          => $qtyToRestore,
+                                    'notes'             => 'Restored from deleted consultation ID: ' . $consultation->id,
+                                ]);
+                            }
                         }
                     }
                 }
-            }
 
-            // 4. Delete the consultation record
-            $consultation->delete();
+                // 4. Delete the consultation record
+                $consultation->delete();
 
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Consultation deleted and medicine stock restored successfully.'
+                ], 200);
+            });
+        } catch (\Exception $e) {
             return response()->json([
-                'success' => true,
-                'message' => 'Consultation deleted and medicine stock restored successfully.'
-            ]);
-        });
+                'success' => false,
+                'message' => 'Failed to delete consultation: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function getwalkinreferral($adid) 
+    public function getwalkinreferral($adid)
     {
         $decryptedId = Crypt::decryptString($adid);
 
@@ -545,7 +561,7 @@ class AppointmentsController extends Controller
             ->select('patientreferral.*')
             ->orderBy('date', 'desc')
             ->get();
-        
+
         if ($refer->isEmpty()) {
             return response()->json(['data' => []]);
         }
@@ -575,14 +591,14 @@ class AppointmentsController extends Controller
                 'mname' => $student->mname,
                 'ext'   => $student->ext,
 
-                
+
             ];
         });
 
         return response()->json(['data' => $data]);
     }
 
-    public function getwalkinempreferral($emp_ID) 
+    public function getwalkinempreferral($emp_ID)
     {
         $emps = DB::connection('hremp')
             ->table('employees')
@@ -598,7 +614,7 @@ class AppointmentsController extends Controller
         $refer = PatientReferral::where('stdntID', $emps->emp_ID)
             ->orderBy('date', 'desc')
             ->get();
-        
+
         if ($refer->isEmpty()) {
             return response()->json(['data' => []]);
         }
@@ -620,14 +636,14 @@ class AppointmentsController extends Controller
                 'mname' => $student->mname,
                 'suffix'   => $student->suffix,
 
-                
+
             ];
         });
 
         return response()->json(['data' => $data]);
     }
 
-    public function createWalkinReferral(Request $request) 
+    public function createWalkinReferral(Request $request)
     {
         if ($request->isMethod('post')) {
             $request->validate([
@@ -740,7 +756,7 @@ class AppointmentsController extends Controller
         }
     }
 
-    public function walkinReferralDelete($id) 
+    public function walkinReferralDelete($id)
     {
         $pvisit = PatientReferral::find($id);
         $pvisit->delete();
