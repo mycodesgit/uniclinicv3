@@ -62,6 +62,7 @@ class AppointmentsController extends Controller
                     'id'                 => $medicine->id,
                     'code'               => $medicine->code,
                     'name'               => $medicine->name,
+                    'generic_name'               => $medicine->generic_name,
                     'quantity_remaining' => $totalRemaining,
                     'nearest_expiry'     => $nearestExpiry,
                 ];
@@ -78,7 +79,7 @@ class AppointmentsController extends Controller
 
         $patientVisit = Patientvisit::where('stid', $student->id)->get();
 
-        return view('pages.appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'medserverender', 'patientVisit', 'adid'));
+        return view('pages.appointment.walkin-details', compact('patients', 'complaints', 'medicines', 'medserverender', 'student', 'patientVisit', 'adid'));
     }
 
     public function walkinconsultempdetails($emp_ID)
@@ -134,7 +135,6 @@ class AppointmentsController extends Controller
             : collect();
 
         $data = $visits->map(function ($visit) use ($student, $complaints) {
-
             // Extract medicines linked to this visit via transactions
             $medicineCodes = $visit->transactions->map(function ($tx) {
                 return $tx->batch->medicine->code ?? null;

@@ -4,7 +4,6 @@
     $medicineActive = in_array($current_route, ['medicine.index']) ? 'active' : '';
     $complaintActive = in_array($current_route, ['complaint.index']) ? 'active' : '';
     $medserviceActive = in_array($current_route, ['medservices.index']) ? 'active' : '';
-    $accidentActive = in_array($current_route, ['accident.index']) ? 'active' : '';
 
     $preenrolmentActive = in_array($current_route, ['admission.index', 'admission.store']) ? 'active' : '';
 
@@ -45,11 +44,6 @@
     <li>
         <a class="nav-link {{ $medserviceActive }}" href="{{ route('medservices.index') }}">
             <i class="ti ti-server"></i><span class="nav-text">Medical Services</span>
-        </a>
-    </li>
-    <li>
-        <a class="nav-link {{ $accidentActive }}" href="{{ route('accident.index') }}">
-            <i class="ti ti-stethoscope"></i><span class="nav-text">Accident & Injuries</span>
         </a>
     </li>
 
@@ -103,5 +97,5 @@
                 <i class="ti ti-users"></i><span class="nav-text">Users</span>
             </a>
         </li>
-    @endif  
+    @endif
 </ul>

@@ -310,38 +310,59 @@
         })
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const dynamicFieldsContainer = document.getElementById('dynamic-fields');
+    $(document).ready(function () {
+        const $dynamicFields = $('#dynamic-fields');
         const template = document.getElementById('medicine-row-template');
-        const removeBtn = document.getElementById('myremove');
+
+        // Initialize Select2 on existing row on page load
+        $dynamicFields.find('.select2bs4').select2({ width: '100%' });
 
         function toggleRemoveButton() {
-            const rows = dynamicFieldsContainer.querySelectorAll('.row');
-            removeBtn.style.display = rows.length > 1 ? 'inline-block' : 'none';
+            const rowCount = $dynamicFields.find('.medicine-row').length;
+            if (rowCount > 1) {
+                $('.remove-button, #myremove').show();
+            } else {
+                $('.remove-button, #myremove').hide();
+            }
         }
 
-        // ADD button
-        document.querySelector('.add-button').addEventListener('click', () => {
-            const fragment = template.content.cloneNode(true);
-            dynamicFieldsContainer.appendChild(fragment);
+        // ADD BUTTON CLICK
+        $(document).on('click', '.add-button', function (e) {
+            e.preventDefault();
 
-            // Initialize select2 ONLY for the newly added select
-            const selects = dynamicFieldsContainer.querySelectorAll('select.select2');
-            $(selects[selects.length - 1]).select2({ width: '100%' });
+            // 1. Clone template content
+            const clone = template.content.cloneNode(true);
+            $dynamicFields.append(clone);
 
+            // 2. Find the last appended row & initialize Select2 on it
+            const $newRow = $dynamicFields.find('.medicine-row').last();
+            $newRow.find('.select2bs4').select2({ width: '100%' });
+
+            // 3. Update remove button visibility
             toggleRemoveButton();
         });
 
-        // REMOVE button
-        removeBtn.addEventListener('click', () => {
-            const rows = dynamicFieldsContainer.querySelectorAll('.row');
-            if (rows.length > 1) {
-                rows[rows.length - 1].remove();
+        // REMOVE BUTTON CLICK
+        $(document).on('click', '.remove-button, #myremove', function (e) {
+            e.preventDefault();
+
+            const $rows = $dynamicFields.find('.medicine-row');
+            if ($rows.length > 1) {
+                const $lastRow = $rows.last();
+                const $select = $lastRow.find('.select2bs4');
+
+                // Safely destroy Select2 before removing element from DOM
+                if ($select.data('select2')) {
+                    $select.select2('destroy');
+                }
+
+                $lastRow.remove();
             }
+
             toggleRemoveButton();
         });
 
-        // Hide remove button initially
+        // Initial check
         toggleRemoveButton();
     });
 
