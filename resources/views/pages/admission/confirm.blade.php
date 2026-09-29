@@ -4,11 +4,21 @@
     <div class="row ">
         <div class="col-12">
             <div class="mb-6">
-                <h1 class="fs-3 mb-4">Pre-enrollment</h1>
-                <hr>
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                    <div>
+                        <h1 class="h4 fw-bold mb-1" style="letter-spacing: -0.02em;">Pre-enrollment</h1>
+                        <p class="text-muted small mb-0">Manage Pre-enrollment Records</p>
+                    </div>
+                </div>
                 <div class="row g-4 mb-5">
                     <div class="col-md-12">
-                        <div class="card">
+                        <div class="card card-animate">
+                            <div class="card-header pt-3 d-flex justify-content-between align-items-center">
+                                <h6 class="card-title">
+                                    <i class="ti ti-search"></i> Search to show data
+                                </h6>
+                            </div>
                             <div class="card-body">
                                 <form method="GET" action="{{ route('admission.store') }}">
                                     @csrf
@@ -28,17 +38,17 @@
                                                 <label>Campus: <span class="text-danger">*</span></label>
                                                 <select class="form-control form-control-sm" name="campus" id="campus">
                                                     <option value="{{Auth::user()->campus}}">
-                                                        @if (Auth::user()->campus == 'MC') Main 
-                                                            @elseif(Auth::user()->campus == 'VC') Victorias 
-                                                            @elseif(Auth::user()->campus == 'SCC') San Carlos 
-                                                            @elseif(Auth::user()->campus == 'HC') Hinigaran 
-                                                            @elseif(Auth::user()->campus == 'MP') Moises Padilla 
-                                                            @elseif(Auth::user()->campus == 'IC') Ilog 
-                                                            @elseif(Auth::user()->campus == 'CA') Candoni 
-                                                            @elseif(Auth::user()->campus == 'CC') Cauayan 
-                                                            @elseif(Auth::user()->campus == 'SC') Sipalay 
-                                                            @elseif(Auth::user()->campus == 'HinC') Hinobaan 
-                                                            @elseif(Auth::user()->campus == 'VE') Valladolid 
+                                                        @if (Auth::user()->campus == 'MC') Main
+                                                            @elseif(Auth::user()->campus == 'VC') Victorias
+                                                            @elseif(Auth::user()->campus == 'SCC') San Carlos
+                                                            @elseif(Auth::user()->campus == 'HC') Hinigaran
+                                                            @elseif(Auth::user()->campus == 'MP') Moises Padilla
+                                                            @elseif(Auth::user()->campus == 'IC') Ilog
+                                                            @elseif(Auth::user()->campus == 'CA') Candoni
+                                                            @elseif(Auth::user()->campus == 'CC') Cauayan
+                                                            @elseif(Auth::user()->campus == 'SC') Sipalay
+                                                            @elseif(Auth::user()->campus == 'HinC') Hinobaan
+                                                            @elseif(Auth::user()->campus == 'VE') Valladolid
                                                         @endif
                                                     </option>
                                                     @if(Auth::user()->role == 0 || (Auth::user()->campus == 'MC' && Auth::user()->role == 1))

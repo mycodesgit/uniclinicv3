@@ -4,7 +4,7 @@
     <div class="row ">
         <div class="col-12">
             <div class="mb-6">
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
                     <div>
                         <h1 class="h4 fw-bold mb-1" style="letter-spacing: -0.02em;">MDHU Dashboard Overview</h1>
                         <p class="text-muted small mb-0">System metrics, patient consultations, medical records, and daily activity logs.</p>
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Chart Widget -->
                     <div class="col-md-6">
                         <div class="card card-animate mb-3">

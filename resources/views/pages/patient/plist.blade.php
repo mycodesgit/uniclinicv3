@@ -4,8 +4,13 @@
     <div class="row ">
         <div class="col-12">
             <div class="mb-6">
-                <h1 class="fs-3 mb-4">Patients</h1>
-                <hr>
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                    <div>
+                        <h1 class="h4 fw-bold mb-1" style="letter-spacing: -0.02em;">Patients</h1>
+                        <p class="text-muted small mb-0">Manage Patient Records</p>
+                    </div>
+                </div>
                 <div class="row g-4 mb-5">
                     <div class="col-md-12">
                         <ul class="nav nav-pills bg-light p-2 rounded-2" id="pills-tab" role="tablist">
@@ -37,7 +42,12 @@
                     <div class="col-md-12">
                         <div class="tab-content mt-1" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-one" role="tabpanel" aria-labelledby="pills-one-tab" tabindex="0">
-                                <div class="card">
+                                <div class="card card-animate">
+                                    <div class="card-header pt-3">
+                                        <h6 class="card-title">
+                                            <i class="ti ti-search"></i> Search to show data
+                                        </h6>
+                                    </div>
                                     <div class="card-body">
                                         <form id="searchForm">
                                             <div class="row g-2">
@@ -79,6 +89,11 @@
                             </div>
                             <div class="tab-pane fade" id="pills-two" role="tabpanel" aria-labelledby="pills-two-tab" tabindex="0">
                                 <div class="card">
+                                    <div class="card-header pt-3">
+                                        <h6 class="card-title">
+                                            <i class="ti ti-search"></i> Search to show data
+                                        </h6>
+                                    </div>
                                     <div class="card-body">
                                         <form id="searchEmpForm">
                                             <div class="row g-2">
@@ -119,6 +134,11 @@
                             </div>
                             <div class="tab-pane fade" id="pills-three" role="tabpanel" aria-labelledby="pills-three-tab" tabindex="0">
                                 <div class="card">
+                                    <div class="card-header pt-3">
+                                        <h6 class="card-title">
+                                            <i class="ti ti-search"></i> Search to show data
+                                        </h6>
+                                    </div>
                                     <div class="card-header pt-3 d-flex justify-content-between align-items-center">
                                         <h6 class="card-title">
                                             <i class="ti ti-users"></i> List of Guest/Visitor Patients
@@ -141,12 +161,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody style="font-size: 10pt;">
-                                                    
+
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -169,7 +189,7 @@
 
                         <!-- SECTION: Personal Information -->
                         <h6 class="text-primary fw-bold mb-3 border-bottom pb-2">Personal Information</h6>
-                        
+
                         <div class="row g-3">
                             <!-- Last Name -->
                             <div class="col-md-4">

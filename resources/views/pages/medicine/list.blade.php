@@ -4,13 +4,18 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-6">
-                <h1 class="fs-3 mb-4">Medicines Management</h1>
-                <hr>
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                    <div>
+                        <h1 class="h4 fw-bold mb-1" style="letter-spacing: -0.02em;">Medicines</h1>
+                        <p class="text-muted small mb-0">Manage Medicines Records</p>
+                    </div>
+                </div>
                 <div class="row g-4 mb-5">
                     <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header pt-2 d-flex justify-content-between align-items-center">
-                                <h6 class="card-title mb-0">
+                        <div class="card card-animate">
+                            <div class="card-header pt-3 d-flex justify-content-between align-items-center">
+                                <h6 class="card-title">
                                     <i class="fas fa-pills me-1"></i> Medicine Catalog & Batches
                                 </h6>
                                 <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#centermodalmedadd">
@@ -63,12 +68,12 @@
                             <div class="col-md-4">
                                 <label class="form-label mb-1 fs-14 fw-medium">Item Code / Category</label>
                                 <input type="text" name="code" class="form-control form-control-sm text-uppercase" placeholder="e.g., ANTI-VERTIGO">
-                            </div> 
+                            </div>
 
                             <div class="col-md-4">
                                 <label class="form-label mb-1 fs-14 fw-medium">Brand/Item Name <span class="text-danger">*</span></label>
                                 <input type="text" name="name" class="form-control form-control-sm text-capitalize" placeholder="Betahistine Hydrochloride" required>
-                            </div> 
+                            </div>
 
                             <div class="col-md-4">
                                 <label class="form-label mb-1 fs-14 fw-medium">Generic Name</label>
@@ -89,7 +94,7 @@
                                 <label class="form-label mb-1 fs-14 fw-medium">Reorder Alert Level</label>
                                 <input type="number" name="reorder_level" class="form-control form-control-sm" value="10" min="0">
                             </div>
-                            
+
                             <div class="col-md-12">
                                 <label class="form-label mb-1 fs-14 fw-medium">Description</label>
                                 <textarea name="description" class="form-control form-control-sm" rows="3" placeholder="Optional: Add a brief description or notes about the medicine..."></textarea>
@@ -180,7 +185,7 @@
                             <div class="col-md-4">
                                 <label class="form-label mb-1 fs-14 fw-medium">Item Code / Category</label>
                                 <input type="text" name="code" id="editMedicineCode" class="form-control form-control-sm text-uppercase">
-                            </div> 
+                            </div>
 
                             <div class="col-md-4">
                                 <label class="form-label mb-1 fs-14 fw-medium">Brand/Item Name <span class="text-danger">*</span></label>

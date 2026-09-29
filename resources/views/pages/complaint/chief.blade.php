@@ -4,8 +4,13 @@
     <div class="row ">
         <div class="col-12">
             <div class="mb-6">
-                <h1 class="fs-3 mb-4">Chief Complaints</h1>
-                <hr>
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                    <div>
+                        <h1 class="h4 fw-bold mb-1" style="letter-spacing: -0.02em;">Chief Complaints</h1>
+                        <p class="text-muted small mb-0">Manage Cheif Complaints Records</p>
+                    </div>
+                </div>
                 <div class="row g-4 mb-5">
                     <div class="col-md-12">
                         <ul class="nav nav-pills mb-3 bg-light p-2 rounded-2 d-inline-flex col-md-12" id="pills-tab" role="tablist">
@@ -27,8 +32,8 @@
                         </ul>
                         <div class="tab-content mt-3" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-one" role="tabpanel" aria-labelledby="pills-one-tab" tabindex="0">
-                                <div class="card">
-                                    <div class="card-header pt-2 d-flex justify-content-between align-items-center">
+                                <div class="card card-animate">
+                                    <div class="card-header pt-3 d-flex justify-content-between align-items-center">
                                         <h6 class="card-title">
                                             <i class="ti ti-details"></i> List of Chief Complaints
                                         </h6>

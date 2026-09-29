@@ -4,11 +4,16 @@
     <div class="row ">
         <div class="col-12">
             <div class="mb-6">
-                <h1 class="fs-3 mb-4">Patient Details</h1>
-                <hr>
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                    <div>
+                        <h1 class="h4 fw-bold mb-1" style="letter-spacing: -0.02em;">Patients</h1>
+                        <p class="text-muted small mb-0">Manage Patient Records</p>
+                    </div>
+                </div>
                 <div class="row g-4 mb-5">
                     <div class="col-md-12">
-                        <div class="card">
+                        <div class="card card-animate">
                             <div class="row align-items-end">
                                 <div class="col-xl-9 col-lg-8">
                                     <div class="d-sm-flex align-items-center position-relative z-0 overflow-hidden p-3">
@@ -78,7 +83,7 @@
                     <div class="col-md-12">
                         <div class="tab-content mt-1" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-one" role="tabpanel" aria-labelledby="pills-one-tab" tabindex="0">
-                                <div class="card">
+                                <div class="card card-animate">
                                     <div class="card-header">
                                         <h6 class="fw-bold mb-0 d-flex align-items-center" style="color: teal"><i class="ti ti-user me-1"></i> Personal Information</h6>
                                     </div>
@@ -142,28 +147,28 @@
                                                     <input type="text" name="height_cm" id="height_cm" value="{{ $patients->height_cm }}" data-column-id="{{ $patients->id }}" data-column-name="height_cm" class="form-control form-control-sm update-field" placeholder="N/A">
                                                 </div>
                                             </div>
-                                        
+
                                             <div class="col-md-3">
                                                 <div class="mb-3">
                                                     <label class="form-label mb-1 fw-medium">Height (ft)</label><br>
                                                     <input type="text" name="height_ft" id="height_ft" value="{{ $patients->height_ft }}" data-column-id="{{ $patients->id }}" data-column-name="height_ft" class="form-control form-control-sm update-field" placeholder="N/A">
                                                 </div>
                                             </div>
-                                        
+
                                             <div class="col-md-3">
                                                 <div class="mb-3">
                                                     <label class="form-label mb-1 fw-medium">Weight (kg)</label><br>
                                                     <input type="text" name="weight_kg" id="weight_kg" value="{{ $patients->weight_kg }}" data-column-id="{{ $patients->id }}" data-column-name="weight_kg" class="form-control form-control-sm update-field" placeholder="N/A">
                                                 </div>
                                             </div>
-                                        
+
                                             <div class="col-md-3">
                                                 <div class="mb-3">
                                                     <label class="form-label mb-1 fw-medium">Weight (lb)</label><br>
                                                     <input type="text" name="weight_lb" id="weight_lb" value="{{ $patients->weight_lb }}" data-column-id="{{ $patients->id }}" data-column-name="weight_lb" class="form-control form-control-sm update-field" placeholder="N/A">
                                                 </div>
                                             </div>
-                                        
+
                                             <div class="col-md-3">
                                                 <div class="mb-3">
                                                     <label class="form-label mb-1 fw-medium">BMI:</label>
@@ -438,7 +443,7 @@
                                                 "Thyroid Disease, Cancer",
                                             ];
                                         @endphp
-                                        
+
                                         <br>
 
                                         <div class="row">

@@ -4,12 +4,17 @@
     <div class="row ">
         <div class="col-12">
             <div class="mb-6">
-                <h1 class="fs-3 mb-4">Medical Services</h1>
-                <hr>
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                    <div>
+                        <h1 class="h4 fw-bold mb-1" style="letter-spacing: -0.02em;">Medical Services</h1>
+                        <p class="text-muted small mb-0">Manage Medical Services Records</p>
+                    </div>
+                </div>
                 <div class="row g-3 mb-5">
                     <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-header pt-2 d-flex justify-content-between align-items-center">
+                        <div class="card card-animate">
+                            <div class="card-header pt-3 d-flex justify-content-between align-items-center">
                                 <h6 class="card-title">
                                     <i class="ti ti-plus"></i> Add New Medical Services
                                 </h6>
@@ -39,8 +44,8 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-header pt-2 d-flex justify-content-between align-items-center">
+                        <div class="card card-animate">
+                            <div class="card-header pt-3 d-flex justify-content-between align-items-center">
                                 <h6 class="card-title">
                                     <i class="ti ti-server"></i> List of Medical Services
                                 </h6>
@@ -56,7 +61,7 @@
                                             </tr>
                                         </thead>
                                         <tbody style="font-size: 10pt;">
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -88,7 +93,7 @@
                             <div class="col-md-12">
                                 <label class="form-label mb-1 text-dark fs-14 fw-medium" for="editMedServe">Medical Services: <span class="text-danger">*</span></label>
                                 <input type="text" name="medservrender" class="form-control" id="editMedServe" required>
-                            </div> 
+                            </div>
                         </div>
 
                         <!-- Form Footer Actions -->

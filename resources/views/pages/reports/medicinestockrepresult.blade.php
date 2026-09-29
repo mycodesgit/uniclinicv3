@@ -4,8 +4,13 @@
     <div class="row ">
         <div class="col-12">
             <div class="mb-6">
-                <h1 class="fs-3 mb-4">Medicine Stock Report</h1>
-                <hr>
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                    <div>
+                        <h1 class="h4 fw-bold mb-1" style="letter-spacing: -0.02em;">Medicine Stock Report</h1>
+                        <p class="text-muted small mb-0">Generate Medicine Stock Report</p>
+                    </div>
+                </div>
                 <div class="row g-4 mb-5">
                     <div class="col-md-12">
                         <div class="card">
@@ -17,7 +22,7 @@
                             <div class="card-body">
                                 <form action="{{ route('reports.stockmedicine.store') }}" method="GET" id="medStockForm">
                                     @csrf
-                                    
+
                                     <div class="row g-3">
                                         <div class="col-md-3">
                                             <label for="medicine-dropdown" class="form-label fw-bold">Medicine: <span class="text-danger">*</span></label>
@@ -45,10 +50,10 @@
 
                                 <div class="page-header mt-3" style="border-bottom: 1px solid #04401f;"></div>
 
-                                <iframe id="pdfIframe" 
+                                <iframe id="pdfIframe"
                                         src="{{ route('reports.stockmedicine.generate', request()->all()) }}"
-                                        style="width: 100%; height: 580px;" 
-                                        frameborder="0" 
+                                        style="width: 100%; height: 580px;"
+                                        frameborder="0"
                                         class="mt-3">
                                 </iframe>
                             </div>
