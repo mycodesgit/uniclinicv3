@@ -93,8 +93,8 @@ class ReportsMedicalStatisticController extends Controller
                 '10' => 'October',   '11' => 'November', '12' => 'December'
             ];
             $formattedPeriodValue = ($months[$value] ?? $value) . " {$selectedYear}";
-            $query->whereMonth('created_at', $value)
-                ->whereYear('created_at', $selectedYear);
+            $query->whereMonth('date', $value)
+                ->whereYear('date', $selectedYear);
         } elseif ($type === 'quarterly') {
             $quarters = [
                 '01' => "1st Quarter (Jan - Mar) {$selectedYear}",
@@ -114,11 +114,11 @@ class ReportsMedicalStatisticController extends Controller
                 $startDate = Carbon::create($selectedYear, $startMonth, 1)->startOfDay();
                 $endDate   = Carbon::create($selectedYear, $endMonth)->endOfMonth()->endOfDay();
 
-                $query->whereBetween('created_at', [$startDate, $endDate]);
+                $query->whereBetween('date', [$startDate, $endDate]);
             }
         } elseif ($type === 'yearly') {
             $formattedPeriodValue = "Year {$selectedYear}";
-            $query->whereYear('created_at', $selectedYear);
+            $query->whereYear('date', $selectedYear);
         }
 
 
@@ -138,13 +138,13 @@ class ReportsMedicalStatisticController extends Controller
         $studentsGenders = [];
         if (!empty($studentIds)) {
             $studentsGenders = Student::whereIn('stud_id', $studentIds)
-                                    ->pluck('gender', 'stud_id') 
+                                    ->pluck('gender', 'stud_id')
                                     ->toArray();
         }
         $employeeGenders = [];
         if (!empty($employeeIds)) {
             $employeeGenders = Employees::whereIn('emp_ID', $employeeIds)
-                                                        ->pluck('sex', 'emp_ID') 
+                                                        ->pluck('sex', 'emp_ID')
                                                         ->toArray();
         }
         $categories = [
@@ -376,10 +376,10 @@ class ReportsMedicalStatisticController extends Controller
             'servicesRenderedCounts',
             'otherServicesCount',
             'totalServicesRendered',
-            'morbidityData',       
+            'morbidityData',
             'morbidityGrandTotal',
-            'injuryCounts',         
-            'otherInjuriesCount',    
+            'injuryCounts',
+            'otherInjuriesCount',
             'totalInjuries',
             'reportingPeriodLabel',
             'formattedPeriodValue',
