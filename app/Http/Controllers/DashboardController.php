@@ -22,11 +22,11 @@ class DashboardController extends Controller
 
         // 1. Total Visits Count & Medicine Count (Default Database)
         $ptodayvisits = Patientvisit::whereDate('date', $today)->count();
-        
+
         $pthismonthvisits = Patientvisit::whereMonth('date', $currentMonth)
             ->whereYear('date', $currentYear)
             ->count();
-        
+
         $medcount = Medicine::count();
         $medoutstockcount = Medicine::count();
 
@@ -38,13 +38,13 @@ class DashboardController extends Controller
         // 3. Fetch Visit Summaries from local Database grouped by Student ID
         $monthlyPatientVisits = DB::table('patientvisits')
             ->select('stid', DB::raw('COUNT(id) as total_visits'))
-            ->whereMonth('created_at', $currentMonth)
-            ->whereYear('created_at', $currentYear)
+            ->whereMonth('date', $currentMonth)
+            ->whereYear('date', $currentYear)
             ->groupBy('stid')
             ->pluck('total_visits', 'stid');
 
         $dailyPatientVisits = DB::table('patientvisits')
-            ->whereDate('created_at', $today)
+            ->whereDate('date', $today)
             ->pluck('stid')
             ->unique();
 
@@ -108,7 +108,7 @@ class DashboardController extends Controller
         $monthlyConsultations = DB::table('patientvisits')
             ->select(
                 DB::raw('MONTH(date) as month'),
-                DB::raw('COUNT(id) as total_visits') 
+                DB::raw('COUNT(id) as total_visits')
             )
             ->whereYear('date', $currentYear)
             ->where('typeofconsultation', 1)
@@ -160,15 +160,15 @@ class DashboardController extends Controller
             ];
         }
 
-        
+
         return view('pages.home.dashboard', compact(
-            'ptodayvisits', 
-            'pthismonthvisits', 
-            'medcount', 
-            'medoutstockcount', 
-            'collegeAcronymsmonth', 
-            'collegeCountsmonth', 
-            'collegeAcronymsdaily', 
+            'ptodayvisits',
+            'pthismonthvisits',
+            'medcount',
+            'medoutstockcount',
+            'collegeAcronymsmonth',
+            'collegeCountsmonth',
+            'collegeAcronymsdaily',
             'collegeCountsdaily',
             'chartData',
             'categoryMonthlyDatasets'
