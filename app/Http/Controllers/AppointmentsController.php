@@ -426,50 +426,99 @@ class AppointmentsController extends Controller
             }
 
             // ----------------------------------------------------
-            // A. RESTORE OLD INVENTORY STOCK
+            // A. RESTORE OLD INVENTORY STOCK (batches are the source of truth)
             // ----------------------------------------------------
-            $oldMedicines  = array_filter(explode(',', $patient->medicine));
-            $oldQuantities = array_filter(explode(',', $patient->qty));
+            $oldTransactions = MedicineTransaction::where('patientvisit_id', $patient->id)->get();
 
-            foreach ($oldMedicines as $index => $oldMedId) {
-                if (!empty($oldMedId)) {
-                    $medModel = Medicine::find($oldMedId);
-                    if ($medModel) {
-                        $restoredQty = isset($oldQuantities[$index]) ? (int)$oldQuantities[$index] : 0;
-                        $medModel->increment('qty', $restoredQty);
+            foreach ($oldTransactions as $tx) {
+                $batch = MedicineBatch::find($tx->batch_id);
+                if ($batch) {
+                    $batch->increment('quantity_remaining', (int) $tx->quantity);
+                }
+                $tx->delete();
+            }
+
+            // Fallback for legacy rows saved without transaction records:
+            // return the CSV quantities to the medicine's latest batch.
+            if ($oldTransactions->isEmpty()) {
+                $legacyMeds  = array_values(array_filter(explode(',', (string) $patient->medicine)));
+                $legacyQtys  = array_values(array_filter(explode(',', (string) $patient->qty)));
+                foreach ($legacyMeds as $i => $oldMedId) {
+                    $restoredQty = isset($legacyQtys[$i]) ? (int) $legacyQtys[$i] : 0;
+                    if (!empty($oldMedId) && $restoredQty > 0) {
+                        $fallbackBatch = MedicineBatch::where('medicine_id', $oldMedId)
+                            ->orderBy('expiration_date', 'desc')
+                            ->first();
+                        if ($fallbackBatch) {
+                            $fallbackBatch->increment('quantity_remaining', $restoredQty);
+                        }
                     }
                 }
             }
 
             // ----------------------------------------------------
-            // B. DEDUCT NEW INVENTORY STOCK
+            // B. DEDUCT NEW INVENTORY STOCK (same FIFO logic as create)
             // ----------------------------------------------------
-            $newMedicines = array_filter($request->input('medicine', []), fn($val) => !is_null($val) && $val !== '');
-            $newQtys      = array_filter($request->input('qty', []), fn($val) => !is_null($val) && $val !== '');
+            $rawMedicines = (array) $request->input('medicine', []);
+            $rawQuantities = (array) $request->input('qty', []);
 
             $processedMeds = [];
             $processedQtys = [];
 
-            foreach ($newMedicines as $index => $medId) {
-                $qtyToDeduct = isset($newQtys[$index]) ? (int)$newQtys[$index] : 0;
+            foreach ($rawMedicines as $index => $medId) {
+                $requestedQty = (int) ($rawQuantities[$index] ?? 0);
 
-                $medicineModel = Medicine::find($medId);
-                if ($medicineModel) {
-                    // Check if enough stock exists
-                    if ($medicineModel->qty < $qtyToDeduct) {
-                        // Rollback transaction if stock is insufficient
-                        DB::rollBack();
-                        return response()->json([
-                            'success' => false,
-                            'message' => "Insufficient stock for {$medicineModel->medicine}. Available: {$medicineModel->qty}"
-                        ], 422);
+                if (!empty($medId) && $requestedQty > 0) {
+                    $medicineModel = Medicine::find($medId);
+
+                    if ($medicineModel) {
+                        // Fetch available active batches sorted by oldest expiration date (FIFO)
+                        $batches = MedicineBatch::where('medicine_id', $medId)
+                            ->where('quantity_remaining', '>', 0)
+                            ->orderBy('expiration_date', 'asc')
+                            ->get();
+
+                        $totalAvailable = $batches->sum('quantity_remaining');
+
+                        // Check if enough stock exists
+                        if ($totalAvailable < $requestedQty) {
+                            // Rollback transaction if stock is insufficient
+                            DB::rollBack();
+                            return response()->json([
+                                'success' => false,
+                                'message' => "Insufficient stock for {$medicineModel->name}. Available: {$totalAvailable}"
+                            ], 422);
+                        }
+
+                        $qtyToDeduct = $requestedQty;
+
+                        foreach ($batches as $batch) {
+                            if ($qtyToDeduct <= 0) {
+                                break;
+                            }
+
+                            $deductFromBatch = min($batch->quantity_remaining, $qtyToDeduct);
+
+                            // 1. Deduct quantity remaining from batch
+                            $batch->decrement('quantity_remaining', $deductFromBatch);
+
+                            // 2. Log transaction row for audit and PDF reports
+                            MedicineTransaction::create([
+                                'medicine_id'     => $medId,
+                                'batch_id'        => $batch->id,
+                                'patientvisit_id' => $patient->id,
+                                'transaction_type'=> 'dispense',
+                                'quantity'        => $deductFromBatch,
+                                'remarks'         => $request->input('pname'),
+                                'created_by'      => Auth::id() ?? null,
+                            ]);
+
+                            $qtyToDeduct -= $deductFromBatch;
+                        }
+
+                        $processedMeds[] = $medId;
+                        $processedQtys[] = $requestedQty;
                     }
-
-                    // Deduct medicine quantity
-                    $medicineModel->decrement('qty', $qtyToDeduct);
-
-                    $processedMeds[] = $medId;
-                    $processedQtys[] = $qtyToDeduct;
                 }
             }
 
