@@ -151,6 +151,10 @@ class AppointmentsController extends Controller
                 'consultID'       => $visit->consultID,
                 'date'            => $visit->date,
                 'time'            => $visit->time,
+                'typeofconsultation' => $visit->typeofconsultation,
+                'medservrendered' => $visit->medservrendered,
+                'medicine'        => $visit->medicine,
+                'qtys'            => $visit->qty,
 
                 'chief_complaint' => $visit->chief_complaint,
                 'bp'              => $visit->bp,
@@ -380,6 +384,9 @@ class AppointmentsController extends Controller
             'pweight'           => 'nullable|string',
             'treatment'         => 'nullable|string',
             'certificate'       => 'nullable|boolean',
+            'typeofconsultation' => 'nullable',
+            'medservrendered'   => 'nullable|array',
+            'medservrendered.*' => 'nullable',
         ]);
 
         // 2. TRY-CATCH BLOCK WITH DATABASE TRANSACTION
@@ -405,6 +412,18 @@ class AppointmentsController extends Controller
             // Process Chief Complaints Array -> CSV
             $complaints = array_filter($validatedData['chief_complaint'], fn($val) => !is_null($val) && $val !== '');
             $patient->chief_complaint = implode(',', $complaints);
+
+            // Classification + services rendered (same fields as Add section)
+            if ($request->has('typeofconsultation')) {
+                $patient->typeofconsultation = $request->input('typeofconsultation');
+            }
+            $services = array_filter((array) $request->input('medservrendered', []), fn($val) => !is_null($val) && $val !== '');
+            if ($request->has('medservrendered')) {
+                $patient->medservrendered = implode(',', $services);
+            }
+            if ($request->filled('consultID')) {
+                $patient->consultID = $request->input('consultID');
+            }
 
             // ----------------------------------------------------
             // A. RESTORE OLD INVENTORY STOCK
@@ -570,6 +589,7 @@ class AppointmentsController extends Controller
 
             return [
                 'id'                    => $visit->id,
+                'referralID'            => $visit->referralID,
                 'date'                  => $visit->date,
                 'time'                  => $visit->time,
                 'bp'                    => $visit->bp,

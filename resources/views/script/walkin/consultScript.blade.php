@@ -87,9 +87,12 @@
                                 <button type="button"
                                     class="btn btn-sm btn-success btn-walkineditconsult mr-1 text-light"
                                     data-id="${row.id}"
+                                    data-consultid="${row.consultID ?? ''}"
                                     data-date="${row.date}"
                                     data-time="${row.time}"
+                                    data-typeofconsultation="${row.typeofconsultation ?? ''}"
                                     data-chief_complaint="${row.chief_complaint}"
+                                    data-medservrendered="${row.medservrendered ?? ''}"
                                     data-bp="${row.bp}"
                                     data-pr="${row.pr}"
                                     data-rr="${row.rr}"
@@ -100,6 +103,8 @@
                                     data-pweight="${row.pweight}"
                                     data-treatment="${row.treatment}"
                                     data-code="${row.code}"
+                                    data-medicine="${row.medicine ?? ''}"
+                                    data-qtys="${row.qtys ?? row.qty ?? ''}"
                                     data-qty="${row.qty}"
                                     data-certificate="${row.certificate}"
                                     title="View Forms">
@@ -132,9 +137,12 @@
         // ------------------------------------
         $(document).on('click', '.btn-walkineditconsult', function() {
             var id = $(this).data('id');
+            var consultID = $(this).data('consultid');
             var date = $(this).data('date');
             var time = $(this).data('time');
+            var typeofconsultation = $(this).data('typeofconsultation');
             let chiefComplaint = $(this).attr('data-chief_complaint');
+            let medservrendered = $(this).attr('data-medservrendered');
             var bp = $(this).data('bp');
             var pr = $(this).data('pr');
             var rr = $(this).data('rr');
@@ -146,24 +154,36 @@
             let treatment = $(this).attr('data-treatment');
             var certificate = $(this).data('certificate');
 
-            // Parse CSV values into arrays
+            // Medicine IDs CSV (preferred) with per-row quantities CSV
             var medicines = ($(this).attr('data-medicine') || '').split(',').filter(Boolean);
-            var qtys = ($(this).attr('data-qty') || '').split(',').filter(Boolean);
+            var qtys = ($(this).attr('data-qtys') || $(this).attr('data-qty') || '').split(',').filter(Boolean);
 
             // Parse Chief Complaint (Handles array vs string properly for Select2)
             var selectedComplaints = [];
             if (chiefComplaint) {
-                selectedComplaints = chiefComplaint.toString().split(',').map(item => item.trim());
+                selectedComplaints = chiefComplaint.toString().split(',').map(item => item.trim()).filter(Boolean);
+            }
+
+            // Parse Medical Services Rendered for Select2
+            var selectedServices = [];
+            if (medservrendered) {
+                selectedServices = medservrendered.toString().split(',').map(item => item.trim()).filter(Boolean);
             }
 
             // Fill standard form inputs
             $('#editWalkinConsultId').val(id);
+            $('#editWalkinConsultCode').val(consultID);
             $('#editWalkinConsultDate').val(date);
             $('#editWalkinConsultTime').val(time);
+            $('#editWalkinConsultType').val(typeofconsultation !== undefined ? typeofconsultation : '');
 
             // Populate Select2 Chief Complaint
             $('#editWalkinConsultChiefComplaint').val(null).trigger('change');
             $('#editWalkinConsultChiefComplaint').val(selectedComplaints).trigger('change');
+
+            // Populate Select2 Medical Services Rendered
+            $('#editWalkinConsultMedServ').val(null).trigger('change');
+            $('#editWalkinConsultMedServ').val(selectedServices).trigger('change');
 
             $('#editWalkinConsultBP').val(bp);
             $('#editWalkinConsultPR').val(pr);
@@ -174,8 +194,8 @@
             $('#editWalkinConsultPHeight').val(pheight);
             $('#editWalkinConsultPWeight').val(pweight);
             $('#editWalkinConsultTreatment').val(treatment);
-            $('#editWalkinConsultCertificate1').prop('checked', certificate === 1);
-            $('#editWalkinConsultCertificate2').prop('checked', certificate === 0);
+            $('#editWalkinConsultCertificate1').prop('checked', Number(certificate) === 1);
+            $('#editWalkinConsultCertificate2').prop('checked', Number(certificate) === 0);
 
             // Clear existing dynamic dynamic fields
             $('#dynamic-fieldsedit').empty();
@@ -203,14 +223,20 @@
 
             // Set the pre-selected values
             if (selectedMedId) {
-                $row.find('select[name="code[]"]').val(selectedMedId);
+                $row.find('select[name="medicine[]"]').val(String(selectedMedId).trim());
             }
             if (selectedQty) {
-                $row.find('input[name="qty[]"]').val(selectedQty);
+                $row.find('input[name="qty[]"]').val(String(selectedQty).trim());
             }
 
             // Append to the dynamic fields container
             $('#dynamic-fieldsedit').append($row);
+
+            // Initialize Select2 inside modal with proper dropdown parent
+            var $select = $('#dynamic-fieldsedit .medicine-row').last().find('select[name="medicine[]"]');
+            if ($.fn.select2 && !$select.data('select2')) {
+                $select.select2({ dropdownParent: $('#editcentermodalwalkinconsult'), width: '100%' });
+            }
         }
 
 
@@ -226,14 +252,19 @@
         // 4. REMOVE BUTTON CLICK
         // ------------------------------------
         $(document).on('click', '#editRemoveMedicine', function() {
-            var $rows = $('#dynamic-fieldsedit .row');
+            var $rows = $('#dynamic-fieldsedit .medicine-row');
 
             // Remove the last row only if there is more than 1 row remaining
             if ($rows.length > 1) {
-                $rows.last().remove();
+                var $last = $rows.last();
+                var $select = $last.find('select');
+                if ($select.data('select2')) {
+                    $select.select2('destroy');
+                }
+                $last.remove();
             } else {
                 // Optional: reset fields if it's the last row
-                $rows.find('select').val('');
+                $rows.find('select').val('').trigger('change');
                 $rows.find('input').val('');
             }
         });
@@ -504,6 +535,7 @@
                                 <button type="button"
                                     class="btn btn-sm btn-success btn-walkineditreferral mr-1 text-light"
                                     data-id="${row.id}"
+                                    data-refreferralid="${row.referralID ?? ''}"
                                     data-refdate="${row.date}"
                                     data-reftime="${row.time}"
                                     data-refbp="${row.bp}"
@@ -548,6 +580,7 @@
 
     $(document).on('click', '.btn-walkineditreferral', function() {
         var id = $(this).data('id');
+        var referralID = $(this).data('refreferralid');
         var referraldate = $(this).data('refdate');
         var referraltime = $(this).data('reftime');
         var referralbp = $(this).data('refbp');
@@ -565,6 +598,7 @@
         var treatmentmedgiven = $(this).data('reftreatmentmedgiven');
 
         $('#editWalkinReferralId').val(id);
+        $('#editWalkinReferralCode').val(referralID);
         $('#editWalkinReferralDate').val(referraldate);
         $('#editWalkinReferralTime').val(referraltime);
         $('#editWalkinReferralBP').val(referralbp);
