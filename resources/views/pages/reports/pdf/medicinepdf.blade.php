@@ -35,11 +35,7 @@
                     <th colspan="8" style="background:yellow; font-family: DejaVu Sans, sans-serif; font-weight: bold">MEDICAL DENTAL HEALTH UNIT<br>@if (Auth::guard()->user()->campus == 'MC') CPSU MAIN CAMPUS @endif</th>
                     <th style="width: 40px; font-family: DejaVu Sans, sans-serif; font-weight: bold">Report for this month of:</th>
                     <th colspan="2" style="font-family: DejaVu Sans, sans-serif; font-weight: bold">
-                        @php
-                            $monthNum = request('month');
-                            $monthName = $monthNum ? date('F', mktime(0, 0, 0, $monthNum, 1)) : '';
-                        @endphp
-                        {{ $monthName }}
+                        {{ $monthName ?? '' }}
                     </th>
                 </tr>
                 <tr>
@@ -70,77 +66,21 @@
                 </tr>
             </thead>
             <tbody>
-                @php
-                    $letters = range('A', 'Z'); // letters A-Z
-                @endphp
-
-                @forelse ($monthmed as $category => $medicines)
-                    <tr style="background:yellow; font-weight:bold;">
-                        <td colspan="11">{{ $letters[$loop->index] ?? '' }}. {{ $category }}</td>
+                {{-- Flat list: medicines table has no category column, so no grouping headers --}}
+                @forelse ($rows ?? [] as $row)
+                    <tr>
+                        <td>{{ $loop->iteration }}. {{ $row['name'] }}</td>
+                        <td>{{ $row['begBal'] }}</td>
+                        <td>{{ $row['delivQty'] }}</td>
+                        <td>{{ $row['delivDates'] }}</td>
+                        <td>{{ $row['batchDetails'] }}</td>
+                        <td>{{ $row['stockRec'] }}</td>
+                        <td>{{ $row['stockTrans'] }}</td>
+                        <td></td>
+                        <td>{{ $row['consumption'] }}</td>
+                        <td>{{ $row['expired'] }}</td>
+                        <td>{{ $row['endOfMonth'] }}</td>
                     </tr>
-
-                    @foreach ($medicines as $med)
-                        @php
-                            $selectedMonth = request('month', date('m'));
-                            $selectedYear = $currentYear ?? date('Y');
-
-                            // Beginning Balance - Batches received BEFORE the selected month
-                            $begBal = $med->batches
-                                ->filter(function($batch) use ($selectedMonth, $selectedYear) {
-                                    if (!$batch->received_date) return false;
-                                    $date = \Carbon\Carbon::parse($batch->received_date);
-                                    return $date->year < $selectedYear || ($date->year == $selectedYear && $date->month < $selectedMonth);
-                                })
-                                ->sum('quantity_received');
-
-                            // Deliveries - Batches received DURING the selected month
-                            $currentBatches = $med->batches
-                                ->filter(function($batch) use ($selectedMonth, $selectedYear) {
-                                    if (!$batch->received_date) return false;
-                                    $date = \Carbon\Carbon::parse($batch->received_date);
-                                    return $date->year == $selectedYear && $date->month == $selectedMonth;
-                                });
-
-                            $delivQty = $currentBatches->sum('quantity_received');
-                            $stockRec = 0;   // (C)
-                            $stockTrans = 0; // (D)
-
-                            // Calculate Monthly Consumption (E) from MedicineTransaction logs
-                            $consumption = $med->transactions
-                                ->filter(function($transaction) use ($selectedMonth, $selectedYear) {
-                                    if (!$transaction->created_at) return false;
-                                    $date = \Carbon\Carbon::parse($transaction->created_at);
-                                    return $date->year == $selectedYear
-                                        && $date->month == $selectedMonth
-                                        && in_array(strtolower($transaction->transaction_type), ['dispensed', 'issued', 'dispense']);
-                                })
-                                ->sum('quantity');
-
-                            $expired = 0; // (F)
-
-                            // Lot/Batch details
-                            $batchDetails = $currentBatches->map(function($b) {
-                                $exp = $b->expiration_date ? \Carbon\Carbon::parse($b->expiration_date)->format('m/d/Y') : 'N/A';
-                                return $b->lotbatch_number . ' (' . $exp . ')';
-                            })->implode(', ');
-
-                            // Formula Calculation: (A + B + C) - (D + E + F)
-                            $endOfMonth = ($begBal + $delivQty + $stockRec) - ($stockTrans + $consumption + $expired);
-                        @endphp
-                        <tr>
-                            <td>{{ $loop->iteration }}. {{ $med->code }} {{ $med->name }}</td>
-                            <td>{{ $begBal }}</td>
-                            <td>{{ $delivQty }}</td>
-                            <td></td>
-                            <td>{{ $batchDetails }}</td>
-                            <td>{{ $stockRec }}</td>
-                            <td>{{ $stockTrans }}</td>
-                            <td></td>
-                            <td>{{ $consumption }}</td>
-                            <td>{{ $expired }}</td>
-                            <td>{{ $endOfMonth }}</td>
-                        </tr>
-                    @endforeach
                 @empty
                     <tr>
                         <td colspan="11" style="text-align: center">No data available for this month</td>
