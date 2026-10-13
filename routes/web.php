@@ -45,6 +45,7 @@ Route::group(['middleware'=>['guest']],function(){
 
 Route::group(['middleware'=>['login_auth']],function(){
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard.index');
+    Route::get('/dashboard/data',[DashboardController::class,'data'])->name('dashboard.data');
     Route::get('/logout',[DashboardController::class,'logout'])->name('logout');
 
     Route::prefix('/patient')->group(function () {

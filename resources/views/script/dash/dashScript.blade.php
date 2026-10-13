@@ -83,6 +83,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const htmlElement = document.documentElement;
+        const dashboardDataUrl = "{{ route('dashboard.data') }}";
+        const yearSelect = document.getElementById('yearSelect');
+        const yearLoading = document.getElementById('yearLoading');
+        const pvisitYearLabel = document.getElementById('pvisitYearLabel');
+        const pcatYearLabel = document.getElementById('pcatYearLabel');
 
         function getChartBarColor() {
             const isDarkMode = htmlElement.getAttribute('data-bs-theme') === 'dark';
@@ -93,7 +98,7 @@
         const liveChartData = @json($chartData ?? array_fill(0, 12, 0));
         const ctx1 = document.getElementById('pvisitMonthlyChart').getContext('2d');
 
-        const pvisitMonthlyChart = new Chart(ctx1, {
+        window.pvisitMonthlyChart = new Chart(ctx1, {
             type: 'bar',
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -131,23 +136,25 @@
             '5': 'Guest'
         };
 
-        const formattedCategoryDatasets = rawCategoryDatasets.map((dataset, index) => {
-            const customLabel = categoryLabelMap[dataset.label] || dataset.label;
-            return {
-                label: customLabel,
-                data: dataset.data,
-                backgroundColor: categoryColors[index % categoryColors.length],
-                borderRadius: 4
-            };
-        });
+        function formatCategoryDatasets(rawDatasets) {
+            return (rawDatasets || []).map((dataset, index) => {
+                const customLabel = categoryLabelMap[dataset.label] || dataset.label;
+                return {
+                    label: customLabel,
+                    data: dataset.data,
+                    backgroundColor: categoryColors[index % categoryColors.length],
+                    borderRadius: 4
+                };
+            });
+        }
 
         const ctx2 = document.getElementById('pcatvisitMonthlyChart').getContext('2d');
 
-        const pcatvisitMonthlyChart = new Chart(ctx2, {
+        window.pcatvisitMonthlyChart = new Chart(ctx2, {
             type: 'bar',
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: formattedCategoryDatasets
+                datasets: formatCategoryDatasets(rawCategoryDatasets)
             },
             options: {
                 responsive: true,
@@ -173,12 +180,59 @@
             }
         });
 
+        // --- AJAX year filter (no full page reload, data only) ---
+        function setYearLoading(isLoading) {
+            if (yearLoading) yearLoading.classList.toggle('d-none', !isLoading);
+            if (yearSelect) yearSelect.disabled = isLoading;
+        }
+
+        async function refreshDashboardYear(year) {
+            setYearLoading(true);
+            try {
+                const response = await fetch(dashboardDataUrl + '?year=' + encodeURIComponent(year), {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }
+                });
+                if (!response.ok) throw new Error('Failed to load dashboard data.');
+                const payload = await response.json();
+
+                if (window.pvisitMonthlyChart) {
+                    window.pvisitMonthlyChart.data.datasets[0].data = payload.chartData || [];
+                    window.pvisitMonthlyChart.update();
+                }
+
+                if (window.pcatvisitMonthlyChart) {
+                    window.pcatvisitMonthlyChart.data.datasets = formatCategoryDatasets(payload.categoryMonthlyDatasets);
+                    window.pcatvisitMonthlyChart.update();
+                }
+
+                if (pvisitYearLabel) pvisitYearLabel.textContent = payload.year;
+                if (pcatYearLabel) pcatYearLabel.textContent = payload.year;
+
+                // Keep URL in sync without reloading
+                const url = new URL(window.location.href);
+                url.searchParams.set('year', payload.year);
+                window.history.replaceState({}, '', url);
+            } catch (e) {
+                if (window.toastr) toastr.error('Could not load data for selected year.');
+            } finally {
+                setYearLoading(false);
+            }
+        }
+
+        if (yearSelect) {
+            yearSelect.addEventListener('change', function () {
+                refreshDashboardYear(this.value);
+            });
+        }
+
         // Watch for theme changes (Dark Mode / Light Mode)
         const themeObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'data-bs-theme') {
-                    pvisitMonthlyChart.data.datasets[0].backgroundColor = getChartBarColor();
-                    pvisitMonthlyChart.update();
+                    if (window.pvisitMonthlyChart) {
+                        window.pvisitMonthlyChart.data.datasets[0].backgroundColor = getChartBarColor();
+                        window.pvisitMonthlyChart.update();
+                    }
                 }
             });
         });

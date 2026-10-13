@@ -14,11 +14,16 @@ use App\Models\ClinicDB\Medicine;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $today = Carbon::today();
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
+
+        $selectedYear = (int) $request->query('year', $currentYear);
+        if ($selectedYear < 2000 || $selectedYear > ($currentYear + 1)) {
+            $selectedYear = $currentYear;
+        }
 
         // 1. Total Visits Count & Medicine Count (Default Database)
         $ptodayvisits = Patientvisit::whereDate('date', $today)->count();
@@ -103,14 +108,14 @@ class DashboardController extends Controller
             $collegeCountsdaily[]   = $dailyByCollege[$college] ?? 0;
         }
 
-        // 8. Fetch Monthly Visits filtered by typeofconsultation = 1 for Current Year
+        // 8. Fetch Monthly Visits filtered by typeofconsultation = 1 for Selected Year
         // Change 'count(id)' to 'count(DISTINCT stid)' if you only want unique students per month
         $monthlyConsultations = DB::table('patientvisits')
             ->select(
                 DB::raw('MONTH(date) as month'),
                 DB::raw('COUNT(id) as total_visits')
             )
-            ->whereYear('date', $currentYear)
+            ->whereYear('date', $selectedYear)
             ->where('typeofconsultation', 1)
             ->whereNotNull('stid')
             ->groupBy(DB::raw('MONTH(date)'))
@@ -125,6 +130,7 @@ class DashboardController extends Controller
 
         // 9. Fetch Monthly Patient Visits by Category (pcat) for typeofconsultation = 1
         $categories = DB::table('patientvisits')
+            ->whereYear('date', $selectedYear)
             ->whereNotNull('pcat')
             ->where('pcat', '!=', '')
             ->distinct()
@@ -137,7 +143,7 @@ class DashboardController extends Controller
                 'pcat',
                 DB::raw('COUNT(id) as total')
             )
-            ->whereYear('date', $currentYear)
+            ->whereYear('date', $selectedYear)
             ->where('typeofconsultation', 1)
             ->whereNotNull('pcat')
             ->groupBy(DB::raw('MONTH(date)'), 'pcat')
@@ -171,8 +177,97 @@ class DashboardController extends Controller
             'collegeAcronymsdaily',
             'collegeCountsdaily',
             'chartData',
-            'categoryMonthlyDatasets'
+            'categoryMonthlyDatasets',
+            'selectedYear'
         ));
+    }
+
+    /**
+     * Return year-filtered chart data as JSON for AJAX refresh (no page reload).
+     */
+    public function data(Request $request)
+    {
+        $currentYear = Carbon::now()->year;
+
+        $validated = Validator::make($request->all(), [
+            'year' => 'nullable|integer|min:2000|max:' . ($currentYear + 1),
+        ]);
+
+        if ($validated->fails()) {
+            return response()->json(['message' => 'Invalid year.'], 422);
+        }
+
+        $selectedYear = (int) $request->query('year', $currentYear);
+
+        $yearly = $this->getYearlyChartData($selectedYear);
+
+        return response()->json([
+            'year' => $selectedYear,
+            'chartData' => $yearly['chartData'],
+            'categoryMonthlyDatasets' => $yearly['categoryMonthlyDatasets'],
+        ]);
+    }
+
+    /**
+     * Shared yearly aggregation used by index() and data().
+     */
+    private function getYearlyChartData(int $year): array
+    {
+        $monthlyConsultations = DB::table('patientvisits')
+            ->select(
+                DB::raw('MONTH(date) as month'),
+                DB::raw('COUNT(id) as total_visits')
+            )
+            ->whereYear('date', $year)
+            ->where('typeofconsultation', 1)
+            ->whereNotNull('stid')
+            ->groupBy(DB::raw('MONTH(date)'))
+            ->pluck('total_visits', 'month')
+            ->toArray();
+
+        $chartData = [];
+        for ($m = 1; $m <= 12; $m++) {
+            $chartData[] = $monthlyConsultations[$m] ?? 0;
+        }
+
+        $categories = DB::table('patientvisits')
+            ->whereYear('date', $year)
+            ->whereNotNull('pcat')
+            ->where('pcat', '!=', '')
+            ->distinct()
+            ->pluck('pcat')
+            ->toArray();
+
+        $rawCategoryMonthlyData = DB::table('patientvisits')
+            ->select(
+                DB::raw('MONTH(date) as month'),
+                'pcat',
+                DB::raw('COUNT(id) as total')
+            )
+            ->whereYear('date', $year)
+            ->where('typeofconsultation', 1)
+            ->whereNotNull('pcat')
+            ->groupBy(DB::raw('MONTH(date)'), 'pcat')
+            ->get();
+
+        $categoryMonthlyDatasets = [];
+
+        foreach ($categories as $category) {
+            $monthlyCounts = array_fill(1, 12, 0);
+
+            foreach ($rawCategoryMonthlyData as $row) {
+                if ($row->pcat === $category) {
+                    $monthlyCounts[$row->month] = $row->total;
+                }
+            }
+
+            $categoryMonthlyDatasets[] = [
+                'label' => $category,
+                'data'  => array_values($monthlyCounts),
+            ];
+        }
+
+        return compact('chartData', 'categoryMonthlyDatasets');
     }
 
     public function logout()

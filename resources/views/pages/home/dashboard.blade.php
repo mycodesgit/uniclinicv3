@@ -9,6 +9,18 @@
                         <h1 class="h4 fw-bold mb-1" style="letter-spacing: -0.02em;">MDHU Dashboard Overview</h1>
                         <p class="text-muted small mb-0">System metrics, patient consultations, medical records, and daily activity logs.</p>
                     </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <form id="yearForm" class="d-flex align-items-center gap-2" onsubmit="return false;">
+                            <label for="yearSelect" class="form-label mb-0 small text-muted">Year:</label>
+                            <select id="yearSelect" name="year" class="form-select form-select-sm">
+                                @php $selectedYear = $selectedYear ?? request('year', date('Y')); @endphp
+                                @for ($y = date('Y'); $y >= date('Y') - 4; $y--)
+                                    <option value="{{ $y }}" {{ $selectedYear == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                @endfor
+                            </select>
+                            <span id="yearLoading" class="spinner-border spinner-border-sm text-secondary d-none" role="status" aria-hidden="true"></span>
+                        </form>
+                    </div>
                 </div>
                 <div class="row g-3 mb-3">
                     <div class="col-xl-3 col-sm-6">
@@ -87,7 +99,7 @@
                             <div class="card-body">
                                 <div>
                                     <h6 class="fw-bold mb-0">No. of Patient Visits</h6>
-                                    <small class="text-muted">Monthly breakdown of patients for {{ date('Y') }}</small>
+                                    <small class="text-muted">Monthly breakdown of patients for <span id="pvisitYearLabel">{{ $selectedYear ?? date('Y') }}</span></small>
                                 </div>
                                 <div style="height:250px; min-height:250px">
                                     <canvas id="pvisitMonthlyChart"></canvas>
@@ -99,7 +111,7 @@
                             <div class="card-body">
                                 <div>
                                     <h6 class="fw-bold mb-0">No. of Patient Visits by Category</h6>
-                                    <small class="text-muted">Monthly breakdown of patients for {{ date('Y') }}</small>
+                                    <small class="text-muted">Monthly breakdown of patients for <span id="pcatYearLabel">{{ $selectedYear ?? date('Y') }}</span></small>
                                 </div>
                                 <div style="height:250px; min-height:250px">
                                     <canvas id="pcatvisitMonthlyChart"></canvas>
