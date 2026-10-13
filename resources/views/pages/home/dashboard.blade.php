@@ -26,10 +26,10 @@
                     <div class="col-xl-3 col-sm-6">
                         <div class="card card-animate p-3">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="text-muted small fw-medium">Today</span>
+                                <span class="text-muted small fw-medium">Visits — <span id="ptodayLabel">{{ $dayLabel ?? \Carbon\Carbon::now()->format('F d, Y') }}</span></span>
                                 <i class="ti ti-users text-muted fs-5"></i>
                             </div>
-                            <div class="h2 fw-bold mb-1">{{ number_format($ptodayvisits ?? 0) }}</div>
+                            <div class="h2 fw-bold mb-1" id="ptodayCount">{{ number_format($ptodayvisits ?? 0) }}</div>
                             <small class="text-muted"><span class="text-success fw-semibold"><i class="ti ti-arrow-up-right"></i> Patient</span> consultations</small>
                         </div>
                     </div>
@@ -37,10 +37,10 @@
                     <div class="col-xl-3 col-sm-6">
                         <div class="card card-animate p-3">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="text-muted small fw-medium">This Month</span>
+                                <span class="text-muted small fw-medium">Visits — <span id="pthismonthLabel">{{ $monthLabel ?? \Carbon\Carbon::now()->format('F Y') }}</span></span>
                                 <i class="ti ti-file-check text-muted fs-5"></i>
                             </div>
-                            <div class="h2 fw-bold mb-1">{{ number_format($pthismonthvisits ?? 0) }}</div>
+                            <div class="h2 fw-bold mb-1" id="pthismonthCount">{{ number_format($pthismonthvisits ?? 0) }}</div>
                             <small class="text-muted"><span class="text-success fw-semibold"><i class="ti ti-check"></i> Patient</span> consultations</small>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                             <div class="card-body">
                                 <div>
                                     <h6 class="fw-bold mb-0">Patient Visit This Months</h6>
-                                    <small class="text-muted">Monthly breakdown of patients per colleges {{ \Carbon\Carbon::now()->format('F Y') }}</small>
+                                    <small class="text-muted">Monthly breakdown of patients per colleges <span id="collegeMonthLabel">{{ $monthLabel ?? \Carbon\Carbon::now()->format('F Y') }}</span></small>
                                 </div>
                                 <div style="height:250px; min-height:250px">
                                     <canvas id="currcollegevisitBarChartMonthh"></canvas>
@@ -84,7 +84,7 @@
                             <div class="card-body">
                                 <div>
                                     <h6 class="fw-bold mb-0">Patient Visit Today</h6>
-                                    <small class="text-muted">Daily breakdown of patients per colleges {{ \Carbon\Carbon::now()->format('F d, Y') }}</small>
+                                    <small class="text-muted">Daily breakdown of patients per colleges <span id="collegeDailyLabel">{{ $dayLabel ?? \Carbon\Carbon::now()->format('F d, Y') }}</span></small>
                                 </div>
                                 <div style="height:250px; min-height:250px">
                                     <canvas id="currcollegevisitBarChart" style="height:250px; min-height:250px"></canvas>

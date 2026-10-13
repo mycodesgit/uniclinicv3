@@ -1,29 +1,36 @@
 <script>
+    // Shared college color map
+    var collegeColorMap = {
+        'CJE': 'gray',
+        'CAS': 'red',
+        'CBM': 'pink',
+        'CAF': 'green',
+        'CCS': 'purple',
+        'COE': 'orange',
+        'CTE': 'blue'
+    };
+
+    function collegeBarColors(acronyms) {
+        return (acronyms || []).map(function (college) {
+            return collegeColorMap[college] || 'black';
+        });
+    }
+</script>
+
+<script>
     $(function() {
+        var acronyms = (typeof collegeAcronymsmonth !== 'undefined') ? collegeAcronymsmonth : [];
+        var counts = (typeof collegeCountsmonth !== 'undefined') ? collegeCountsmonth : [];
         var ctx = document.getElementById('currcollegevisitBarChartMonthh').getContext('2d');
 
-        // Fixed colors for each college
-        var colorMap = {
-            'CJE': 'gray',
-            'CAS': 'red',
-            'CBM': 'pink',
-            'CAF': 'green',
-            'CCS': 'purple',
-            'COE': 'orange',
-            'CTE': 'blue'
-        };
-
-        // Assign fixed color per acronym; fallback to black if not found
-        var barColors = collegeAcronymsmonth.map(college => colorMap[college] || 'black');
-
-        new Chart(ctx, {
+        window.collegeMonthChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: collegeAcronymsmonth,
+                labels: acronyms.slice(),
                 datasets: [{
                     label: 'Student Patient Visits per College',
-                    data: collegeCountsmonth,
-                    backgroundColor: barColors
+                    data: counts.slice(),
+                    backgroundColor: collegeBarColors(acronyms)
                 }]
             },
             options: {
@@ -41,30 +48,18 @@
 
 <script>
     $(function() {
+        var acronyms = (typeof collegeAcronymsdaily !== 'undefined') ? collegeAcronymsdaily : [];
+        var counts = (typeof collegeCountsdaily !== 'undefined') ? collegeCountsdaily : [];
         var ctx = document.getElementById('currcollegevisitBarChart').getContext('2d');
 
-        // Fixed colors for each college
-        var colorMap = {
-            'CJE': 'gray',
-            'CAS': 'red',
-            'CBM': 'pink',
-            'CAF': 'green',
-            'CCS': 'purple',
-            'COE': 'orange',
-            'CTE': 'blue'
-        };
-
-        // Assign fixed color per acronym; fallback to black if not found
-        var barColors = collegeAcronymsdaily.map(college => colorMap[college] || 'black');
-
-        new Chart(ctx, {
+        window.collegeDailyChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: collegeAcronymsdaily,
+                labels: acronyms.slice(),
                 datasets: [{
                     label: 'Student Patient Visits per College',
-                    data: collegeCountsdaily,
-                    backgroundColor: barColors
+                    data: counts.slice(),
+                    backgroundColor: collegeBarColors(acronyms)
                 }]
             },
             options: {
@@ -86,15 +81,13 @@
         const dashboardDataUrl = "{{ route('dashboard.data') }}";
         const yearSelect = document.getElementById('yearSelect');
         const yearLoading = document.getElementById('yearLoading');
-        const pvisitYearLabel = document.getElementById('pvisitYearLabel');
-        const pcatYearLabel = document.getElementById('pcatYearLabel');
 
         function getChartBarColor() {
             const isDarkMode = htmlElement.getAttribute('data-bs-theme') === 'dark';
             return isDarkMode ? '#aaabac' : '#18181b';
         }
 
-        // --- CHART 1: Single Bar Chart (Total Visits) ---
+        // --- CHART 3: Single Bar Chart (Total Visits, Jan-Dec) ---
         const liveChartData = @json($chartData ?? array_fill(0, 12, 0));
         const ctx1 = document.getElementById('pvisitMonthlyChart').getContext('2d');
 
@@ -115,7 +108,7 @@
                 plugins: { legend: { display: false } },
                 scales: {
                     x: { grid: { display: false } },
-                    y: { 
+                    y: {
                         grid: { color: '#f4f4f5' },
                         ticks: { precision: 0 }
                     }
@@ -123,10 +116,9 @@
             }
         });
 
-        // --- CHART 2: Multi-Bar Chart by Category (Jan–Dec) ---
+        // --- CHART 4: Multi-Bar Chart by Category (Jan–Dec) ---
         const rawCategoryDatasets = @json($categoryMonthlyDatasets ?? []);
-        
-        // Assign unique colors to each category bar
+
         const categoryColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
         const categoryLabelMap = {
             '1': 'Student',
@@ -147,6 +139,8 @@
                 };
             });
         }
+
+        window.formatCategoryDatasets = formatCategoryDatasets;
 
         const ctx2 = document.getElementById('pcatvisitMonthlyChart').getContext('2d');
 
@@ -171,7 +165,7 @@
                 },
                 scales: {
                     x: { grid: { display: false } },
-                    y: { 
+                    y: {
                         grid: { color: '#f4f4f5' },
                         ticks: { precision: 0 },
                         beginAtZero: true
@@ -180,10 +174,15 @@
             }
         });
 
-        // --- AJAX year filter (no full page reload, data only) ---
+        // --- AJAX year filter: updates EVERYTHING date-based, no page reload ---
         function setYearLoading(isLoading) {
             if (yearLoading) yearLoading.classList.toggle('d-none', !isLoading);
             if (yearSelect) yearSelect.disabled = isLoading;
+        }
+
+        function setText(id, value) {
+            const el = document.getElementById(id);
+            if (el && typeof value !== 'undefined') el.textContent = value;
         }
 
         async function refreshDashboardYear(year) {
@@ -193,24 +192,45 @@
                     headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }
                 });
                 if (!response.ok) throw new Error('Failed to load dashboard data.');
-                const payload = await response.json();
+                const p = await response.json();
 
+                // 1. Top count cards
+                setText('ptodayCount', Number(p.ptodayvisits || 0).toLocaleString());
+                setText('pthismonthCount', Number(p.pthismonthvisits || 0).toLocaleString());
+                setText('ptodayLabel', p.dayLabel);
+                setText('pthismonthLabel', p.monthLabel);
+
+                // 2. College charts
+                if (window.collegeMonthChart && p.collegeAcronymsmonth) {
+                    window.collegeMonthChart.data.labels = p.collegeAcronymsmonth;
+                    window.collegeMonthChart.data.datasets[0].data = p.collegeCountsmonth || [];
+                    window.collegeMonthChart.data.datasets[0].backgroundColor = collegeBarColors(p.collegeAcronymsmonth);
+                    window.collegeMonthChart.update();
+                }
+                if (window.collegeDailyChart && p.collegeAcronymsdaily) {
+                    window.collegeDailyChart.data.labels = p.collegeAcronymsdaily;
+                    window.collegeDailyChart.data.datasets[0].data = p.collegeCountsdaily || [];
+                    window.collegeDailyChart.data.datasets[0].backgroundColor = collegeBarColors(p.collegeAcronymsdaily);
+                    window.collegeDailyChart.update();
+                }
+                setText('collegeMonthLabel', p.monthLabel);
+                setText('collegeDailyLabel', p.dayLabel);
+
+                // 3. Yearly charts
                 if (window.pvisitMonthlyChart) {
-                    window.pvisitMonthlyChart.data.datasets[0].data = payload.chartData || [];
+                    window.pvisitMonthlyChart.data.datasets[0].data = p.chartData || [];
                     window.pvisitMonthlyChart.update();
                 }
-
                 if (window.pcatvisitMonthlyChart) {
-                    window.pcatvisitMonthlyChart.data.datasets = formatCategoryDatasets(payload.categoryMonthlyDatasets);
+                    window.pcatvisitMonthlyChart.data.datasets = formatCategoryDatasets(p.categoryMonthlyDatasets);
                     window.pcatvisitMonthlyChart.update();
                 }
-
-                if (pvisitYearLabel) pvisitYearLabel.textContent = payload.year;
-                if (pcatYearLabel) pcatYearLabel.textContent = payload.year;
+                setText('pvisitYearLabel', p.year);
+                setText('pcatYearLabel', p.year);
 
                 // Keep URL in sync without reloading
                 const url = new URL(window.location.href);
-                url.searchParams.set('year', payload.year);
+                url.searchParams.set('year', p.year);
                 window.history.replaceState({}, '', url);
             } catch (e) {
                 if (window.toastr) toastr.error('Could not load data for selected year.');
@@ -237,9 +257,9 @@
             });
         });
 
-        themeObserver.observe(htmlElement, { 
-            attributes: true, 
-            attributeFilter: ['data-bs-theme'] 
+        themeObserver.observe(htmlElement, {
+            attributes: true,
+            attributeFilter: ['data-bs-theme']
         });
     });
 </script>
