@@ -75,29 +75,56 @@ class ReportsMedicineController extends Controller
         // 3. Convert month number to full month name (e.g., "05" -> "May")
         $monthName = \Carbon\Carbon::createFromDate($currentYear, $month, 1)->format('F');
 
-        // 4. Fetch all medicines with stock relations (no category column exists,
-        //    so rows are a flat list ordered by name instead of grouped)
+        // 4. Fetch all medicines with stock relations.
+        //    The medicine `code` field doubles as the category
+        //    ("Item Code / Category" in the medicine form), so rows are
+        //    grouped under "A. CategoryName" headers.
         $medicines = Medicine::with(['batches', 'transactions'])
+                ->orderBy('code', 'asc')
                 ->orderBy('name', 'asc')
                 ->get();
 
         // 5. Build per-medicine inventory rows for the selected month
         $rows = $this->buildMonthlyInventoryRows($medicines, $month, $currentYear);
 
-        // 6. Prepare data payload
+        // 6. Group rows by category with lettered labels (A, B, ... Z, AA, ...)
+        $grouped = [];
+        foreach (collect($rows)->groupBy('category') as $category => $items) {
+            $grouped[] = [
+                'label' => $this->letterLabel(count($grouped)) . '. ' . ($category ?: 'Uncategorized'),
+                'items' => $items->values()->all(),
+            ];
+        }
+
+        // 7. Prepare data payload
         $data = [
-            'rows'          => $rows,
+            'grouped'       => $grouped,
             'monthselected' => $monthselected,
             'monthName'     => $monthName,
             'currentYear'   => $currentYear,
         ];
 
-        // 7. Generate PDF
+        // 8. Generate PDF
         $pdf = PDF::loadView('pages.reports.pdf.medicinepdf', $data)
                 ->setPaper('Legal', 'landscape');
 
         // Return as inline stream (ideal for iframe embedding)
         return $pdf->stream("Medicine_Report_{$monthName}_{$currentYear}.pdf", ['Attachment' => false]);
+    }
+
+    /**
+     * 0-based index to spreadsheet-style letters: 0 => A, 25 => Z, 26 => AA, ...
+     */
+    private function letterLabel(int $index): string
+    {
+        $label = '';
+        $index++;
+        while ($index > 0) {
+            $index--;
+            $label = chr(65 + ($index % 26)) . $label;
+            $index = intdiv($index, 26);
+        }
+        return $label;
     }
 
     /**
@@ -193,8 +220,13 @@ class ReportsMedicineController extends Controller
             // Formula: (A + B + C) - (D + E + F)
             $endOfMonth = ($begBal + $delivQty + $stockRec) - ($stockTrans + $consumption + $expired);
 
+            // Commodity name: generic + dosage shown once (code is the group header)
+            $suffix = trim(($med->generic_name ?? '') . ' ' . ($med->dosage ?? ''));
+            $displayName = $med->name . ($suffix !== '' ? ' (' . $suffix . ')' : '');
+
             $rows[] = [
-                'name'        => trim(($med->code ? $med->code . ' ' : '') . $med->name),
+                'category'    => $med->code ?: 'Uncategorized',
+                'name'        => $displayName,
                 'begBal'      => $begBal,
                 'delivQty'    => $delivQty,
                 'delivDates'  => implode(', ', array_unique($delivDates)),

@@ -66,21 +66,27 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- Flat list: medicines table has no category column, so no grouping headers --}}
-                @forelse ($rows ?? [] as $row)
-                    <tr>
-                        <td>{{ $loop->iteration }}. {{ $row['name'] }}</td>
-                        <td>{{ $row['begBal'] }}</td>
-                        <td>{{ $row['delivQty'] }}</td>
-                        <td>{{ $row['delivDates'] }}</td>
-                        <td>{{ $row['batchDetails'] }}</td>
-                        <td>{{ $row['stockRec'] }}</td>
-                        <td>{{ $row['stockTrans'] }}</td>
-                        <td></td>
-                        <td>{{ $row['consumption'] }}</td>
-                        <td>{{ $row['expired'] }}</td>
-                        <td>{{ $row['endOfMonth'] }}</td>
+                {{-- Grouped under "A. CategoryName" headers; category = medicine code field --}}
+                @forelse ($grouped ?? [] as $group)
+                    <tr style="background:yellow; font-weight:bold;">
+                        <td colspan="11">{{ $group['label'] }}</td>
                     </tr>
+
+                    @foreach ($group['items'] as $row)
+                        <tr>
+                            <td>{{ $loop->iteration }}. {{ $row['name'] }}</td>
+                            <td>{{ $row['begBal'] }}</td>
+                            <td>{{ $row['delivQty'] }}</td>
+                            <td>{{ $row['delivDates'] }}</td>
+                            <td>{{ $row['batchDetails'] }}</td>
+                            <td>{{ $row['stockRec'] }}</td>
+                            <td>{{ $row['stockTrans'] }}</td>
+                            <td></td>
+                            <td>{{ $row['consumption'] }}</td>
+                            <td>{{ $row['expired'] }}</td>
+                            <td>{{ $row['endOfMonth'] }}</td>
+                        </tr>
+                    @endforeach
                 @empty
                     <tr>
                         <td colspan="11" style="text-align: center">No data available for this month</td>
