@@ -18,7 +18,7 @@
 			border: 1px solid #000;
 		  	padding: 5px;
             font-family: Sans-serif;
-		} 
+		}
 		#medreptable th {
 		  	border: 1px solid #000;
 		  	font-weight: normal;
@@ -110,8 +110,8 @@
                                 ->filter(function($transaction) use ($selectedMonth, $selectedYear) {
                                     if (!$transaction->created_at) return false;
                                     $date = \Carbon\Carbon::parse($transaction->created_at);
-                                    return $date->year == $selectedYear 
-                                        && $date->month == $selectedMonth 
+                                    return $date->year == $selectedYear
+                                        && $date->month == $selectedMonth
                                         && in_array(strtolower($transaction->transaction_type), ['dispensed', 'issued', 'dispense']);
                                 })
                                 ->sum('quantity');
@@ -131,8 +131,8 @@
                             <td>{{ $loop->iteration }}. {{ $med->code }} {{ $med->name }}</td>
                             <td>{{ $begBal }}</td>
                             <td>{{ $delivQty }}</td>
-                            <td>{{ $batchDetails }}</td>
                             <td></td>
+                            <td>{{ $batchDetails }}</td>
                             <td>{{ $stockRec }}</td>
                             <td>{{ $stockTrans }}</td>
                             <td></td>
