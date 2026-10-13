@@ -16,7 +16,6 @@ use App\Models\EnrollmentDB\Student;
 use App\Models\ScheduleDB\College;
 use App\Models\ScheduleDB\EnPrograms;
 
-use App\Models\ClinicDB\AccidentInjury;
 use App\Models\ClinicDB\Complaint;
 use App\Models\ClinicDB\GuestPatient;
 use App\Models\ClinicDB\Patientvisit;
@@ -330,42 +329,75 @@ class ReportsMedicalStatisticController extends Controller
 
 
         // V. ACCIDENTS AND INJURIES
-        // 1. Fetch active injury master list sorted alphabetically
-        $injuriesMasterList = AccidentInjury::where('status', 1)
-            ->orderBy('name', 'ASC')
-            ->get();
+        // Source: Complaints whose category is the "Accident & Injuries" category.
+        // Counts each occurrence in the period visits' chief_complaint (ID or name match).
+        $accidentComplaints = $allComplaints->filter(function ($complaint) {
+            return (bool) preg_match('/accident.*injur|injur.*accident/i', $complaint->categoryname ?? '');
+        })->sortBy('complaintname')->values();
 
         // 2. Initialize counting array
         $injuryCounts = [];
-        foreach ($injuriesMasterList as $injury) {
-            $injuryCounts[$injury->id] = [
-                'name'  => $injury->name,
+        $injuryCountsByName = [];
+        foreach ($accidentComplaints as $complaint) {
+            $injuryCounts[$complaint->id] = [
+                'name'  => $complaint->complaintname,
                 'count' => 0,
             ];
+            $injuryCountsByName[strtolower(trim($complaint->complaintname))] = $complaint->id;
         }
 
         // 3. Process filtered $reports visits
-        // Assumes patient_visits table stores selected injury ID(s) in $visit->accident_injury column
-        $otherInjuriesCount = 0;
-
         foreach ($reports as $visit) {
-            if (!empty($visit->accident_injury)) {
-                // Split comma-separated IDs if multiple values are stored
-                $injuryIds = array_filter(explode(',', $visit->accident_injury));
+            if (empty($visit->chief_complaint)) {
+                continue;
+            }
 
-                foreach ($injuryIds as $id) {
-                    $id = trim($id);
-                    if (isset($injuryCounts[$id])) {
-                        $injuryCounts[$id]['count']++;
-                    } else {
-                        $otherInjuriesCount++;
-                    }
+            $complaintKeys = array_filter(array_map('trim', explode(',', $visit->chief_complaint)));
+
+            foreach ($complaintKeys as $key) {
+                if (isset($injuryCounts[$key])) {
+                    $injuryCounts[$key]['count']++;
+                } elseif (isset($injuryCountsByName[strtolower($key)])) {
+                    $injuryCounts[$injuryCountsByName[strtolower($key)]]['count']++;
                 }
             }
         }
 
         // 4. Calculate total injuries
+        $otherInjuriesCount = 0;
         $totalInjuries = array_sum(array_column($injuryCounts, 'count')) + $otherInjuriesCount;
+
+
+        // VI. REFERRALS (period-filtered PatientReferral grouped by facility)
+        $referralQuery = PatientReferral::query();
+        if ($type === 'monthly') {
+            $referralQuery->whereMonth('date', $value)
+                ->whereYear('date', $selectedYear);
+        } elseif ($type === 'quarterly') {
+            if (array_key_exists($value, $monthRanges)) {
+                [$startMonth, $endMonth] = $monthRanges[$value];
+                $referralQuery->whereBetween('date', [
+                    Carbon::create($selectedYear, $startMonth, 1)->startOfDay(),
+                    Carbon::create($selectedYear, $endMonth)->endOfMonth()->endOfDay(),
+                ]);
+            }
+        } elseif ($type === 'yearly') {
+            $referralQuery->whereYear('date', $selectedYear);
+        }
+
+        $referrals = $referralQuery->get();
+        $referralCounts = [];
+        $unspecifiedReferralsCount = 0;
+        foreach ($referrals as $referral) {
+            $facility = trim((string) ($referral->preferto ?? ''));
+            if ($facility === '') {
+                $unspecifiedReferralsCount++;
+            } else {
+                $referralCounts[$facility] = ($referralCounts[$facility] ?? 0) + 1;
+            }
+        }
+        ksort($referralCounts);
+        $totalReferrals = $referrals->count();
 
         return compact(
             'reports',
@@ -381,6 +413,9 @@ class ReportsMedicalStatisticController extends Controller
             'injuryCounts',
             'otherInjuriesCount',
             'totalInjuries',
+            'referralCounts',
+            'unspecifiedReferralsCount',
+            'totalReferrals',
             'reportingPeriodLabel',
             'formattedPeriodValue',
             'preparedBy',

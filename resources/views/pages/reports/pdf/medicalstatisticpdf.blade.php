@@ -342,41 +342,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Falls</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Cuts/Lacerations</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Sprains</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Burns</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Sports-related Injuries</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Vehicular Incidents</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Animal Bites</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Others</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
+                {{-- Rows come from Complaints in the "Accident & Injuries" category; counts from visits in the selected period --}}
+                @foreach($injuryCounts as $injury)
+                    <tr>
+                        <td>{{ $injury['name'] }}</td>
+                        <td class="center">{{ $injury['count'] }}</td>
+                    </tr>
+                @endforeach
+
+                @if($otherInjuriesCount > 0)
+                    <tr>
+                        <td>Others</td>
+                        <td class="center">{{ $otherInjuriesCount }}</td>
+                    </tr>
+                @endif
+
+                @if(empty($injuryCounts) && $otherInjuriesCount == 0)
+                    <tr>
+                        <td colspan="2" class="center">No records for this period.</td>
+                    </tr>
+                @endif
+
                 <tr class="total-row">
                     <td>TOTAL</td> <!--[cite: 1] -->
-                    <td></td>
+                    <td class="center">{{ $totalInjuries }}</td>
                 </tr>
             </tbody>
         </table>
@@ -391,37 +380,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>City Health Office</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Rural Health Unit</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Government Hospital</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Private Hospital</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Specialist Physician</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Dental Clinic</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
-                <tr>
-                    <td>Diagnostic Laboratory</td>
-                    <td></td>
-                </tr> <!--[cite: 1] -->
+                {{-- Rows come from patientreferral records in the selected period, grouped by facility --}}
+                @foreach($referralCounts as $facility => $count)
+                    <tr>
+                        <td>{{ $facility }}</td>
+                        <td class="center">{{ $count }}</td>
+                    </tr>
+                @endforeach
+
+                @if($unspecifiedReferralsCount > 0)
+                    <tr>
+                        <td>Unspecified</td>
+                        <td class="center">{{ $unspecifiedReferralsCount }}</td>
+                    </tr>
+                @endif
+
+                @if(empty($referralCounts) && $unspecifiedReferralsCount == 0)
+                    <tr>
+                        <td colspan="2" class="center">No referrals recorded for this period.</td>
+                    </tr>
+                @endif
+
                 <tr class="total-row">
                     <td>TOTAL</td> <!--[cite: 1] -->
-                    <td></td>
+                    <td class="center">{{ $totalReferrals }}</td>
                 </tr>
             </tbody>
         </table>
@@ -491,10 +473,10 @@
         <div class="signatures-container">
             <div class="signature-block">
                 <h3>Prepared by:</h3> <!--[cite: 1] -->
-                <div class="signature-line"><label>Name:</label> <input type="text"></div> <!--[cite: 1] -->
-                <div class="signature-line"><label>Position:</label> <input type="text"></div> <!--[cite: 1] -->
+                <div class="signature-line"><label>Name:</label> <input type="text" value="{{ $preparedBy ?? '' }}"></div> <!--[cite: 1] -->
+                <div class="signature-line"><label>Position:</label> <input type="text" value="{{ $position ?? '' }}"></div> <!--[cite: 1] -->
                 <div class="signature-line"><label>Signature:</label> <input type="text"></div> <!--[cite: 1] -->
-                <div class="signature-line"><label>Date:</label> <input type="date"></div> <!--[cite: 1] -->
+                <div class="signature-line"><label>Date:</label> <input type="text" value="{{ date('F d, Y') }}"></div> <!--[cite: 1] -->
             </div>
 
             <div class="signature-block">
