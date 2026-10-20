@@ -32,7 +32,6 @@ class PatientEmpController extends Controller
 {
     public function search(Request $request)
     {
-        $campus = 1;
         $search = $request->query('search');
 
         $emps = Employees::select(
@@ -43,8 +42,7 @@ class PatientEmpController extends Controller
                 'sex',
                 'camp_id',
                 'civil_status'
-            )->where('camp_id', $campus)
-            ->when($search, function ($query) use ($search) {
+            )->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('lname', 'LIKE', "%{$search}%")
                         ->orWhere('fname', 'LIKE', "%{$search}%")
