@@ -62,6 +62,30 @@
             font-weight: 500;
         }
 
+        /* Grand Total strip (4 columns) in the header, before Prepared by */
+        .grand-total-strip {
+            width: 100%;
+            clear: both;
+            margin: 5px 0 12px;
+        }
+
+        .grand-total-strip table {
+            margin-bottom: 0;
+        }
+
+        .grand-total-strip .gt-label {
+            font-weight: bold;
+            background-color: #f2f2f2;
+            border-left: 4px solid #333;
+            width: 30%;
+            text-transform: uppercase;
+        }
+
+        .grand-total-strip .gt-tag {
+            color: #666;
+            font-size: 12px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -164,14 +188,6 @@
                 <span class="info-label">Month/Quarter/Year:</span>
                 <span class="info-value">{{ $formattedPeriodValue }}</span>
             </div>
-            <div class="info-group">
-                <span class="info-label">Prepared by:</span>
-                <span class="info-value">{{ $preparedBy }}</span>
-            </div>
-            <div class="info-group">
-                <span class="info-label">Position:</span>
-                <span class="info-value">{{ $position }}</span>
-            </div>
         </div>
 
         <!-- New Cases by College -->
@@ -227,26 +243,19 @@
             </table>
         @endforelse
 
-        {{-- Overall Total --}}
-        <h2>Overall Total</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Summary</th>
-                    <th class="center" style="width: 15%;">Total</th>
-                    <th class="center" style="width: 15%;">Male</th>
-                    <th class="center" style="width: 15%;">Female</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="total-row">
-                    <td><strong>ALL COLLEGES</strong></td>
-                    <td class="center"><strong>{{ $newCaseTotal['total'] }}</strong></td>
-                    <td class="center"><strong>{{ $newCaseTotal['male'] }}</strong></td>
-                    <td class="center"><strong>{{ $newCaseTotal['female'] }}</strong></td>
-                </tr>
-            </tbody>
-        </table>
+        {{-- Grand Total (4 columns) displayed before Prepared by --}}
+        <div class="grand-total-strip">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Grand Total</td>
+                        <td class="center" style="width: 15%;"><span class="gt-tag">Total:</span> <strong>{{ $newCaseTotal['total'] }}</strong></td>
+                        <td class="center" style="width: 15%;"><span class="gt-tag">Male:</span> <strong>{{ $newCaseTotal['male'] }}</strong></td>
+                        <td class="center" style="width: 15%;"><span class="gt-tag">Female:</span> <strong>{{ $newCaseTotal['female'] }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <!-- Signatures -->
         <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 30px;">
