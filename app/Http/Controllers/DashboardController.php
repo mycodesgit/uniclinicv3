@@ -86,10 +86,15 @@ class DashboardController extends Controller
             ->pluck('college_abbr');
 
         // 3. Fetch Visit Summaries scoped to selected year + month/day.
+        //    The monthly per-college counts use the SAME population as the
+        //    "No. of Patient Visits" chart (classification = New Cases with an
+        //    stid), so the college bars always add up to the monthly total.
         $monthlyPatientVisits = DB::table('patientvisits')
             ->select('stid', DB::raw('COUNT(id) as total_visits'))
             ->whereMonth('date', $month)
             ->whereYear('date', $selectedYear)
+            ->where('typeofconsultation', 1)
+            ->whereNotNull('stid')
             ->groupBy('stid')
             ->pluck('total_visits', 'stid');
 
@@ -122,19 +127,27 @@ class DashboardController extends Controller
         }
 
         // 6. Aggregate Totals by College
-        $monthlyByCollege = [];
-        $dailyByCollege   = [];
+        $monthlyByCollege   = [];
+        $dailyByCollege     = [];
+        $monthlyUnspecified = 0;
 
-        foreach ($studentColleges as $studentId => $row) {
-            $college = $row->college_abbr;
-
-            // Aggregate Monthly Visits
-            if (isset($monthlyPatientVisits[$studentId])) {
-                $monthlyByCollege[$college] = ($monthlyByCollege[$college] ?? 0) + $monthlyPatientVisits[$studentId];
+        // Monthly: iterate EVERY stid with visits so no visit is dropped —
+        // rows that cannot be mapped to a college (employee IDs, guests,
+        // students missing from the enrollment server) roll into "Unspecified".
+        foreach ($monthlyPatientVisits as $studentId => $total) {
+            if ($studentId === null || $studentId === '' || !$studentColleges->has($studentId)) {
+                $monthlyUnspecified += $total;
+                continue;
             }
 
-            // Aggregate Daily Unique Student Visits
+            $college = strtoupper(trim($studentColleges[$studentId]->college_abbr));
+            $monthlyByCollege[$college] = ($monthlyByCollege[$college] ?? 0) + $total;
+        }
+
+        // Aggregate Daily Unique Student Visits
+        foreach ($studentColleges as $studentId => $row) {
             if (in_array($studentId, $dailyStudentIds)) {
+                $college = strtoupper(trim($row->college_abbr));
                 $dailyByCollege[$college] = ($dailyByCollege[$college] ?? 0) + 1;
             }
         }
@@ -145,12 +158,36 @@ class DashboardController extends Controller
         $collegeAcronymsdaily = [];
         $collegeCountsdaily   = [];
 
+        $masterCollegeKeys = $colleges->map(fn ($c) => strtoupper(trim($c)))->all();
+
         foreach ($colleges as $college) {
+            $key = strtoupper(trim($college));
+
             $collegeAcronymsmonth[] = $college;
-            $collegeCountsmonth[]   = $monthlyByCollege[$college] ?? 0;
+            $collegeCountsmonth[]   = $monthlyByCollege[$key] ?? 0;
 
             $collegeAcronymsdaily[] = $college;
-            $collegeCountsdaily[]   = $dailyByCollege[$college] ?? 0;
+            $collegeCountsdaily[]   = $dailyByCollege[$key] ?? 0;
+        }
+
+        // Colleges found in the data but missing from the college list
+        // (e.g. KAB students) are appended so every visit stays visible.
+        foreach (array_keys(array_merge($dailyByCollege, $monthlyByCollege)) as $key) {
+            if (in_array($key, $masterCollegeKeys, true)) {
+                continue;
+            }
+
+            $collegeAcronymsmonth[] = $key;
+            $collegeCountsmonth[]   = $monthlyByCollege[$key] ?? 0;
+
+            $collegeAcronymsdaily[] = $key;
+            $collegeCountsdaily[]   = $dailyByCollege[$key] ?? 0;
+        }
+
+        // Unmapped visits still count toward the monthly total
+        if ($monthlyUnspecified > 0) {
+            $collegeAcronymsmonth[] = 'Unspecified';
+            $collegeCountsmonth[]   = $monthlyUnspecified;
         }
 
         // 8. Fetch Monthly Visits filtered by typeofconsultation = 1 for Selected Year
