@@ -86,7 +86,36 @@ class AppointmentsController extends Controller
     {
         $patients = Employees::where('emp_ID', $emp_ID)->firstOrFail();
         $complaints =  Complaint::all();
-        $medicines = Medicine::all();
+
+        $medicines = Medicine::with(['batches' => function ($query) {
+                $query->where('quantity_remaining', '>', 0)
+                    ->orderBy('expiration_date', 'asc');
+            }])
+            ->where('is_active', true)
+            ->get()
+            ->map(function ($medicine) {
+                $totalRemaining = $medicine->batches->sum('quantity_remaining');
+
+                // Get first batch
+                $firstBatch = $medicine->batches->first();
+
+                // Safely parse date using Carbon
+                $nearestExpiry = 'N/A';
+                if ($firstBatch && $firstBatch->expiration_date) {
+                    $nearestExpiry = \Carbon\Carbon::parse($firstBatch->expiration_date)->format('M d, Y');
+                }
+
+                return (object) [
+                    'id'                 => $medicine->id,
+                    'code'               => $medicine->code,
+                    'name'               => $medicine->name,
+                    'generic_name'               => $medicine->generic_name,
+                    'quantity_remaining' => $totalRemaining,
+                    'nearest_expiry'     => $nearestExpiry,
+                ];
+            })
+            ->filter(fn ($med) => $med->quantity_remaining > 0)
+            ->values();
         $medserverender = MedicalServicesRendered::all();
 
         $emps = DB::connection('hremp')
