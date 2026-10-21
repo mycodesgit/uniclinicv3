@@ -70,6 +70,23 @@ class ReportsMedicalStatisticController extends Controller
         return $pdf->stream('Medical_Statistics_Report.pdf', ['Attachment' => false]);
     }
 
+    public function generateNewCase(Request $request)
+    {
+        $request->validate([
+            'reporting_period' => 'required|in:monthly,quarterly,yearly',
+            'period_value'     => 'required',
+        ]);
+
+        // Fetch New Cases data grouped by college
+        $data = $this->getNewCaseByCollegeData($request);
+
+        $pdf = PDF::loadView('pages.reports.pdf.newcasestatisticpdf', $data)
+                ->setPaper('Legal', 'portrait');
+
+        // Return inline stream instead of forcing a download
+        return $pdf->stream('New_Cases_Report.pdf', ['Attachment' => false]);
+    }
+
     /**
      * Helper logic to handle database filtering and label transformation
      */
@@ -421,6 +438,217 @@ class ReportsMedicalStatisticController extends Controller
             'preparedBy',
             'position',
             'selectedYear'
+        );
+    }
+
+    /**
+     * Helper logic for the New Cases report grouped by college.
+     * Counts patient visits with typeofconsultation = 1 (New Cases)
+     * and maps student consultations to their college affiliation.
+     */
+    private function getNewCaseByCollegeData(Request $request)
+    {
+        $type         = $request->input('reporting_period');
+        $value        = $request->input('period_value');
+        $selectedYear = $request->input('year', date('Y'));
+        $preparedBy   = $request->input('prepared_by');
+        $position     = $request->input('position');
+
+        // Filter New Case visits using the same period logic as the main report
+        $query = Patientvisit::query()->where('typeofconsultation', 1);
+        $formattedPeriodValue = '';
+        if ($type === 'monthly') {
+            $months = [
+                '01' => 'January',   '02' => 'February', '03' => 'March',
+                '04' => 'April',     '05' => 'May',      '06' => 'June',
+                '07' => 'July',      '08' => 'August',   '09' => 'September',
+                '10' => 'October',   '11' => 'November', '12' => 'December'
+            ];
+            $formattedPeriodValue = ($months[$value] ?? $value) . " {$selectedYear}";
+            $query->whereMonth('date', $value)
+                ->whereYear('date', $selectedYear);
+        } elseif ($type === 'quarterly') {
+            $quarters = [
+                '01' => "1st Quarter (Jan - Mar) {$selectedYear}",
+                '02' => "2nd Quarter (Apr - Jun) {$selectedYear}",
+                '03' => "3rd Quarter (Jul - Sep) {$selectedYear}",
+                '04' => "4th Quarter (Oct - Dec) {$selectedYear}",
+            ];
+            $formattedPeriodValue = $quarters[$value] ?? "Q{$value} {$selectedYear}";
+            $monthRanges = [
+                '01' => [1, 3],   // Q1
+                '02' => [4, 6],   // Q2
+                '03' => [7, 9],   // Q3
+                '04' => [10, 12], // Q4
+            ];
+            if (array_key_exists($value, $monthRanges)) {
+                [$startMonth, $endMonth] = $monthRanges[$value];
+                $startDate = Carbon::create($selectedYear, $startMonth, 1)->startOfDay();
+                $endDate   = Carbon::create($selectedYear, $endMonth)->endOfMonth()->endOfDay();
+
+                $query->whereBetween('date', [$startDate, $endDate]);
+            }
+        } elseif ($type === 'yearly') {
+            $formattedPeriodValue = "Year {$selectedYear}";
+            $query->whereYear('date', $selectedYear);
+        }
+
+        $reports = $query->get();
+
+        // College affiliations only apply to student consultations (pcat = 1)
+        $studentVisits = $reports->where('pcat', 1)->values();
+
+        $stids   = $studentVisits->pluck('stid')->filter()->unique()->values();
+        $studIds = $studentVisits->pluck('stdntID')->filter()->unique()->values();
+
+        // Student genders from the enrollment server
+        $studentGenders = [];
+        if ($studIds->isNotEmpty()) {
+            $studentGenders = Student::whereIn('stud_id', $studIds)
+                                    ->pluck('gender', 'stud_id')
+                                    ->toArray();
+        }
+
+        // Student program codes from the enrollment server (same pattern as DashboardController)
+        $studentPrograms = collect();
+        if ($stids->isNotEmpty()) {
+            $studentPrograms = DB::connection('enrollment')
+                ->table('program_en_history')
+                ->join('students', 'program_en_history.studentID', '=', 'students.stud_id')
+                ->whereIn('students.id', $stids)
+                ->select(
+                    'students.id as student_id',
+                    'program_en_history.progCod'
+                )
+                ->distinct()
+                ->get()
+                ->keyBy('student_id');
+        }
+
+        // Full program master list from the schedule server, grouped by college (via progCod prefix).
+        // Every program is listed in the report — 0 counts when there is no data for the period.
+        $programs = EnPrograms::orderBy('progAcronym')
+            ->get(['progCod', 'progAcronym', 'progName'])
+            ->groupBy(fn ($program) => strtoupper(substr($program->progCod, 0, 3)));
+        $masterProgCods = $programs->flatten(1)->pluck('progCod')->flip();
+
+        // Tally new cases by college, program and gender
+        $collegeTally = [];
+        $programTally = [];
+        $unspecified  = ['male' => 0, 'female' => 0, 'total' => 0];
+        foreach ($studentVisits as $visit) {
+            $progCod     = $studentPrograms[$visit->stid]->progCod ?? null;
+            $collegeAbbr = $progCod !== null ? substr($progCod, 0, 3) : null;
+            $gender      = strtolower(trim($studentGenders[$visit->stdntID] ?? ''));
+
+            // College bucket
+            if ($collegeAbbr === null) {
+                $bucket = &$unspecified;
+            } else {
+                if (!isset($collegeTally[$collegeAbbr])) {
+                    $collegeTally[$collegeAbbr] = ['male' => 0, 'female' => 0, 'total' => 0];
+                }
+                $bucket = &$collegeTally[$collegeAbbr];
+            }
+            if ($gender === 'male' || $gender === 'm') {
+                $bucket['male']++;
+            } elseif ($gender === 'female' || $gender === 'f') {
+                $bucket['female']++;
+            }
+            $bucket['total'] = $bucket['male'] + $bucket['female'];
+            unset($bucket);
+
+            // Program bucket
+            if ($progCod !== null) {
+                if (!isset($programTally[$progCod])) {
+                    $programTally[$progCod] = ['male' => 0, 'female' => 0, 'total' => 0];
+                }
+                $program = &$programTally[$progCod];
+                if ($gender === 'male' || $gender === 'm') {
+                    $program['male']++;
+                } elseif ($gender === 'female' || $gender === 'f') {
+                    $program['female']++;
+                }
+                $program['total'] = $program['male'] + $program['female'];
+                unset($program);
+            }
+        }
+
+        // Build rows for every college in the master list, with ALL its programs underneath
+        $colleges = College::whereIn('id', [2,3,4,5,6,7,8])->orderBy('college_abbr')->get();
+        $collegeRows = [];
+        foreach ($colleges as $college) {
+            $tally = $collegeTally[$college->college_abbr] ?? ['male' => 0, 'female' => 0, 'total' => 0];
+
+            // Every program of this college — 0 counts when no new cases in the period
+            $collegePrograms = $programs[strtoupper($college->college_abbr)] ?? collect();
+            $programRows = [];
+            foreach ($collegePrograms as $program) {
+                $pTally = $programTally[$program->progCod] ?? ['male' => 0, 'female' => 0, 'total' => 0];
+                $programRows[] = [
+                    'acronym' => $program->progAcronym,
+                    'name'    => $program->progName,
+                    'male'    => $pTally['male'],
+                    'female'  => $pTally['female'],
+                    'total'   => $pTally['total'],
+                ];
+            }
+
+            // Fallback: tallied programs missing from the master list still get a row
+            foreach ($programTally as $progCod => $pTally) {
+                if (substr(strtoupper($progCod), 0, 3) !== strtoupper($college->college_abbr)) {
+                    continue;
+                }
+                if ($masterProgCods->has($progCod)) {
+                    continue;
+                }
+                $programRows[] = [
+                    'acronym' => $progCod,
+                    'name'    => '',
+                    'male'    => $pTally['male'],
+                    'female'  => $pTally['female'],
+                    'total'   => $pTally['total'],
+                ];
+            }
+            usort($programRows, fn ($a, $b) => strcmp($a['acronym'], $b['acronym']));
+
+            $collegeRows[] = [
+                'abbr'     => $college->college_abbr,
+                'name'     => $college->college_name,
+                'male'     => $tally['male'],
+                'female'   => $tally['female'],
+                'total'    => $tally['total'],
+                'programs' => $programRows,
+            ];
+        }
+
+        // Append unmatched student consultations
+        if ($unspecified['total'] > 0) {
+            $collegeRows[] = [
+                'abbr'     => '',
+                'name'     => 'Unspecified',
+                'male'     => $unspecified['male'],
+                'female'   => $unspecified['female'],
+                'total'    => $unspecified['total'],
+                'programs' => [],
+            ];
+        }
+
+        $newCaseTotal = [
+            'male'   => array_sum(array_column($collegeRows, 'male')),
+            'female' => array_sum(array_column($collegeRows, 'female')),
+            'total'  => array_sum(array_column($collegeRows, 'total')),
+        ];
+
+        $reportingPeriodLabel = ucfirst($type);
+
+        return compact(
+            'collegeRows',
+            'newCaseTotal',
+            'reportingPeriodLabel',
+            'formattedPeriodValue',
+            'preparedBy',
+            'position'
         );
     }
 }

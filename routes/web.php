@@ -142,6 +142,7 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/reports/medical/statistic',[ReportsMedicalStatisticController::class,'index'])->name('reports.medical.statistic');
         Route::get('/reports/medical/statistic/view',[ReportsMedicalStatisticController::class,'store'])->name('reports.medical.statistic.store');
         Route::get('/reports/medical/statistic/generate',[ReportsMedicalStatisticController::class,'generate'])->name('reports.medical.statistic.generate');
+        Route::get('/reports/medical/statistic/newcase/generate',[ReportsMedicalStatisticController::class,'generateNewCase'])->name('reports.medical.statistic.newcase.generate');
 
         Route::get('/reports/medicine',[ReportsMedicineController::class,'index'])->name('reports.medicine');
         Route::get('/reports/medicine/view',[ReportsMedicineController::class,'store'])->name('reports.medicine.store');
