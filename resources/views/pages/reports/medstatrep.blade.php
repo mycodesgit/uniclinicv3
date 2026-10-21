@@ -138,7 +138,7 @@
                                 </h6>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('reports.medical.statistic.newcase.generate') }}" method="GET" id="newCaseForm">
+                                <form action="{{ route('reports.medical.statistic.newcase.generate') }}" method="GET" id="newCaseForm" novalidate>
                                     @csrf
                                     <div class="row g-3">
                                         {{-- 1. Reporting Period Type --}}
@@ -150,6 +150,7 @@
                                                 <option value="quarterly" {{ request('reporting_period') == 'quarterly' ? 'selected' : '' }}>Quarterly</option>
                                                 <option value="yearly" {{ request('reporting_period') == 'yearly' ? 'selected' : '' }}>Yearly</option>
                                             </select>
+                                            <div class="invalid-feedback">Please select a reporting period type.</div>
                                         </div>
 
                                         {{-- 2. Dynamic Period Value Container --}}
@@ -158,6 +159,7 @@
 
                                             {{-- Default / Placeholder Input --}}
                                             <input type="text" class="form-control form-control-sm nc-period-input" id="nc_period_default" placeholder="Select type first" disabled>
+                                            <div class="invalid-feedback">Please select a period value.</div>
 
                                             {{-- Monthly Input --}}
                                             <div id="nc_wrapper_monthly" class="nc-period-wrapper d-none">
@@ -176,6 +178,7 @@
                                                     <option value="11">11 - November</option>
                                                     <option value="12">12 - December</option>
                                                 </select>
+                                                <div class="invalid-feedback">Please select a period value.</div>
                                             </div>
 
                                             {{-- Quarterly Input --}}
@@ -187,11 +190,13 @@
                                                     <option value="03">Q3 (3rd Quarter)</option>
                                                     <option value="04">Q4 (4th Quarter)</option>
                                                 </select>
+                                                <div class="invalid-feedback">Please select a period value.</div>
                                             </div>
 
                                             {{-- Yearly Option Text Output (when Yearly selected) --}}
                                             <div id="nc_wrapper_yearly" class="nc-period-wrapper d-none">
                                                 <input type="text" class="form-control form-control-sm nc-period-input" name="period_value" value="Full Year" readonly disabled>
+                                                <div class="invalid-feedback">Please select a period value.</div>
                                             </div>
                                         </div>
 
@@ -212,12 +217,14 @@
                                         <div class="col-md-2">
                                             <label for="nc_prepared_by" class="form-label fw-bold">Prepared By: <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control form-control-sm" id="nc_prepared_by" name="prepared_by" value="{{ Auth::user()->fname ?? '' }} {{ Auth::user()->lname ?? '' }}" required readonly>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </div>
 
                                         {{-- 5. Position --}}
                                         <div class="col-md-2">
                                             <label for="nc_position" class="form-label fw-bold">Position: <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control form-control-sm" id="nc_position" name="position" value="{{ Auth::user()->role ?? '' }}" required readonly>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </div>
 
                                         {{-- 6. Submit Button --}}
@@ -289,6 +296,10 @@
         }
 
         function handleNewCasePeriodChange(type) {
+            // Clear previous validation styles when the period type changes
+            document.getElementById('newCaseForm').querySelectorAll('.is-invalid')
+                .forEach(function (el) { el.classList.remove('is-invalid'); });
+
             // Hide all wrappers and disable all inputs of the New Cases card
             document.querySelectorAll('.nc-period-wrapper').forEach(el => el.classList.add('d-none'));
             document.querySelectorAll('.nc-period-input').forEach(el => el.disabled = true);
@@ -331,19 +342,58 @@
             }
         });
 
+        // Remove the invalid style as soon as a field is edited
+        ['input', 'change'].forEach(function (evt) {
+            document.getElementById('newCaseForm').addEventListener(evt, function (e) {
+                e.target.classList.remove('is-invalid');
+            });
+        });
+
         // Generate the New Cases Report inside the on-page iframe (keeps the current UI)
         document.getElementById('newCaseForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const periodType = document.getElementById('nc_reporting_period').value;
-            if (!periodType) {
-                alert('Please select a Reporting Period type.');
-                return false;
+            const form = this;
+
+            // Reset validation styles of the previous attempt
+            form.querySelectorAll('.is-invalid').forEach(function (el) {
+                el.classList.remove('is-invalid');
+            });
+
+            let firstInvalid = null;
+            function markInvalid(el) {
+                if (!el) return;
+                el.classList.add('is-invalid');
+                if (!firstInvalid) firstInvalid = el;
             }
 
-            const periodValue = this.querySelector('#nc_wrapper_' + periodType + ' .nc-period-input');
+            // 1. Reporting Period type
+            const periodType = document.getElementById('nc_reporting_period');
+            if (!periodType.value) {
+                markInvalid(periodType);
+            }
+
+            // 2. Period Value (depends on the selected type)
+            const periodValue = periodType.value
+                ? form.querySelector('#nc_wrapper_' + periodType.value + ' .nc-period-input')
+                : document.getElementById('nc_period_default');
             if (!periodValue || periodValue.disabled || !periodValue.value) {
-                alert('Please select a Period Value.');
+                markInvalid(periodValue);
+            }
+
+            // 3. Prepared By & Position
+            const preparedBy = document.getElementById('nc_prepared_by');
+            if (!preparedBy.value.trim()) {
+                markInvalid(preparedBy);
+            }
+            const position = document.getElementById('nc_position');
+            if (!position.value.trim()) {
+                markInvalid(position);
+            }
+
+            // Show the validator on the first missing input instead of an alert popup
+            if (firstInvalid) {
+                firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 return false;
             }
 

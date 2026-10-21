@@ -132,13 +132,17 @@
         }
 
         .signatures-container {
-            display: flex;
-            justify-content: space-between;
             margin-top: 40px;
         }
 
         .signature-block {
-            width: 45%;
+            display: inline-block;
+            width: 47%;
+            vertical-align: top;
+        }
+
+        .signature-block-right {
+            margin-left: 3%;
         }
 
         .signature-block h3 {
@@ -148,16 +152,19 @@
 
         .signature-line {
             margin-bottom: 15px;
-            display: flex;
         }
 
         .signature-line label {
+            display: inline-block;
             width: 80px;
             font-weight: bold;
+            vertical-align: middle;
         }
 
         .signature-line input {
-            flex-grow: 1;
+            display: inline-block;
+            width: 65%;
+            height: 18px; /* fixed height so filled and empty inputs keep the rows aligned */
             border: none;
             border-bottom: 1px solid #333;
             outline: none;
@@ -269,7 +276,7 @@
                 <div class="signature-line"><label>Date:</label> <input type="text" value="{{ date('F d, Y') }}"></div>
             </div>
 
-            <div class="signature-block">
+            <div class="signature-block signature-block-right">
                 <h3>Noted by:</h3>
                 <div class="signature-line"><label>Name:</label> <input type="text"></div>
                 <div class="signature-line"><label>Position:</label> <input type="text"></div>
