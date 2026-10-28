@@ -134,11 +134,6 @@
                             </div>
                             <div class="tab-pane fade" id="pills-three" role="tabpanel" aria-labelledby="pills-three-tab" tabindex="0">
                                 <div class="card">
-                                    <div class="card-header pt-3">
-                                        <h6 class="card-title">
-                                            <i class="ti ti-search"></i> Search to show data
-                                        </h6>
-                                    </div>
                                     <div class="card-header pt-3 d-flex justify-content-between align-items-center">
                                         <h6 class="card-title">
                                             <i class="ti ti-users"></i> List of Guest/Visitor Patients
