@@ -106,6 +106,7 @@
                 },
                 {data: 'gender'},
                 {data: 'civil_status'},
+                {data: 'patient_type', defaultContent: ''},
                 {data: 'address'},
                 {
                     data: 'id',

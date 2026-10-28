@@ -70,7 +70,7 @@
                     `;
                 }
 
-                document.querySelectorAll('.page-link').forEach(link => {
+                pagination.querySelectorAll('.page-link').forEach(link => {
                     link.addEventListener('click', function (e) {
                         e.preventDefault();
                         loadStudents(this.dataset.page);
@@ -113,7 +113,7 @@
         const patientDetailsRoute = "{{ route('appointment.walkin.empdetails', ['emp_ID' => ':emp_ID']) }}";
         const input = document.getElementById('searchEmpInput');
         const tableBody = document.getElementById('employeesTable');
-        const pagination = document.getElementById('paginationLinks');
+        const pagination = document.getElementById('paginationEmpLinks');
         const searchRoute = "{{ route('patients.employee.search') }}";
 
         function loadEmployees(page = 1) {
@@ -177,7 +177,7 @@
                     `;
                 }
 
-                document.querySelectorAll('.page-link').forEach(link => {
+                pagination.querySelectorAll('.page-link').forEach(link => {
                     link.addEventListener('click', function (e) {
                         e.preventDefault();
                         loadEmployees(this.dataset.page);
@@ -208,6 +208,101 @@
             submitHandler: function () {
                 // 🔥 Runs only when valid
                 loadEmployees(1);
+            }
+        });
+
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const patientDetailsRoute = "{{ route('appointment.walkin.guestdetails', ['patientID' => ':patientID']) }}";
+        const input = document.getElementById('searchGuestInput');
+        const tableBody = document.getElementById('guestsTable');
+        const pagination = document.getElementById('paginationGuestLinks');
+        const searchRoute = "{{ route('patients.guest.search') }}";
+
+        function loadGuests(page = 1) {
+            const search = input.value.trim();
+
+            fetch(`${searchRoute}?search=${encodeURIComponent(search)}&page=${page}`, {
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(res => res.json())
+            .then(res => {
+
+                tableBody.innerHTML = '';
+                pagination.innerHTML = '';
+
+                if (res.data.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="text-center">No records found</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                res.data.forEach(guest => {
+                    const detailsUrl = patientDetailsRoute.replace(':patientID', encodeURIComponent(guest.patientID));
+                    tableBody.innerHTML += `
+                        <tr>
+                            <td>${guest.lname}, ${guest.fname}</td>
+                            <td>${guest.patientID}</td>
+                            <td>${guest.gender ?? ''}</td>
+                            <td>${guest.civil_status ?? ''}</td>
+                            <td>${guest.patient_type ?? ''}</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-1">
+                                    <a href="${detailsUrl}" class="btn btn-success btn-sm text-light" title="View Details">
+                                        <i class="ti ti-eye" style="color:#fff"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                for (let i = 1; i <= res.last_page; i++) {
+                    pagination.innerHTML += `
+                        <li class="page-item ${i === res.current_page ? 'active' : ''}">
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `;
+                }
+
+                pagination.querySelectorAll('.page-link').forEach(link => {
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        loadGuests(this.dataset.page);
+                    });
+                });
+            });
+        }
+
+        // ✅ Validation FIRST
+        $('#searchGuestForm').validate({
+            rules: {
+                searchguest: { required: true },
+            },
+            messages: {
+                searchguest: { required: "Please Enter Guest Last Name or Patient ID" },
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.col-md-4').append(error);
+            },
+            highlight: function (element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).removeClass('is-invalid');
+            },
+            submitHandler: function () {
+                // 🔥 Runs only when valid
+                loadGuests(1);
             }
         });
 

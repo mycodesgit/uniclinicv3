@@ -122,25 +122,44 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="pills-three" role="tabpanel" aria-labelledby="pills-three-tab" tabindex="0">
-                                        <div class="table-responsive mt-2 p-2">
-                                            <button id="btn-guestpatient" type="button" class="btn btn-success btn-md text-light" data-bs-toggle="offcanvas" data-bs-target="#new_patient_outsider">
-                                                <i class="ti ti-plus me-1"></i> New Guest Patient
-                                            </button>
-                                            <table id="guesttabletab" class="table table-striped" style="width: 100%">
+                                        <form id="searchGuestForm">
+                                            <div class="row g-2">
+                                                <div class="col-md-4">
+                                                    <input type="text" id="searchGuestInput" name="searchguest" class="form-control form-control-md" placeholder="Search Patient Last Name or First Name or Patient ID">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button type="submit" class="btn btn-success btn-md text-light">Search</button>
+                                                </div>
+                                                <div class="col-md-6 text-md-end">
+                                                    <a href="{{ route('patients.students') }}" class="btn btn-outline-success btn-md">
+                                                        <i class="ti ti-plus me-1"></i> New Guest Patient
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped" id="">
                                                 <thead class="">
                                                     <tr>
-                                                        <th>Patient ID</th>
                                                         <th>Name</th>
+                                                        <th>Patient ID</th>
                                                         <th>Gender</th>
                                                         <th>Civil Status</th>
-                                                        <th>Date Added</th>
-                                                        <th class="text-center" width="7%">Action</th>
+                                                        <th>Patient Type</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody style="font-size: 10pt;">
-
+                                                <tbody id="guestsTable">
+                                                    <tr>
+                                                        <td colspan="6" class="text-center">Search to load data</td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
+                                            <br>
+                                            <nav>
+                                                <ul class="pagination justify-content-center" id="paginationGuestLinks"></ul>
+                                            </nav>
                                         </div>
                                     </div>
                                 </div>

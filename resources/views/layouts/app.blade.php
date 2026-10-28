@@ -275,6 +275,9 @@
     @if (request()->routeIs('appointment.walkin.empdetails'))
         @include('script.walkin.consultEmpScript')
     @endif
+    @if (request()->routeIs('appointment.walkin.guestdetails'))
+        @include('script.walkin.consultGuestScript')
+    @endif
     @if (request()->routeIs('medicine.index'))
         @include('script.med.medScript')
         @include('script.validations.medicinevalidation')

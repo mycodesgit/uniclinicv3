@@ -25,6 +25,7 @@ use App\Models\ClinicDB\MedicineBatch;
 use App\Models\ClinicDB\MedicineTransaction;
 use App\Models\ClinicDB\Complaint;
 use App\Models\ClinicDB\MedicalServicesRendered;
+use App\Models\ClinicDB\GuestPatient;
 
 class AppointmentsController extends Controller
 {
@@ -128,6 +129,49 @@ class AppointmentsController extends Controller
         return view('pages.appointment.walkin-empdetails', compact('patients', 'complaints', 'medicines', 'medserverender', 'patientVisit', 'emp_ID'));
     }
 
+    public function walkinconsultguestdetails($patientID)
+    {
+        $patients = GuestPatient::where('patientID', $patientID)->firstOrFail();
+        $complaints = Complaint::all();
+
+        $medicines = Medicine::with(['batches' => function ($query) {
+                $query->where('quantity_remaining', '>', 0)
+                    ->orderBy('expiration_date', 'asc');
+            }])
+            ->where('is_active', true)
+            ->get()
+            ->map(function ($medicine) {
+                $totalRemaining = $medicine->batches->sum('quantity_remaining');
+
+                // Get first batch
+                $firstBatch = $medicine->batches->first();
+
+                // Safely parse date using Carbon
+                $nearestExpiry = 'N/A';
+                if ($firstBatch && $firstBatch->expiration_date) {
+                    $nearestExpiry = \Carbon\Carbon::parse($firstBatch->expiration_date)->format('M d, Y');
+                }
+
+                return (object) [
+                    'id'                 => $medicine->id,
+                    'code'               => $medicine->code,
+                    'name'               => $medicine->name,
+                    'generic_name'       => $medicine->generic_name,
+                    'quantity_remaining' => $totalRemaining,
+                    'nearest_expiry'     => $nearestExpiry,
+                ];
+            })
+            // Keep out-of-stock medicines so previously dispensed ones still display (disabled) in the edit modal
+            ->values();
+
+        $medserverender = MedicalServicesRendered::all();
+
+        // Guest visits are keyed by patientID (GSTP-xxxx) in stdntID, so they never collide with student/employee IDs
+        $patientVisit = Patientvisit::where('stdntID', $patients->patientID)->get();
+
+        return view('pages.appointment.walkin-guestdetails', compact('patients', 'complaints', 'medicines', 'medserverender', 'patientVisit', 'patientID'));
+    }
+
     public function getwalkinconsult($adid)
     {
         $decryptedId = Crypt::decryptString($adid);
@@ -201,6 +245,91 @@ class AppointmentsController extends Controller
                 'fname'           => $student->fname,
                 'mname'           => $student->mname,
                 'ext'             => $student->ext,
+
+                // Multi-relation outputs
+                'code'            => $medicineCodes ?: 'N/A',
+                'medicinename'    => $medicineNames ?: 'N/A',
+                'qty'             => $totalQty > 0 ? $totalQty : ($visit->qty ?? 0),
+
+                'complaintname'   => collect(explode(',', (string) $visit->chief_complaint))
+                    ->map(fn ($id) => $complaints[$id] ?? null)
+                    ->filter()
+                    ->implode(', '),
+            ];
+        });
+
+        return response()->json(['data' => $data]);
+    }
+
+    public function getwalkinguestconsult($patientID)
+    {
+        $guest = GuestPatient::select('patientID', 'lname', 'fname', 'mname', 'ext')
+            ->where('patientID', $patientID)
+            ->first();
+
+        if (!$guest) {
+            return response()->json(['message' => 'Guest patient not found'], 404);
+        }
+
+        // Eager-load transactions with batch and medicine relations
+        $visits = Patientvisit::with(['transactions'])
+            ->where('stdntID', $guest->patientID)
+            ->orderBy('date', 'desc')
+            ->get();
+
+        if ($visits->isEmpty()) {
+            return response()->json(['data' => []]);
+        }
+
+        // Fetch complaint IDs
+        $complaintIds = $visits->pluck('chief_complaint')
+            ->filter()
+            ->flatMap(fn ($v) => explode(',', $v))
+            ->filter()
+            ->unique();
+
+        $complaints = $complaintIds->isNotEmpty()
+            ? Complaint::whereIn('id', $complaintIds)->pluck('complaintname', 'id')
+            : collect();
+
+        $data = $visits->map(function ($visit) use ($guest, $complaints) {
+            // Extract medicines linked to this visit via transactions
+            $medicineCodes = $visit->transactions->map(function ($tx) {
+                return $tx->batch->medicine->code ?? null;
+            })->filter()->unique()->implode(', ');
+
+            $medicineNames = $visit->transactions->map(function ($tx) {
+                return $tx->batch->medicine->name ?? null;
+            })->filter()->unique()->implode(', ');
+
+            $totalQty = $visit->transactions->sum('quantity');
+
+            return [
+                'id'              => $visit->id,
+                'consultID'       => $visit->consultID,
+                'date'            => $visit->date,
+                'time'            => $visit->time,
+                'typeofconsultation' => $visit->typeofconsultation,
+                'medservrendered' => $visit->medservrendered,
+                'medicine'        => $visit->medicine,
+                'qtys'            => $visit->qty,
+
+                'chief_complaint' => $visit->chief_complaint,
+                'bp'              => $visit->bp,
+                'pr'              => $visit->pr,
+                'rr'              => $visit->rr,
+                'spo'             => $visit->spo,
+                'btemp'           => $visit->btemp,
+                'lmp'             => $visit->lmp,
+                'pheight'         => $visit->pheight,
+                'pweight'         => $visit->pweight,
+                'treatment'       => $visit->treatment,
+                'certificate'     => $visit->certificate,
+
+                'lname'           => $guest->lname,
+                'fname'           => $guest->fname,
+                'mname'           => $guest->mname,
+                'ext'             => $guest->ext,
 
                 // Multi-relation outputs
                 'code'            => $medicineCodes ?: 'N/A',
@@ -690,6 +819,56 @@ class AppointmentsController extends Controller
                 'ext'   => $student->ext,
 
 
+            ];
+        });
+
+        return response()->json(['data' => $data]);
+    }
+
+    public function getwalkinguestreferral($patientID)
+    {
+        $guest = GuestPatient::select('patientID', 'lname', 'fname', 'mname', 'ext')
+            ->where('patientID', $patientID)
+            ->first();
+
+        if (!$guest) {
+            return response()->json(['message' => 'Guest patient not found'], 404);
+        }
+
+        $refer = PatientReferral::where('stdntID', $guest->patientID)
+            ->select('patientreferral.*')
+            ->orderBy('date', 'desc')
+            ->get();
+
+        if ($refer->isEmpty()) {
+            return response()->json(['data' => []]);
+        }
+
+        $data = $refer->map(function ($visit) use ($guest) {
+
+            return [
+                'id'                    => $visit->id,
+                'referralID'            => $visit->referralID,
+                'date'                  => $visit->date,
+                'time'                  => $visit->time,
+                'bp'                    => $visit->bp,
+                'pr'                    => $visit->pr,
+                'rr'                    => $visit->rr,
+                'spo'                   => $visit->spo,
+                'btemp'                 => $visit->btemp,
+                'lmp'                   => $visit->lmp,
+                'pheight'               => $visit->pheight,
+                'pweight'               => $visit->pweight,
+                'preferfrom'            => $visit->preferfrom,
+                'preferto'              => $visit->preferto,
+                'reasonrefer'           => $visit->reasonrefer,
+                'tentdiagnose'          => $visit->tentdiagnose,
+                'treatmentmedgiven'     => $visit->treatmentmedgiven,
+
+                'lname' => $guest->lname,
+                'fname' => $guest->fname,
+                'mname' => $guest->mname,
+                'ext'   => $guest->ext,
             ];
         });
 

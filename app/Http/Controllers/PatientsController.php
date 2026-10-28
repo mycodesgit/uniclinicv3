@@ -75,6 +75,23 @@ class PatientsController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    public function searchguest(Request $request)
+    {
+        $search = $request->query('search');
+
+        $guests = GuestPatient::when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('lname', 'LIKE', "%{$search}%")
+                    ->orWhere('fname', 'LIKE', "%{$search}%")
+                    ->orWhere('patientID', 'LIKE', "%{$search}%");
+                });
+            })
+            ->orderBy('lname')
+            ->paginate(10);
+
+        return response()->json($guests);
+    }
+
     public function showdetails($id)
     {
         $decryptedId = Crypt::decryptString($id);
@@ -105,6 +122,7 @@ class PatientsController extends Controller
                 'mname' => 'required',
                 'gender' => 'required',
                 'civil_status' => 'required',
+                'patient_type' => 'required|in:Pakyaw,Guest,Civilian',
             ]);
 
             $lname = $request->input('lname');
@@ -137,6 +155,7 @@ class PatientsController extends Controller
                     'ext' => $request->input('ext'),
                     'gender' => $request->input('gender'),
                     'civil_status' => $request->input('civil_status'),
+                    'patient_type' => $request->input('patient_type'),
                     'address' => $request->input('address'),
                 ]);
 
@@ -146,9 +165,11 @@ class PatientsController extends Controller
                 ], 200);
 
             } catch (\Exception $e) {
+                \Log::error('Failed to create Guest Patient: ' . $e->getMessage());
+
                 return response()->json([
                     'error' => true,
-                    'message' => 'Failed to create Guest Patient'
+                    'message' => 'Failed to create Guest Patient' . (config('app.debug') ? ': ' . $e->getMessage() : '')
                 ], 500);
             }
         }

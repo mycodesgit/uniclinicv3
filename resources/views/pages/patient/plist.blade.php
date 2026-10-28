@@ -156,6 +156,7 @@
                                                         <th>Name</th>
                                                         <th>Gender</th>
                                                         <th>Civil Status</th>
+                                                        <th>Patient Type</th>
                                                         <th>Date Added</th>
                                                         <th class="text-center" width="7%">Action</th>
                                                     </tr>
@@ -250,6 +251,19 @@
                                         <option value="Married">Married</option>
                                         <option value="Widowed">Widowed</option>
                                         <option value="Separated">Separated</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Patient Type -->
+                            <div class="col-md-12">
+                                <div class="mb-0">
+                                    <label class="form-label mb-1 text-dark fs-14 fw-medium">Patient Type <span class="text-danger">*</span></label>
+                                    <select name="patient_type" id="patient_type" class="form-control form-control-sm rounded" required>
+                                        <option value="">Select Patient Type</option>
+                                        <option value="Pakyaw">Pakyaw</option>
+                                        <option value="Guest">Guest</option>
+                                        <option value="Civilian">Civilian</option>
                                     </select>
                                 </div>
                             </div>

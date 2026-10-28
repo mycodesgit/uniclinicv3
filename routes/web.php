@@ -56,6 +56,7 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::post('/student/show/moreinfo/historyupdate', [PatientsController::class, 'studentsHistory'])->name('patients.studentsHistory');
 
         Route::get('/guest',[PatientsController::class,'showguest'])->name('patients.showguest');
+        Route::get('/guest/search',[PatientsController::class,'searchguest'])->name('patients.guest.search');
         Route::post('/guest/add',[PatientsController::class,'create'])->name('patients.create');
 
         Route::get('/employee/search', [PatientEmpController::class, 'search'])->name('patients.employee.search');
@@ -119,6 +120,9 @@ Route::group(['middleware'=>['login_auth']],function(){
         Route::get('/walkins',[AppointmentsController::class,'index'])->name('appointment.walkin');
         Route::get('/walkins/details/{adid}',[AppointmentsController::class,'walkinconsultdetails'])->name('appointment.walkin.details');
         Route::get('/walkins/empdetails/{emp_ID}',[AppointmentsController::class,'walkinconsultempdetails'])->name('appointment.walkin.empdetails');
+        Route::get('/walkins/guestdetails/{patientID}',[AppointmentsController::class,'walkinconsultguestdetails'])->name('appointment.walkin.guestdetails');
+        Route::get('/walkins/fetchguest/{patientID}',[AppointmentsController::class,'getwalkinguestconsult'])->name('getwalkinguestconsult.walkin');
+        Route::get('/walkins/referralfetchguest/{patientID}',[AppointmentsController::class,'getwalkinguestreferral'])->name('getwalkinguestreferral.walkin');
         Route::get('/walkins/fetch/{adid}',[AppointmentsController::class,'getwalkinconsult'])->name('getwalkinconsult.walkin');
         Route::get('/walkins/fetchemp/{emp_ID}',[AppointmentsController::class,'getwalkinempconsult'])->name('getwalkinempconsult.walkin');
         Route::post('/walkins/add',[AppointmentsController::class,'createWalkinConsultation'])->name('appointment.walkinconsult.store');

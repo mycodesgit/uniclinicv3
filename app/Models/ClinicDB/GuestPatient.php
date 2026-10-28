@@ -19,6 +19,7 @@ class GuestPatient extends Model
         'ext',
         'gender',
         'civil_status',
+        'patient_type',
         'address'
     ];
 }
