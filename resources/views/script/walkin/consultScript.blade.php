@@ -220,13 +220,32 @@
         function addMedicineRow(selectedMedId = '', selectedQty = '') {
             var templateHtml = $('#medicine-row-templateedit').html();
             var $row = $(templateHtml);
+            var $medSelect = $row.find('select[name="medicine[]"]');
+            var $qtyInput = $row.find('input[name="qty[]"]');
 
             // Set the pre-selected values
             if (selectedMedId) {
-                $row.find('select[name="medicine[]"]').val(String(selectedMedId).trim());
+                var medId = String(selectedMedId).trim();
+                var $option = $medSelect.find('option').filter(function() { return this.value === medId; });
+
+                // Medicine no longer listed (e.g. deactivated): add it so it still displays
+                if ($option.length === 0) {
+                    $option = $('<option>', { value: medId, text: 'Medicine #' + medId + ' (Unavailable)', disabled: true });
+                    $medSelect.append($option);
+                }
+                $medSelect.val(medId);
+
+                // Out of stock: keep the dispensed medicine but lock the row so it cannot be edited or removed
+                if ($option.prop('disabled')) {
+                    $medSelect.prop('disabled', true);
+                    $qtyInput.prop('readonly', true).addClass('bg-light');
+                    // Disabled selects are not submitted, so send the medicine through a hidden input
+                    $row.append($('<input>', { type: 'hidden', name: 'medicine[]', value: medId }));
+                    $row.addClass('locked-row');
+                }
             }
             if (selectedQty) {
-                $row.find('input[name="qty[]"]').val(String(selectedQty).trim());
+                $qtyInput.val(String(selectedQty).trim());
             }
 
             // Append to the dynamic fields container
@@ -253,10 +272,17 @@
         // ------------------------------------
         $(document).on('click', '#editRemoveMedicine', function() {
             var $rows = $('#dynamic-fieldsedit .medicine-row');
+            var $editableRows = $rows.not('.locked-row');
 
-            // Remove the last row only if there is more than 1 row remaining
+            // Locked (out-of-stock) rows are never removed
+            if ($editableRows.length === 0) {
+                toastr.info('Out-of-stock medicines already dispensed cannot be removed.');
+                return;
+            }
+
+            // Remove the last editable row only if there is more than 1 row remaining
             if ($rows.length > 1) {
-                var $last = $rows.last();
+                var $last = $editableRows.last();
                 var $select = $last.find('select');
                 if ($select.data('select2')) {
                     $select.select2('destroy');
@@ -264,8 +290,8 @@
                 $last.remove();
             } else {
                 // Optional: reset fields if it's the last row
-                $rows.find('select').val('').trigger('change');
-                $rows.find('input').val('');
+                $editableRows.find('select').val('').trigger('change');
+                $editableRows.find('input').val('');
             }
         });
 

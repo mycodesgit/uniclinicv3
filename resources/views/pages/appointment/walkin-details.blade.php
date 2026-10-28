@@ -202,8 +202,8 @@
                                                                 <select name="medicine[]" class="form-control form-control-sm select2bs4">
                                                                     <option value="">-- Choose Medicine --</option>
                                                                     @foreach ($medicines as $medicine)
-                                                                        <option value="{{ $medicine->id }}">
-                                                                            {{ $medicine->name }} - {{ $medicine->generic_name }} (Stock: {{ $medicine->quantity_remaining }})
+                                                                        <option value="{{ $medicine->id }}" @disabled($medicine->quantity_remaining <= 0)>
+                                                                            {{ $medicine->name }} - {{ $medicine->generic_name }} ({{ $medicine->quantity_remaining > 0 ? 'Stock: ' . $medicine->quantity_remaining : 'Out of Stock' }})
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -239,8 +239,8 @@
                                                         <select name="medicine[]" class="form-control form-control-sm select2bs4">
                                                             <option value="">-- Choose Medicine --</option>
                                                             @foreach ($medicines as $medicine)
-                                                                <option value="{{ $medicine->id }}">
-                                                                    {{ $medicine->name }} - {{ $medicine->generic_name }} (Stock: {{ $medicine->quantity_remaining }}
+                                                                <option value="{{ $medicine->id }}" @disabled($medicine->quantity_remaining <= 0)>
+                                                                    {{ $medicine->name }} - {{ $medicine->generic_name }} ({{ $medicine->quantity_remaining > 0 ? 'Stock: ' . $medicine->quantity_remaining : 'Out of Stock' }})
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -909,8 +909,8 @@
                                 <select name="medicine[]" class="form-control form-control-sm editMedicineSelect">
                                     <option value="">-- Choose Medicine --</option>
                                     @foreach ($medicines as $medicine)
-                                        <option value="{{ $medicine->id }}">
-                                            {{ $medicine->name }} - {{ $medicine->generic_name }} (Stock: {{ $medicine->quantity_remaining }})
+                                        <option value="{{ $medicine->id }}" @disabled($medicine->quantity_remaining <= 0)>
+                                            {{ $medicine->name }} - {{ $medicine->generic_name }} ({{ $medicine->quantity_remaining > 0 ? 'Stock: ' . $medicine->quantity_remaining : 'Out of Stock' }})
                                         </option>
                                     @endforeach
                                 </select>

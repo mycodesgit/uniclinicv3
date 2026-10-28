@@ -10,7 +10,7 @@
             var formData = $(this).serialize();
 
             $.ajax({
-                
+
                 url: "{{route('complaint.create') }}",
                 type: "POST",
                 data: formData,
@@ -39,7 +39,7 @@
                 "type": "GET",
             },
             // "bFilter": true,
-			// "sDom": 'fBtlpi',  
+			// "sDom": 'fBtlpi',
 			// "ordering": true,
 			// "language": {
 			// 	search: ' ',
@@ -90,7 +90,7 @@
                 },
             ],
             "createdRow": function (row, data, index) {
-                $(row).attr('id', 'tr-' + data.id); 
+                $(row).attr('id', 'tr-' + data.id);
             }
         });
         $(document).on('complaintAdded', function() {
@@ -103,15 +103,17 @@
         var compCategory = $(this).data('categoryname');
         var compName = $(this).data('complaintname');
         var compSpecific = $(this).data('specificcondition');
-        var medUnit = $(this).data('measure');
-        var medLot = $(this).data('lotno');
-        var expiryDate = $(this).data('expirydate');
-        var referenceNo = $(this).data('refnoid');
+
+        // Keep the saved category selectable even if it is no longer in the list (e.g. disabled)
+        var $category = $('#editCategoryname');
+        if (compCategory && $category.find('option').filter(function() { return this.value === compCategory; }).length === 0) {
+            $category.append($('<option>', { value: compCategory, text: compCategory }));
+        }
 
         $('#editChiefComplaintId').val(id);
-        $('#editCategoryname').val(compCategory);
+        $category.val(compCategory || '').trigger('change');
         $('#editComplaint').val(compName);
-        $('#editSpecific').val(compSpecific);
+        $('#editSpecific').val(compSpecific || '');
 
         $('#editChiefComplaintModal').modal('show');
     });

@@ -214,16 +214,25 @@
 
     <script>
         $(function () {
+            // Attach the dropdown inside its modal (if any) so Bootstrap's focus trap doesn't block the search box
+            function select2Parent(el) {
+                var $modal = $(el).closest('.modal');
+                return $modal.length ? $modal : $(document.body);
+            }
+
             $('.select2').each(function () {
                 $(this).select2({
-                    dropdownParent: $(this).closest('.modal'),
+                    dropdownParent: select2Parent(this),
                 });
             });
 
-            $('.select2bs4').select2({
-                theme: 'bootstrap4',
-                height: '100',
-            })
+            $('.select2bs4').each(function () {
+                $(this).select2({
+                    theme: 'bootstrap4',
+                    width: '100%',
+                    dropdownParent: select2Parent(this),
+                });
+            });
         });
         document.addEventListener("DOMContentLoaded", function () {
             const cards = document.querySelectorAll('.card-animate');

@@ -67,7 +67,7 @@ class AppointmentsController extends Controller
                     'nearest_expiry'     => $nearestExpiry,
                 ];
             })
-            ->filter(fn ($med) => $med->quantity_remaining > 0)
+            // Keep out-of-stock medicines so previously dispensed ones still display (disabled) in the edit modal
             ->values();
 
         $medserverender = MedicalServicesRendered::all();
